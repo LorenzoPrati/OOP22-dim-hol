@@ -1,6 +1,9 @@
 package model;
 
 import java.awt.geom.Point2D;
+import model.common.State;
+import model.common.Type;
+import model.physics.CollisionBox;
 
 /**
  * An interface to model a game object
