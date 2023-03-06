@@ -2,6 +2,8 @@ package model.physics;
 
 import java.awt.geom.Point2D;
 
+import model.common.P2d;
+
 /**
  * An interface to model a boundary box 
  * for detecing collision between game objects
@@ -19,6 +21,6 @@ public interface CollisionBox {
      * translates the box to the given point
      * @param p is the new point 
      */
-    void translate(Point2D p);
+    void translate(P2d p);
 
 }

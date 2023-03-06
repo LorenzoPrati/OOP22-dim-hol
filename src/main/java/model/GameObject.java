@@ -1,6 +1,6 @@
 package model;
 
-import java.awt.geom.Point2D;
+import model.common.P2d;
 import model.common.State;
 import model.common.Type;
 import model.physics.CollisionBox;
@@ -9,6 +9,13 @@ import model.physics.CollisionBox;
  * An interface to model a game object
  */
 public interface GameObject {
+
+    /**
+     * 
+     * @param dt is the delta time to advance
+     */
+    void update(long dt);
+
     /**
      * 
      * @return the id of the game object
@@ -25,13 +32,13 @@ public interface GameObject {
      * 
      * @return the current position
      */
-    Point2D getPosition();
+    P2d getPosition();
 
     /**
      * 
      * @param p is the position to set
      */
-    void setPosition(Point2D p);
+    void setPosition(P2d p);
 
     /**
      * 
