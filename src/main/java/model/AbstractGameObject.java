@@ -2,8 +2,9 @@ package model;
 
 import model.common.P2d;
 import model.common.State;
-import model.common.Type;
+import model.common.ObjectType;
 import model.physics.CollisionBox;
+import model.rooms.Room;
 
 /**
  * An abstract class to model a generic game object and implementing methods common to 
@@ -13,9 +14,10 @@ public abstract class AbstractGameObject implements GameObject {
 
     private P2d position;
     private int id;
-    private Type type;
+    private ObjectType type;
     private State state;
     private CollisionBox collisionBox;
+    private Room room;
 
     /**
      * every game object has its update method
@@ -53,12 +55,12 @@ public abstract class AbstractGameObject implements GameObject {
     }
 
     @Override
-    public Type getType() {
+    public ObjectType getType() {
         return this.type;
     }
 
     @Override
-    public void setType(Type t) {
+    public void setType(ObjectType t) {
         this.type = t;
     }
 
@@ -70,6 +72,11 @@ public abstract class AbstractGameObject implements GameObject {
     @Override
     public void setState(State s) {
         this.state = s;
+    }
+
+    @Override
+    public Room getRoom() {
+        return this.room;
     }
 
 }

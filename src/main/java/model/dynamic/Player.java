@@ -1,5 +1,8 @@
 package model.dynamic;
 
+import java.lang.ModuleLayer.Controller;
+import java.util.LinkedList;
+
 public class Player extends AbstractDynamicObject {
 
     private HealthComponent healthComponent;
@@ -12,9 +15,28 @@ public class Player extends AbstractDynamicObject {
             if (this.isCollidingWithWalls()) {
                 this.bounceBack();
             }
-            //check other collisions
+            for (var o : this.getRoom().getRoomObjects()) {
+                if (this.getCollisionBox().overlaps(o.getCollisionBox())) {
+                    switch (o.getType()) {
+                        case HEARTH:
+                            //hearth effect
+                            this.getRoom().removeObject(o);
+                            break;
+                        case COIN:
+                            //coin effect
+                            this.getRoom().removeObject(o);
+                            break;
+                        case GATE:
+                            //gate effect
+                            this.getRoom().removeObject(o);
+                            break;
+                    }
+                    //this.getRoom().removeObject(o);
+                }
+            }
             
         }
+        
     }
     
 }
