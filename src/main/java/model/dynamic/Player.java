@@ -1,6 +1,5 @@
 package model.dynamic;
 
-import java.lang.ModuleLayer.Controller;
 import java.util.LinkedList;
 
 public class Player extends AbstractDynamicObject {
