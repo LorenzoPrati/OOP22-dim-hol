@@ -9,10 +9,16 @@ public interface Controller {
     // void notifyInput(...);
 
     /**
-     * this method run the Main Loop: 
+     * Starts the Main Loop: 
      */
-    void startMainLoop();
+    void mainLoop();
 
+    /**
+     * Sets the running stete of the game loop.
+     * 
+     * @param isRunning
+     */
+    void setRunning(boolean isRunning);
 
 
 
