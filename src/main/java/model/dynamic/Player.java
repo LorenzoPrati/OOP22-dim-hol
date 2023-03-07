@@ -37,5 +37,13 @@ public class Player extends AbstractDynamicObject {
         }
         
     }
-    
+
+    public HealthComponent getHealthComponent() {
+        return healthComponent;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
 }
