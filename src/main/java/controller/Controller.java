@@ -9,6 +9,11 @@ public interface Controller {
     // void notifyInput(...);
 
     /**
+     * 
+     */
+    void notifyPressed(Command c);
+
+    /**
      * Starts the Main Loop: 
      */
     void mainLoop();
@@ -19,15 +24,4 @@ public interface Controller {
      * @param isRunning
      */
     void setRunning(boolean isRunning);
-
-
-
-
-
-    
-
-
-
-
-
 }

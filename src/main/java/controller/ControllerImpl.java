@@ -1,6 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+
+import javax.swing.text.View;
 
 import model.World;
 
@@ -10,10 +15,12 @@ import model.World;
 public class ControllerImpl implements Controller {
 
     private World world;
-    //TODO: private View view;
+    private View view;
     private boolean isRunning;
     private final static long PERIOD = 20;
-    List<Integer> gameObjects;
+    private final List<Integer> gameObjects;
+    private final Queue<Command> commands;
+
 
     @Override
     public void mainLoop() {
@@ -52,13 +59,6 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * This takes the input and handle it:
-     */
-    public void inputaHandler() {
-        //TODO: to be added
-    }
-
-    /**
      * Change the Main Loop state:  
      * @param isRunning
      */
@@ -78,9 +78,11 @@ public class ControllerImpl implements Controller {
     /**
      * 
      */
-
     public void updateInput() {
-        // TODO: implement input handling. 
+        this.world.getPlayer().reset();  
+        if (!this.commands.isEmpty()) {
+            this.commands.poll().execute(world);
+        }
     }
 
     /**
@@ -116,7 +118,11 @@ public class ControllerImpl implements Controller {
             //TODO: this.view.update(obj.x, obj.y, obj.state, obj.type, id);
         }
         //TODO: this.view.draw();
-        //TODO: this.view.showUI();
+        //TODO: this.view.showUI(this.world.getPlayer().getHealthComponent().getHealth(), this.world.getPlayer().getHealthComponent().getMaxHealth, this.world.getPlayer().getCoins());
+    }
 
-    }    
+    @Override
+    public void notifyPressed(Command c) {
+        this.commands.add(c);
+    }
 }
