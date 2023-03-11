@@ -1,4 +1,4 @@
-package controller.game_engine;
+package controller;
 
 /**
  * Engine is the manager of the game scenes, it can change scene and 

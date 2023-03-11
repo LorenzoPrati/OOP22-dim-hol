@@ -1,6 +1,8 @@
-package view;
+package view.gameview;
 
 import javax.swing.JPanel;
+
+import view.Scene;
 
 /**
  * The implementation of the main game scene.

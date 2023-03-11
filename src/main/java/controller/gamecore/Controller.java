@@ -1,17 +1,25 @@
-package controller;
+package controller.gamecore;
+
+import controller.gamecore.commands.Command;
+import model.World;
+
+/**
+ * An interface to model the game controller.
+ */
 
 public interface Controller {
     
     /**
-     *  
+     *  To be added.
      */
-    // void registerAsObserver();
-    // void notifyInput(...);
+    //TODO: void registerAsObserver();
+    //TODO: void notifyInput(...);
 
     /**
      * 
+     * @param command
      */
-    void notifyPressed(Command c);
+    void notifyPressed(Command command);
 
     /**
      * Starts the Main Loop: 
@@ -24,4 +32,11 @@ public interface Controller {
      * @param isRunning
      */
     void setRunning(boolean isRunning);
+
+    /**
+     * Return the world.
+     * 
+     * @return world
+     */
+    World getWorld();
 }
