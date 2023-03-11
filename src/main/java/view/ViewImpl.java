@@ -23,7 +23,7 @@ public class ViewImpl implements View {
      */
     @Override
     public void setScene(Scene s) {
-        this.frame.remove(currentScene);
+        this.frame.remove(currentScene.getPanel());
         currentScene = s;
         this.frame.getContentPane().add(currentScene.getPanel());
         this.frame.revalidate();
