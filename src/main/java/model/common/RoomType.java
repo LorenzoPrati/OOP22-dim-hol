@@ -1,7 +1,7 @@
 package model.common;
 
 public enum RoomType {
-    NORMAL, 
+    BASE, 
     SHOP, 
     BOSS;
 }
