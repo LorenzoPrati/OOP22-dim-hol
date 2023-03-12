@@ -1,50 +1,53 @@
 package model;
 
 import java.util.List;
-import model.common.TileType;
+import java.util.Optional;
+
+import model.common.RoomType;
+import model.dynamic.Player;
+import model.rooms.RoomMap;
 
 /**
- * An interface to model the world where game object exist
+ * An interface to model the world.
  */
 public interface World {
 
     /**
      * 
-     * @param c
-     */
-    //public void setWorldListener(Controller c);
-
-    /**
-     * 
-     * @param dt is the delta time
+     * @param dt is the delta time.
      */
     public void update(long dt);
     
     /**
      * 
      * @param id
-     * @return the object from the id
+     * @return the object matching the given id
      */
-    GameObject getGameObject(int id);
+    Optional<GameObject> getGameObject(Integer id);
 
     /**
      * 
-     * @return all the game objects
+     * @return game objects
      */
-    List<GameObject> getGameObjectList();
+    List<GameObject> getGameObjects();
 
     /**
      * 
-     * @param tilemap is the new map to load
+     * @return the player
      */
-    public void changeRoom(TileType[][] tilemap);
+    public Player getPlayer();
 
     /**
      * 
-     * @return true if the current room is cleared, 
-     * false otherwise
+     * @param tm the tilemap to build the new room
      */
-    public boolean roomCleared();
+    public void updateMap(RoomMap tm);
+
+    /**
+     * 
+     * @return true if the current room is cleared
+     */
+    public boolean isCleared();
 
     /**
      * 
@@ -57,5 +60,11 @@ public interface World {
      * @return true if win, false if player death
      */
     public boolean getResult();
+
+    /**
+     * 
+     * @return
+     */
+    public RoomType getRoomMap();
 
 }

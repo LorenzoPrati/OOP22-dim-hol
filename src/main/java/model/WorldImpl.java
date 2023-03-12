@@ -1,52 +1,97 @@
 package model;
 
 import java.util.List;
-import model.common.TileType;
+import java.util.Optional;
+
+import model.common.RoomType;
+import model.dynamic.Player;
 import model.rooms.Room;
+import model.rooms.RoomMap;
 
 public class WorldImpl implements World {
 
-    private Room currentRoom;
+    private final static int TOTAL_ROOMS_NUMBER = 10;
 
+    private Room currentRoom;
+    private int roomExplored;
+
+    public WorldImpl(Room currentRoom, int roomExplored) {
+        this.currentRoom = currentRoom;
+        this.roomExplored = roomExplored;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(long dt) {
         this.currentRoom.update(dt);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public GameObject getGameObject(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGameObject'");
+    public Optional<GameObject> getGameObject(Integer id) {
+        return this.currentRoom.getObjects().stream().filter(o -> o.getId().equals(id)).findFirst();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<GameObject> getGameObjectList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGameObjectList'");
+    public List<GameObject> getGameObjects() {
+        return this.currentRoom.getObjects();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void changeRoom(TileType[][] tilemap) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changeRoom'");
+    public Player getPlayer() {
+        return (Player) this.currentRoom.getObjects().stream().filter(o -> o instanceof Player).findAny().get();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean roomCleared() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'roomCleared'");
+    public void updateMap(RoomMap map) {
+        
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isCleared() {
+        return this.currentRoom.isCleared();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isFinished() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isFinished'");
+        return this.getPlayer() == null
+                || (this.currentRoom.getRoomType().equals(RoomType.BOSS) && this.currentRoom.isCleared());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getResult() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getResult'");
+        return this.getPlayer() != null ? true : false;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RoomType getRoomMap() {
+        return this.roomExplored == TOTAL_ROOMS_NUMBER - 1 ? RoomType.BOSS
+                : (this.roomExplored % 3 == 0 ? RoomType.SHOP : RoomType.BASE);
+    }
+
 }
