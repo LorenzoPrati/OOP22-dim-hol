@@ -1,34 +1,50 @@
-package controller;
+package controller.gamecore;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
 
-import javax.swing.text.View;
-
+import controller.Engine;
+import controller.gamecore.commands.Command;
 import model.World;
+import model.WorldImpl;
+import view.Scene;
+import view.gameview.GameScene;
 
 /**
  * This class serve as the controller:
  */
 public class ControllerImpl implements Controller {
 
-    private World world;
-    private View view;
+    private final World world;
+    private final Scene scene;
     private boolean isRunning;
     private final static long PERIOD = 20;
-    private final List<Integer> gameObjects;
+    private final List<Integer> identifiers;
     private final Queue<Command> commands;
+    private final Engine engine;
 
+    public ControllerImpl(Engine engine) {
+        this.identifiers = new LinkedList<>();
+        this.commands = new LinkedBlockingDeque<>();
+        this.world = new WorldImpl();
+        this.scene = new GameScene();
+        this.engine = engine;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void mainLoop() {
         long previous = System.currentTimeMillis();
         while (isRunning || !this.world.isFinished()) {
             if (this.world.roomCleared()) {
-                //TODO: load the new map.
-                this.world.changeRoom(null);    //TODO: insert what we found before with the map loader.
+                // TODO: load the new map.
+                this.engine.loadScene();
+                this.world.changeRoom(null); // TODO: insert what we found before with the map loader.
+                this.engine.stopLoadScene();
             }
             long current = System.currentTimeMillis();
             long elapsed = current - previous;
@@ -38,14 +54,13 @@ public class ControllerImpl implements Controller {
             this.waitForNextFrame(current);
             previous = current;
         }
-        //TODO: Tells to the up-controller to display the screen "WIN" or "LOOSE".
-
+        // TODO: Tells to the up-controller to display the screen "WIN" or "LOOSE".
     }
 
     /**
      * Waits for the next frame.
      * 
-     * @param start 
+     * @param start
      */
     private void waitForNextFrame(long start) {
         long dt = System.currentTimeMillis() - start;
@@ -59,36 +74,21 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Change the Main Loop state:  
-     * @param isRunning
+     * {@inheritDoc}
+     * 
      */
     @Override
     public void setRunning(boolean isRunning) {
         this.isRunning = isRunning;
     }
-    
-    /**
-     * Starts the Main Loop:
-     * @return isRunning
-     */
-    public boolean isRunning() {
-        return isRunning;
-    }
 
-    /**
-     * 
-     */
     public void updateInput() {
-        this.world.getPlayer().reset();  
+        this.world.getPlayer().reset();
         if (!this.commands.isEmpty()) {
-            this.commands.poll().execute(world);
+            this.commands.poll().execute(this);
         }
     }
 
-    /**
-     * 
-     * @param dt
-     */
     public void update(long dt) {
         world.update(dt);
         this.updateId();
@@ -98,31 +98,52 @@ public class ControllerImpl implements Controller {
      * Updates the list of game objects and their IDs
      */
     public void updateId() {
-        for (var id : this.gameObjects) {
-            if (this.world.getGameObject(id) == null) {
-                this.gameObjects.remove(id);
+        for (var id : this.identifiers) {
+            if (this.world.getGameObject(id).isEmpty()) {
+                this.identifiers.remove(id);
             }
         }
         for (var obj : this.world.getGameObjectList()) {
-            if (!this.gameObjects.contains(obj.getId())) {
-                this.gameObjects.add(obj.getId());
+            if (!this.identifiers.contains(obj.getId())) {
+                this.identifiers.add(obj.getId());
             }
         }
     }
 
     public void render() {
-        //TODO: implent rendering
+        // TODO: implent rendering
 
-        for (var id : this.gameObjects) {
+        for (var id : this.identifiers) {
             var obj = this.world.getGameObject(id);
-            //TODO: this.view.update(obj.x, obj.y, obj.state, obj.type, id);
+            this.scene.getPanel().update(obj.getPosition().getX(), obj.getPosition().getY(), obj.getState(),
+                    obj.getType(), obj.getId());
         }
-        //TODO: this.view.draw();
-        //TODO: this.view.showUI(this.world.getPlayer().getHealthComponent().getHealth(), this.world.getPlayer().getHealthComponent().getMaxHealth, this.world.getPlayer().getCoins());
+
+        this.scene.getPanel().draw();
+        this.scene.getPanel().showUI();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void notifyPressed(Command c) {
         this.commands.add(c);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public World getWorld() {
+        return this.world;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Engine getEngine() {
+        return this.engine;
     }
 }

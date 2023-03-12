@@ -1,21 +1,15 @@
 package controller.gamecore;
 
+import controller.Engine;
 import controller.gamecore.commands.Command;
 import model.World;
-
 /**
  * An interface to model the game controller.
  */
-
 public interface Controller {
-    
-    /**
-     *  To be added.
-     */
-    //TODO: void registerAsObserver();
-    //TODO: void notifyInput(...);
 
     /**
+     * Notify if the command has been pressed.
      * 
      * @param command
      */
@@ -39,4 +33,11 @@ public interface Controller {
      * @return world
      */
     World getWorld();
+
+    /**
+     * Return the engine.
+     * 
+     * @return engine
+     */
+    Engine getEngine();
 }
