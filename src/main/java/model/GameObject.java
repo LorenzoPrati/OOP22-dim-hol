@@ -1,85 +1,68 @@
 package model;
 
-import model.common.P2d;
-import model.common.State;
+import org.locationtech.jts.geom.Coordinate;
+
 import model.common.ObjectType;
+import model.common.State;
 import model.physics.CollisionBox;
 import model.rooms.Room;
 
 /**
- * An interface to model a game object
+ * An interface to model a game object.
  */
 public interface GameObject {
 
     /**
      * 
-     * @param dt is the delta time to advance
+     * @param dt is the delta time.
      */
     void update(long dt);
 
     /**
      * 
-     * @return the id of the game object
+     * @return the id of the game object.
      */
-    int getId();
+    Integer getId();
 
     /**
      * 
-     * @param id is the id to be set
+     * @return the current position.
      */
-    void setId(int id);
+    Coordinate getPosition();
 
     /**
      * 
-     * @return the current position
+     * @param c the position to set.
      */
-    P2d getPosition();
+    void setPosition(Coordinate c);
 
     /**
      * 
-     * @param p is the position to set
-     */
-    void setPosition(P2d p);
-
-    /**
-     * 
-     * @return the box for deceting collisions
+     * @return the collision box.
      */
     CollisionBox getCollisionBox();
 
     /**
      * 
-     * @param cb the box to be set
-     */
-    void setCollisionBox(CollisionBox cb);
-
-    /**
-     * 
-     * @return the game object type 
+     * @return the game object type.
      */
     ObjectType getType();
 
     /**
      * 
-     * @param t the type to be set
-     */
-    void setType(ObjectType t);
-
-    /**
-     * 
-     * @return the game object state
+     * @return the game object state.
      */
     State getState();
 
     /**
      * 
-     * @param s the state to be set
+     * @param s the state to set.
      */
     void setState(State s);
 
     /**
      * 
-     * @return
+     * @return the current room.
      */
     Room getRoom();
 }

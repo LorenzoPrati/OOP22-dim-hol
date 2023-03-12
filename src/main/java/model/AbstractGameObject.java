@@ -1,82 +1,97 @@
 package model;
 
-import model.common.P2d;
-import model.common.State;
+import org.locationtech.jts.geom.Coordinate;
+
 import model.common.ObjectType;
+import model.common.State;
 import model.physics.CollisionBox;
 import model.rooms.Room;
 
 /**
- * An abstract class to model a generic game object and implementing methods common to 
- * all game objects
+ * Implements methods common to all game objects.
  */
 public abstract class AbstractGameObject implements GameObject {
 
-    private P2d position;
-    private int id;
-    private ObjectType type;
+    private Coordinate position;
+    private final Integer id;
+    private final ObjectType type;
     private State state;
-    private CollisionBox collisionBox;
+    private final CollisionBox collisionBox;
     private Room room;
 
-    /**
-     * every game object has its update method
-     */
+    public AbstractGameObject(Coordinate position, Integer id, ObjectType type, State state, CollisionBox collisionBox,
+            Room room) {
+        this.position = position;
+        this.id = id;
+        this.type = type;
+        this.state = state;
+        this.collisionBox = collisionBox;
+        this.room = room;
+    }
+
     public abstract void update(long dt);
 
-    @Override
-    public int getId() {
-        return this.id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public P2d getPosition() {
-        return this.position;
-    }
-
-    @Override
-    public void setPosition(P2d p) {
-        this.position = p;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CollisionBox getCollisionBox() {
         return this.collisionBox;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setCollisionBox(CollisionBox cb) {
-        this.collisionBox = cb;
+    public Integer getId() {
+        return this.id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public ObjectType getType() {
-        return this.type;
+    public Coordinate getPosition() {
+        return this.position;
     }
 
-    @Override
-    public void setType(ObjectType t) {
-        this.type = t;
-    }
-
-    @Override
-    public State getState() {
-        return this.state;
-    }
-
-    @Override
-    public void setState(State s) {
-        this.state = s;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Room getRoom() {
         return this.room;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public State getState() {
+        return this.state;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObjectType getType() {
+        return this.type;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setPosition(Coordinate c) {
+        this.position = c;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setState(State s) {
+        this.state = s;
+    }
 }
