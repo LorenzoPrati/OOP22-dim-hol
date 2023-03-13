@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import model.common.RoomType;
-import model.dynamic.Player;
+import model.dynamic.player.Player;
 import model.rooms.Room;
-import model.rooms.RoomMap;
 
 public class WorldImpl implements World {
 
@@ -55,10 +54,10 @@ public class WorldImpl implements World {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void updateMap(RoomMap map) {
+    //@Override
+    // public void updateMap(RoomMap map) {
         
-    }
+    // }
 
     /**
      * {@inheritDoc}

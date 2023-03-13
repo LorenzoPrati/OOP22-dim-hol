@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import model.common.RoomType;
-import model.dynamic.Player;
-import model.rooms.RoomMap;
+import model.dynamic.player.Player;
 
 /**
  * An interface to model the world.
@@ -41,7 +40,7 @@ public interface World {
      * 
      * @param tm the tilemap to build the new room
      */
-    public void updateMap(RoomMap tm);
+    //public void updateMap(RoomMap tm);
 
     /**
      * 
