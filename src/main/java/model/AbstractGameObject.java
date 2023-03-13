@@ -35,8 +35,6 @@ public abstract class AbstractGameObject implements GameObject {
 
     public abstract void update(long dt);
 
-    public abstract void updateState();
-
     /**
      * {@inheritDoc}
      */
