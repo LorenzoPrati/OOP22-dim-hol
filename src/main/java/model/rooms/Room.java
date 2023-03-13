@@ -20,7 +20,7 @@ public interface Room {
      * 
      * @return the object in the room
      */
-    public List<GameObject> getRoomObjects();
+    public List<GameObject> getObjects();
 
     /**
      * 
@@ -30,15 +30,15 @@ public interface Room {
 
     /**
      * 
-     * @param o is the object to add
+     * @param o 
      */
-    public void addObjects(List<GameObject> objects);
+    public void addObjects(List<GameObject> o);
 
     /**
      * 
-     * @param objects to remove
+     * @param o
      */
-    public void removeObject(GameObject o);
+    public void removeObjects(List<GameObject> o);
 
     /**
      * set the room as cleared
