@@ -56,13 +56,20 @@ public interface GameObject {
 
     /**
      * 
-     * @param s the state to set.
-     */
-    void setState(State s);
-
-    /**
-     * 
      * @return the current room.
      */
     Room getRoom();
+
+    /**
+     * 
+     * @return the height of the object
+     */
+    int getHeight();
+
+    /**
+     * 
+     * @return the width of the object
+     */
+    int getWidth();
+
 }
