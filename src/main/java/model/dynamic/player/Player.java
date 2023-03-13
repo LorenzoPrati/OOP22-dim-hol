@@ -10,5 +10,7 @@ public interface Player {
     Health getHealth();
 
     void takeDamage(int amount);
+
+    int getFirePower();
     
 }

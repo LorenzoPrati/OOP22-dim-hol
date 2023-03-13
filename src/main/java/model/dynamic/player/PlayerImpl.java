@@ -21,6 +21,7 @@ public class PlayerImpl extends AbstractDynamicObject implements Player, LivingC
     private boolean shooting;
     private int meeleDamage;
     private int ammunition;
+    private int firepower;
 
     public PlayerImpl(Coordinate position, Integer id, ObjectType type, State state, CollisionBox collisionBox,
             Room room,
@@ -117,6 +118,11 @@ public class PlayerImpl extends AbstractDynamicObject implements Player, LivingC
     @Override
     public void takeDamage(int amount) {
         this.getHealth().decrease(amount);
+    }
+
+    @Override
+    public int getFirePower() {
+        return this.firepower;
     }
 
 }
