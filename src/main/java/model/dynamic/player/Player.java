@@ -1,9 +1,11 @@
 package model.dynamic.player;
 
+import model.dynamic.DynamicObject;
+
 /**
  * An interface to model the Player
  */
-public interface Player { 
+public interface Player extends DynamicObject { 
 
     int getCoins();
 

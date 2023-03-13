@@ -2,12 +2,13 @@ package model.dynamic;
 
 import org.locationtech.jts.geom.Coordinate;
 
+import model.GameObject;
 import model.common.Direction;
 
 /**
  * An interface to model an object that is capable of movement.
  */
-public interface DynamicObject {
+public interface DynamicObject extends GameObject {
 
     /**
      * 
