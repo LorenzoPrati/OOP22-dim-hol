@@ -7,13 +7,12 @@ import org.locationtech.jts.geom.Coordinate;
 import model.common.ObjectType;
 import model.common.State;
 import model.dynamic.AbstractDynamicObject;
-import model.dynamic.LivingCharacter;
 import model.dynamic.enemies.Enemy;
 import model.items.Item;
 import model.physics.CollisionBox;
 import model.rooms.Room;
 
-public class PlayerImpl extends AbstractDynamicObject implements Player, LivingCharacter {
+public class PlayerImpl extends AbstractDynamicObject implements Player {
 
     private Health healthComponent;
     private int coins;
@@ -23,7 +22,7 @@ public class PlayerImpl extends AbstractDynamicObject implements Player, LivingC
     private int ammunition;
     private int firepower;
 
-    public PlayerImpl(Coordinate position, Integer id, ObjectType type, State state, CollisionBox collisionBox,
+    public PlayerImpl(Coordinate position, int id, ObjectType type, State state, CollisionBox collisionBox,
             Room room,
             int height, int width) {
         super(position, id, type, state, collisionBox, room, height, width);
@@ -44,7 +43,7 @@ public class PlayerImpl extends AbstractDynamicObject implements Player, LivingC
                 if (o instanceof Item) {
                     Item i = (Item) o;
                     if (true /* i.canBeUsedOn(this) */) {
-                        i.applyEffect(this);
+                        // i.applyEffect(this);
                     }
                 } else if (o instanceof Enemy && this.attacking) {
                     Enemy e = (Enemy) o;
@@ -59,8 +58,7 @@ public class PlayerImpl extends AbstractDynamicObject implements Player, LivingC
         }
     }
 
-    @Override
-    public void updateState() {
+    private void updateState() {
         if (this.isMoving()) {
             switch (this.getDirection()) {
                 case UP:
@@ -86,7 +84,16 @@ public class PlayerImpl extends AbstractDynamicObject implements Player, LivingC
             }
         }
         if (!this.isMoving() || !this.isAttacking()) {
-            this.setState(State.IDLE);
+            switch (this.getDirection()) {
+                case UP:
+                    this.setState(State.IDLE_UP);
+                case DOWN:
+                    this.setState(State.IDLE_DOWN);
+                case LEFT:
+                    this.setState(State.IDLE_LEFT);
+                case RIGHT:
+                    this.setState(State.IDLE_RIGHT);
+            }
         }
     }
 
@@ -104,11 +111,6 @@ public class PlayerImpl extends AbstractDynamicObject implements Player, LivingC
 
     public boolean isAttacking() {
         return this.attacking;
-    }
-
-    @Override
-    public boolean isAlive() {
-        return this.getHealth().getValue() > 0;
     }
 
     private boolean isShooting() {

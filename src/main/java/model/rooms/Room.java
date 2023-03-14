@@ -11,7 +11,7 @@ import model.common.RoomType;
 public interface Room {
 
     /**
-     * update the room
+     * updates the room
      * @param dt is the delta time
      */
     public void update(long dt);

@@ -17,6 +17,11 @@ public enum State {
     ATTACK_LEFT,
     ATTACK_RIGHT,
 
+    IDLE_UP,
+    IDLE_DOWN,
+    IDLE_LEFT,
+    IDLE_RIGHT,
+
     IDLE;
 
 }

@@ -19,7 +19,7 @@ public abstract class AbstractDynamicObject extends AbstractGameObject implement
     private boolean moving;
     private Coordinate lastPosition;
 
-    public AbstractDynamicObject(Coordinate position, Integer id, ObjectType type, State state,
+    public AbstractDynamicObject(Coordinate position, int id, ObjectType type, State state,
             CollisionBox collisionBox, Room room, int height, int width) {
         super(position, id, type, state, collisionBox, room, height, width);
         //TODO Auto-generated constructor stub

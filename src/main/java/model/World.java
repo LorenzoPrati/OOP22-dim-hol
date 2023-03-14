@@ -40,7 +40,7 @@ public interface World {
      * 
      * @param tm the tilemap to build the new room
      */
-    //public void updateMap(RoomMap tm);
+    public void changeRoom(Boolean[][] tm);
 
     /**
      * 
@@ -64,6 +64,6 @@ public interface World {
      * 
      * @return
      */
-    public RoomType getRoomMap();
+    public RoomType getNextRoomType();
 
 }
