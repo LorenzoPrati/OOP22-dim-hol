@@ -13,20 +13,24 @@ import model.rooms.Room;
 public abstract class AbstractGameObject implements GameObject {
 
     private Coordinate position;
-    private final Integer id;
+    private int id;
     private final ObjectType type;
     private State state;
     private final CollisionBox collisionBox;
     private Room room;
+    private final int width;
+    private final int height;
 
-    public AbstractGameObject(Coordinate position, Integer id, ObjectType type, State state, CollisionBox collisionBox,
-            Room room) {
+    public AbstractGameObject(Coordinate position, int id, ObjectType type, State state, CollisionBox collisionBox,
+            Room room, int width, int height) {
         this.position = position;
         this.id = id;
         this.type = type;
         this.state = state;
         this.collisionBox = collisionBox;
         this.room = room;
+        this.width = width;
+        this.height = height;
     }
 
     public abstract void update(long dt);
@@ -91,7 +95,28 @@ public abstract class AbstractGameObject implements GameObject {
      * {@inheritDoc}
      */
     @Override
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public void setState(State s) {
         this.state = s;
     }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }

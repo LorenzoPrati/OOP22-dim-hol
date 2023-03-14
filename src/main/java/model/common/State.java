@@ -1,5 +1,8 @@
 package model.common;
 
+import model.GameObject;
+import model.dynamic.player.Player;
+
 /**
  * An enum to represent all states of a game object
  */
@@ -14,5 +17,11 @@ public enum State {
     ATTACK_LEFT,
     ATTACK_RIGHT,
 
-    IDLE,
+    IDLE_UP,
+    IDLE_DOWN,
+    IDLE_LEFT,
+    IDLE_RIGHT,
+
+    IDLE;
+
 }

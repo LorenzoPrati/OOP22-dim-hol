@@ -1,23 +1,38 @@
 package model.dynamic;
 
+import org.locationtech.jts.geom.Coordinate;
+
 import model.AbstractGameObject;
 import model.common.Direction;
-import model.common.P2d;
+import model.common.ObjectType;
+import model.common.State;
+import model.physics.CollisionBox;
+import model.rooms.Room;
 
 /**
- * A class to model a generic dynamic game object
+ * A class to model a generic dynamic game object.
  */
-public abstract class AbstractDynamicObject extends AbstractGameObject {
+public abstract class AbstractDynamicObject extends AbstractGameObject implements DynamicObject {
 
     private Direction direction;
     private double speed;
     private boolean moving;
-    private P2d lastPosition;
+    private Coordinate lastPosition;
+
+    public AbstractDynamicObject(Coordinate position, int id, ObjectType type, State state,
+            CollisionBox collisionBox, Room room, int height, int width) {
+        super(position, id, type, state, collisionBox, room, height, width);
+        //TODO Auto-generated constructor stub
+    }
 
     public abstract void update(long dt);
 
-    public void moveBasedOnDirection(long dt) {
-        this.lastPosition = this.getPosition();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void move(long dt) {
+        this.setLastPosition(this.getPosition());
         switch (this.getDirection()) {
             case UP:
                 this.getPosition().setY(this.getPosition().getY() - (speed * dt * 0.001));
@@ -35,45 +50,94 @@ public abstract class AbstractDynamicObject extends AbstractGameObject {
         this.getCollisionBox().translate(this.getPosition());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Direction getDirection() {
-        return direction;
+        return this.direction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public double getSpeed() {
         return speed;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setSpeed(double speed) {
         this.speed = speed;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isMoving() {
         return moving;
     }
 
-    public void setMoving(boolean moving) {
-        this.moving = moving;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void enableMovement() {
+        this.moving = true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isCollidingWithWalls() {
+        //TODO: 
         return false;
     }
 
-    public P2d getLastPosition() {
-        return lastPosition;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Coordinate getLastPosition() {
+        return this.lastPosition;
     }
 
-    public void setLastPosition(P2d lastPosition) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLastPosition(Coordinate lastPosition) {
         this.lastPosition = lastPosition;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void bounceBack() {
         this.setPosition(this.getLastPosition());
         this.getCollisionBox().translate(this.getPosition());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resetMovement() {
+        this.moving = false;
     }
 
 }

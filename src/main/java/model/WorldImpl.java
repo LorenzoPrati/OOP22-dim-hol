@@ -2,22 +2,35 @@ package model;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
+import org.locationtech.jts.geom.Coordinate;
+
+import model.common.IDUtil;
+import model.common.ObjectType;
 import model.common.RoomType;
-import model.dynamic.Player;
+import model.common.State;
+import model.dynamic.player.Player;
+import model.dynamic.player.PlayerImpl;
+import model.physics.CollisionBoxImpl;
 import model.rooms.Room;
-import model.rooms.RoomMap;
+import model.rooms.RoomFactory;
 
+/**
+ * World implementation.
+ */
 public class WorldImpl implements World {
 
-    private final static int TOTAL_ROOMS_NUMBER = 10;
+    private final static int TOTAL_ROOM_NUMBER = 10;
+    private final static int SHOP_ROOM_OCCURENCE = 3;
 
     private Room currentRoom;
-    private int roomExplored;
+    private int roomsCleared = 0;
+    IDUtil idGenerator = new IDUtil();
+    RoomFactory rf = new RoomFactory(idGenerator);
 
-    public WorldImpl(Room currentRoom, int roomExplored) {
-        this.currentRoom = currentRoom;
-        this.roomExplored = roomExplored;
+    public WorldImpl() {
+
     }
 
     /**
@@ -56,8 +69,18 @@ public class WorldImpl implements World {
      * {@inheritDoc}
      */
     @Override
-    public void updateMap(RoomMap map) {
-        
+    public void changeRoom(Boolean[][] map) {
+        this.currentRoom = this.rf.createRoom(this.getNextRoomType(), map);
+        this.idGenerator.reset();
+        if (this.roomsCleared != 0) {
+            var p = (GameObject) this.getPlayer();
+            p.setId(this.idGenerator.generateID());
+            this.currentRoom.addObjects(Stream.of(p).toList());
+        } else {
+            this.currentRoom.addObjects(Stream.of((GameObject) new PlayerImpl(new Coordinate(10, 10),
+                    this.idGenerator.generateID(), ObjectType.PLAYER, State.IDLE_DOWN,
+                    new CollisionBoxImpl(new Coordinate(10, 10)), this.currentRoom, 1, 1)).toList());
+        }
     }
 
     /**
@@ -65,7 +88,7 @@ public class WorldImpl implements World {
      */
     @Override
     public boolean isCleared() {
-        return this.currentRoom.isCleared();
+        return this.currentRoom.isCleared() || this.roomsCleared == 0;
     }
 
     /**
@@ -89,9 +112,9 @@ public class WorldImpl implements World {
      * {@inheritDoc}
      */
     @Override
-    public RoomType getRoomMap() {
-        return this.roomExplored == TOTAL_ROOMS_NUMBER - 1 ? RoomType.BOSS
-                : (this.roomExplored % 3 == 0 ? RoomType.SHOP : RoomType.BASE);
+    public RoomType getNextRoomType() {
+        return this.roomsCleared == TOTAL_ROOM_NUMBER - 1 ? RoomType.BOSS
+                : (this.roomsCleared % SHOP_ROOM_OCCURENCE == 0 ? RoomType.SHOP : RoomType.BASE);
     }
 
 }

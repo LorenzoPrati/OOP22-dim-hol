@@ -1,26 +1,30 @@
 package model.physics;
 
-import java.awt.geom.Point2D;
-
-import model.common.P2d;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 
 /**
- * An interface to model a boundary box 
- * for detecing collision between game objects
+ * An interface to model a box for detecting collisions
  */
 public interface CollisionBox {
 
     /**
      * 
      * @param cb the collision box to check collision with
-     * @return true if a box overlaps the other
+     * @return true if a box intersects the other
      */
-    boolean overlaps(CollisionBox cb);
+    boolean intersects(CollisionBox cb);
 
     /**
-     * translates the box to the given point
+     * translates the box to the given coordinate
      * @param p is the new point 
      */
-    void translate(P2d p);
+    void translate(Coordinate c);
+
+    /**
+     * 
+     * @return the geometry representing the box
+     */
+   Geometry getBox();
 
 }
