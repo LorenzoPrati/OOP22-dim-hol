@@ -9,14 +9,16 @@ import model.GameObject;
 /**
  * Implements a rectangular collision box.
  */
-public class CollisionBoxImpl implements CollisionBox{
+public class CollisionBoxImpl implements CollisionBox {
 
-    private final GameObject owner;
+    private int h;
+    private int w;
+    private Coordinate coordinate;
     private Geometry box;
     private GeometryFactory gf = new GeometryFactory();
 
-    public CollisionBoxImpl(GameObject owner) {
-        this.owner = owner;
+    public CollisionBoxImpl(Coordinate c) {
+        this.coordinate = c;
         this.box = gf.createPolygon(this.getCoordinates());
     }
 
@@ -37,11 +39,11 @@ public class CollisionBoxImpl implements CollisionBox{
 
     private Coordinate[] getCoordinates() {
         return new Coordinate[] {
-            new Coordinate(this.owner.getPosition().getX(), this.owner.getPosition().getY()),
-            new Coordinate(this.owner.getPosition().getX(), this.owner.getPosition().getY()+this.owner.getHeight()),
-            new Coordinate(this.owner.getPosition().getX() + this.owner.getWidth(), this.owner.getPosition().getY()),
-            new Coordinate(this.owner.getPosition().getX() + this.owner.getWidth(), this.owner.getPosition().getY()+this.owner.getHeight()),
+                new Coordinate(coordinate.getX(), coordinate.getY()),
+                new Coordinate(coordinate.getX(), coordinate.getY() + this.h),
+                new Coordinate(coordinate.getX() + this.w, coordinate.getY()),
+                new Coordinate(coordinate.getX() + this.w, coordinate.getY() + this.h)
         };
     }
-    
+
 }
