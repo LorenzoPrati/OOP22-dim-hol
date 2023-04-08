@@ -6,7 +6,7 @@ package it.unibo.dimhol.systems;
 public interface GameSystem {
 
     /**
-     * This method gets called every world update cycle
+     * This method gets called every world update cycle.
      *
      * @param dt the delta time
      */
