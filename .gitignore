@@ -12,3 +12,19 @@ bin/
 .project
 .settings/
 .classpath
+
+#Ignore latex
+*.toc
+*.synctex.gz
+*.synctex.bbl
+*.synctex.blg
+*.log
+*.out
+*.aux
+*.bbl
+*.blg
+*.eps
+*.kate-swp
+*.dvi
+*.fdb_latexmk
+*.fls
