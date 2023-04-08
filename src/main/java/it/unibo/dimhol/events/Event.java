@@ -1,4 +1,6 @@
-package it.unibo.dimhol;
+package it.unibo.dimhol.events;
+
+import it.unibo.dimhol.World;
 
 /**
  * Represents an event occurred in the world.

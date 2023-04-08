@@ -1,6 +1,7 @@
 package it.unibo.dimhol;
 
 import it.unibo.dimhol.entity.Entity;
+import it.unibo.dimhol.events.Event;
 import it.unibo.dimhol.systems.GameSystem;
 
 import java.util.ArrayDeque;
