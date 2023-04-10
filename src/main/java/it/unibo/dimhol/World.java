@@ -19,6 +19,7 @@ public class World {
     private final List<GameSystem> systems = new ArrayList<>();
     //Scene scene;
     //factories
+    private final InputListener input = new InputListener();
 
     private final Queue<Event> eventQueue = new ArrayDeque<>();
 
@@ -34,6 +35,7 @@ public class World {
         /*
         Setup view
          */
+
     }
 
 
@@ -90,5 +92,9 @@ public class World {
 
     public void removeEntity(final Entity e) {
         this.entities.remove(e);
+    }
+
+    public InputListener getInput() {
+        return input;
     }
 }
