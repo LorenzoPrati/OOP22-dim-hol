@@ -5,6 +5,6 @@ package it.unibo.dimhol;
  */
 public class Launch {
     public static void main(final String[] args) {
-        System.out.println("Hello, world!");
+        new World().gameLoop();
     }
 }
