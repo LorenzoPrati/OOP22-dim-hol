@@ -20,7 +20,7 @@ public class CollisionSystem extends AbstractSystem {
 
     @Override
     public void process(Entity e, long dt) {
-        var p1 = (PositionComponent) e.getComponent(BodyComponent.class);
+        var p1 = (PositionComponent) e.getComponent(PositionComponent.class);
         var b1 = (BodyComponent) e.getComponent(BodyComponent.class);
         for (var other : this.world.getEntities()) {
             if (!other.equals(e) && other.hasComponent(BodyComponent.class)) {

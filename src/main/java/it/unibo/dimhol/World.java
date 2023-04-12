@@ -8,6 +8,8 @@ import it.unibo.dimhol.entity.GenericEntityFactory;
 import it.unibo.dimhol.events.Event;
 import it.unibo.dimhol.systems.*;
 import it.unibo.dimhol.components.*;
+
+import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +85,7 @@ public class World {
 
     private void render() {
         this.scene.render();
+        Toolkit.getDefaultToolkit().sync();
     }
 
     private void update(final long dt) {
