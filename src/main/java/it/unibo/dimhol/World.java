@@ -1,13 +1,9 @@
 package it.unibo.dimhol;
 
-import it.unibo.dimhol.components.PositionComponent;
 import it.unibo.dimhol.entity.Entity;
-import it.unibo.dimhol.entity.EntityBuilder;
-import it.unibo.dimhol.entity.EntityImpl;
-import it.unibo.dimhol.entity.GenericEntityFactory;
+import it.unibo.dimhol.entity.GenericFactory;
 import it.unibo.dimhol.events.Event;
 import it.unibo.dimhol.systems.*;
-import it.unibo.dimhol.components.*;
 
 import java.awt.*;
 import java.util.ArrayDeque;
@@ -27,36 +23,27 @@ public class World {
 
     //factories
     private final InputListener input = new InputListener();
-    private GenericEntityFactory factory = new GenericEntityFactory();
+    private GenericFactory gf = new GenericFactory();
     private final Queue<Event> eventQueue = new ArrayDeque<>();
 
     public World() {
         /*
         Add entities
          */
-        this.entities.add(factory.createPlayer(200, 150));
-        this.entities.add(factory.createObstacle(100,100));
-
+        this.entities.add(gf.createPlayer(200, 150));
+        this.entities.add(gf.createObstacle(100,100));
         /*
         Add systems
          */
-        var inputSystem = new PlayerInputSystem(this, PlayerComponent.class);
-        var movementSystem = new MovementSystem(this, PositionComponent.class, MovementComponent.class);
-        var collisionSystem = new CollisionSystem(this, BodyComponent.class, PositionComponent.class);
-        var renderSystem = new RenderSystem(this, PositionComponent.class, VisualDebugComponent.class);
-        var clearCollidedSystem = new ClearCollisionSystem(this, CollisionComponent.class);
-
-        this.systems.add(inputSystem);
-        this.systems.add(movementSystem);
-        this.systems.add(collisionSystem);
-        this.systems.add(clearCollidedSystem);
-        this.systems.add(renderSystem);
-
+        this.systems.add(new PlayerInputSystem(this));
+        this.systems.add(new MovementSystem(this));
+        this.systems.add(new CollisionSystem(this));
+        this.systems.add(new ClearCollisionSystem(this));
+        this.systems.add(new RenderSystem(this));
         /*
         Setup view
          */
         this.scene = new Scene(this);
-
     }
 
 

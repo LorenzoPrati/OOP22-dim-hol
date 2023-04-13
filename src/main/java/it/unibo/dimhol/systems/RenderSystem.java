@@ -9,8 +9,8 @@ import it.unibo.dimhol.entity.Entity;
 public class RenderSystem extends AbstractSystem{
     private final World world;
 
-    public RenderSystem(World w, Class<? extends Component>... comps) {
-        super(w, comps);
+    public RenderSystem(World w) {
+        super(w, VisualDebugComponent.class);
         this.world = w;
     }
 

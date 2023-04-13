@@ -3,6 +3,7 @@ package it.unibo.dimhol.systems;
 import it.unibo.dimhol.World;
 import it.unibo.dimhol.components.Component;
 import it.unibo.dimhol.components.MovementComponent;
+import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
 import org.locationtech.jts.math.Vector2D;
 
@@ -11,8 +12,8 @@ import org.locationtech.jts.math.Vector2D;
  */
 public class PlayerInputSystem extends AbstractSystem {
 
-    public PlayerInputSystem(World w, Class<? extends Component>... comps) {
-        super(w, comps);
+    public PlayerInputSystem(World w) {
+        super(w, PlayerComponent.class);
     }
 
     @Override

@@ -8,13 +8,13 @@ import it.unibo.dimhol.components.*;
 /**
  * Implementation of a factory to create various entities.
  */
-public class GenericEntityFactory {
+public class GenericFactory {
 
     private static final double PLAYER_SPEED = 6;
     private static final int W = 60;
     private static final int H = 60;
 
-    public GenericEntityFactory() {
+    public GenericFactory() {
     }
 
     public Entity createPlayer(final double x, final double y) {

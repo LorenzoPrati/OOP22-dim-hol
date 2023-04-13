@@ -10,8 +10,8 @@ import it.unibo.dimhol.entity.Entity;
  */
 public class ClearCollisionSystem extends AbstractSystem {
 
-    public ClearCollisionSystem(World w, Class<? extends Component>... comps) {
-        super(w, comps);
+    public ClearCollisionSystem(World w) {
+        super(w, CollisionComponent.class);
     }
 
     @Override

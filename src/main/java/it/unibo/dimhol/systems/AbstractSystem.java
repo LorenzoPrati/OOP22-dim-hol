@@ -13,6 +13,7 @@ import java.util.Set;
  * that belongs to a given family of components.
  */
 public abstract class AbstractSystem implements GameSystem {
+
     protected final World world;
     private final Set<Class<? extends Component>> family = new HashSet<>();
 

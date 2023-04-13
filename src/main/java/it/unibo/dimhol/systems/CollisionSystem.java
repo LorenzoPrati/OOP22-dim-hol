@@ -14,8 +14,8 @@ import java.lang.reflect.GenericArrayType;
  * A {@link it.unibo.dimhol.components.CollisionComponent} is attached to make sure next systems can handle them.
  */
 public class CollisionSystem extends AbstractSystem {
-    public CollisionSystem(World w, Class<? extends Component>... comps) {
-        super(w, comps);
+    public CollisionSystem(World w) {
+        super(w, BodyComponent.class);
     }
 
     @Override

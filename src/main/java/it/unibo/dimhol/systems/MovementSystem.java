@@ -11,8 +11,8 @@ import org.locationtech.jts.math.Vector2D;
  * A system to handle movement of entities.
  */
 public class MovementSystem extends AbstractSystem {
-    public MovementSystem(World w, Class<? extends Component>... comps) {
-        super(w, comps);
+    public MovementSystem(World w) {
+        super(w, MovementComponent.class);
     }
 
     @Override
