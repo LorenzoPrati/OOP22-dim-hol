@@ -39,7 +39,7 @@ public class CollisionSystem extends AbstractSystem {
     }
 
     private boolean collisionHappens(PositionComponent p1, PositionComponent p2, BodyComponent b1, BodyComponent b2) {
-        return b1.getBs().getShape(p1.getX(),p1.getY())
-                .intersects(b2.getBs().getShape(p2.getX(),p2.getY()));
+        return b1.getBs().getShape(p1.getPos().getX(),p1.getPos().getY())
+                .intersects(b2.getBs().getShape(p2.getPos().getX(),p2.getPos().getY()));
     }
 }

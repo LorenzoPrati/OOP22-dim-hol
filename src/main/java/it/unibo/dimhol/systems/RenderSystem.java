@@ -18,7 +18,7 @@ public class RenderSystem extends AbstractSystem{
     public void process(Entity e, long dt) {
        var pos = (PositionComponent)e.getComponent(PositionComponent.class);
        var vis = (VisualDebugComponent)e.getComponent(VisualDebugComponent.class);
-       this.world.getScene().queue(vis.getType(), pos.getX(), pos.getY());
+       this.world.getScene().queue(vis.getType(), pos.getPos().getX(), pos.getPos().getY());
     }
     
 }

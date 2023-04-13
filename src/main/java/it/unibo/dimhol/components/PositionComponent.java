@@ -1,5 +1,7 @@
 package it.unibo.dimhol.components;
 
+import org.locationtech.jts.math.Vector2D;
+
 import java.util.Optional;
 
 /**
@@ -7,57 +9,36 @@ import java.util.Optional;
  */
 public class PositionComponent implements Component {
 
-    private double x;
-    private double y;
-    private Optional<Double> lastX = Optional.empty();
-    private Optional<Double> lastY = Optional.empty();
+    private Vector2D pos;
+    private Optional<Vector2D> lastPos;
 
-    public PositionComponent(final double x, final double y) {
-        this.x = x;
-        this.y = y;
+    public PositionComponent(final Vector2D pos) {
+        this.pos = pos;
     }
 
-    public double getX() {
-        return x;
+    public Vector2D getPos() {
+        return pos;
     }
 
-    public double getY() {
-        return y;
+    public void setPos(final Vector2D pos) {
+        this.pos = pos;
     }
 
-    public void setX(final double x) {
-        this.x = x;
+    public Optional<Vector2D> getLastPos() {
+        return lastPos;
     }
 
-    public void setY(final double y) {
-        this.y = y;
-    }
-
-    public double getLastX() {
-        return lastX.get();
-    }
-
-    public void setLastX(final double lastX) {
-        this.lastX = Optional.of(lastX);
-    }
-
-    public double getLastY() {
-        return lastY.get();
-    }
-
-    public void setLastY(final double lastY) {
-        this.lastY = Optional.of(lastY);
+    public void setLastPos(final Optional<Vector2D> lastPos) {
+        this.lastPos = lastPos;
     }
 
     public void updateLastPos() {
-        this.lastX = Optional.of(this.x);
-        this.lastY = Optional.of(this.y);
+        this.lastPos = Optional.of(this.pos);
     }
 
     public void resetToLastPos() {
-        if (this.lastX.isPresent() && this.lastY.isPresent()) {
-            this.x = this.lastX.get();
-            this.y = this.lastY.get();
+        if (this.lastPos.isPresent()) {
+            this.pos = this.lastPos.get();
         }
     }
 

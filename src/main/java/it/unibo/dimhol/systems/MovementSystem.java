@@ -21,11 +21,7 @@ public class MovementSystem extends AbstractSystem {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         pos.updateLastPos();
         if (mov.isEnabled()) {
-            var posVec = new Vector2D(pos.getX(), pos.getY());
-            var delta = mov.getDir().multiply(mov.getSpeed()); //add delta time
-            var newPosVec = posVec.add(delta);
-            pos.setX(newPosVec.getX());
-            pos.setY(newPosVec.getY());
+            pos.setPos(pos.getPos().add(mov.getDir().multiply(mov.getSpeed() + dt * 0.001)));
         }
     }
 }
