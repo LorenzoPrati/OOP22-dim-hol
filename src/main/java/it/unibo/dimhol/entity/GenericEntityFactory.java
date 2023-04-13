@@ -25,4 +25,11 @@ public class GenericEntityFactory {
                 .add(new VisualDebugComponent(0))
                 .build();
     }
+
+    public Entity createObstacle(final double x, final double y) {
+        return new EntityBuilder().add(new PositionComponent(new Vector2D(100,100)))
+                .add(new BodyComponent(new RectBodyShape(W, H)))
+                .add(new VisualDebugComponent(2))
+                .build();
+    }
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 public class PositionComponent implements Component {
 
     private Vector2D pos;
-    private Optional<Vector2D> lastPos;
+    private Optional<Vector2D> lastPos = Optional.empty();
 
     public PositionComponent(final Vector2D pos) {
         this.pos = pos;

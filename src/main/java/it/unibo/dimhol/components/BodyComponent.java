@@ -5,7 +5,6 @@ import it.unibo.dimhol.commons.shapes.BodyShape;
 public class BodyComponent implements Component {
 
     private BodyShape bs;
-    //body type
 
     public BodyComponent(final BodyShape bs) {
         this.bs = bs;
@@ -14,5 +13,4 @@ public class BodyComponent implements Component {
     public BodyShape getBs() {
         return bs;
     }
-
 }

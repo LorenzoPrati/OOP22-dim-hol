@@ -35,6 +35,7 @@ public class World {
         Add entities
          */
         this.entities.add(factory.createPlayer(200, 150));
+        this.entities.add(factory.createObstacle(100,100));
 
         /*
         Add systems
