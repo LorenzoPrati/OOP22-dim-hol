@@ -27,6 +27,7 @@ public class Scene {
         this.frame.setResizable(false);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.addKeyListener(this.world.getInput());
+        this.frame.addMouseListener(this.world.getInput());
     }
 
     class Panel extends JPanel{

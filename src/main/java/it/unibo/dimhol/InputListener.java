@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 public class InputListener implements KeyListener, MouseListener {
 
     private boolean up, down, left, right;
+    private boolean leftClick, rightClick;
 
     public boolean anyMoveKeyPressed() {
         return up || down || left || right;
@@ -30,6 +31,14 @@ public class InputListener implements KeyListener, MouseListener {
 
     public boolean isRight() {
         return right;
+    }
+
+    public boolean isLeftClick() {
+        return leftClick;
+    }
+
+    public boolean isRightClick() {
+        return rightClick;
     }
 
     @Override
@@ -64,12 +73,18 @@ public class InputListener implements KeyListener, MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        switch (e.getButton()) {
+            case MouseEvent.BUTTON1 -> this.leftClick = true;
+            case MouseEvent.BUTTON3 -> this.rightClick = true;
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        switch (e.getButton()) {
+            case MouseEvent.BUTTON1 -> this.leftClick = false;
+            case MouseEvent.BUTTON3 -> this.rightClick = false;
+        }
     }
 
     @Override
