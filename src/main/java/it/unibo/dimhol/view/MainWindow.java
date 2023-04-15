@@ -29,4 +29,8 @@ public class MainWindow extends JFrame {
         this.revalidate();
     }
 
+    public void render() {
+        this.repaint();
+        Toolkit.getDefaultToolkit().sync();
+    }
 }

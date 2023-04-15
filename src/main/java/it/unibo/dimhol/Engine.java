@@ -37,7 +37,7 @@ public class Engine {
             long currTime = System.currentTimeMillis();
             long dt = currTime - prevTime;
             this.world.update(dt);
-            this.window.repaint();
+            this.window.render();
             this.waitForNextFrame(currTime);
             prevTime = currTime;
         }
