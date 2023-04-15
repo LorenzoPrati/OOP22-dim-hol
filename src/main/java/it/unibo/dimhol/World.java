@@ -4,7 +4,11 @@ import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.entity.GenericFactory;
 import it.unibo.dimhol.events.Event;
 import it.unibo.dimhol.systems.*;
+import it.unibo.dimhol.view.InputListener;
+import it.unibo.dimhol.view.MainWindow;
+import it.unibo.dimhol.view.Scene;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -16,12 +20,10 @@ import java.util.Queue;
  */
 public class World {
 
-    private static final long PERIOD = 20;
+
     private final List<Entity> entities = new ArrayList<>();
     private final List<GameSystem> systems = new ArrayList<>();
     private Scene scene;
-
-    //factories
     private final InputListener input = new InputListener();
     private GenericFactory gf = new GenericFactory();
     private final Queue<Event> eventQueue = new ArrayDeque<>();
@@ -43,40 +45,10 @@ public class World {
         /*
         Setup view
          */
-        this.scene = new Scene(this);
+        this.scene = new Scene();
     }
 
-
-    public void gameLoop() {
-        long prevTime = System.currentTimeMillis();
-        while(true) {
-            long currTime = System.currentTimeMillis();
-            long dt = currTime - prevTime;
-            this.update(dt);
-            this.render();
-            this.waitForNextFrame(currTime);
-            prevTime = currTime;
-        }
-    }
-
-
-    private void waitForNextFrame(long startTime) {
-        long dt = System.currentTimeMillis() - startTime;
-        if (dt < PERIOD) {
-            try {
-                Thread.sleep(PERIOD - dt);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    private void render() {
-        this.scene.render();
-        Toolkit.getDefaultToolkit().sync();
-    }
-
-    private void update(final long dt) {
+    public void update(final long dt) {
         this.systems.forEach(s -> s.update(dt));
         this.handleEvents();
     }

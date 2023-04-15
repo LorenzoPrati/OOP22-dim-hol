@@ -5,6 +5,6 @@ package it.unibo.dimhol;
  */
 public class Launch {
     public static void main(final String[] args) {
-        new World().gameLoop();
+        new Engine();
     }
 }

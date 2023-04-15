@@ -1,4 +1,4 @@
-package it.unibo.dimhol;
+package it.unibo.dimhol.view;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
