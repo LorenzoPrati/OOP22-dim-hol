@@ -1,4 +1,4 @@
-package it.unibo.dimhol.Map;
+package it.unibo.dimhol.map;
 public class Tile {
     //TODO: private List<Effect> effects;
 
