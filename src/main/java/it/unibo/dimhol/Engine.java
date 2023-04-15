@@ -1,6 +1,8 @@
 package it.unibo.dimhol;
 
+import it.unibo.dimhol.view.ExamplePanelScreen;
 import it.unibo.dimhol.view.MainWindow;
+import it.unibo.dimhol.view.PauseExampleScreen;
 import it.unibo.dimhol.view.Scene;
 
 import javax.swing.*;
@@ -14,23 +16,15 @@ public class Engine {
     private MainWindow window;
     private World world;
 
+    private Thread game;
+
     public Engine() {
         window = new MainWindow(Engine.this);
     }
 
     public void startGame() {
-        this.world = new World();
-        this.window.changePanel(this.world.getScene());
-        /**
-         * input is set after the scene is made visible
-         */
-        this.world.getScene().setInput(this.world.getInput());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                gameLoop();
-            }
-        }).start();
+        this.world = new World(this);
+        this.resumeGame();
     }
 
     public MainWindow getWindow() {
@@ -58,5 +52,25 @@ public class Engine {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public void stopGame() {
+        this.game.interrupt();
+        this.window.changePanel(new PauseExampleScreen(this));
+    }
+
+    public void resumeGame() {
+        this.window.changePanel(this.world.getScene());
+        /**
+         * input is set after the scene is made visible
+         */
+        this.world.getScene().setInput(this.world.getInput());
+        this.game = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                gameLoop();
+            }
+        });
+        this.game.start();
     }
 }

@@ -1,5 +1,7 @@
 package it.unibo.dimhol.view;
 
+import it.unibo.dimhol.Engine;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -10,8 +12,13 @@ import java.awt.event.MouseListener;
  */
 public class InputListener implements KeyListener, MouseListener {
 
+    private final Engine engine;
     private boolean up, down, left, right;
     private boolean leftClick, rightClick;
+
+    public InputListener(Engine engine) {
+        this.engine = engine;
+    }
 
     public boolean anyMoveKeyPressed() {
         return up || down || left || right;
@@ -53,6 +60,7 @@ public class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_S -> this.down = true;
             case KeyEvent.VK_A -> this.left = true;
             case KeyEvent.VK_D -> this.right = true;
+            case KeyEvent.VK_ESCAPE -> this.engine.stopGame();
         }
     }
 

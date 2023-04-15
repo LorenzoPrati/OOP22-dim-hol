@@ -5,11 +5,8 @@ import it.unibo.dimhol.entity.GenericFactory;
 import it.unibo.dimhol.events.Event;
 import it.unibo.dimhol.systems.*;
 import it.unibo.dimhol.view.InputListener;
-import it.unibo.dimhol.view.MainWindow;
 import it.unibo.dimhol.view.Scene;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +17,15 @@ import java.util.Queue;
  */
 public class World {
 
-
+    private Engine engine;
     private final List<Entity> entities = new ArrayList<>();
     private final List<GameSystem> systems = new ArrayList<>();
     private Scene scene;
-    private final InputListener input = new InputListener();
+    private final InputListener input;
     private GenericFactory gf = new GenericFactory();
     private final Queue<Event> eventQueue = new ArrayDeque<>();
 
-    public World() {
+    public World(final Engine engine) {
         /*
         Add entities
          */
@@ -45,6 +42,8 @@ public class World {
         /*
         Setup view
          */
+        this.engine = engine;
+        this.input = new InputListener(engine);
         this.scene = new Scene();
     }
 
