@@ -24,6 +24,8 @@ public class World {
     private final InputListener input;
     private GenericFactory gf = new GenericFactory();
     private final Queue<Event> eventQueue = new ArrayDeque<>();
+    private boolean gameOver;
+    private boolean result;
 
     public World(final Engine engine) {
         /*
@@ -44,7 +46,7 @@ public class World {
          */
         this.engine = engine;
         this.input = new InputListener(engine);
-        this.scene = new Scene();
+        this.scene = new Scene(this);
     }
 
     public void update(final long dt) {
@@ -81,5 +83,21 @@ public class World {
 
     public Scene getScene() {
         return this.scene;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public boolean getResult() {
+        return result;
+    }
+
+    public void setResult(final boolean result) {
+        this.result = result;
+    }
+
+    public void setGameOver() {
+        this.gameOver = true;
     }
 }

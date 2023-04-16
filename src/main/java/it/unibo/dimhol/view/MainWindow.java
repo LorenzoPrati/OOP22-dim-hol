@@ -8,6 +8,9 @@ import java.awt.*;
 public class MainWindow extends JFrame {
 
     private final Engine engine;
+
+    static GraphicsDevice device = GraphicsEnvironment
+            .getLocalGraphicsEnvironment().getScreenDevices()[0];
     JPanel currPanel;
     public MainWindow(final Engine engine) {
         this.engine = engine;
@@ -32,5 +35,9 @@ public class MainWindow extends JFrame {
     public void render() {
         this.repaint();
         Toolkit.getDefaultToolkit().sync();
+    }
+
+    public void makeFullScreen() {
+        GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);
     }
 }

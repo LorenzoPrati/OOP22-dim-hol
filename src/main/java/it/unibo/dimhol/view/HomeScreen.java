@@ -19,5 +19,15 @@ public class HomeScreen extends JPanel {
             engine.getWindow().changePanel(new ExamplePanelScreen(engine));
         });
         this.add(b1);
+        var b2 = new JButton("exit");
+        b2.addActionListener(e -> {
+            System.exit(0);
+        });
+        this.add(b2);
+        var b3 = new JButton("full screen");
+        b3.addActionListener(e -> {
+           engine.getWindow().makeFullScreen();
+        });
+        this.add(b3);
     }
 }

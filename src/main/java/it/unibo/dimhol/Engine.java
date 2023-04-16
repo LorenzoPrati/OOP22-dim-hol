@@ -1,9 +1,6 @@
 package it.unibo.dimhol;
 
-import it.unibo.dimhol.view.ExamplePanelScreen;
-import it.unibo.dimhol.view.MainWindow;
-import it.unibo.dimhol.view.PauseExampleScreen;
-import it.unibo.dimhol.view.Scene;
+import it.unibo.dimhol.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +12,6 @@ public class Engine {
     private static final long PERIOD = 20;
     private MainWindow window;
     private World world;
-
     private Thread game;
 
     public Engine() {
@@ -33,7 +29,7 @@ public class Engine {
 
     public void gameLoop() {
         long prevTime = System.currentTimeMillis();
-        while(true) {
+        while(!world.isGameOver()) {
             long currTime = System.currentTimeMillis();
             long dt = currTime - prevTime;
             this.world.update(dt);
@@ -41,6 +37,7 @@ public class Engine {
             this.waitForNextFrame(currTime);
             prevTime = currTime;
         }
+        this.window.changePanel(new ResultScreen(this, world.getResult()));
     }
 
     private void waitForNextFrame(long startTime) {
@@ -61,7 +58,7 @@ public class Engine {
 
     public void resumeGame() {
         this.window.changePanel(this.world.getScene());
-        /**
+        /*
          * input is set after the scene is made visible
          */
         this.world.getScene().setInput(this.world.getInput());
@@ -73,4 +70,5 @@ public class Engine {
         });
         this.game.start();
     }
+
 }
