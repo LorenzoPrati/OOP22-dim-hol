@@ -47,11 +47,11 @@ public class Scene extends JPanel {
                     g2.setColor(Color.GREEN);
                     break;
                 }
-                case 1:{ //ENEMY
+                case 1:{ //OBSTACLE
                     g2.setColor(Color.RED);
                     break;
                 }
-                case 2:{ //COIN
+                case 2:{ //HEART
                     g2.setColor(Color.YELLOW);
                     break;
                 }

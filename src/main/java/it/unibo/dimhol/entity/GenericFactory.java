@@ -4,6 +4,7 @@ import org.locationtech.jts.math.Vector2D;
 
 import it.unibo.dimhol.commons.shapes.RectBodyShape;
 import it.unibo.dimhol.components.*;
+import it.unibo.dimhol.effects.IncreaseCurrentHealthEffect;
 
 /**
  * Implementation of a factory to create various entities.
@@ -29,7 +30,16 @@ public class GenericFactory {
     public Entity createObstacle(final double x, final double y) {
         return new EntityBuilder().add(new PositionComponent(new Vector2D(100,100)))
                 .add(new BodyComponent(new RectBodyShape(W, H), true))
-                .add(new VisualDebugComponent(2))
+                .add(new VisualDebugComponent(1))
                 .build();
+    }
+
+    public Entity createHeart(final double x, final double y){
+        return new EntityBuilder().add(new HeartComponent())
+            .add(new PositionComponent(new Vector2D(x, y)))
+            .add(new BodyComponent(new RectBodyShape(W,H), false))
+            .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
+            .add(new VisualDebugComponent(2))
+            .build();
     }
 }

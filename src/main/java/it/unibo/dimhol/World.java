@@ -33,14 +33,17 @@ public class World {
          */
         this.entities.add(gf.createPlayer(200, 150));
         this.entities.add(gf.createObstacle(100,100));
+        this.entities.add(gf.createHeart(200, 400));
         /*
         Add systems
          */
         this.systems.add(new PlayerInputSystem(this));
         this.systems.add(new MovementSystem(this));
         this.systems.add(new CollisionSystem(this));
+        this.systems.add(new ItemSystem(this));
         this.systems.add(new ClearCollisionSystem(this));
         this.systems.add(new RenderSystem(this));
+        
         /*
         Setup view
          */
