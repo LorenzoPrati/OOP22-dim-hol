@@ -23,6 +23,7 @@ public class GenericFactory {
                 .add(new PositionComponent(new Vector2D(x,y)))
                 .add(new MovementComponent(new Vector2D(0,0),PLAYER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(W,H), true))
+                .add(new HealthComponent(10))
                 .add(new VisualDebugComponent(0))
                 .build();
     }
