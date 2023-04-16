@@ -23,14 +23,14 @@ public final class EntityImpl implements Entity {
 
     @Override
     public Component getComponent(final Class<? extends Component> compClass) {
-        return this.comps.stream().filter(e -> e.getClass().equals(compClass))
+        return this.comps.stream().filter(e -> e.getClass() == compClass)
                 .findAny()
                 .get();
     }
 
     @Override
     public boolean hasComponent(final Class<? extends Component> compClass) {
-        return this.comps.stream().filter(c -> c.getClass().equals(compClass))
+        return this.comps.stream().filter(c -> c.getClass() == compClass)
                 .count() == 1;
     }
 
