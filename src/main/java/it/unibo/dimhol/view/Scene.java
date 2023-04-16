@@ -3,7 +3,6 @@ package it.unibo.dimhol.view;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-
 import it.unibo.dimhol.Engine;
 import it.unibo.dimhol.World;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
