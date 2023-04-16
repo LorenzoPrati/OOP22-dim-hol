@@ -27,8 +27,10 @@ public class CollisionSystem extends AbstractSystem {
                 var p2 = (PositionComponent) other.getComponent(PositionComponent.class);
                 var b2 = (BodyComponent) other.getComponent(BodyComponent.class);
                 if (this.collisionHappens(p1,p2,b1,b2)) {
-                    p1.resetToLastPos();
-                    p2.resetToLastPos();
+                    if (b1.isSolid() && b2.isSolid()) {
+                        p1.resetToLastPos();
+                        p2.resetToLastPos();
+                    }
                     if (!e.hasComponent(CollisionComponent.class)) {
                         e.addComponent(new CollisionComponent(other));
                     }
