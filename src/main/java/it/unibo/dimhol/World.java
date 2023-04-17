@@ -35,7 +35,7 @@ public class World {
         this.entities.add(gf.createObstacle(100,100));
         this.entities.add(gf.createZombieEnemy(300,100));
         this.entities.add(gf.createShooterEnemy(300,200));
-        this.entities.add(gf.createZombieEnemy(300,400));
+        //this.entities.add(gf.createZombieEnemy(300,400));
         /*
         Add systems
          */

@@ -54,18 +54,25 @@ public class Scene extends JPanel {
             switch(type){
                 case 0: { //PLAYER
                     g2.setColor(Color.GREEN);
+                    g2.drawRect(elem.getMiddle(), elem.getRight(), 60, 60);
                     break;
                 }
                 case 1:{ //ENEMY
                     g2.setColor(Color.RED);
+                    g2.drawRect(elem.getMiddle(), elem.getRight(), 60, 60);
                     break;
                 }
                 case 2:{ //COIN
                     g2.setColor(Color.YELLOW);
+                    g2.drawRect(elem.getMiddle(), elem.getRight(), 60, 60);
+                    break;
+                }
+                case 3:{
+                    g2.setColor(Color.BLUE);
+                    g2.drawRect(elem.getMiddle(), elem.getRight(), 10, 10);
                     break;
                 }
             }
-            g2.drawRect(elem.getMiddle(), elem.getRight(), 60, 60);
         }
         renderQueue.clear();
     }

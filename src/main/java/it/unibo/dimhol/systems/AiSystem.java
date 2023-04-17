@@ -39,8 +39,8 @@ public final class AiSystem extends AbstractSystem {
                     }
                     routineExecute.get().clear();
                 }
+                break;
             }
-            break;
         }
     }
 

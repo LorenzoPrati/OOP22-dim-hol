@@ -1,6 +1,5 @@
 package it.unibo.dimhol.ai;
 
-import it.unibo.dimhol.components.AiComponent;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PositionComponent;
 import it.unibo.dimhol.entity.Entity;
@@ -29,8 +28,23 @@ public class FollowingAction implements Action {
     public Optional<List<Event>> execute(Entity enemy) {
         var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
 
-        movComp.setEnabled(true);
+        AiMathUtil aiMathUtil = new AiMathUtil(playerPos.getPos().getX(), playerPos.getPos().getY(),
+                enemyPos.getPos().getX(), enemyPos.getPos().getY());
+        int angle = aiMathUtil.getAngle();
 
+        if (angle > -45 && angle < 45) {
+            if (playerPos.getPos().getX() > enemyPos.getPos().getX()) {
+                movComp.setDir(new Vector2D(1, 0));
+            } else {
+                movComp.setDir(new Vector2D(-1, 0));
+            }
+        } else if (angle > 45 && angle < 90 || angle < -45 && angle > -90) {
+            if (playerPos.getPos().getY() > enemyPos.getPos().getY()) {
+                movComp.setDir(new Vector2D(0, 1));
+            } else {
+                movComp.setDir(new Vector2D(0, -1));
+            }
+        }
 
         return Optional.empty();
     }

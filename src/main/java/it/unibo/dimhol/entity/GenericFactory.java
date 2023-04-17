@@ -49,8 +49,8 @@ public class GenericFactory {
         return new EntityBuilder()
                 .add(new PositionComponent(new Vector2D(x, y)))
                 .add(new MovementComponent(new Vector2D(dirX, dirY), 2, true))
-                .add(new BodyComponent(new RectBodyShape(W, H), false))
-                .add(new VisualDebugComponent(1))
+                .add(new BodyComponent(new RectBodyShape(10, 10), false))
+                .add(new VisualDebugComponent(3))
                 .build();
     }
 

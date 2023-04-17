@@ -14,7 +14,6 @@ public class RoutineFactory {
      */
     public final List<Action> createShooterRoutine() {
         return new ArrayList<>(List.of(
-                new RandomMovementAction(),
                 new DistanceAttackAction(),
                 new RandomMovementAction()
         ));
@@ -26,9 +25,8 @@ public class RoutineFactory {
      */
     public final List<Action> createZombieRoutine() {
         return new ArrayList<>(List.of(
-                new RandomMovementAction(),
-                new DistanceAttackAction(),
-                new FollowingAction()
+                new FollowingAction(),
+                new RandomMovementAction()
         ));
     }
 }
