@@ -15,8 +15,8 @@ import java.util.Random;
  */
 public final class RandomMovementAction implements Action {
 
-    private static final int START_RANGE_TIME = 1000;
-    private static final int END_RANGE_TIME = 2000;
+    private static final int START_RANGE_TIME = 500;
+    private static final int END_RANGE_TIME = 1000;
     private final Random rand = new Random();
     private final int aggroRay;
     private int walkingTimeMillis;
