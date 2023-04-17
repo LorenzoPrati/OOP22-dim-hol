@@ -5,6 +5,8 @@ import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PositionComponent;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.entity.GenericFactory;
+import it.unibo.dimhol.events.AddEntityEvent;
+import it.unibo.dimhol.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +14,11 @@ import java.util.Optional;
 
 public class DistanceAttackAction implements Action {
 
-    private static final int RELOAD_GUN_TIME = 1000;
-    private final int aggroRay;
+    private static final int RELOAD_GUN_TIME = 3000;
+    private static final int AGGRO_RAY = 300;
     private PositionComponent playerPos;
     private PositionComponent enemyPos;
-    private final GenericFactory entityFactory = new GenericFactory();
-
-    public DistanceAttackAction(int aggroRay) {
-        this.aggroRay = aggroRay;
-    }
+    private final GenericFactory ef = new GenericFactory();
 
     @Override
     public boolean canExecute(Entity player, Entity enemy) {
@@ -28,14 +26,15 @@ public class DistanceAttackAction implements Action {
         enemyPos = (PositionComponent) enemy.getComponent(PositionComponent.class);
 
         var distance = playerPos.getPos().distance(enemyPos.getPos());
-        return distance <= aggroRay;
+        return distance < AGGRO_RAY;
     }
 
     @Override
-    public Optional<List<Entity>> execute(Entity enemy) {
+    public Optional<List<Event>> execute(Entity enemy) {
         var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
         var aiComp = (AiComponent) enemy.getComponent(AiComponent.class);
 
+        movComp.setEnabled(false);
         if (System.currentTimeMillis() - aiComp.getPrevMovTime() >= RELOAD_GUN_TIME) {
             return Optional.of(shoot(movComp));
         } else {
@@ -43,12 +42,14 @@ public class DistanceAttackAction implements Action {
         }
     }
 
-    private List<Entity> shoot(MovementComponent movComp) {
-        List<Entity> bullets = new ArrayList<>();
+    private List<Event> shoot(MovementComponent movComp) {
+        List<Event> bullets = new ArrayList<>();
+        /*
         if(enemyPos.getPos().angle(playerPos.getPos()) > 45 && enemyPos.getPos().angle(playerPos.getPos()) < 135) {
-            // bullets.add(entityFactory.createBullet());
-        }
 
+        }
+        */
+        bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX(), enemyPos.getPos().getY(), 1, 0)));
         return bullets;
     }
 

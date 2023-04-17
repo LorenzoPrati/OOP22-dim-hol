@@ -1,6 +1,7 @@
 package it.unibo.dimhol.ai;
 
 import it.unibo.dimhol.entity.Entity;
+import it.unibo.dimhol.events.Event;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,6 @@ public interface Action {
      * @param enemy is the entity that could execute an action.
      * @return new entities that enemy could create.
      */
-    Optional<List<Entity>> execute(Entity enemy);
+    Optional<List<Event>> execute(Entity enemy);
 
 }

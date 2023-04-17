@@ -7,6 +7,7 @@ import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.events.AddEntityEvent;
+import it.unibo.dimhol.events.Event;
 
 /**
  * A system for manage enemies.
@@ -18,10 +19,8 @@ public final class AiSystem extends AbstractSystem {
     /**
      *
      * @param world .
-     * @param comps .
      */
-    @SuppressWarnings("unchecked")
-    public AiSystem(final World world, final Class<? extends Component>... comps) {
+    public AiSystem(final World world) {
         super(world, AiComponent.class);
         for (var entity : world.getEntities()) {
             if (entity.hasComponent(PlayerComponent.class)) {
@@ -33,15 +32,15 @@ public final class AiSystem extends AbstractSystem {
     @Override
     public void process(final Entity enemy, final long dt) {
         var enemyAI = (AiComponent) enemy.getComponent(AiComponent.class);
-        var enemyMov = (MovementComponent) enemy.getComponent(MovementComponent.class);
 
         for (var routine : enemyAI.getRoutines()) {
             if (routine.canExecute(player, enemy)) {
-                if (routine.execute(enemy).isPresent()) {
-                    for (Entity entity : routine.execute(enemy).get()) {
-                        enemyMov.setEnabled(false);
-                        this.world.notifyEvent(new AddEntityEvent(entity));
+                var routineExecute = routine.execute(enemy);
+                if (routineExecute.isPresent()) {
+                    for (Event event : routineExecute.get()) {
+                        this.world.notifyEvent(event);
                     }
+                    routineExecute.get().clear();
                 }
             }
             break;
