@@ -2,11 +2,8 @@ package it.unibo.dimhol.systems;
 
 import it.unibo.dimhol.World;
 import it.unibo.dimhol.components.AiComponent;
-import it.unibo.dimhol.components.Component;
-import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
-import it.unibo.dimhol.events.AddEntityEvent;
 import it.unibo.dimhol.events.Event;
 
 /**

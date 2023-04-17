@@ -9,16 +9,12 @@ import java.util.List;
 public class RoutineFactory {
 
     /**
-     * Shooter Aggro Ray.
-     */
-    public static final int SHOOTER_AGGRO_RAY = 200;
-
-    /**
      *
      * @return the behaviour of a shooter enemy.
      */
     public final List<Action> createShooterRoutine() {
         return new ArrayList<>(List.of(
+                new RandomMovementAction(),
                 new DistanceAttackAction(),
                 new RandomMovementAction()
         ));
@@ -30,7 +26,9 @@ public class RoutineFactory {
      */
     public final List<Action> createZombieRoutine() {
         return new ArrayList<>(List.of(
-                new RandomMovementAction()
+                new RandomMovementAction(),
+                new DistanceAttackAction(),
+                new FollowingAction()
         ));
     }
 }

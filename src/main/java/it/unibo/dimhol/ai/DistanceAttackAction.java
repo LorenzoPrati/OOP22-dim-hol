@@ -36,6 +36,7 @@ public class DistanceAttackAction implements Action {
 
         movComp.setEnabled(false);
         if (System.currentTimeMillis() - aiComp.getPrevMovTime() >= RELOAD_GUN_TIME) {
+            aiComp.setPrevMovTime(System.currentTimeMillis());
             return Optional.of(shoot(movComp));
         } else {
             return Optional.empty();
@@ -50,6 +51,7 @@ public class DistanceAttackAction implements Action {
         }
         */
         bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX(), enemyPos.getPos().getY(), 1, 0)));
+        bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX(), enemyPos.getPos().getY(), -1, 0)));
         return bullets;
     }
 
