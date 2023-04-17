@@ -1,5 +1,6 @@
 package it.unibo.dimhol.view;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -29,6 +30,13 @@ public class Scene extends JPanel {
         var b1 = new JButton("lose");
         b1.addActionListener(e -> {world.setGameOver(); world.setResult(false);});
         this.add(b1);
+        /*
+        hides mouse cursor
+         */
+        this.setCursor(this.getToolkit().createCustomCursor(
+                new BufferedImage( 1, 1, BufferedImage.TYPE_INT_ARGB ),
+                new Point(),
+                null));
     }
 
     public void setInput(final InputListener input) {
