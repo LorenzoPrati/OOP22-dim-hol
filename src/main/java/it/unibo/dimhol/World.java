@@ -33,6 +33,7 @@ public class World {
          */
         this.entities.add(gf.createPlayer(200, 150));
         this.entities.add(gf.createObstacle(100,100));
+        this.entities.add(gf.createHeart(200, 400));
         this.entities.add(gf.createZombieEnemy(300,100));
         this.entities.add(gf.createZombieEnemy(300,200));
         this.entities.add(gf.createZombieEnemy(300,400));
@@ -40,11 +41,12 @@ public class World {
         Add systems
          */
         this.systems.add(new PlayerInputSystem(this));
+        this.systems.add(new AiSystem(this));
         this.systems.add(new MovementSystem(this));
         this.systems.add(new CollisionSystem(this));
+        this.systems.add(new ItemSystem(this));
         this.systems.add(new ClearCollisionSystem(this));
         this.systems.add(new RenderSystem(this));
-        this.systems.add(new AiSystem(this));
         /*
         Setup view
          */

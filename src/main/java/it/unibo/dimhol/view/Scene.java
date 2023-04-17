@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-
 import it.unibo.dimhol.Engine;
 import it.unibo.dimhol.World;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
@@ -56,11 +55,11 @@ public class Scene extends JPanel {
                     g2.setColor(Color.GREEN);
                     break;
                 }
-                case 1:{ //ENEMY
+                case 1:{ //OBSTACLE
                     g2.setColor(Color.RED);
                     break;
                 }
-                case 2:{ //COIN
+                case 2:{ //HEART
                     g2.setColor(Color.YELLOW);
                     break;
                 }
