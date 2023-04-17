@@ -16,7 +16,7 @@ import java.util.Random;
 public final class RandomMovementAction implements Action {
 
     private static final int START_RANGE_TIME = 1000;
-    private static final int END_RANGE_TIME = 3000;
+    private static final int END_RANGE_TIME = 2000;
     private final Random rand = new Random();
     private final int aggroRay;
     private int walkingTimeMillis;
@@ -45,8 +45,13 @@ public final class RandomMovementAction implements Action {
         var aiComp = (AiComponent) enemy.getComponent(AiComponent.class);
         movComp.setEnabled(true);
         if (System.currentTimeMillis() - aiComp.getPrevMovTime() >= walkingTimeMillis) {
-            var point = rand.nextDouble(-1, 1);
-            movComp.setDir(new Vector2D(point, point));
+            int randDir = rand.nextInt(5);
+            switch (randDir) {
+                case 1 -> movComp.setDir(new Vector2D(0, 1));
+                case 2 -> movComp.setDir(new Vector2D(0, -1));
+                case 3 -> movComp.setDir(new Vector2D(1, 0));
+                case 4 -> movComp.setDir(new Vector2D(-1, 0));
+            }
             aiComp.setPrevMovTime(System.currentTimeMillis());
             setWalkingTimeMillis();
         }

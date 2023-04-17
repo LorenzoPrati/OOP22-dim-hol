@@ -20,9 +20,9 @@ public final class AiSystem extends AbstractSystem {
      * @param world .
      * @param comps .
      */
-    @SafeVarargs
+    @SuppressWarnings("unchecked")
     public AiSystem(final World world, final Class<? extends Component>... comps) {
-        super(world, comps);
+        super(world, AiComponent.class);
         for (var entity : world.getEntities()) {
             if (entity.hasComponent(PlayerComponent.class)) {
                 this.player = entity;
