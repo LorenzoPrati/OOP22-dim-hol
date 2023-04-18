@@ -59,6 +59,10 @@ public class DistanceAttackAction implements Action {
             if (playerPos.getPos().getX() > enemyPos.getPos().getX()) {
                 bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
                         enemyPos.getPos().getY() + cW, 1, 0)));
+                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
+                        enemyPos.getPos().getY() + cW, 1, -0.1)));
+                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
+                        enemyPos.getPos().getY() + cW, 1, 0.1)));
             } else {
                 bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
                         enemyPos.getPos().getY() + cW, -1, 0)));
