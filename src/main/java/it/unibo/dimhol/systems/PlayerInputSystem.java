@@ -2,6 +2,7 @@ package it.unibo.dimhol.systems;
 
 import it.unibo.dimhol.World;
 import it.unibo.dimhol.components.Component;
+import it.unibo.dimhol.components.InfoAnimationComponent;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
@@ -19,6 +20,7 @@ public class PlayerInputSystem extends AbstractSystem {
     @Override
     public void process(Entity e, long dt) {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
+        var info = (InfoAnimationComponent)e.getComponent(InfoAnimationComponent.class);
         mov.setEnabled(false);
         mov.setDir(new Vector2D(0,0));
         var input = this.world.getInput();

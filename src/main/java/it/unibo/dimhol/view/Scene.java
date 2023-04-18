@@ -4,19 +4,16 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-
 import it.unibo.dimhol.Engine;
 import it.unibo.dimhol.World;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
-import org.apache.commons.lang3.tuple.Triple;
 import java.awt.*;
 
 /*A temporary Scene just to debug. */
 
 public class Scene extends JPanel {
     private World world;
-
-    private List<Triple<Integer,Integer,Integer>> renderQueue = new ArrayList<>();
+    private ResourceLoader loader = new ResourceLoader();
+    private List<GraphicInfo> renderList = new ArrayList<>();
 
     public Scene(World world){
         this.world = world;
@@ -49,29 +46,31 @@ public class Scene extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        for(var elem :renderQueue){
-            var type = elem.getLeft();
+        for(var elem :renderList){
+            var type = elem.getType();
             switch(type){
-                case 0: { //PLAYER
-                    g2.setColor(Color.GREEN);
+                case "player": { 
+                    System.out.println(elem.getIndex());
+                    g2.drawImage(new PlayerAnimation(elem.getState(),elem.getIndex(), loader).getImageToDraw(),
+                         (int)elem.getX(), (int)elem.getY(), 60, 60, null);
                     break;
                 }
-                case 1:{ //ENEMY
-                    g2.setColor(Color.RED);
+                case "enemy":{
+                    //TODO
                     break;
                 }
-                case 2:{ //COIN
-                    g2.setColor(Color.YELLOW);
+                case "coin":{
+                    //TODO
                     break;
                 }
+
             }
-            g2.drawRect(elem.getMiddle(), elem.getRight(), 60, 60);
         }
-        renderQueue.clear();
+        renderList.clear();
     }
 
-    public void queue(int t, double x, double y) {
-        this.renderQueue.add(new ImmutableTriple<>(t,(int)x,(int)y));
+    public void toList(String type, String state, int index, double x, double y) {
+        this.renderList.add(new GraphicInfo(type,state,index,x,y));
     }
     
 }
