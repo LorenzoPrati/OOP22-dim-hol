@@ -48,8 +48,8 @@ public class DistanceAttackAction implements Action {
 
     private List<Event> shoot() {
         List<Event> bullets = new ArrayList<>();
-        var cH = enemyBody.getBs().getBoundingHeight() / 2;
-        var cW = enemyBody.getBs().getBoundingWidth() / 2;
+        var enemyHeight = enemyBody.getBs().getBoundingHeight();
+        var enemyWidth = enemyBody.getBs().getBoundingWidth();
 
         AiMathUtil aiMathUtil = new AiMathUtil(playerPos.getPos().getX(), playerPos.getPos().getY(),
                 enemyPos.getPos().getX(), enemyPos.getPos().getY());
@@ -57,23 +57,21 @@ public class DistanceAttackAction implements Action {
 
         if (angle > -45 && angle < 45) {
             if (playerPos.getPos().getX() > enemyPos.getPos().getX()) {
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, 1, 0)));
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, 1, -0.1)));
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, 1, 0.1)));
+                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() +
+                        (enemyWidth + (enemyWidth / 100 * 10)), enemyPos.getPos().getY() +
+                        (enemyHeight / 2), 1, 0)));
             } else {
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, -1, 0)));
+                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() - (enemyWidth / 100 * 30),
+                        enemyPos.getPos().getY() + (enemyWidth / 2) , -1, 0)));
             }
         } else if (angle > 45 && angle < 90 || angle < -45 && angle > -90 ) {
             if (playerPos.getPos().getY() > enemyPos.getPos().getY()) {
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, 0, 1)));
+                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() +
+                        enemyHeight / 2,
+                        enemyPos.getPos().getY() + enemyHeight + (enemyHeight / 100 * 10), 0, 1)));
             } else {
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, 0, -1)));
+                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + enemyWidth / 2,
+                        enemyPos.getPos().getY() - (enemyHeight / 100 * 30), 0, -1)));
             }
         }
         return bullets;
