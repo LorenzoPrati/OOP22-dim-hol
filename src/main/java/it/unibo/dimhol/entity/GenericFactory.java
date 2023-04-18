@@ -49,9 +49,28 @@ public class GenericFactory {
     public Entity createZombieEnemy(final double x, final double y) {
         return new EntityBuilder()
                 .add(new AiComponent(new RoutineFactory().createZombieRoutine()))
-                .add(new PositionComponent(new Vector2D(x,y)))
-                .add(new MovementComponent(new Vector2D(0,0), ENEMY_SPEED, false))
-                .add(new BodyComponent(new RectBodyShape(W,H), true))
+                .add(new PositionComponent(new Vector2D(x, y)))
+                .add(new MovementComponent(new Vector2D(0,0), ENEMY_SPEED, true))
+                .add(new BodyComponent(new RectBodyShape(W, H), true))
+                .add(new VisualDebugComponent(1))
+                .build();
+    }
+
+    public Entity createBullet(final double x, final double y, final double dirX, final double dirY) {
+        return new EntityBuilder()
+                .add(new PositionComponent(new Vector2D(x, y)))
+                .add(new MovementComponent(new Vector2D(dirX, dirY), 2, true))
+                .add(new BodyComponent(new RectBodyShape(10, 10), false))
+                .add(new VisualDebugComponent(3))
+                .build();
+    }
+
+    public Entity createShooterEnemy(final double x, final double y) {
+        return new EntityBuilder()
+                .add(new AiComponent(new RoutineFactory().createShooterRoutine()))
+                .add(new PositionComponent(new Vector2D(x, y)))
+                .add(new MovementComponent(new Vector2D(0,0), ENEMY_SPEED, true))
+                .add(new BodyComponent(new RectBodyShape(W, H), true))
                 .add(new VisualDebugComponent(1))
                 .build();
     }
