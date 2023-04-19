@@ -1,0 +1,9 @@
+attacking_up 6 1
+attacking_down 6 2
+attacking_left 6 3 
+attacking_right 6 4
+walking_up 8 5
+walking_down 8 6
+walking_left 8 7
+walking_right 8 8
+idle 1 9
