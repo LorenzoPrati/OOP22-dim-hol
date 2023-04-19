@@ -1,11 +1,7 @@
 package it.unibo.dimhol.components;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import it.unibo.dimhol.StateInfo;
 
 public class InfoAnimationComponent implements Component{
     private String state; 
@@ -17,7 +13,7 @@ public class InfoAnimationComponent implements Component{
         this.index = 0;
         this.map.putAll(map);
         this.state = "walking up";
-        this.lastState = state;
+        this.lastState = "walking down";
     }
     
     public void setState(final String state) {
