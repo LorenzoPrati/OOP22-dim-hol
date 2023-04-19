@@ -1,5 +1,6 @@
 package it.unibo.dimhol.ai;
 
+import it.unibo.dimhol.components.BodyComponent;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PositionComponent;
 import it.unibo.dimhol.entity.Entity;
@@ -14,23 +15,29 @@ public class FollowingAction implements Action {
     private static final int AGGRO_RAY = 300;
     private PositionComponent playerPos;
     private PositionComponent enemyPos;
+    private Vector2D playerCentralPos;
+    private Vector2D enemyCentralPos;
 
     @Override
     public boolean canExecute(Entity player, Entity enemy) {
-        playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
-        enemyPos = (PositionComponent) enemy.getComponent(PositionComponent.class);
 
-        var distance = playerPos.getPos().distance(enemyPos.getPos());
-        return distance < AGGRO_RAY;
+        playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
+        BodyComponent playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
+        enemyPos = (PositionComponent) enemy.getComponent(PositionComponent.class);
+        BodyComponent enemyBody = (BodyComponent) enemy.getComponent(BodyComponent.class);
+
+        playerCentralPos = MathUtilities.getCentralPosition(playerPos, playerBody);
+        enemyCentralPos = MathUtilities.getCentralPosition(enemyPos, enemyBody);
+
+        return MathUtilities.getDistance(playerCentralPos, enemyCentralPos) < AGGRO_RAY;
+
     }
 
     @Override
     public Optional<List<Event>> execute(Entity enemy) {
-        var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
 
-        AiMathUtil aiMathUtil = new AiMathUtil(playerPos.getPos().getX(), playerPos.getPos().getY(),
-                enemyPos.getPos().getX(), enemyPos.getPos().getY());
-        int angle = aiMathUtil.getAngle();
+        var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
+        double angle = MathUtilities.getAngle(playerCentralPos, enemyCentralPos);
 
         if (angle > -45 && angle < 45) {
             if (playerPos.getPos().getX() > enemyPos.getPos().getX()) {

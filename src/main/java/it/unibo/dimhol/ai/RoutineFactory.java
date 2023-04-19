@@ -25,6 +25,7 @@ public class RoutineFactory {
      */
     public final List<Action> createZombieRoutine() {
         return new ArrayList<>(List.of(
+                new MeleeAttaackAction(),
                 new FollowingAction(),
                 new RandomMovementAction()
         ));

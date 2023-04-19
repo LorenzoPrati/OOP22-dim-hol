@@ -75,4 +75,12 @@ public class GenericFactory {
                 .add(new VisualDebugComponent(1))
                 .build();
     }
+
+    public Entity createMeleeAttack() {
+        return new EntityBuilder()
+                .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
+                .add(new BodyComponent(new RectBodyShape(30, 30), false))
+                .add(new VisualDebugComponent(4))
+                .build();
+    }
 }

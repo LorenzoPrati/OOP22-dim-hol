@@ -1,6 +1,7 @@
 package it.unibo.dimhol.ai;
 
 import it.unibo.dimhol.components.AiComponent;
+import it.unibo.dimhol.components.BodyComponent;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PositionComponent;
 import it.unibo.dimhol.entity.Entity;
@@ -28,11 +29,17 @@ public final class RandomMovementAction implements Action {
 
     @Override
     public boolean canExecute(final Entity player, final Entity enemy) {
-        var playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
-        var enemyPos = (PositionComponent) enemy.getComponent(PositionComponent.class);
 
-        var distance = playerPos.getPos().distance(enemyPos.getPos());
-        return distance >= AGGRO_RAY;
+        PositionComponent playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
+        BodyComponent playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
+        PositionComponent enemyPos = (PositionComponent) enemy.getComponent(PositionComponent.class);
+        BodyComponent enemyBody = (BodyComponent) enemy.getComponent(BodyComponent.class);
+
+        Vector2D playerCentralPos = MathUtilities.getCentralPosition(playerPos, playerBody);
+        Vector2D enemyCentralPos = MathUtilities.getCentralPosition(enemyPos, enemyBody);
+
+        return MathUtilities.getDistance(playerCentralPos, enemyCentralPos) >= AGGRO_RAY;
+
     }
 
     @Override
