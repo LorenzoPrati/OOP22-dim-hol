@@ -5,68 +5,37 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.imageio.ImageIO;
 
 public class ResourceLoader {
-    private Map<String,BufferedImage> playerImages = new HashMap<>();
-    private BufferedImage enemyImages;
-    private Map<String,BufferedImage> shopItemsImages = new HashMap<>();
-    private Map<String,BufferedImage> bulletImages = new HashMap<>();
-    private BufferedImage coinImage;
-    private BufferedImage heartImage;
-    private BufferedImage keyImage;
-
+    private Map<Integer,BufferedImage> imagesMap = new HashMap<>();
+   
     public ResourceLoader(){
-        playerSpritesLoader();
-        enemySpritesLoader();
-        itemSpritesLoader();
-        backgroundLoader();
+        load();
     }
 
-
-    /*carica immagini del player */
-    private void playerSpritesLoader(){
+    private void load(){
         try{
-            this.playerImages.put("attacking down", ImageIO.read(new File("src/res/warrior/attack/WarriorDownAttack01.png")));
-            this.playerImages.put("attacking up", ImageIO.read(new File("src/res/warrior/attack/WarriorUpAttack01.png")));
-            this.playerImages.put("attacking left", ImageIO.read(new File("src/res/warrior/attack/WarriorLeftAttack01.png")));
-            this.playerImages.put("attacking right", ImageIO.read(new File("src/res/warrior/attack/WarriorRightAttack01.png")));
-            this.playerImages.put("walking down", ImageIO.read(new File("src/res/warrior/walk/WarriorDownWalk.png")));
-            this.playerImages.put("walking up", ImageIO.read(new File("src/res/warrior/walk/WarriorUpWalk.png")));
-            this.playerImages.put("walking left", ImageIO.read(new File("src/res/warrior/walk/WarriorLeftWalk.png")));
-            this.playerImages.put("walking right", ImageIO.read(new File("src/res/warrior/walk/WarriorRightWalk.png")));
+            this.imagesMap.put(1, ImageIO.read(new File("src/res/warrior/attack/WarriorUpAttack01.png")));
+            this.imagesMap.put(2, ImageIO.read(new File("src/res/warrior/attack/WarriorDownAttack01.png")));
+            this.imagesMap.put(3, ImageIO.read(new File("src/res/warrior/attack/WarriorLeftAttack01.png")));
+            this.imagesMap.put(4, ImageIO.read(new File("src/res/warrior/attack/WarriorRightAttack01.png")));
+            this.imagesMap.put(5, ImageIO.read(new File("src/res/warrior/walk/WarriorDownWalk.png")));
+            this.imagesMap.put(6, ImageIO.read(new File("src/res/warrior/walk/WarriorUpWalk.png")));
+            this.imagesMap.put(7, ImageIO.read(new File("src/res/warrior/walk/WarriorLeftWalk.png")));
+            this.imagesMap.put(8, ImageIO.read(new File("src/res/warrior/walk/WarriorRightWalk.png")));
+            //TODO: add image state idle for the player
+            this.imagesMap.put(10, ImageIO.read(new File("src/res/enemies/ghost-Sheet.png")));
+            this.imagesMap.put(11, ImageIO.read(new File("src/res/items/coin.png")));
+            this.imagesMap.put(12, ImageIO.read(new File("src/res/items/heart.png")));
+            this.imagesMap.put(13, ImageIO.read(new File("src/res/items/key.png")));
         }
         catch(IOException e){
             System.out.println("Error loading images");
         }
     }
 
-    private void enemySpritesLoader() {
-        try{
-            this.enemyImages = ImageIO.read(new File("src/res/enemies/ghost-Sheet.png"));
-        }
-        catch(IOException e){
-            System.out.println("Error loading enemies images");
-        }
-    }
-
-    private void itemSpritesLoader() {
-        try{
-            this.coinImage = ImageIO.read(new File("src/res/items/coin.png"));
-            this.heartImage = ImageIO.read(new File("src/res/items/heart.png"));
-            this.keyImage = ImageIO.read(new File("src/res/items/key.png"));
-        }
-        catch(IOException e){
-            System.out.println("Error loading items images");
-        }
-    }
-
-    private void backgroundLoader(){
-
-    }
-
-    public BufferedImage getPlayerImage(String state){
-        return playerImages.get(state);
+    public BufferedImage getImage(final int numImage){
+        return imagesMap.get(numImage);
     }
 }

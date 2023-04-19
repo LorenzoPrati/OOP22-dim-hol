@@ -1,28 +1,18 @@
 package it.unibo.dimhol.view;
 
 public class GraphicInfo {
-    private final String type;
-    private final String state;
+    private final int numImage;
     private final int index;
     private final double x;
     private final double y;
 
-    public GraphicInfo(final String type, final String state, final int index, final double x, final double y){
-        this.type = type;
-        this.state = state;
+    public GraphicInfo(final int index, final int numImage, final double x, final double y){
         this.index = index;
+        this.numImage = numImage;
         this.x = x;
         this.y = y;
     }
     
-    public String getType() {
-        return this.type;
-    }
-
-    public String getState() {
-        return this.state;
-    }
-
     public int getIndex() {
         return this.index;
     }
@@ -34,5 +24,10 @@ public class GraphicInfo {
     public double getY() {
         return this.y;
     }
+
+    public int getNumImage() {
+        return this.numImage;
+    }
+
     
 }

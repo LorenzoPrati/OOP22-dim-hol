@@ -1,50 +1,31 @@
 package it.unibo.dimhol.components;
 
-import it.unibo.dimhol.properties.NumSpriteProperty;
+import java.util.HashMap;
+import java.util.Map;
+import it.unibo.dimhol.StateInfo;
 
 public class InfoAnimationComponent implements Component{
     private String state; 
     private String lastState;
-    private String type;
     private int index; 
-    private NumSpriteProperty numSprites = new NumSpriteProperty();
+    private final Map<String,StateInfo> map = new HashMap<>();
 
-    public InfoAnimationComponent(final String type,final String state){
+    public InfoAnimationComponent(final Map<String,StateInfo> map){
         this.index = 0;
-        this.type = type;
-        this.state = state; 
-        this.lastState = state;
-    }
-
-    public String getState() {
-        return this.state;
+        this.map.putAll(map);
+        this.state = "walking up";
     }
     
     public void setState(final String state) {
         this.lastState = state;
         this.state = state;
     }
-
-    public String getLastState() {
-        return this.lastState;
-    }
-
-    public void setLastState(final String lastState) {
-        this.lastState = lastState;
-    }
-
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(final String type) {
-        this.type = type;
-    }
-
+    
     public int getIndex(){
         if(state.equals(this.lastState)){
-            System.out.println(this.type);
-            var maxIndex = NumSpriteProperty.getNumSprites(this.type);
+            int maxIndex = map.entrySet().stream()
+                .filter(e -> e.getKey().equals(this.state))
+                .map(e -> e.getValue().getFrames()).findAny().get();
             if(this.index == maxIndex-1){ 
                 this.index = 0;
             }
@@ -56,6 +37,12 @@ public class InfoAnimationComponent implements Component{
             this.index = 0;
         }
         return this.index;
+    }
+
+    public int getNumToUse(){
+        return map.entrySet().stream()
+        .filter(e -> e.getKey().equals(this.state))
+        .map(e -> e.getValue().getNum()).findAny().get();
     }
     
 }

@@ -47,30 +47,14 @@ public class Scene extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         for(var elem :renderList){
-            var type = elem.getType();
-            switch(type){
-                case "player": { 
-                    System.out.println(elem.getIndex());
-                    g2.drawImage(new PlayerAnimation(elem.getState(),elem.getIndex(), loader).getImageToDraw(),
-                         (int)elem.getX(), (int)elem.getY(), 60, 60, null);
-                    break;
-                }
-                case "enemy":{
-                    //TODO
-                    break;
-                }
-                case "coin":{
-                    //TODO
-                    break;
-                }
-
-            }
+           g2.drawImage(new Animation(elem.getIndex(), elem.getNumImage(), loader).getImageToDraw(),
+                (int)elem.getX(), (int)elem.getY(), 60, 60, null);
         }
         renderList.clear();
     }
 
-    public void toList(String type, String state, int index, double x, double y) {
-        this.renderList.add(new GraphicInfo(type,state,index,x,y));
+    public void toList(final int index, final int numImage, final double x,final double y) {
+        this.renderList.add(new GraphicInfo(numImage,index,x,y));
     }
     
 }

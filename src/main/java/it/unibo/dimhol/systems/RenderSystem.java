@@ -19,7 +19,7 @@ public class RenderSystem extends AbstractSystem{
     public void process(Entity e, long dt) {
        var pos = (PositionComponent)e.getComponent(PositionComponent.class);
        var info = (InfoAnimationComponent)e.getComponent(InfoAnimationComponent.class);
-       this.world.getScene().toList(info.getType(), info.getState(), info.getIndex(), pos.getPos().getX(), pos.getPos().getY());
+       this.world.getScene().toList(info.getIndex(),info.getNumToUse(), pos.getPos().getX(), pos.getPos().getY());
     }
     
 }

@@ -3,8 +3,8 @@
         states:
             - attacking_up:
                 - info: 
-                  frames: 6
-                  imageNumber: 1
+                    frames: 6
+                    imageNumber: 1
             - attacking down:
                 - info:
                   frames: 6
@@ -15,12 +15,12 @@
                   imageNumber: 3
             - attacking right:
                 - info:
-                  frames: 6
-                  imageNumber: 4
+                    frames: 6
+                    imageNumber: 4
             - walking up:
                 - info:
-                  frames: 8
-                  imageNumber: 5
+                    frames: 8
+                    imageNumber: 5
             - walking down:
                 - info:
                   frames: 6
