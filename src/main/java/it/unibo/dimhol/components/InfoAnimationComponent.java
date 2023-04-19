@@ -1,19 +1,23 @@
 package it.unibo.dimhol.components;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import it.unibo.dimhol.StateInfo;
 
 public class InfoAnimationComponent implements Component{
     private String state; 
     private String lastState;
     private int index; 
-    private final Map<String,StateInfo> map = new HashMap<>();
+    private final Map<String,Integer[]> map = new HashMap<>();
 
-    public InfoAnimationComponent(final Map<String,StateInfo> map){
+    public InfoAnimationComponent(final Map<String,Integer[]> map){
         this.index = 0;
         this.map.putAll(map);
         this.state = "walking up";
+        this.lastState = state;
     }
     
     public void setState(final String state) {
@@ -23,16 +27,12 @@ public class InfoAnimationComponent implements Component{
     
     public int getIndex(){
         if(state.equals(this.lastState)){
-            /*int maxIndex = 0;
+            int maxIndex = 0;
             for(var elem : map.entrySet()){
-                if(elem.getKey() == this.state){
+                if(elem.getKey().equals(this.state)){
                     maxIndex = elem.getValue()[0];
                 }
-            }*/
-            var maxIndex=  map.entrySet().stream()
-                .filter(e -> e.getKey().equals(this.state))
-                .map(e -> e.getValue().getFrames()).findAny().get();
-
+            }
             if(this.index == maxIndex-1){ 
                 this.index = 0;
             }
@@ -43,21 +43,16 @@ public class InfoAnimationComponent implements Component{
         else{
             this.index = 0;
         }
-        System.out.println(index);
         return this.index;
     }
 
     public int getNumToUse(){
-        /*int num = 0;
         for(var elem : map.entrySet()){
-            if(elem.getKey() == this.state){
-                num = elem.getValue()[1];
+            if(elem.getKey().equals(this.state)){
+                return elem.getValue()[1];
             }
         }
-        return num;*/
-        return map.entrySet().stream()
-        .filter(e -> e.getKey().equals(this.state))
-        .map(e -> e.getValue().getNum()).findAny().get();
+        return -1;
     }
     
 }

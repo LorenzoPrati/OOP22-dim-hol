@@ -1,80 +1,80 @@
 
     player:
-        - attacking_up:
-            - info: 
-                frames: 6
-                imageNumber: 1
-        - attacking down:
-            - info:
-                frames: 6
-                imageNumber: 2
-        - attacking left:
-            - info:
-                frames: 6
-                imageNumber: 3
-        - attacking right:
+        attacking_up:
+            info: 
+                - frames: 6
+                - imageNumber: 1
+        attacking down:
+            info:
+                - frames: 6
+                - imageNumber: 2
+        attacking left:
+            info:
+                - frames: 6
+                - imageNumber: 3
+        attacking right:
             - info:
                 frames: 6
                 imageNumber: 4
-        - walking up:
-            - info:
-                frames: 8
-                imageNumber: 5
-        - walking down:
+        walking up:
+            info:
+            - frames: 8
+            - imageNumber: 5
+        walking down:
             - info:
                 frames: 6
                 imageNumber: 6
-        - walking left:
+        walking left:
             - info:
                 frames: 6
                 imageNumber: 7
-        - walking right:
+        walking right:
             - info:
                 frames: 6
                 imageNumber: 8
-        - idle:
+        idle:
             - info:
                 frames: 1
                 imageNumber: 9
     enemy:
-        - idle:
+        idle:
             - info:
                 frames: 4
                 imageNumber: 10
     coin:
-        - idle:
+        idle:
             - info:
                 frames: 6
                 imageNumber: 11
     heart:
-        - idle:
+        idle:
             - info:
                 frames: 1
                 imageNumber: 12
     key:
-        - idle:
+        idle:
             - info:
                 frames: 1
                 imageNumber: 13
     chest:
-        - idle:
+        idle:
             - info:
                 frames: 2
                 imageNumber: 14
     bullet:
-        - up:
+        up:
             - info:
                 frames: 1
                 imageNumber: 15
-        - down:
+        down:
             - info:
                 frames: 1
                 imageNumber: 16
-        - left:
+        left:
             - info:
                 frames: 1
                 imageNumber: 17
-        - right:
+        right:
             - info:
                 frames: 1
                 imageNumber: 18

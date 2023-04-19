@@ -22,15 +22,14 @@ public class GenericFactory {
     private static final double ENEMY_SPEED = 3;
     private static final int W = 60;
     private static final int H = 60;
-    private final Map<String,Map<String,StateInfo>> map = new HashMap<>();
+    private final Map<String,Map<String,Integer[]>> map = new HashMap<>();
 
     public GenericFactory() {
         try{
             InputStream input = new FileInputStream(new File("src/main/java/it/unibo/dimhol/ConfigFile.yaml"));
             Yaml yaml = new Yaml();
-            Map<String,Map<String,StateInfo>> mapLoaded = yaml.load(input);
+            Map<String,Map<String,Integer[]>> mapLoaded = yaml.load(input);
             map.putAll(mapLoaded);
-            System.out.println(map);
         }
         catch(FileNotFoundException e){
             System.out.println("File not found. ");
