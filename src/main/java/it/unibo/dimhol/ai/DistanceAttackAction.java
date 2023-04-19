@@ -8,6 +8,7 @@ import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.entity.GenericFactory;
 import it.unibo.dimhol.events.AddEntityEvent;
 import it.unibo.dimhol.events.Event;
+import org.locationtech.jts.math.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +18,27 @@ public class DistanceAttackAction implements Action {
 
     private static final int RELOAD_GUN_TIME = 2000;
     private static final int AGGRO_RAY = 300;
+    private final GenericFactory genericFactory = new GenericFactory();
     private PositionComponent playerPos;
     private PositionComponent enemyPos;
-    private BodyComponent enemyBody;
-    private final GenericFactory ef = new GenericFactory();
+    private Vector2D playerCentralPos;
+    private Vector2D enemyCentralPos;
+    private Entity enemy;
 
     @Override
     public boolean canExecute(Entity player, Entity enemy) {
-        playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
-        enemyPos = (PositionComponent) enemy.getComponent(PositionComponent.class);
-        enemyBody = (BodyComponent) enemy.getComponent(BodyComponent.class);
+        this.enemy = enemy;
 
-        var distance = playerPos.getPos().distance(enemyPos.getPos());
-        return distance < AGGRO_RAY;
+        playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
+        BodyComponent playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
+        enemyPos = (PositionComponent) enemy.getComponent(PositionComponent.class);
+        BodyComponent enemyBody = (BodyComponent) enemy.getComponent(BodyComponent.class);
+
+        playerCentralPos = MathUtilities.getCentralPosition(playerPos, playerBody);
+        enemyCentralPos = MathUtilities.getCentralPosition(enemyPos, enemyBody);
+
+        return MathUtilities.getDistance(playerCentralPos, enemyCentralPos) <= AGGRO_RAY;
+
     }
 
     @Override
@@ -48,32 +57,20 @@ public class DistanceAttackAction implements Action {
 
     private List<Event> shoot() {
         List<Event> bullets = new ArrayList<>();
-        var cH = enemyBody.getBs().getBoundingHeight() / 2;
-        var cW = enemyBody.getBs().getBoundingWidth() / 2;
 
-        AiMathUtil aiMathUtil = new AiMathUtil(playerPos.getPos().getX(), playerPos.getPos().getY(),
-                enemyPos.getPos().getX(), enemyPos.getPos().getY());
-        int angle = aiMathUtil.getAngle();
+        double angle = MathUtilities.getAngle(playerCentralPos, enemyCentralPos);
 
         if (angle > -45 && angle < 45) {
             if (playerPos.getPos().getX() > enemyPos.getPos().getX()) {
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, 1, 0)));
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, 1, -0.1)));
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, 1, 0.1)));
+                bullets.add(new AddEntityEvent(genericFactory.createBullet(1, 0, enemy)));
             } else {
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, -1, 0)));
+                bullets.add(new AddEntityEvent(genericFactory.createBullet(-1, 0, enemy)));
             }
-        } else if (angle > 45 && angle < 90 || angle < -45 && angle > -90 ) {
+        } else if (angle > 45 && angle < 90 || angle < -45 && angle > -90) {
             if (playerPos.getPos().getY() > enemyPos.getPos().getY()) {
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, 0, 1)));
+                bullets.add(new AddEntityEvent(genericFactory.createBullet(0, 1, enemy)));
             } else {
-                bullets.add(new AddEntityEvent(ef.createBullet(enemyPos.getPos().getX() + cH,
-                        enemyPos.getPos().getY() + cW, 0, -1)));
+                bullets.add(new AddEntityEvent(genericFactory.createBullet(0, -1, enemy)));
             }
         }
         return bullets;
