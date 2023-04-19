@@ -49,18 +49,18 @@
     heart:
         - idle:
             - info:
-              frames: 1
-              imageNumber: 12
+                frames: 1
+                imageNumber: 12
     key:
         - idle:
             - info:
-              frames: 1
-              imageNumber: 13
+                frames: 1
+                imageNumber: 13
     chest:
         - idle:
             - info:
-              frames: 2
-              imageNumber: 14
+                frames: 2
+                imageNumber: 14
     bullet:
         - up:
             - info:

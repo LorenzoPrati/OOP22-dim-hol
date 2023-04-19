@@ -4,9 +4,10 @@ public class StateInfo {
     private final int frames;
     private final int num;
 
-    public StateInfo(int frames, int num){
-        this.frames = frames;
-        this.num = num;
+    /*TODO : remove numbers */
+    public StateInfo(int[] info){
+        this.frames = info[0];
+        this.num = info[1];
     }
 
     public int getFrames() {
