@@ -34,7 +34,7 @@ public class LoadMapImpl implements LoadMap {
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse("C:\\RepoProgettoECS\\OOP22-dim-hol\\src\\main\\java\\it\\unibo\\dimhol\\map\\parsing\\pom\\PrimaProvaTiled.xml");
+            Document doc = dBuilder.parse("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
 
             /**
              * Normalize the document by removing empty spaces and combining adjacent text nodes.
@@ -64,7 +64,9 @@ public class LoadMapImpl implements LoadMap {
              * Get the first child of the data element, which contains the matrix data as string.
              */
             Node stringMatrix = dataNodeList.item(0).getFirstChild(); //layer 0
+            System.out.println("Map parsed:");
             System.out.println(stringMatrix.getTextContent());
+            System.out.println("Print Successful!");
             this.map = new int[height][width];
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
@@ -75,8 +77,10 @@ public class LoadMapImpl implements LoadMap {
      * Testing with a specific main (temporary).
      * @param args
      */
+
+    //TODO: remove after the test.
     public static void main(final String[] args) {
-        LoadMapImpl parser = new LoadMapImpl("src\\main\\java\\it\\unibo\\dimhol\\map\\parsing\\pom\\PrimaProvaTiled.xml");
+        LoadMapImpl parser = new LoadMapImpl("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
 
         int[][] map = parser.getMap();
         int width = parser.getWidth();
@@ -84,6 +88,7 @@ public class LoadMapImpl implements LoadMap {
         int tileWidth = parser.getTileWidth();
         int tileHeight = parser.getTileHeight();
 
+        System.out.println("\ntest: 20 rows and 20 cols");
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 System.out.print(" ");
@@ -91,6 +96,7 @@ public class LoadMapImpl implements LoadMap {
             System.out.println("here");
         }
         //TODO: Do something with the map data...
+        System.out.println("Done!");
     }
 
     @Override
