@@ -11,8 +11,8 @@ public class MathUtilities {
     }
 
     public static Vector2D getCentralPosition(PositionComponent entityPos, BodyComponent entityBody) {
-        return new Vector2D(entityPos.getPos().getX() + entityBody.getBs().getBoundingWidth(),
-                entityPos.getPos().getY() + entityBody.getBs().getBoundingHeight());
+        return new Vector2D(entityPos.getPos().getX() + (entityBody.getBs().getBoundingWidth() / 2),
+                entityPos.getPos().getY() + (entityBody.getBs().getBoundingHeight() / 2));
     }
 
     public static double getAngle(Vector2D playerCentralPos, Vector2D enemyCentralPos) {

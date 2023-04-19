@@ -1,13 +1,12 @@
 package it.unibo.dimhol.entity;
 
+import it.unibo.dimhol.ai.MathUtilities;
 import it.unibo.dimhol.ai.RoutineFactory;
 import org.locationtech.jts.math.Vector2D;
 
 import it.unibo.dimhol.commons.shapes.RectBodyShape;
 import it.unibo.dimhol.components.*;
 import it.unibo.dimhol.effects.IncreaseCurrentHealthEffect;
-
-import java.util.Optional;
 
 /**
  * Implementation of a factory to create various entities.
@@ -16,6 +15,8 @@ public class GenericFactory {
 
     private static final double BULLET_WIDTH = 10;
     private static final double BULLET_HEIGHT = 10;
+    private static final double MELEE_WIDTH = 30;
+    private static final double MELEE_HEIGHT = 30;
     private static final double PLAYER_SPEED = 6;
     private static final double ENEMY_SPEED = 3;
     private static final int W = 60;
@@ -63,34 +64,36 @@ public class GenericFactory {
     public Entity createBullet(final double dirX, final double dirY, final Entity entity) {
         return new EntityBuilder()
                 .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
-                .add(new PositionComponent(setBulletPosition(dirX, dirY, entity)))
+                .add(new PositionComponent(setWeaponPosition(dirX, dirY, entity, BULLET_WIDTH, BULLET_HEIGHT)))
                 .add(new MovementComponent(new Vector2D(dirX, dirY), 2, true))
                 .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
                 .add(new VisualDebugComponent(3))
                 .build();
     }
 
-    private Vector2D setBulletPosition(final double dirX, final double dirY, final Entity entity) {
+    private Vector2D setWeaponPosition(final double dirX, final double dirY, final Entity entity,
+                                       final double weaponWidth, final double weaponHeight) {
+
         PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
         BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
         var enemyHeight = entityBody.getBs().getBoundingHeight();
         var enemyWidth = entityBody.getBs().getBoundingWidth();
-
+        var centralEntityPos = MathUtilities.getCentralPosition(entityPos, entityBody);
         double bulletX;
         double bulletY;
 
         if (dirX == 1) {
-            bulletX = entityPos.getPos().getX() + enemyWidth;
-            bulletY = entityPos.getPos().getY() + (enemyHeight / 2);
+            bulletX = centralEntityPos.getX() + (enemyWidth / 2);
+            bulletY = centralEntityPos.getY();
         } else if (dirX == -1) {
-            bulletX = entityPos.getPos().getX() - BULLET_WIDTH;
-            bulletY = entityPos.getPos().getY() + (enemyHeight / 2);
+            bulletX = centralEntityPos.getX() - (enemyWidth / 2) - weaponWidth;
+            bulletY = centralEntityPos.getY();
         } else if (dirY == 1) {
-            bulletX = entityPos.getPos().getX() + (enemyHeight / 2);
-            bulletY = entityPos.getPos().getY() + enemyHeight;
+            bulletX = centralEntityPos.getX();
+            bulletY = centralEntityPos.getY() + (enemyHeight / 2);
         } else {
-            bulletX = entityPos.getPos().getX() + (enemyWidth / 2);
-            bulletY = entityPos.getPos().getY() - BULLET_HEIGHT;
+            bulletX = centralEntityPos.getX();
+            bulletY = centralEntityPos.getY() - (enemyHeight / 2) - weaponHeight;
         }
 
         return new Vector2D(bulletX, bulletY);
@@ -106,11 +109,14 @@ public class GenericFactory {
                 .build();
     }
 
-    public Entity createMeleeAttack() {
+
+    public Entity createMeleeAttack(final double dirX, final double dirY, final Entity entity) {
         return new EntityBuilder()
                 .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
-                .add(new BodyComponent(new RectBodyShape(30, 30), false))
+                .add(new PositionComponent(setWeaponPosition(dirX, dirY, entity, MELEE_WIDTH, MELEE_HEIGHT)))
+                .add(new BodyComponent(new RectBodyShape(MELEE_WIDTH, MELEE_HEIGHT), false))
                 .add(new VisualDebugComponent(4))
                 .build();
     }
+
 }
