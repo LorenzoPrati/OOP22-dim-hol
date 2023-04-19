@@ -37,6 +37,7 @@ public class FollowingAction implements Action {
     public Optional<List<Event>> execute(Entity enemy) {
 
         var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
+        movComp.setEnabled(true);
         double angle = MathUtilities.getAngle(playerCentralPos, enemyCentralPos);
 
         if (angle > -45 && angle < 45) {

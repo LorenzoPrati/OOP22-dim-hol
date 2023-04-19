@@ -73,7 +73,7 @@ public class Scene extends JPanel {
                 }
                 case 4:{
                     g2.setColor(Color.cyan);
-                    g2.drawRect(elem.getMiddle(), elem.getRight(), 60, 30);
+                    g2.drawRect(elem.getMiddle(), elem.getRight(), 30, 30);
                     break;
                 }
 

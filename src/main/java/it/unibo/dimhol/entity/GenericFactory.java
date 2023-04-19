@@ -7,11 +7,15 @@ import it.unibo.dimhol.commons.shapes.RectBodyShape;
 import it.unibo.dimhol.components.*;
 import it.unibo.dimhol.effects.IncreaseCurrentHealthEffect;
 
+import java.util.Optional;
+
 /**
  * Implementation of a factory to create various entities.
  */
 public class GenericFactory {
 
+    private static final double BULLET_WIDTH = 10;
+    private static final double BULLET_HEIGHT = 10;
     private static final double PLAYER_SPEED = 6;
     private static final double ENEMY_SPEED = 3;
     private static final int W = 60;
@@ -56,14 +60,40 @@ public class GenericFactory {
                 .build();
     }
 
-    public Entity createBullet(final double dirX, final double dirY) {
+    public Entity createBullet(final double dirX, final double dirY, final Entity entity) {
         return new EntityBuilder()
                 .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
-                //.add(new PositionComponent(new Vector2D(x, y)))
+                .add(new PositionComponent(setBulletPosition(dirX, dirY, entity)))
                 .add(new MovementComponent(new Vector2D(dirX, dirY), 2, true))
-                .add(new BodyComponent(new RectBodyShape(10, 10), false))
+                .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
                 .add(new VisualDebugComponent(3))
                 .build();
+    }
+
+    private Vector2D setBulletPosition(final double dirX, final double dirY, final Entity entity) {
+        PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
+        BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
+        var enemyHeight = entityBody.getBs().getBoundingHeight();
+        var enemyWidth = entityBody.getBs().getBoundingWidth();
+
+        double bulletX;
+        double bulletY;
+
+        if (dirX == 1) {
+            bulletX = entityPos.getPos().getX() + enemyWidth;
+            bulletY = entityPos.getPos().getY() + (enemyHeight / 2);
+        } else if (dirX == -1) {
+            bulletX = entityPos.getPos().getX() - BULLET_WIDTH;
+            bulletY = entityPos.getPos().getY() + (enemyHeight / 2);
+        } else if (dirY == 1) {
+            bulletX = entityPos.getPos().getX() + (enemyHeight / 2);
+            bulletY = entityPos.getPos().getY() + enemyHeight;
+        } else {
+            bulletX = entityPos.getPos().getX() + (enemyWidth / 2);
+            bulletY = entityPos.getPos().getY() - BULLET_HEIGHT;
+        }
+
+        return new Vector2D(bulletX, bulletY);
     }
 
     public Entity createShooterEnemy(final double x, final double y) {
