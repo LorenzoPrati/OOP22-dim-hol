@@ -1,9 +1,9 @@
 package it.unibo.dimhol.entity;
 
-import it.unibo.dimhol.StateInfo;
 import it.unibo.dimhol.ai.RoutineFactory;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.locationtech.jts.math.Vector2D;
@@ -22,13 +22,13 @@ public class GenericFactory {
     private static final double ENEMY_SPEED = 3;
     private static final int W = 60;
     private static final int H = 60;
-    private final Map<String,Map<String,Integer[]>> map = new HashMap<>();
+    private final Map<String,Map<String,ArrayList<Integer>>> map = new HashMap<>();
 
     public GenericFactory() {
         try{
             InputStream input = new FileInputStream(new File("src/main/java/it/unibo/dimhol/ConfigFile.yaml"));
             Yaml yaml = new Yaml();
-            Map<String,Map<String,Integer[]>> mapLoaded = yaml.load(input);
+            Map<String,Map<String,ArrayList<Integer>>> mapLoaded = yaml.load(input);
             map.putAll(mapLoaded);
         }
         catch(FileNotFoundException e){
@@ -42,7 +42,7 @@ public class GenericFactory {
                 .add(new MovementComponent(new Vector2D(0,0),PLAYER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(W,H), true))
                 .add(new VisualDebugComponent(0))
-                .add(new InfoAnimationComponent(this.map.get("player")))
+                .add(new InfoAnimationComponent(this.map.get("player"), "idle up"))
                 .build();
     }
 
@@ -50,7 +50,7 @@ public class GenericFactory {
         return new EntityBuilder().add(new PositionComponent(new Vector2D(100,100)))
                 .add(new BodyComponent(new RectBodyShape(W, H), true))
                 .add(new VisualDebugComponent(2))
-                //.add(new InfoAnimationComponent("coin"))
+                .add(new InfoAnimationComponent(this.map.get("coin"), "idle"))
                 .build();
     }
 
@@ -60,7 +60,7 @@ public class GenericFactory {
                 .add(new PositionComponent(new Vector2D(x,y)))
                 .add(new MovementComponent(new Vector2D(0,0), ENEMY_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(W,H), true))
-                .add(new InfoAnimationComponent(this.map.get("enemy")))
+                .add(new InfoAnimationComponent(this.map.get("enemy"), "idle"))
                 .add(new VisualDebugComponent(1))
                 .build();
     }

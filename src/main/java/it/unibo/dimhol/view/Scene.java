@@ -17,7 +17,7 @@ public class Scene extends JPanel {
 
     public Scene(World world){
         this.world = world;
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.PINK);
         /*
         Debug
          */
@@ -48,13 +48,14 @@ public class Scene extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         for(var elem :renderList){
            g2.drawImage(new Animation(elem.getIndex(), elem.getNumImage(), loader).getImageToDraw(),
-                (int)elem.getX(), (int)elem.getY(), 60, 60, null);
+                (int)elem.getX(), (int)elem.getY(), 80, 80, null);
         }
+        g2.dispose();
         renderList.clear();
     }
 
     public void toList(final int index, final int numImage, final double x,final double y) {
-        this.renderList.add(new GraphicInfo(numImage,index,x,y));
+        this.renderList.add(new GraphicInfo(index,numImage,x,y));
     }
     
 }

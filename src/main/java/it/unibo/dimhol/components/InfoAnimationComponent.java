@@ -1,5 +1,6 @@
 package it.unibo.dimhol.components;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,13 +8,13 @@ public class InfoAnimationComponent implements Component{
     private String state; 
     private String lastState;
     private int index; 
-    private final Map<String,Integer[]> map = new HashMap<>();
+    private final Map<String,ArrayList<Integer>> map = new HashMap<>();
 
-    public InfoAnimationComponent(final Map<String,Integer[]> map){
+    public InfoAnimationComponent(final Map<String,ArrayList<Integer>> map, String initialState){
         this.index = 0;
         this.map.putAll(map);
-        this.state = "walking up";
-        this.lastState = "walking down";
+        this.state = initialState;
+        this.lastState = null;
     }
     
     public void setState(final String state) {
@@ -21,12 +22,13 @@ public class InfoAnimationComponent implements Component{
         this.state = state;
     }
     
+    //TO FIX 
     public int getIndex(){
         if(state.equals(this.lastState)){
             int maxIndex = 0;
             for(var elem : map.entrySet()){
                 if(elem.getKey().equals(this.state)){
-                    maxIndex = elem.getValue()[0];
+                    maxIndex = elem.getValue().get(0);
                 }
             }
             if(this.index == maxIndex-1){ 
@@ -39,16 +41,21 @@ public class InfoAnimationComponent implements Component{
         else{
             this.index = 0;
         }
+        System.out.println("indice: " + index); //for debug
         return this.index;
     }
 
     public int getNumToUse(){
+        int num = -1;
         for(var elem : map.entrySet()){
             if(elem.getKey().equals(this.state)){
-                return elem.getValue()[1];
+                
+                num=  elem.getValue().get(1);
+                System.out.println("numero immagine: " + num); //for debug
+                return num;
             }
         }
-        return -1;
+        return num;
     }
     
 }

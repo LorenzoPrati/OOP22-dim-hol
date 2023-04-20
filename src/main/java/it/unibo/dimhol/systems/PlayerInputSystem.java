@@ -27,12 +27,16 @@ public class PlayerInputSystem extends AbstractSystem {
         if (input.anyMoveKeyPressed()) {
             mov.setEnabled(true);
             if (input.isUp()) {
+                info.setState("walking up");
                 mov.setDir(new Vector2D(0,-1));
             } else if (input.isDown()) {
+                info.setState("walking down");
                 mov.setDir(new Vector2D(0,1));
             } else if (input.isLeft()) {
+                info.setState("walking left");
                 mov.setDir(new Vector2D(-1,0));
             } else if (input.isRight()) {
+                info.setState("walking right");
                 mov.setDir(new Vector2D(1,0));
             }
         }

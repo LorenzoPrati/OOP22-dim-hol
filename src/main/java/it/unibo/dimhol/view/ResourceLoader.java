@@ -20,15 +20,21 @@ public class ResourceLoader {
             this.imagesMap.put(2, ImageIO.read(new File("src/res/warrior/attack/WarriorDownAttack01.png")));
             this.imagesMap.put(3, ImageIO.read(new File("src/res/warrior/attack/WarriorLeftAttack01.png")));
             this.imagesMap.put(4, ImageIO.read(new File("src/res/warrior/attack/WarriorRightAttack01.png")));
-            this.imagesMap.put(5, ImageIO.read(new File("src/res/warrior/walk/WarriorDownWalk.png")));
-            this.imagesMap.put(6, ImageIO.read(new File("src/res/warrior/walk/WarriorUpWalk.png")));
+            
+            this.imagesMap.put(5, ImageIO.read(new File("src/res/warrior/walk/WarriorUpWalk.png")));
+            this.imagesMap.put(6, ImageIO.read(new File("src/res/warrior/walk/WarriorDownWalk.png")));
             this.imagesMap.put(7, ImageIO.read(new File("src/res/warrior/walk/WarriorLeftWalk.png")));
             this.imagesMap.put(8, ImageIO.read(new File("src/res/warrior/walk/WarriorRightWalk.png")));
-            //TODO: add image state idle for the player
-            this.imagesMap.put(10, ImageIO.read(new File("src/res/enemies/ghost-Sheet.png")));
-            this.imagesMap.put(11, ImageIO.read(new File("src/res/items/coin.png")));
-            this.imagesMap.put(12, ImageIO.read(new File("src/res/items/heart.png")));
-            this.imagesMap.put(13, ImageIO.read(new File("src/res/items/key.png")));
+
+            this.imagesMap.put(9, ImageIO.read(new File("src/res/warrior/idle/WarriorUpIdle.png")));
+            this.imagesMap.put(10, ImageIO.read(new File("src/res/warrior/idle/WarriorDownIdle.png")));
+            this.imagesMap.put(11, ImageIO.read(new File("src/res/warrior/idle/WarriorLeftIdle.png")));
+            this.imagesMap.put(12, ImageIO.read(new File("src/res/warrior/idle/WarriorRightIdle.png")));
+
+            this.imagesMap.put(13, ImageIO.read(new File("src/res/enemies/ghost-Sheet.png")));
+            this.imagesMap.put(14, ImageIO.read(new File("src/res/items/coin.png")));
+            this.imagesMap.put(15, ImageIO.read(new File("src/res/items/heart.png")));
+            this.imagesMap.put(16, ImageIO.read(new File("src/res/items/key.png")));
         }
         catch(IOException e){
             System.out.println("Error loading images");

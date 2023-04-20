@@ -15,7 +15,7 @@ public class Animation {
 
     public BufferedImage getImageToDraw() {
         var imageToCut = loader.getImage(this.numImage);
-        return imageToCut.getSubimage(index*32, 0*32, 32, 32);
+        return imageToCut.getSubimage(index*48, 0*48, 48, 48); //TO FIX 
     }
 
 }
