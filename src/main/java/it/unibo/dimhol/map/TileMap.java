@@ -4,14 +4,14 @@ package it.unibo.dimhol.map;
  * The TileMap is a two-dimensional grid of tiles.
  */
 public class TileMap {
-    private Tile[][] tiles;
+    private Tile[][] tilemap;
 
     /**
      * Creates a new TileMap with the give tiles.
-     * @param tiles a 2D array of Tiles representing the map.
+     * @param tilemap a 2D array of Tiles representing the map.
      */
-    public  TileMap(final Tile[][] tiles) {
-        this.tiles = tiles;
+    public  TileMap(final Tile[][] tilemap) {
+        this.tilemap = tilemap;
     }
 
     /**
@@ -21,6 +21,6 @@ public class TileMap {
      * @return the Tile at the specified coordinates.
      */
     public Tile getTile(final int x, final int y) {
-        return tiles[x][y];
+        return tilemap[x][y];
     }
 }
