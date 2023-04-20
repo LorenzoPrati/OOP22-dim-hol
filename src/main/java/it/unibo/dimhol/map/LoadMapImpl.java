@@ -20,7 +20,7 @@ import java.util.List;
 public class LoadMapImpl implements LoadMap {
     private static final int ROWS = 20;
     private static final int COLS = 20;
-    private int[][] map;
+    private Tile[][] map;
     private int width;
     private int height;
     private int tileWidth;
@@ -76,7 +76,7 @@ public class LoadMapImpl implements LoadMap {
             System.out.println("Map parsed:");
             System.out.println(stringMatrix.getTextContent());
             System.out.println("Print Successful!");
-            this.map = new int[height][width];
+            this.map = new Tile[height][width];
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
