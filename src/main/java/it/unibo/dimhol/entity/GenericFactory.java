@@ -2,6 +2,7 @@ package it.unibo.dimhol.entity;
 
 import it.unibo.dimhol.ai.MathUtilities;
 import it.unibo.dimhol.ai.RoutineFactory;
+import it.unibo.dimhol.effects.DecreaseHealthDamage;
 import org.locationtech.jts.math.Vector2D;
 
 import it.unibo.dimhol.commons.shapes.RectBodyShape;
@@ -63,7 +64,7 @@ public class GenericFactory {
 
     public Entity createBullet(final double dirX, final double dirY, final Entity entity) {
         return new EntityBuilder()
-                .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
+                .add(new DamageComponent(new DecreaseHealthDamage(entity)))
                 .add(new PositionComponent(setWeaponPosition(dirX, dirY, entity, BULLET_WIDTH, BULLET_HEIGHT)))
                 .add(new MovementComponent(new Vector2D(dirX, dirY), 2, true))
                 .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
@@ -118,7 +119,7 @@ public class GenericFactory {
 
     public Entity createMeleeAttack(final double dirX, final double dirY, final Entity entity) {
         return new EntityBuilder()
-                .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
+                .add(new DamageComponent(new DecreaseHealthDamage(entity)))
                 .add(new PositionComponent(setWeaponPosition(dirX, dirY, entity, MELEE_WIDTH, MELEE_HEIGHT)))
                 .add(new BodyComponent(new RectBodyShape(MELEE_WIDTH, MELEE_HEIGHT), false))
                 .add(new VisualDebugComponent(4))
