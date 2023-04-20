@@ -18,11 +18,11 @@ public class InfoAnimationComponent implements Component{
     }
     
     public void setState(final String state) {
-        this.lastState = state;
+        this.lastState = this.state;
         this.state = state;
     }
     
-    //TO FIX 
+    
     public int getIndex(){
         if(state.equals(this.lastState)){
             int maxIndex = 0;
