@@ -14,8 +14,8 @@ public class GenericFactory {
 
     private static final double BULLET_WIDTH = 10;
     private static final double BULLET_HEIGHT = 10;
-    private static final double MELEE_WIDTH = 10;
-    private static final double MELEE_HEIGHT = 30;
+    private static final double MELEE_WIDTH = 60;
+    private static final double MELEE_HEIGHT = 60;
     private static final double PLAYER_SPEED = 6;
     private static final double ENEMY_SPEED = 3;
     private static final int W = 60;
@@ -64,7 +64,8 @@ public class GenericFactory {
         PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
         BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
         return new EntityBuilder()
-                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(), entityBody.getBs(), BULLET_WIDTH, BULLET_HEIGHT)))
+                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(),
+                        entityBody.getBs(), BULLET_WIDTH, BULLET_HEIGHT)))
                 .add(new MovementComponent(new Vector2D(dirX, dirY), 2, true))
                 .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
                 .add(new VisualDebugComponent(3))
