@@ -9,4 +9,5 @@ public interface BodyShape {
 
     double getBoundingHeight();
 
+    void rotate90Grade();
 }

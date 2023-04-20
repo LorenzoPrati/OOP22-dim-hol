@@ -15,7 +15,7 @@ public class GenericFactory {
 
     private static final double BULLET_WIDTH = 10;
     private static final double BULLET_HEIGHT = 10;
-    private static final double MELEE_WIDTH = 30;
+    private static final double MELEE_WIDTH = 10;
     private static final double MELEE_HEIGHT = 30;
     private static final double PLAYER_SPEED = 6;
     private static final double ENEMY_SPEED = 3;
@@ -83,17 +83,23 @@ public class GenericFactory {
         double bulletY;
 
         if (dirX == 1) {
+
+            entityBody.getBs().rotate90Grade();
+
             bulletX = centralEntityPos.getX() + (enemyWidth / 2);
-            bulletY = centralEntityPos.getY();
+            bulletY = centralEntityPos.getY() - (weaponWidth / 2);
         } else if (dirX == -1) {
-            bulletX = centralEntityPos.getX() - (enemyWidth / 2) - weaponWidth;
-            bulletY = centralEntityPos.getY();
+
+            entityBody.getBs().rotate90Grade();
+
+            bulletX = centralEntityPos.getX() - (enemyWidth / 2) - weaponHeight;
+            bulletY = centralEntityPos.getY() - (weaponWidth / 2);
         } else if (dirY == 1) {
-            bulletX = centralEntityPos.getX();
+            bulletX = centralEntityPos.getX() - (weaponHeight / 2);
             bulletY = centralEntityPos.getY() + (enemyHeight / 2);
-        } else {
-            bulletX = centralEntityPos.getX();
-            bulletY = centralEntityPos.getY() - (enemyHeight / 2) - weaponHeight;
+        } else {    // dirY = -1
+            bulletX = centralEntityPos.getX() - (weaponHeight / 2);
+            bulletY = centralEntityPos.getY() - (enemyHeight / 2) - weaponWidth;
         }
 
         return new Vector2D(bulletX, bulletY);

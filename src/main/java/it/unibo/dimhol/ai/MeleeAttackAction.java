@@ -62,23 +62,13 @@ public class MeleeAttackAction implements Action {
 
         double angle = MathUtilities.getAngle(playerCentralPos, enemyCentralPos);
 
-        if (angle > -45 && angle < 45) {
-            if (playerPos.getPos().getX() > enemyPos.getPos().getX()) {
-                // right
-                swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(1, 0, enemy)));
-            } else {
-                //left
-                swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(-1, 0, enemy)));
-            }
-        } else if (angle > 45 && angle < 90 || angle < -45 && angle > -90) {
-            if (playerPos.getPos().getY() > enemyPos.getPos().getY()) {
-                //down
-                swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(0, 1, enemy)));
-            } else {
-                //up
-                swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(0, -1, enemy)));
-            }
+        switch (MathUtilities.getVisionZone(angle, playerPos.getPos(), enemyPos.getPos())) {
+            case 1 -> swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(1, 0, enemy)));
+            case 2 -> swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(-1, 0, enemy)));
+            case 3 -> swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(0, 1, enemy)));
+            case 4 -> swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(0, -1, enemy)));
         }
+
         return swords;
     }
 }

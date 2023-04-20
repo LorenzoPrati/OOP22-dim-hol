@@ -60,19 +60,13 @@ public class DistanceAttackAction implements Action {
 
         double angle = MathUtilities.getAngle(playerCentralPos, enemyCentralPos);
 
-        if (angle > -45 && angle < 45) {
-            if (playerPos.getPos().getX() > enemyPos.getPos().getX()) {
-                bullets.add(new AddEntityEvent(genericFactory.createBullet(1, 0, enemy)));
-            } else {
-                bullets.add(new AddEntityEvent(genericFactory.createBullet(-1, 0, enemy)));
-            }
-        } else if (angle > 45 && angle < 90 || angle < -45 && angle > -90) {
-            if (playerPos.getPos().getY() > enemyPos.getPos().getY()) {
-                bullets.add(new AddEntityEvent(genericFactory.createBullet(0, 1, enemy)));
-            } else {
-                bullets.add(new AddEntityEvent(genericFactory.createBullet(0, -1, enemy)));
-            }
+        switch (MathUtilities.getVisionZone(angle, playerPos.getPos(), enemyPos.getPos())) {
+            case 1 -> bullets.add(new AddEntityEvent(genericFactory.createBullet(1, 0, enemy)));
+            case 2 -> bullets.add(new AddEntityEvent(genericFactory.createBullet(-1, 0, enemy)));
+            case 3 -> bullets.add(new AddEntityEvent(genericFactory.createBullet(0, 1, enemy)));
+            case 4 -> bullets.add(new AddEntityEvent(genericFactory.createBullet(0, -1, enemy)));
         }
+
         return bullets;
     }
 

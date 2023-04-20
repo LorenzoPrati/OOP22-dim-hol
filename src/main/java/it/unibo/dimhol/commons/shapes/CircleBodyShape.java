@@ -6,7 +6,7 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class CircleBodyShape implements BodyShape {
 
-    private final double radius;
+    private double radius;
 
     public CircleBodyShape(final double radius) {
         this.radius = radius;
@@ -20,6 +20,10 @@ public class CircleBodyShape implements BodyShape {
     @Override
     public double getBoundingHeight() {
         return 2*radius;
+    }
+
+    @Override
+    public void rotate90Grade() {
     }
 
     @Override
