@@ -33,8 +33,8 @@ public class MeleeAttackAction implements Action {
         enemyPos = (PositionComponent) enemy.getComponent(PositionComponent.class);
         BodyComponent enemyBody = (BodyComponent) enemy.getComponent(BodyComponent.class);
 
-        playerCentralPos = MathUtilities.getCentralPosition(playerPos, playerBody);
-        enemyCentralPos = MathUtilities.getCentralPosition(enemyPos, enemyBody);
+        playerCentralPos = MathUtilities.getCentralPosition(playerPos.getPos(), playerBody.getBs());
+        enemyCentralPos = MathUtilities.getCentralPosition(enemyPos.getPos(), enemyBody.getBs());
 
         double aggroRay = (MathUtilities.getDistance(enemyPos.getPos(), enemyCentralPos))
                 + (MathUtilities.getDistance(playerPos.getPos(), playerCentralPos));

@@ -2,12 +2,10 @@ package it.unibo.dimhol.entity;
 
 import it.unibo.dimhol.ai.MathUtilities;
 import it.unibo.dimhol.ai.RoutineFactory;
-import it.unibo.dimhol.effects.DecreaseHealthDamage;
-import org.locationtech.jts.math.Vector2D;
-
 import it.unibo.dimhol.commons.shapes.RectBodyShape;
 import it.unibo.dimhol.components.*;
 import it.unibo.dimhol.effects.IncreaseCurrentHealthEffect;
+import org.locationtech.jts.math.Vector2D;
 
 /**
  * Implementation of a factory to create various entities.
@@ -63,47 +61,14 @@ public class GenericFactory {
     }
 
     public Entity createBullet(final double dirX, final double dirY, final Entity entity) {
+        PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
+        BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
         return new EntityBuilder()
-                .add(new DamageComponent(new DecreaseHealthDamage(entity)))
-                .add(new PositionComponent(setWeaponPosition(dirX, dirY, entity, BULLET_WIDTH, BULLET_HEIGHT)))
+                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(), entityBody.getBs(), BULLET_WIDTH, BULLET_HEIGHT)))
                 .add(new MovementComponent(new Vector2D(dirX, dirY), 2, true))
                 .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
                 .add(new VisualDebugComponent(3))
                 .build();
-    }
-
-    private Vector2D setWeaponPosition(final double dirX, final double dirY, final Entity entity,
-                                       final double weaponWidth, final double weaponHeight) {
-
-        PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
-        BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
-        var enemyHeight = entityBody.getBs().getBoundingHeight();
-        var enemyWidth = entityBody.getBs().getBoundingWidth();
-        var centralEntityPos = MathUtilities.getCentralPosition(entityPos, entityBody);
-        double bulletX;
-        double bulletY;
-
-        if (dirX == 1) {
-
-            entityBody.getBs().rotate90Grade();
-
-            bulletX = centralEntityPos.getX() + (enemyWidth / 2);
-            bulletY = centralEntityPos.getY() - (weaponWidth / 2);
-        } else if (dirX == -1) {
-
-            entityBody.getBs().rotate90Grade();
-
-            bulletX = centralEntityPos.getX() - (enemyWidth / 2) - weaponHeight;
-            bulletY = centralEntityPos.getY() - (weaponWidth / 2);
-        } else if (dirY == 1) {
-            bulletX = centralEntityPos.getX() - (weaponHeight / 2);
-            bulletY = centralEntityPos.getY() + (enemyHeight / 2);
-        } else {    // dirY = -1
-            bulletX = centralEntityPos.getX() - (weaponHeight / 2);
-            bulletY = centralEntityPos.getY() - (enemyHeight / 2) - weaponWidth;
-        }
-
-        return new Vector2D(bulletX, bulletY);
     }
 
     public Entity createShooterEnemy(final double x, final double y) {
@@ -118,9 +83,10 @@ public class GenericFactory {
 
 
     public Entity createMeleeAttack(final double dirX, final double dirY, final Entity entity) {
+        PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
+        BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
         return new EntityBuilder()
-                .add(new DamageComponent(new DecreaseHealthDamage(entity)))
-                .add(new PositionComponent(setWeaponPosition(dirX, dirY, entity, MELEE_WIDTH, MELEE_HEIGHT)))
+                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(), entityBody.getBs(), MELEE_WIDTH, MELEE_HEIGHT)))
                 .add(new BodyComponent(new RectBodyShape(MELEE_WIDTH, MELEE_HEIGHT), false))
                 .add(new VisualDebugComponent(4))
                 .build();

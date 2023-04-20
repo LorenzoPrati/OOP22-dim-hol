@@ -24,12 +24,6 @@ public class RectBodyShape implements BodyShape {
         return h;
     }
 
-    @Override
-    public void rotate90Grade() {
-        var tmp = this.h;
-        this.h = this.w;
-        this.w = tmp;
-    }
 
     @Override
     public Polygon getShape(double x, double y) {

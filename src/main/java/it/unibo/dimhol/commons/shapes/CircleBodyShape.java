@@ -22,9 +22,6 @@ public class CircleBodyShape implements BodyShape {
         return 2*radius;
     }
 
-    @Override
-    public void rotate90Grade() {
-    }
 
     @Override
     public Polygon getShape(double x, double y) {
