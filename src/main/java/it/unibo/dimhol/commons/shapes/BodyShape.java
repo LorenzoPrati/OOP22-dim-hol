@@ -8,5 +8,4 @@ public interface BodyShape {
     double getBoundingWidth();
 
     double getBoundingHeight();
-
 }
