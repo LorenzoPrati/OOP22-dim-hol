@@ -2,17 +2,16 @@ package it.unibo.dimhol;
 
 import it.unibo.dimhol.view.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+/**
+ * Engine class.
+ */
 public class Engine {
 
     private static final long PERIOD = 20;
     private MainWindow window;
     private World world;
     private Thread game;
+    private boolean pause;
 
     public Engine() {
         window = new MainWindow(Engine.this);
@@ -21,6 +20,13 @@ public class Engine {
     public void startGame() {
         this.world = new World(this);
         this.resumeGame();
+        this.game = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                gameLoop();
+            }
+        });
+        this.game.start();
     }
 
     public MainWindow getWindow() {
@@ -32,8 +38,10 @@ public class Engine {
         while(!world.isGameOver()) {
             long currTime = System.currentTimeMillis();
             long dt = currTime - prevTime;
-            this.world.update(dt);
-            this.window.render();
+            if (!this.pause) {
+                this.world.update(dt);
+                this.window.render();
+            }
             this.waitForNextFrame(currTime);
             prevTime = currTime;
         }
@@ -52,7 +60,7 @@ public class Engine {
     }
 
     public void stopGame() {
-        this.game.interrupt();
+        this.pause = true;
         this.window.changePanel(new PauseExampleScreen(this));
     }
 
@@ -62,13 +70,7 @@ public class Engine {
          * input is set after the scene is made visible
          */
         this.world.getScene().setInput(this.world.getInput());
-        this.game = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                gameLoop();
-            }
-        });
-        this.game.start();
+        this.pause = false;
     }
 
 }
