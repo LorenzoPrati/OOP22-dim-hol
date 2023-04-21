@@ -2,6 +2,7 @@ package it.unibo.dimhol.systems;
 
 import it.unibo.dimhol.World;
 import it.unibo.dimhol.components.Component;
+import it.unibo.dimhol.components.AnimationComponent;
 import it.unibo.dimhol.components.PositionComponent;
 import it.unibo.dimhol.components.VisualDebugComponent;
 import it.unibo.dimhol.entity.Entity;
@@ -17,8 +18,8 @@ public class RenderSystem extends AbstractSystem{
     @Override
     public void process(Entity e, long dt) {
        var pos = (PositionComponent)e.getComponent(PositionComponent.class);
-       var vis = (VisualDebugComponent)e.getComponent(VisualDebugComponent.class);
-       this.world.getScene().queue(vis.getType(), pos.getPos().getX(), pos.getPos().getY());
+       var info = (AnimationComponent)e.getComponent(AnimationComponent.class);
+       this.world.getScene().toList(info.getIndex(),info.getNumToUse(), pos.getPos().getX(), pos.getPos().getY());
     }
     
 }
