@@ -8,7 +8,7 @@ public interface LoadMap {
      * Returns the 2D arrays of integers that represents the tile map.
      * @return the tile map ad a 2D array of integers
      */
-    int[][] getMap();
+    Tile[][] getMap();
 
     /**
      * Returns the width of the tile map.
