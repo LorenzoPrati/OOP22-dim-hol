@@ -44,6 +44,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.locationtech.jts/jts-core
     implementation("org.locationtech.jts:jts-core:1.19.0")
+    // https://mvnrepository.com/artifact/org.yaml/snakeyaml
+    implementation("org.yaml:snakeyaml:2.0")
 
 }
 
