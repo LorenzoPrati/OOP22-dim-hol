@@ -1,4 +1,4 @@
-package it.unibo.dimhol.GameLevels;
+package it.unibo.dimhol.gameLevels;
 
 /**
  * An interface for each different game room.
