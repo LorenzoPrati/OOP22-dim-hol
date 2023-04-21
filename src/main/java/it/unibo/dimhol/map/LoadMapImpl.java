@@ -85,8 +85,8 @@ public class LoadMapImpl implements LoadMap {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (Integer.parseInt((nline.get(k))) == 1) {
-                    matrix[i][j] = new Tile(false);
-                } else matrix[i][j] = new Tile(true);
+                    matrix[i][j] = new Tile(true);
+                } else matrix[i][j] = new Tile(false);
             }
         }
         return matrix;
