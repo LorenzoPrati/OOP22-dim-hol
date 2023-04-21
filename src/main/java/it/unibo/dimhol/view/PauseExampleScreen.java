@@ -16,10 +16,12 @@ public class PauseExampleScreen extends JPanel {
             engine.resumeGame();
         });
         this.add(b);
-        var b1 = new JButton("exit");
+        var b1 = new JButton("home");
         b1.addActionListener(e -> {
-            System.exit(0);
+            engine.endGame();
+            engine.getWindow().changePanel(new HomeScreen(engine));
         });
         this.add(b1);
+
     }
 }

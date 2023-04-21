@@ -6,27 +6,26 @@ import java.util.List;
 import javax.swing.*;
 import it.unibo.dimhol.Engine;
 import it.unibo.dimhol.World;
+import org.apache.commons.lang3.tuple.Triple;
+
 import java.awt.*;
 
 /*A temporary Scene just to debug. */
 
 public class Scene extends JPanel {
-    private World world;
+
+    private List<Triple<Integer,Integer,Integer>> renderQueue = new ArrayList<>();
     private ResourceLoader loader = new ResourceLoader();
     private List<GraphicInfo> renderList = new ArrayList<>();
 
-    public Scene(World world){
-        this.world = world;
-        this.setBackground(Color.PINK);
+    public Scene(){
+
+        this.setBackground(Color.BLACK);
+
         /*
         Debug
          */
-        var b = new JButton("win");
-        b.addActionListener(e -> { world.setGameOver(); world.setResult(true);});
-        this.add(b);
-        var b1 = new JButton("lose");
-        b1.addActionListener(e -> {world.setGameOver(); world.setResult(false);});
-        this.add(b1);
+
         /*
         hides mouse cursor
          */

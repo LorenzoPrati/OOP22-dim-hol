@@ -5,37 +5,70 @@ import it.unibo.dimhol.view.*;
 /**
  * Engine class.
  */
-public class Engine {
+public final class Engine {
 
     private static final long PERIOD = 20;
-    private MainWindow window;
+    private final MainWindow window;
     private World world;
-    private Thread game;
+    /**
+     * True if the game needs to be paused.
+     */
     private boolean pause;
+    /**
+     * True if the game loop needs to run.
+     */
+    private boolean running;
 
     public Engine() {
-        window = new MainWindow(Engine.this);
+        this.window = new MainWindow(this);
     }
 
-    public void startGame() {
-        this.world = new World(this);
+    /**
+     * Starts a new game.
+     */
+    public void newGame() {
+        this.world = new World();
+        this.world.setInput(new InputListener(this));
         this.resumeGame();
-        this.game = new Thread(new Runnable() {
+        this.running = true;
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 gameLoop();
             }
-        });
-        this.game.start();
+        }).start();
     }
 
-    public MainWindow getWindow() {
-        return this.window;
+    /**
+     * Pause the game.
+     */
+    public void stopGame() {
+        this.pause = true;
+        this.window.changePanel(new PauseExampleScreen(this));
     }
 
-    public void gameLoop() {
+    /**
+     * Resume the game.
+     */
+    public void resumeGame() {
+        this.window.changePanel(this.world.getScene());
+        /*
+         * input is set after the scene is made visible
+         */
+        this.world.getScene().setInput(this.world.getInput());
+        this.pause = false;
+    }
+
+    /**
+     * Terminates the game loop.
+     */
+    public void endGame() {
+        this.running = false;
+    }
+
+    private void gameLoop() {
         long prevTime = System.currentTimeMillis();
-        while(!world.isGameOver()) {
+        while(!this.world.isGameOver() && this.running) {
             long currTime = System.currentTimeMillis();
             long dt = currTime - prevTime;
             if (!this.pause) {
@@ -45,6 +78,10 @@ public class Engine {
             this.waitForNextFrame(currTime);
             prevTime = currTime;
         }
+        this.showMatchResult();
+    }
+
+    private void showMatchResult() {
         this.window.changePanel(new ResultScreen(this, world.getResult()));
     }
 
@@ -59,18 +96,8 @@ public class Engine {
         }
     }
 
-    public void stopGame() {
-        this.pause = true;
-        this.window.changePanel(new PauseExampleScreen(this));
-    }
-
-    public void resumeGame() {
-        this.window.changePanel(this.world.getScene());
-        /*
-         * input is set after the scene is made visible
-         */
-        this.world.getScene().setInput(this.world.getInput());
-        this.pause = false;
+    public MainWindow getWindow() {
+        return window;
     }
 
 }
