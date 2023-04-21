@@ -45,8 +45,8 @@ public class LevelGenerator {
             List<Tile> walkableTiles = findWalkableTile();
             int playerIndex = new Random().nextInt(walkableTiles.size());
             Tile playerTile = walkableTiles.get(playerIndex);
-            putPlayer();
-            putEnemies();
+//            putPlayer(); //TODO: continue
+//            putEnemies();//TODO: continue
         }
 
     /**
@@ -81,9 +81,9 @@ public class LevelGenerator {
      */
     private List<Tile> getWalkableTiles() {
         List<Tile> walkableTiles = new ArrayList<>();
-        for (int i = 0;)
-
-        return null;
+//        for (int i = 0;)
+//TODO: continue
+//        return null;
     }
 
     /**
@@ -93,6 +93,7 @@ public class LevelGenerator {
      * @param y the y-coordinate of the player entity.
      */
     private void putPlayer(double x, double y) {
+        //TODO: continue
     }
 
     /**
@@ -101,24 +102,6 @@ public class LevelGenerator {
      * @param walkableTiles The list of walkable tiles in the map.
      */
     private void putEnemies(List<Tile> walkableTiles) {
-
+        //TODO: continue
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
