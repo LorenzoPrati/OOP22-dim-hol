@@ -21,13 +21,13 @@ public class World {
     private final List<Entity> entities = new ArrayList<>();
     private final List<GameSystem> systems = new ArrayList<>();
     private Scene scene;
-    private final InputListener input;
+    private InputListener input;
     private GenericFactory gf = new GenericFactory();
     private final Queue<Event> eventQueue = new ArrayDeque<>();
     private boolean gameOver;
     private boolean result;
 
-    public World(final Engine engine) {
+    public World() {
         /*
         Add entities
          */
@@ -50,9 +50,12 @@ public class World {
         /*
         Setup view
          */
-        this.engine = engine;
-        this.input = new InputListener(engine);
-        this.scene = new Scene(this);
+
+        this.scene = new Scene();
+    }
+
+    public void setInput(InputListener input) {
+        this.input = input;
     }
 
     public void update(final long dt) {

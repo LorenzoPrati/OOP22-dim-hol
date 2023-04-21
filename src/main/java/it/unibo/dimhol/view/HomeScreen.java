@@ -11,7 +11,7 @@ public class HomeScreen extends JPanel {
         this.engine = engine;
         var b = new JButton("play");
         b.addActionListener(e -> {
-            engine.startGame();
+            engine.newGame();
         });
         this.add(b);
         var b1 = new JButton("example");
