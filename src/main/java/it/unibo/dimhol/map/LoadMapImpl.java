@@ -18,14 +18,11 @@ import java.util.List;
  * The class is responsible for parsing an XML file and loading a map from it.
  */
 public class LoadMapImpl implements LoadMap {
-    private static final int ROWS = 20;
-    private static final int COLS = 20;
     private Tile[][] map;
     private int width;
     private int height;
     private int tileWidth;
     private int tileHeight;
-
     private List<Tile[][]> mapTileLayers;
 
     /**
@@ -34,8 +31,6 @@ public class LoadMapImpl implements LoadMap {
      */
     public LoadMapImpl(final String fileName) {
         try {
-            File inputFile = new File(fileName);
-
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(new File(fileName));
@@ -90,33 +85,29 @@ public class LoadMapImpl implements LoadMap {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (Integer.parseInt((nline.get(k))) == 1) {
-                    matrix[i][j] = new Tile(true);
-                } else {
                     matrix[i][j] = new Tile(false);
-                }
+                } else matrix[i][j] = new Tile(true);
             }
         }
         return matrix;
     }
 
-    /**
-     * Testing with a specific main (temporary).
-     * @param args
-     */
-
-    //TODO: remove after the test.
-    public static void main(final String[] args) {
-        LoadMapImpl parser = new LoadMapImpl("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
-        int[][] map = parser.getMap();
-        int width = parser.getWidth();
-        int height = parser.getHeight();
-        int tileWidth = parser.getTileWidth();
-        int tileHeight = parser.getTileHeight();
-    }
+//    /**
+//     * Test it:
+//     * @param args
+//     */
+//    public static void main(final String[] args) {
+//        LoadMapImpl parser = new LoadMapImpl("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
+//        Tile[][] map = parser.getMap();
+//        int width = parser.getWidth();
+//        int height = parser.getHeight();
+//        int tileWidth = parser.getTileWidth();
+//        int tileHeight = parser.getTileHeight();
+//    }
 
     @Override
-    public int[][] getMap() {
-        return new int[0][];
+    public Tile[][] getMap() {
+        return new Tile[width][height];
     }
 
     @Override
