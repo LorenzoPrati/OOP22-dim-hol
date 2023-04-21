@@ -5,6 +5,18 @@ import it.unibo.dimhol.ai.RoutineFactory;
 import it.unibo.dimhol.commons.shapes.RectBodyShape;
 import it.unibo.dimhol.components.*;
 import it.unibo.dimhol.effects.IncreaseCurrentHealthEffect;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import org.locationtech.jts.math.Vector2D;
+import org.yaml.snakeyaml.Yaml;
+import java.io.FileInputStream;
+import it.unibo.dimhol.commons.shapes.RectBodyShape;
+import it.unibo.dimhol.components.*;
+import java.io.File;
+import java.io.InputStream;
 import org.locationtech.jts.math.Vector2D;
 
 /**
@@ -20,8 +32,18 @@ public class GenericFactory {
     private static final double ENEMY_SPEED = 3;
     private static final int W = 60;
     private static final int H = 60;
+    private final Map<String,Map<String,ArrayList<Integer>>> map = new HashMap<>();
 
     public GenericFactory() {
+        try{
+            InputStream input = new FileInputStream(new File("src/main/java/it/unibo/dimhol/ConfigFile.yaml"));
+            Yaml yaml = new Yaml();
+            Map<String,Map<String,ArrayList<Integer>>> mapLoaded = yaml.load(input);
+            map.putAll(mapLoaded);
+        }
+        catch(FileNotFoundException e){
+            System.out.println("File not found. ");
+        }
     }
 
     public Entity createPlayer(final double x, final double y) {
@@ -46,6 +68,7 @@ public class GenericFactory {
             .add(new PositionComponent(new Vector2D(x, y)))
             .add(new BodyComponent(new RectBodyShape(W,H), false))
             .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
+            .add(new AnimationComponent(this.map.get("heart"), "idle"))
             .add(new VisualDebugComponent(2))
             .build();
     }
