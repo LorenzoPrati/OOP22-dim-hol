@@ -6,20 +6,22 @@ import java.util.List;
 import javax.swing.*;
 import it.unibo.dimhol.Engine;
 import it.unibo.dimhol.World;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
+
 import java.awt.*;
 
 /*A temporary Scene just to debug. */
 
 public class Scene extends JPanel {
 
-
     private List<Triple<Integer,Integer,Integer>> renderQueue = new ArrayList<>();
+    private ResourceLoader loader = new ResourceLoader();
+    private List<GraphicInfo> renderList = new ArrayList<>();
 
     public Scene(){
 
         this.setBackground(Color.BLACK);
+
         /*
         Debug
          */
@@ -43,42 +45,16 @@ public class Scene extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        for(var elem :renderQueue){
-            var type = elem.getLeft();
-            switch(type){
-                case 0: { //PLAYER
-                    g2.setColor(Color.GREEN);
-                    g2.drawRect(elem.getMiddle(), elem.getRight(), 60, 60);
-                    break;
-                }
-                case 1:{ //OBSTACLE
-                    g2.setColor(Color.RED);
-                    g2.drawRect(elem.getMiddle(), elem.getRight(), 60, 60);
-                    break;
-                }
-                case 2:{ //HEART
-                    g2.setColor(Color.YELLOW);
-                    g2.drawRect(elem.getMiddle(), elem.getRight(), 60, 60);
-                    break;
-                }
-                case 3:{
-                    g2.setColor(Color.BLUE);
-                    g2.drawRect(elem.getMiddle(), elem.getRight(), 10, 10);
-                    break;
-                }
-                case 4:{
-                    g2.setColor(Color.cyan);
-                    g2.drawRect(elem.getMiddle(), elem.getRight(), 60, 60);
-                    break;
-                }
-
-            }
+        for(var elem :renderList){
+           g2.drawImage(new Animation(elem.getIndex(), elem.getNumImage(), loader).getImageToDraw(),
+                (int)elem.getX(), (int)elem.getY(), 80, 80, null);
         }
-        renderQueue.clear();
+        g2.dispose();
+        renderList.clear();
     }
 
-    public void queue(int t, double x, double y) {
-        this.renderQueue.add(new ImmutableTriple<>(t,(int)x,(int)y));
+    public void toList(final int index, final int numImage, final double x,final double y) {
+        this.renderList.add(new GraphicInfo(index,numImage,x,y));
     }
     
 }
