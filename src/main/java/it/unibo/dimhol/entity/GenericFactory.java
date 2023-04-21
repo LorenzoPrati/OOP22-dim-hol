@@ -16,7 +16,6 @@ import java.io.FileInputStream;
 import it.unibo.dimhol.commons.shapes.RectBodyShape;
 import it.unibo.dimhol.components.*;
 import java.io.File;
-import java.io.InputStream;
 import org.locationtech.jts.math.Vector2D;
 
 /**
