@@ -42,7 +42,7 @@ public class LevelGenerator {
             savePlayer();
             clearEntities();
             loadMap();
-            List<Tile> walkableTiles = findWalkableTile();
+            List<Tile> walkableTiles = getWalkableTiles();
             int playerIndex = new Random().nextInt(walkableTiles.size());
             Tile playerTile = walkableTiles.get(playerIndex);
 //            putPlayer(); //TODO: continue
@@ -83,7 +83,7 @@ public class LevelGenerator {
         List<Tile> walkableTiles = new ArrayList<>();
 //        for (int i = 0;)
 //TODO: continue
-//        return null;
+        return walkableTiles;
     }
 
     /**
