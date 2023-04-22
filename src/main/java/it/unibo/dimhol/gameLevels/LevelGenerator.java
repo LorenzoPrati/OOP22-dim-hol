@@ -12,16 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The LevelGenerator class generates a new level for the game, including the placement of the player and enemies.
+ */
 public class LevelGenerator {
-    private static final int ENEMY_DENSITY = 50;
+    private static final int ENEMY_DENSITY = 10;
     private final World world;
     private final LoadMap loadMap = new LoadMapImpl("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
     private final GenericFactory genericFactory = new GenericFactory();
     private Tile[][] map;
     private int currentLevel = 0;
     private Entity player;
-    private Entity enemy;
-
     private LevelGenerator(World world) {
         this.world = world;
     }
@@ -43,12 +44,10 @@ public class LevelGenerator {
             clearEntities();
             loadMap();
             List<Tile> walkableTiles = getWalkableTiles();
-            int playerIndex = new Random().nextInt(walkableTiles.size());
-            Tile playerTile = walkableTiles.get(playerIndex);
-            putPlayer(playerTile.getX(5.0), playerTile.getY(5.0)); //TODO: to be solved
-            putEnemies(walkableTiles, playerIndex);
+            Tile playerTile = getRandomTile(walkableTiles);
+            placePlayer(playerTile.getX(5.0), playerTile.getY(5.0));
+            placeEnemies(walkableTiles, playerTile, 10.0, 10.0);
         }
-
     /**
      * Saves the player's entity.
      */
@@ -82,44 +81,72 @@ public class LevelGenerator {
     private List<Tile> getWalkableTiles() {
         List<Tile> walkableTiles = new ArrayList<>();
         for (Tile[] tiles : map) {
-            for (int j = 0; j < tiles.length; j++) {
-                if (tiles[j].isCollidable()) {
-                    walkableTiles.add(tiles[j]);
+            for (Tile tile : tiles) {
+                if (!tile.isCollidable()) {
+                    walkableTiles.add(tile);
                 }
             }
         }
         return walkableTiles;
     }
-
     /**
-     * Puts the player entity at the specified position.
+     * Selects a random tile from the given list of walkable tiles.
+     * @param walkableTiles The list of walkable tiles to choose from.
+     * @return A random walkable tile.
+     */
+    private Tile getRandomTile(List<Tile> walkableTiles) {
+        return walkableTiles.get(new Random().nextInt(walkableTiles.size()));
+    }
+    /**
+     * Place the player entity at the specified position.
      *
      * @param x the x-coordinate of the player entity.
      * @param y the y-coordinate of the player entity.
      */
-    private void putPlayer(double x, double y) {
+    private void placePlayer(double x, double y) {
         Entity playerEntity = genericFactory.createPlayer(x, y);
         world.addEntity(playerEntity);
 //        world.setPlayer(playerEntity);
     }
-
     /**
-     * Puts the enemies entities randomly around the map.
+     * Places enemies entities on random tiles in the game map.
      *
      * @param walkableTiles The list of walkable tiles in the map.
-     * @param playerIndex The index of the tile where the player will be placed.
+     * @param playerTile The index of the tile where the player will be placed.
+     * @param x The x-coordinate where enemies should be placed.
+     * @param y The y-coordinate where enemies should be placed.
      */
-    private void putEnemies(List<Tile> walkableTiles, int playerIndex) {
-        //Get the number of enemies to place:
-        int numEnemies = (int) Math.ceil((walkableTiles.size() - 1) * ENEMY_DENSITY); // It calculates the number of enemies to place based on the density defined in ENEMY_DENSITY
-        //Remove the player tile from the walkable tiles:
-        walkableTiles.remove(playerIndex);
+    private void placeEnemies(List<Tile> walkableTiles, Tile playerTile, double x, double y) {
+        int numEnemies = calculateNumEnemies(walkableTiles.size());
+        List<Tile> tilesToPlaceEnemiesOn = new ArrayList<>(walkableTiles); //creates a new list to store the tiles where enemies will be placed on.
+        tilesToPlaceEnemiesOn.remove(playerTile); //remove the player tile form the list.
+
         for (int i = 0; i < numEnemies; i++) {
-            //Get a random tile index from the list of walkable tiles.
-            int randomIndex = (int) (Math.random() * walkableTiles.size()); //randomly selects tiles from the list to place enemies on
-            world.addEntity(enemy);
-            //remove the tile form the list of walkable tiles so an enemy cannot be placed here.
-            walkableTiles.remove(randomIndex);
+            int randomIndex = (int) (Math.random() * walkableTiles.size()); //Get a random tile index from the list.
+            Tile tilesToPlaceEnemyOn = tilesToPlaceEnemiesOn.get(randomIndex);
+            Entity enemyEntity = spawnEnemy(x, y);
+            world.addEntity(enemyEntity);
+            tilesToPlaceEnemiesOn.remove(tilesToPlaceEnemyOn); //remove the tile from the list so another enemy won't be placed there.
         }
+    }
+    /**
+     * Calculates the number of enemies to place based on the density, that is defined in ENEMY_DENSITY.
+     * @param numWalkableTiles
+     * @return The number of enemies to be placed.
+     */
+    private int calculateNumEnemies(int numWalkableTiles) {
+        /* subtracts 1 from the total number of walkable tiles in the game, as the player tile should not be counted as a valid enemy placement tile.
+        * Then it's multiplied by the density value */
+        return (int) Math.ceil((numWalkableTiles - 1) * ENEMY_DENSITY); //ceil do rounding to the result (to negative).
+    }
+    /**
+     * Creates an enemy entity with the specified x and y coordinates.
+     * @param x The x-coordinate where the enemy should be placed.
+     * @param y The y-coordinate where the enemy should be placed.
+     * @return The created enemy entity.
+     */
+    private Entity spawnEnemy(double x, double y) {
+        return genericFactory.createZombieEnemy(x, y);
+//        return genericFactory.createShooterEnemy(x, y);
     }
 }
