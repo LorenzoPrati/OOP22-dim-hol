@@ -4,30 +4,26 @@ import it.unibo.dimhol.World;
 import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.entity.GenericFactory;
-import it.unibo.dimhol.events.AddEntityEvent;
 import it.unibo.dimhol.map.LoadMap;
 import it.unibo.dimhol.map.LoadMapImpl;
 import it.unibo.dimhol.map.Tile;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.awt.Point;
 
 public class LevelGenerator {
     private static final int ENEMY_DENSITY = 50;
-    private World world;
-    private LoadMap loadMap = new LoadMapImpl("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
-    private GenericFactory genericFactory = new GenericFactory();
+    private final World world;
+    private final LoadMap loadMap = new LoadMapImpl("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
+    private final GenericFactory genericFactory = new GenericFactory();
     private Tile[][] map;
-    private int currentLevel;
+    private int currentLevel = 0;
     private Entity player;
     private Entity enemy;
 
     private LevelGenerator(World world) {
         this.world = world;
-        currentLevel = 0;
     }
 
     //Change the level:
@@ -85,10 +81,10 @@ public class LevelGenerator {
      */
     private List<Tile> getWalkableTiles() {
         List<Tile> walkableTiles = new ArrayList<>();
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                if (map[i][j].isCollidable()) {
-                    walkableTiles.add(map[i][j]);
+        for (Tile[] tiles : map) {
+            for (int j = 0; j < tiles.length; j++) {
+                if (tiles[j].isCollidable()) {
+                    walkableTiles.add(tiles[j]);
                 }
             }
         }
