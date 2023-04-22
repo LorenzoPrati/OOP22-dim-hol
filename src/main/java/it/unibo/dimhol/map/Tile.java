@@ -26,4 +26,12 @@ public class Tile {
     public boolean isCollidable() {
         return collidable;
     }
+
+    public double getX(double x) {
+        return x;
+    }
+
+    public double getY(double y) {
+        return y;
+    }
 }
