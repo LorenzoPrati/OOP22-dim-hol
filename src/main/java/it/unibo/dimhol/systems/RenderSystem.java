@@ -11,7 +11,7 @@ public class RenderSystem extends AbstractSystem{
     private final World world;
 
     public RenderSystem(World w) {
-        super(w, VisualDebugComponent.class);
+        super(w, AnimationComponent.class);
         this.world = w;
     }
 
