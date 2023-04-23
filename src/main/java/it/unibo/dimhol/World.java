@@ -8,10 +8,8 @@ import it.unibo.dimhol.systems.*;
 import it.unibo.dimhol.view.InputListener;
 import it.unibo.dimhol.view.Scene;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * A class to model the world where the entities exist.
@@ -26,32 +24,33 @@ public class World {
      * Class that registers user input.
      */
     private InputListener input;
-
-    private final List<Entity> entities = new ArrayList<>();
-    private final List<GameSystem> systems = new ArrayList<>();
-    private GenericFactory gf = new GenericFactory();
-    private final Queue<Event> eventQueue = new ArrayDeque<>();
-
+    /*
+    state of the game
+     */
     private boolean gameOver;
-    private boolean result;
+    //private boolean result;
+    /*
+    world
+     */
+    private final List<Entity> entities;
+    private final List<GameSystem> systems;
+    private final List<Event> events;
+    /*
+    map
+     */
+    //parser
+    //level generator
+    //tilemap
+    //int currentLevel;
 
     /**
      * Constructs a world.
      */
     public World() {
-        /*
-        Add entities
-         */
-
-
-        //this.entities.add(gf.createHeart(400,560));
-
-        this.entities.add(gf.createHeart(400,500));
-        this.entities.add(gf.createZombieEnemy(400,300));
-        this.entities.add(gf.createHeart(400,550));
-        this.entities.add(gf.createShooterEnemy(470,300));
-        this.entities.add(gf.createPlayer(200, 150));
-
+        this.entities = new ArrayList<>();
+        this.systems = new ArrayList<>();
+        this.events = new ArrayList<>();
+        this.scene = new Scene();
         /*
         Add systems
          */
@@ -64,9 +63,14 @@ public class World {
         this.systems.add(new ClearCollisionSystem(this));
         this.systems.add(new RenderSystem(this));
         /*
+        generate first level
+         */
+        this.entities.add(new GenericFactory().createPlayer(100,100));
+        //set tilemap
+        /*
         Setup view
          */
-        this.scene = new Scene();
+        //set map in scene
     }
 
     /**
@@ -97,30 +101,55 @@ public class World {
         this.handleEvents();
     }
 
+    /**
+     * Notifies an event to the world to handle.
+     *
+     * @param ev the event to notify
+     */
     public void notifyEvent(final Event ev) {
-        this.eventQueue.add(ev);
+        this.events.add(ev);
     }
 
+    /**
+     * Handle all events.
+     */
     private void handleEvents() {
-        while(!this.eventQueue.isEmpty()) {
-            this.eventQueue.poll().execute(this);
-        }
-        this.eventQueue.clear();
+        this.events.stream().forEach(ev -> ev.execute(this));
+        this.events.clear();
     }
 
-
+    /**
+     * Gets the entities that currently exist in the world.
+     *
+     * @return a list containing all the entities in the world
+     */
     public List<Entity> getEntities() {
         return this.entities;
     }
 
+    /**
+     * Adds an entity to the world.
+     *
+     * @param e the entity to add
+     */
     public void addEntity(final Entity e) {
         this.entities.add(e);
     }
 
+    /**
+     * Removes an entity from the world.
+     *
+     * @param e the entity to remove
+     */
     public void removeEntity(final Entity e) {
         this.entities.remove(e);
     }
 
+    /**
+     * Gets the input listener that is registered for the world.
+     *
+     * @return the current input listener
+     */
     public InputListener getInputListener() {
         return this.input;
     }
@@ -151,5 +180,5 @@ public class World {
         //this.result = result;
     //}
 
-
+    //getTileMap()
 }
