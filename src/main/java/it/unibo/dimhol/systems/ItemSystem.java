@@ -17,9 +17,9 @@ public class ItemSystem extends AbstractSystem{
        var collided = (CollisionComponent)e.getComponent(CollisionComponent.class);
        var pickable = (PickableComponent)e.getComponent(PickableComponent.class);
        var effect = pickable.getEffect();
-       if(effect.canUseOn(collided.getEntity())){
+       if(effect.canUseOn(collided.getCollided())){
             System.out.println("Heart picked");
-            effect.applyOn(collided.getEntity());
+            effect.applyOn(collided.getCollided());
             this.world.notifyEvent(new RemoveEntityEvent(e));
        }
     }

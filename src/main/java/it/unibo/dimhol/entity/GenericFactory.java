@@ -13,10 +13,7 @@ import java.util.Map;
 import org.locationtech.jts.math.Vector2D;
 import org.yaml.snakeyaml.Yaml;
 import java.io.FileInputStream;
-import it.unibo.dimhol.commons.shapes.RectBodyShape;
-import it.unibo.dimhol.components.*;
 import java.io.File;
-import org.locationtech.jts.math.Vector2D;
 
 /**
  * Implementation of a factory to create various entities.
@@ -47,7 +44,7 @@ public class GenericFactory {
 
     public Entity createPlayer(final double x, final double y) {
         return new EntityBuilder().add(new PlayerComponent())
-                .add(new PositionComponent(new Vector2D(x,y)))
+                .add(new PositionComponent(new Vector2D(x,y), 0))
                 .add(new MovementComponent(new Vector2D(0,0),PLAYER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(W,H), true))
                 .add(new HealthComponent(10))
@@ -56,7 +53,7 @@ public class GenericFactory {
     }
 
     public Entity createObstacle(final double x, final double y) {
-        return new EntityBuilder().add(new PositionComponent(new Vector2D(100,100)))
+        return new EntityBuilder().add(new PositionComponent(new Vector2D(100,100), 0))
                 .add(new BodyComponent(new RectBodyShape(W, H), true))
                 .add(new VisualDebugComponent(1))
                 .build();
@@ -64,7 +61,7 @@ public class GenericFactory {
 
     public Entity createHeart(final double x, final double y){
         return new EntityBuilder().add(new HeartComponent())
-            .add(new PositionComponent(new Vector2D(x, y)))
+            .add(new PositionComponent(new Vector2D(x, y), 0))
             .add(new BodyComponent(new RectBodyShape(W,H), false))
             .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
             .add(new AnimationComponent(this.map.get("heart"), "idle"))
@@ -75,10 +72,10 @@ public class GenericFactory {
     public Entity createZombieEnemy(final double x, final double y) {
         return new EntityBuilder()
                 .add(new AiComponent(new RoutineFactory().createZombieRoutine()))
-                .add(new PositionComponent(new Vector2D(x, y)))
+                .add(new PositionComponent(new Vector2D(x, y), 0))
                 .add(new MovementComponent(new Vector2D(0,0), ENEMY_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(W, H), true))
-                .add(new VisualDebugComponent(1))
+                .add(new AnimationComponent(map.get("enemy"),"idle"))
                 .build();
     }
 
@@ -87,20 +84,19 @@ public class GenericFactory {
         BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
         return new EntityBuilder()
                 .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(),
-                        entityBody.getBs(), BULLET_WIDTH, BULLET_HEIGHT)))
+                        entityBody.getBodyShape(), BULLET_WIDTH, BULLET_HEIGHT), 0))
                 .add(new MovementComponent(new Vector2D(dirX, dirY), 2, true))
                 .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
-                .add(new VisualDebugComponent(3))
                 .build();
     }
 
     public Entity createShooterEnemy(final double x, final double y) {
         return new EntityBuilder()
                 .add(new AiComponent(new RoutineFactory().createShooterRoutine()))
-                .add(new PositionComponent(new Vector2D(x, y)))
+                .add(new PositionComponent(new Vector2D(x, y), 0))
                 .add(new MovementComponent(new Vector2D(0,0), ENEMY_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(W, H), true))
-                .add(new VisualDebugComponent(1))
+                .add(new AnimationComponent(map.get("enemy"),"idle"))
                 .build();
     }
 
@@ -109,7 +105,7 @@ public class GenericFactory {
         PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
         BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
         return new EntityBuilder()
-                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(), entityBody.getBs(), MELEE_WIDTH, MELEE_HEIGHT)))
+                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(), entityBody.getBodyShape(), MELEE_WIDTH, MELEE_HEIGHT), 0))
                 .add(new BodyComponent(new RectBodyShape(MELEE_WIDTH, MELEE_HEIGHT), false))
                 .add(new VisualDebugComponent(4))
                 .build();

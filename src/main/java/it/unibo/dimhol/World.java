@@ -32,6 +32,8 @@ public class World {
         Add entities
          */
         this.entities.add(gf.createPlayer(200, 150));
+        this.entities.add(gf.createHeart(400,500));
+        this.entities.add(gf.createZombieEnemy(400,300));
         /*
         Add systems
          */
@@ -45,7 +47,6 @@ public class World {
         /*
         Setup view
          */
-
         this.scene = new Scene();
     }
 
