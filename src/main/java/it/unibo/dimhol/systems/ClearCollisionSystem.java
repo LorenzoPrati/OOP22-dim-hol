@@ -10,12 +10,23 @@ import it.unibo.dimhol.entity.Entity;
  */
 public class ClearCollisionSystem extends AbstractSystem {
 
+    /**
+     * Constructs a ClearCollisionSystem. Iterates through {@link CollisionComponent}.
+     *
+     * @param w the world
+     */
     public ClearCollisionSystem(World w) {
         super(w, CollisionComponent.class);
     }
 
+    /**
+     * Removes CollisionComponent from the entity.
+     *
+     * @param e the entity to process
+     * @param dt the delta time
+     */
     @Override
-    public void process(Entity e, long dt) {
+    public void process(final Entity e, final long dt) {
         var cc = (CollisionComponent) e.getComponent(CollisionComponent.class);
         e.removeComponent(cc);
     }

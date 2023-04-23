@@ -19,6 +19,9 @@ public final class Engine {
      */
     private boolean running;
 
+    /**
+     * Constructs an Engine.
+     */
     public Engine() {
         this.window = new MainWindow(this);
     }
@@ -28,7 +31,7 @@ public final class Engine {
      */
     public void newGame() {
         this.world = new World();
-        this.world.setInput(new InputListener(this));
+        this.world.setInputListener(new InputListener(this));
         this.resumeGame();
         this.running = true;
         new Thread(new Runnable() {
@@ -55,7 +58,7 @@ public final class Engine {
         /*
          * input is set after the scene is made visible
          */
-        this.world.getScene().setInput(this.world.getInput());
+        this.world.getScene().setInput(this.world.getInputListener());
         this.pause = false;
     }
 
@@ -68,8 +71,8 @@ public final class Engine {
 
     private void gameLoop() {
         long prevTime = System.currentTimeMillis();
-        while(!this.world.isGameOver() && this.running) {
-            long currTime = System.currentTimeMillis();
+        while (!this.world.isGameOver() && this.running) {
+            final long currTime = System.currentTimeMillis();
             long dt = currTime - prevTime;
             if (!this.pause) {
                 this.world.update(dt);
@@ -78,15 +81,15 @@ public final class Engine {
             this.waitForNextFrame(currTime);
             prevTime = currTime;
         }
-        this.showMatchResult();
+        //this.showMatchResult();
     }
 
-    private void showMatchResult() {
-        this.window.changePanel(new ResultScreen(this, world.getResult()));
-    }
+    //private void showMatchResult() {
+        //this.window.changePanel(new ResultScreen(this, world.getResult()));
+    //}
 
-    private void waitForNextFrame(long startTime) {
-        long dt = System.currentTimeMillis() - startTime;
+    private void waitForNextFrame(final long startTime) {
+        final long dt = System.currentTimeMillis() - startTime;
         if (dt < PERIOD) {
             try {
                 Thread.sleep(PERIOD - dt);
@@ -96,8 +99,12 @@ public final class Engine {
         }
     }
 
+    /**
+     * Gets the main window.
+     *
+     * @return the main window
+     */
     public MainWindow getWindow() {
         return window;
     }
-
 }

@@ -2,28 +2,38 @@ package it.unibo.dimhol.components;
 
 import it.unibo.dimhol.entity.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Holds data about a collision.
+ * Holds data about collisions.
  */
 public class CollisionComponent implements Component {
 
-    private final Entity collided;
+    private final List<Entity> collidedList;
 
     /**
-     * Constructs a CollisionComponent with given collided entity.
-     *
-     * @param collided the collided entity
+     * Constructs a CollisionComponent with empty collided list.
      */
-    public CollisionComponent(final Entity collided) {
-        this.collided = collided;
+    public CollisionComponent() {
+        this.collidedList = new ArrayList<>();
     }
 
     /**
-     * Gets the collided entity.
+     * Adds the given entity to the collided list.
      *
-     * @return the collided entity
+     * @param e the entity that collided
      */
-    public Entity getCollided() {
-        return this.collided;
+    public void addCollided(final Entity e) {
+        this.collidedList.add(e);
+    }
+
+    /**
+     * Gets the collided entities.
+     *
+     * @return the list containing the collided entities
+     */
+    public List<Entity> getCollided() {
+        return this.collidedList;
     }
 }
