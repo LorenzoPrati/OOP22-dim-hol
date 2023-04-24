@@ -39,9 +39,8 @@ public class World {
     map
      */
     //parser
-    //level generator
-    //tilemap
-    //int currentLevel;
+    //level manager
+    //
 
     /**
      * Constructs a world.
@@ -51,6 +50,29 @@ public class World {
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
         this.scene = new Scene();
+
+        /*
+        generate first level
+         */
+        var gf = new GenericFactory();
+        this.entities.add(gf.createPlayer(10,10));
+        this.entities.add(gf.createZombieEnemy(100,100));
+        this.entities.add(gf.createZombieEnemy(700,100));
+        this.entities.add(gf.createZombieEnemy(900,100));
+        this.entities.add(gf.createZombieEnemy(880,100));
+        this.entities.add(gf.createShooterEnemy(100,100));
+        this.entities.add(gf.createShooterEnemy(700,100));
+        this.entities.add(gf.createShooterEnemy(900,550));
+        this.entities.add(gf.createZombieEnemy(450,100));
+        this.entities.add(gf.createShooterEnemy(300,100));
+        this.entities.add(gf.createShooterEnemy(570,550));
+        this.entities.add(gf.createZombieEnemy(355,105));
+
+        //set tilemap
+        /*
+        Setup view
+         */
+        //set map in scene
         /*
         Add systems
          */
@@ -60,17 +82,9 @@ public class World {
         this.systems.add(new CollisionSystem(this));
         this.systems.add(new PhysicsSystem(this));
         this.systems.add(new ItemSystem(this));
+
         this.systems.add(new ClearCollisionSystem(this));
         this.systems.add(new RenderSystem(this));
-        /*
-        generate first level
-         */
-        this.entities.add(new GenericFactory().createPlayer(100,100));
-        //set tilemap
-        /*
-        Setup view
-         */
-        //set map in scene
     }
 
     /**
@@ -92,13 +106,12 @@ public class World {
     }
 
     /**
-     * Gets called each game loop. Updates the world by delta time.
-     *
-     * @param dt the delta time
+     * Gets called each game loop. Updates the world.
      */
-    public void update(final long dt) {
-        this.systems.forEach(s -> s.update(dt));
+    public void update() {
+        this.systems.forEach(s -> s.update());
         this.handleEvents();
+        //System.out.println("num ent " + this.getEntities().size());
     }
 
     /**

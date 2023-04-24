@@ -7,15 +7,18 @@ public class Tile {
     /**
      * Whether this Tile is collidable.
      */
-    private final boolean collidable;
+    private final boolean walkable;
+    private final int tileSetId;
 
     /**
      * Constructs a new Tile with the specified collidability.
      *
-     * @param collidable whether this Tile should be collidable.
+     * @param tileSetId
+     * @param walkable   whether this Tile should be collidable.
      */
-    public Tile(final boolean collidable) {
-        this.collidable = collidable;
+    public Tile(final int tileSetId, final boolean walkable) {
+        this.tileSetId = tileSetId;
+        this.walkable = walkable;
     }
 
     /**
@@ -23,8 +26,11 @@ public class Tile {
      *
      * @return true if this Tile si collidable, false otherwise.
      */
-    public boolean isCollidable() {
-        return collidable;
+    public boolean isWalkable() {
+        return walkable;
+    }
+    public int getTileSetId() {
+        return tileSetId;
     }
 
     public double getX(double x) {
