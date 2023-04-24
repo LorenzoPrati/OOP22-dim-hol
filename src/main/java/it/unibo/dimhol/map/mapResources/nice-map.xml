@@ -4,7 +4,7 @@
  <tileset firstgid="1" name="ArtTileSet" tilewidth="32" tileheight="32" tilecount="1856" columns="116">
   <image source="ArtTileSet.png" trans="ff00ff" width="3712" height="512"/>
  </tileset>
- <layer id="5" name="obstacles" width="30" height="20">
+ <layer id="5" name="obstacles" width="20" height="30">
   <property tileMapIdInt="25" tileSetIdInt="24" walkableBool="true"/>
   <property tileMapIdInt="134" tileSetIdInt="133" walkableBool="false"/>
   <data encoding="csv">
