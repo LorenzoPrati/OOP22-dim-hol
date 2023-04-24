@@ -18,8 +18,7 @@ import java.util.List;
 /**
  * The class is responsible for parsing an XML file and loading a map from it.
  */
-public class MapLoaderImpl implements MapLoad {
-    private Tile[][] map;
+public class LoadMapImpl implements MapLoad {
     private final int width;
     private final int height;
     private final int tileWidth;
@@ -29,62 +28,55 @@ public class MapLoaderImpl implements MapLoad {
     Element layerElement;
 
     /**
-     * Constructor for MapLoaderImpl.
-     *
-     * @param tileWidth
-     * @param tileHeight
-     * @param width
-     * @param height
-     * @param mapTileLayers
-     */
-    public MapLoaderImpl(int tileWidth, int tileHeight, int width, int height, List<Tile[][]> mapTileLayers) {
-        this.tileWidth = tileWidth;
-        this.tileHeight = tileHeight;
-        this.width = 0;
-        this.height = 0;
-        this.mapTileLayers = new ArrayList<>();
-    }
-
-    /**
-     * Load a map from a given XML file.
-     *
+     * Constructor for LoadMapImpl that loads a map from an XML file.
      * @param fileName The name of the XML file to load the map from.
-     * @return true if the map has been successfully loaded, false otherwise.
      */
-    public MapLoaderImpl loadMapFromXmlFile(final String fileName) {
+    public LoadMapImpl(final String fileName) {
+
+        Element rootElement = null;
+        Document doc = null;
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(new File(fileName));
-            //Normalize the document by removing empty spaces and combining adjacent text nodes.
+            doc = dBuilder.parse(new File(fileName));
+            /*
+             * Normalize the document by removing empty spaces and combining adjacent text nodes.
+             */
             doc.getDocumentElement().normalize();
-            Element rootElement = doc.getDocumentElement();
-            int width = Integer.parseInt(rootElement.getAttribute("width"));
-            int height = Integer.parseInt(rootElement.getAttribute("height"));
-            int tileWidth = Integer.parseInt(rootElement.getAttribute("tilewidth"));
-            int tileHeight = Integer.parseInt(rootElement.getAttribute("tileheight"));
-
-            NodeList layerNodeList = doc.getElementsByTagName("layer");
-            if (layerNodeList.getLength() == 0)
-                return null;
-
-            List<Tile[][]> mapTileLayers = new ArrayList<>();
-            for (int i = 0; i < layerNodeList.getLength(); i++) {
-                mapTileLayers.add(getTileMatrix(layerNodeList.item(i), width, height));
-            }
-
-            return new MapLoaderImpl(width, height, tileWidth, tileHeight, mapTileLayers);
+            rootElement = doc.getDocumentElement();
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
-            System.out.println("ERROR: The map has not been parsed!");
         }
-        return null;
+
+        /*
+         * Get the root element of the document.
+         */
+        assert rootElement != null;
+        tileWidth = Integer.parseInt(rootElement.getAttribute("tilewidth"));
+        tileHeight = Integer.parseInt(rootElement.getAttribute("tileheight"));
+
+        /*
+         * Get the list of all the layer elements into the document.
+         */
+        layerNodeList = doc.getElementsByTagName("layer");
+        layerElement = (Element) layerNodeList;
+        width = Integer.parseInt(layerElement.getAttribute("width"));
+        height = Integer.parseInt(layerElement.getAttribute("height"));
+        /*
+         * Get the first layer element by using "item(0)" and store it in a "node" variable "layerNode".
+         */
+        mapTileLayers = new ArrayList<>();
+        for (int i = 0; i < layerNodeList.getLength(); i++) {
+            mapTileLayers.add(getTileMatrix(layerNodeList.item(i)));
+        }
+
+
     }
 
-    private Tile[][] getTileMatrix(Node item, int width, int height) {
-        Element layerElement = (Element) item;
+    private Tile[][] getTileMatrix(Node item) {
+        Element layerElement = (Element) item.getChildNodes();
         NodeList propertyNodes = layerElement.getElementsByTagName("property");
-        Element dataElement = (Element) layerElement.getElementsByTagName("data").item(0);
+        Element dataElement = (Element) layerElement.getElementsByTagName("data");
 
         String[] line = dataElement.getFirstChild().getTextContent().split("[\n|,]");
         List<String> nline = Arrays.stream(line).filter(e -> !e.equals("")).toList();
@@ -97,32 +89,15 @@ public class MapLoaderImpl implements MapLoad {
                     Element property = (Element) propertyNodes.item(l);
                     if (Integer.parseInt((nline.get(k))) == Integer.parseInt(property.getAttribute("tileMapIdInt"))) {
 
-                        if (property.hasAttribute("walkableBool") && property.hasAttribute("tileSetIdInt")) {
-                            matrix[i][j] = new Tile(Integer.parseInt(property.getAttribute("tileSetIdInt")),
+                        if (property.hasAttribute("walkableBool")) {
+                            matrix[i][j] = new Tile(Integer.parseInt(property.getAttribute("tileMapIdInt")) - 1,
                                     Boolean.parseBoolean(property.getAttribute("walkableBool")));
                         }
                     }
                 }
-                k++;
             }
-
         }
         return matrix;
-    }
-
-    @Override
-    public Tile[][] getMap() {
-        return new Tile[width][height];
-    }
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
     }
 
     @Override
@@ -134,6 +109,22 @@ public class MapLoaderImpl implements MapLoad {
     public int getTileHeight() {
         return tileHeight;
     }
+
+    @Override
+    public Tile[][] getMap() {
+        return new Tile[0][];
+    }
+
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public  int getHeight() {
+        return height;
+    }
+
     @Override
     public List<Tile[][]> getMapTileLayers() {
         return mapTileLayers;

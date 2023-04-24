@@ -7,12 +7,6 @@ import java.util.List;
  */
 public interface MapLoad {
     /**
-     * Returns the 2D arrays of integers that represents the tile map.
-     * @return the tile map ad a 2D array of integers
-     */
-    Tile[][] getMap();
-
-    /**
      * Returns the width of the tile map.
      * @return the width of the tile map
      */
