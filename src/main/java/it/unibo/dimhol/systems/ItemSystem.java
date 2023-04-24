@@ -13,7 +13,7 @@ public class ItemSystem extends AbstractSystem{
     }
 
     @Override
-    public void process(Entity e, long dt) {
+    public void process(Entity e) {
        var collided = (CollisionComponent)e.getComponent(CollisionComponent.class);
        var pickable = (PickableComponent)e.getComponent(PickableComponent.class);
        var effect = pickable.getEffect();

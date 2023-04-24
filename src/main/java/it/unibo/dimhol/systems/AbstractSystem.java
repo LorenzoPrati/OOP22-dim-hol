@@ -32,10 +32,10 @@ public abstract class AbstractSystem implements GameSystem {
      * {@inheritDoc}
      */
     @Override
-    public void update(final long dt) {
+    public void update() {
         this.world.getEntities().stream()
                 .filter(e -> e.hasFamily(this.family))
-                .forEach(e -> this.process(e, dt));
+                .forEach(e -> this.process(e));
     }
 
     /**
@@ -43,7 +43,6 @@ public abstract class AbstractSystem implements GameSystem {
      * Performs the system specific task.
      *
      * @param e the entity to process
-     * @param dt the delta time
      */
-    public abstract void process(final Entity e, final long dt);
+    public abstract void process(final Entity e);
 }
