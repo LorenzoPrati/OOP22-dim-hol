@@ -25,10 +25,9 @@ public class CollisionSystem extends AbstractSystem {
      * so that next system can handle them.
      *
      * @param e the entity to process
-     * @param dt the delta time
      */
     @Override
-    public void process(final Entity e, final long dt) {
+    public void process(final Entity e) {
         for (var o : this.world.getEntities()) {
             if (!o.equals(e) && o.hasComponent(BodyComponent.class)) {
                 this.checkCollision(e, o);

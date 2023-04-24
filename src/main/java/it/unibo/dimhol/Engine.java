@@ -6,8 +6,14 @@ import it.unibo.dimhol.view.*;
  * Engine class.
  */
 public final class Engine {
+    /*
+    Game loop settings
+     */
+    private static final double FRAMES_PER_SECOND = 60;
+    private static double SECOND_TO_NANOSECOND = 1_000_000_000;
+    private static double NANO_SECONDS_PER_FRAME = SECOND_TO_NANOSECOND / FRAMES_PER_SECOND;
+    private static double SECOND_TO_MILLISECOND = 1_000;
 
-    private static final long PERIOD = 20;
     private final MainWindow window;
     private World world;
     /**
@@ -18,12 +24,17 @@ public final class Engine {
      * True if the game loop needs to run.
      */
     private boolean running;
+    /**
+     * True if in debug mode.
+     */
+    private boolean debug;
 
     /**
      * Constructs an Engine.
      */
     public Engine() {
         this.window = new MainWindow(this);
+        //System.setProperty("sun.java2d.opengl", "true");
     }
 
     /**
@@ -70,34 +81,39 @@ public final class Engine {
     }
 
     private void gameLoop() {
-        long prevTime = System.currentTimeMillis();
-        while (!this.world.isGameOver() && this.running) {
-            final long currTime = System.currentTimeMillis();
-            long dt = currTime - prevTime;
-            if (!this.pause) {
-                this.world.update(dt);
-                this.window.render();
+        long prev = System.nanoTime(); //time since previous loop
+        int frames = 0;
+        double dt = 0;
+        double time = System.currentTimeMillis();
+        while (this.running) {
+            long now = System.nanoTime();
+            dt += (now - prev) / NANO_SECONDS_PER_FRAME;
+            prev = now;
+            if (dt >= 1) {
+                if (!this.pause) {
+                    this.world.update();
+                    this.window.render();
+                }
+                frames++;
+                dt--;
+                /*
+                Display fps (if in debug mode)
+                 */
+                if(System.currentTimeMillis() - time >= 1 * SECOND_TO_MILLISECOND) {
+                    if (this.debug) {
+                        System.out.println("FPS=" + frames);
+                    }
+                    time += 1 * SECOND_TO_MILLISECOND;
+                    frames = 0;
+                }
             }
-            this.waitForNextFrame(currTime);
-            prevTime = currTime;
         }
-        //this.showMatchResult();
     }
 
     //private void showMatchResult() {
         //this.window.changePanel(new ResultScreen(this, world.getResult()));
     //}
 
-    private void waitForNextFrame(final long startTime) {
-        final long dt = System.currentTimeMillis() - startTime;
-        if (dt < PERIOD) {
-            try {
-                Thread.sleep(PERIOD - dt);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     /**
      * Gets the main window.
@@ -106,5 +122,24 @@ public final class Engine {
      */
     public MainWindow getWindow() {
         return window;
+    }
+
+    /**
+     * Gets the debug mode state.
+     *
+     * @return true if the debug mode is enabled, false otherwise.
+     */
+    public boolean isDebugMode() {
+        return this.debug;
+    }
+
+    /**
+     * Enable or disable the debug mode.
+     *
+     * @param debug the flag to enable/disable the debug mode.
+     *              True to enable it, false otherwise.
+     */
+    public void setDebugMode(final boolean debug) {
+        this.debug = debug;
     }
 }

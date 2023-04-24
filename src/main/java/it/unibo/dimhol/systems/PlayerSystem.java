@@ -25,10 +25,9 @@ public class PlayerSystem extends AbstractSystem {
      * Handle player logic.
      *
      * @param e the entity to process
-     * @param dt the delta time
      */
     @Override
-    public void process(final Entity e, final long dt) {
+    public void process(final Entity e) {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         var an = (AnimationComponent) e.getComponent(AnimationComponent.class);
         var input = this.world.getInputListener();
