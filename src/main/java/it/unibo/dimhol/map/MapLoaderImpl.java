@@ -96,6 +96,13 @@ public class MapLoaderImpl implements MapLoad {
                 k++;
             }
         }
+//        //test: print the matrix
+//        for (int i = 0; i < width; i++) {
+//            for (int j = 0; j < height; j++) {
+//                System.out.print(matrix[i][j].getTileSetId() + " ");
+//            }
+//            System.out.println();
+//        }
         return matrix;
     }
 
