@@ -18,12 +18,12 @@ import java.util.List;
 /**
  * The class is responsible for parsing an XML file and loading a map from it.
  */
-public class LoadMapImpl implements MapLoad {
-    private final int width;
-    private final int height;
-    private final int tileWidth;
-    private final int tileHeight;
-    private final List<Tile[][]> mapTileLayers;
+public class MapLoaderImpl implements MapLoad {
+    private int width;
+    private int height;
+    private int tileWidth;
+    private int tileHeight;
+    private List<Tile[][]> mapTileLayers;
     NodeList layerNodeList;
     Element layerElement;
 
@@ -31,7 +31,7 @@ public class LoadMapImpl implements MapLoad {
      * Constructor for LoadMapImpl that loads a map from an XML file.
      * @param fileName The name of the XML file to load the map from.
      */
-    public LoadMapImpl(final String fileName) {
+    public MapLoaderImpl(final String fileName) {
 
         Element rootElement = null;
         Document doc = null;
@@ -69,8 +69,6 @@ public class LoadMapImpl implements MapLoad {
         for (int i = 0; i < layerNodeList.getLength(); i++) {
             mapTileLayers.add(getTileMatrix(layerNodeList.item(i)));
         }
-
-
     }
 
     private Tile[][] getTileMatrix(Node item) {
@@ -95,6 +93,7 @@ public class LoadMapImpl implements MapLoad {
                         }
                     }
                 }
+                k++;
             }
         }
         return matrix;
@@ -110,10 +109,6 @@ public class LoadMapImpl implements MapLoad {
         return tileHeight;
     }
 
-    @Override
-    public Tile[][] getMap() {
-        return new Tile[0][];
-    }
 
     @Override
     public int getWidth() {
