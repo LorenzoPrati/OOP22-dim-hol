@@ -12,9 +12,10 @@ public class Tile {
     /**
      * Constructs a new Tile with the specified collidability.
      *
-     * @param collidable whether this Tile should be collidable.
+     * @param tileSetIdInt
+     * @param collidable   whether this Tile should be collidable.
      */
-    public Tile(final boolean collidable) {
+    public Tile(int tileSetIdInt, final boolean collidable) {
         this.collidable = collidable;
     }
 
