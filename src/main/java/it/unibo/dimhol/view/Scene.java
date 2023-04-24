@@ -49,14 +49,14 @@ public class Scene extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        var layer = mapLoader.getMapTileLayers().get(0);
+        var layer = mapLoader.getMapTileLayers().get(1);
 
         for (int i = 0; i < mapLoader.getWidth(); i++) {
             for (int j = 0; j < mapLoader.getHeight(); j++) {
-                var drawX = mapLoader.getTileWidth() * i;
-                var drawY = mapLoader.getTileHeight() * j;
+                var drawX = mapLoader.getTileHeight() * j;
+                var drawY = mapLoader.getTileWidth() * i;
                 var id = layer[i][j].getTileSetId();
-                g2.drawImage(loader.getTileImage(id), drawY, drawX, mapLoader.getTileWidth(), mapLoader.getTileHeight(), null);
+                g2.drawImage(loader.getTileImage(id), drawX, drawY, mapLoader.getTileWidth(), mapLoader.getTileHeight(), null);
             }
         }
 
