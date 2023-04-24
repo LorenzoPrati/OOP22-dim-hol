@@ -1,15 +1,11 @@
 package it.unibo.dimhol.map;
 
+import java.util.List;
+
 /**
  * The LoadMap interface represents a contract for classes that can load and provide information about a tile map.
  */
-public interface LoadMap {
-    /**
-     * Returns the 2D arrays of integers that represents the tile map.
-     * @return the tile map ad a 2D array of integers
-     */
-    Tile[][] getMap();
-
+public interface MapLoad {
     /**
      * Returns the width of the tile map.
      * @return the width of the tile map
@@ -33,4 +29,10 @@ public interface LoadMap {
      * @return the height of a single tile in the tile map
      */
     int getTileHeight();
+
+    /**
+     *
+     * @return map tile layers.
+     */
+    List<Tile[][]> getMapTileLayers();
 }

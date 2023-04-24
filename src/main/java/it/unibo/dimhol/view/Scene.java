@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.*;
 import it.unibo.dimhol.Engine;
 import it.unibo.dimhol.World;
+import it.unibo.dimhol.map.MapLoaderImpl;
+import it.unibo.dimhol.map.*;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.awt.*;
@@ -15,7 +17,8 @@ import java.awt.*;
 public class Scene extends JPanel {
 
     private List<Triple<Integer,Integer,Integer>> renderQueue = new ArrayList<>();
-    private ResourceLoader loader = new ResourceLoader();
+    private MapLoad mapLoader = new MapLoaderImpl("src/main/java/it/unibo/dimhol/map/mapResources/nice-map.tmx");
+    private ResourceLoader loader = new ResourceLoader(mapLoader.getTileWidth(), mapLoader.getTileHeight());
     private List<GraphicInfo> renderList = new ArrayList<>();
 
     public Scene(){
