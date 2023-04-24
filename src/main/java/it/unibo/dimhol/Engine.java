@@ -34,7 +34,7 @@ public final class Engine {
      */
     public Engine() {
         this.window = new MainWindow(this);
-        //System.setProperty("sun.java2d.opengl", "true");
+        System.setProperty("sun.java2d.opengl", "true");
     }
 
     /**
@@ -99,7 +99,7 @@ public final class Engine {
                 /*
                 Display fps (if in debug mode)
                  */
-                if(System.currentTimeMillis() - time >= 1 * SECOND_TO_MILLISECOND) {
+                if (System.currentTimeMillis() - time >= 1 * SECOND_TO_MILLISECOND) {
                     if (this.debug) {
                         System.out.println("FPS=" + frames);
                     }

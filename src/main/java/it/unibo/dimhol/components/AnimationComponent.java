@@ -15,6 +15,7 @@ public class AnimationComponent implements Component{
         this.index = 0;
         this.map.putAll(map);
         this.state = initialState;
+        this.lastState = state;
     }
     
     public void setState(final String state) {
@@ -33,6 +34,7 @@ public class AnimationComponent implements Component{
             }
             if(this.index == maxIndex-1){ 
                 this.index = 0;
+                this.counter = 0;
             }
             else{
                 if(this.counter>=4){
@@ -45,7 +47,6 @@ public class AnimationComponent implements Component{
             this.index = 0;
         }
         this.counter++;
-        System.out.println("indice: " + index); //for debug
         return this.index;
     }
 
@@ -53,9 +54,7 @@ public class AnimationComponent implements Component{
         int num = -1;
         for(var elem : map.entrySet()){
             if(elem.getKey().equals(this.state)){
-                
                 num=  elem.getValue().get(1);
-                System.out.println("numero immagine: " + num); //for debug
                 return num;
             }
         }
