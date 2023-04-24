@@ -17,14 +17,25 @@ public abstract class AbstractSystem implements GameSystem {
     protected final World world;
     private final Set<Class<? extends Component>> family = new HashSet<>();
 
+    /**
+     * Constructs a system to operates on a given world and family of components.
+     *
+     * @param w the world
+     * @param comps the family of components
+     */
     public AbstractSystem(final World w, final Class<? extends Component>... comps) {
         this.world = w;
         this.family.addAll(Arrays.asList(comps));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(final long dt) {
-        this.world.getEntities().stream().filter(e -> e.hasFamily(this.family)).forEach(e -> this.process(e, dt));
+        this.world.getEntities().stream()
+                .filter(e -> e.hasFamily(this.family))
+                .forEach(e -> this.process(e, dt));
     }
 
     /**
@@ -34,6 +45,5 @@ public abstract class AbstractSystem implements GameSystem {
      * @param e the entity to process
      * @param dt the delta time
      */
-    public abstract void process(Entity e, long dt);
-
+    public abstract void process(final Entity e, final long dt);
 }

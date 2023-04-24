@@ -2,26 +2,36 @@ package it.unibo.dimhol.systems;
 
 import it.unibo.dimhol.World;
 import it.unibo.dimhol.components.AnimationComponent;
-import it.unibo.dimhol.components.Component;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
 import org.locationtech.jts.math.Vector2D;
 
 /**
- * A system to handle player input.
+ * A system to handle player logic.
  */
-public class PlayerInputSystem extends AbstractSystem {
+public class PlayerSystem extends AbstractSystem {
 
-    public PlayerInputSystem(World w) {
+    /**
+     * Constructs a PlayerSystem. Iterates through entities that has {@link PlayerComponent}.
+     *
+     * @param w the world
+     */
+    public PlayerSystem(final World w) {
         super(w, PlayerComponent.class);
     }
 
+    /**
+     * Handle player logic.
+     *
+     * @param e the entity to process
+     * @param dt the delta time
+     */
     @Override
-    public void process(Entity e, long dt) {
+    public void process(final Entity e, final long dt) {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         var an = (AnimationComponent) e.getComponent(AnimationComponent.class);
-        var input = this.world.getInput();
+        var input = this.world.getInputListener();
         if (input.anyMoveKeyPressed()) {
             mov.setEnabled(true);
             if (input.isUp()) {

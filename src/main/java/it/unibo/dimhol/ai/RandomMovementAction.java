@@ -35,8 +35,8 @@ public final class RandomMovementAction implements Action {
         PositionComponent enemyPos = (PositionComponent) enemy.getComponent(PositionComponent.class);
         BodyComponent enemyBody = (BodyComponent) enemy.getComponent(BodyComponent.class);
 
-        Vector2D playerCentralPos = MathUtilities.getCentralPosition(playerPos.getPos(), playerBody.getBs());
-        Vector2D enemyCentralPos = MathUtilities.getCentralPosition(enemyPos.getPos(), enemyBody.getBs());
+        Vector2D playerCentralPos = MathUtilities.getCentralPosition(playerPos.getPos(), playerBody.getBodyShape());
+        Vector2D enemyCentralPos = MathUtilities.getCentralPosition(enemyPos.getPos(), enemyBody.getBodyShape());
 
         return MathUtilities.getDistance(playerCentralPos, enemyCentralPos) >= AGGRO_RAY;
 
