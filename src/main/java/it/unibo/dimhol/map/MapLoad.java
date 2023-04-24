@@ -3,7 +3,7 @@ package it.unibo.dimhol.map;
 /**
  * The LoadMap interface represents a contract for classes that can load and provide information about a tile map.
  */
-public interface LoadMap {
+public interface MapLoad {
     /**
      * Returns the 2D arrays of integers that represents the tile map.
      * @return the tile map ad a 2D array of integers

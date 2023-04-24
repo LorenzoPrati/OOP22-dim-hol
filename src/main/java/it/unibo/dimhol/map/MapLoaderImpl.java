@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * The class is responsible for parsing an XML file and loading a map from it.
  */
-public class LoadMapImpl implements LoadMap {
+public class MapLoaderImpl implements LoadMap {
     private Tile[][] map;
     private int width;
     private int height;
@@ -29,7 +29,7 @@ public class LoadMapImpl implements LoadMap {
      * Constructor for LoadMapImpl that loads a map from an XML file.
      * @param fileName The name of the XML file to load the map from.
      */
-    public LoadMapImpl(final String fileName) {
+    public MapLoaderImpl(final String fileName) {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
