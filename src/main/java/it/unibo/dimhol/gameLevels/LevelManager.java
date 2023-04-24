@@ -15,7 +15,7 @@ import java.util.Random;
 /**
  * The LevelGenerator class generates a new level for the game, including the placement of the player and enemies.
  */
-public class LevelGenerator {
+public class LevelManager {
     private static final int ENEMY_DENSITY = 10;
     private final World world;
     private final LoadMap loadMap = new LoadMapImpl("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
@@ -23,7 +23,7 @@ public class LevelGenerator {
     private Tile[][] map;
     private int currentLevel = 0;
     private Entity player;
-    private LevelGenerator(World world) {
+    private LevelManager(World world) {
         this.world = world;
     }
 
