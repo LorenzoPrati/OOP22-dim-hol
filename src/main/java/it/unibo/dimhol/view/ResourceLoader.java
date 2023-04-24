@@ -56,8 +56,8 @@ public class ResourceLoader {
         }
         var cols = tileSet.getWidth() / tileWidth;
         var rows = tileSet.getHeight() / tileHeight;
-        for(int i=0; i< cols; i++){
-            for(int j=0; j<rows; j++){
+        for(int i=0; i < rows; i++){
+            for(int j=0; j < cols; j++){
                 this.tileImages.add(tileSet.getSubimage(j*tileWidth,i*tileHeight, tileWidth, tileHeight));
             }
         }
