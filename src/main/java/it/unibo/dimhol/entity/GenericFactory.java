@@ -52,20 +52,12 @@ public class GenericFactory {
                 .build();
     }
 
-    public Entity createObstacle(final double x, final double y) {
-        return new EntityBuilder().add(new PositionComponent(new Vector2D(100,100), 0))
-                .add(new BodyComponent(new RectBodyShape(W, H), true))
-                .add(new VisualDebugComponent(1))
-                .build();
-    }
-
     public Entity createHeart(final double x, final double y){
         return new EntityBuilder().add(new HeartComponent())
             .add(new PositionComponent(new Vector2D(x, y), 0))
             .add(new BodyComponent(new RectBodyShape(W,H), false))
             .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
             .add(new AnimationComponent(this.map.get("heart"), "idle"))
-            .add(new VisualDebugComponent(2))
             .build();
     }
 
@@ -79,17 +71,6 @@ public class GenericFactory {
                 .build();
     }
 
-    public Entity createBullet(final double dirX, final double dirY, final Entity entity) {
-        PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
-        BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
-        return new EntityBuilder()
-                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(),
-                        entityBody.getBodyShape(), BULLET_WIDTH, BULLET_HEIGHT), 0))
-                .add(new MovementComponent(new Vector2D(dirX, dirY), 2, true))
-                .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
-                .build();
-    }
-
     public Entity createShooterEnemy(final double x, final double y) {
         return new EntityBuilder()
                 .add(new AiComponent(new RoutineFactory().createShooterRoutine()))
@@ -100,6 +81,17 @@ public class GenericFactory {
                 .build();
     }
 
+    public Entity createBullet(final double dirX, final double dirY, final Entity entity) {
+        PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
+        BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
+        return new EntityBuilder()
+                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(),
+                        entityBody.getBodyShape(), BULLET_WIDTH, BULLET_HEIGHT), 0))
+                .add(new MovementComponent(new Vector2D(dirX, dirY), 3, true))
+                .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
+                .add(new AnimationComponent(map.get("coin"), "idle"))
+                .build();
+    }
 
     public Entity createMeleeAttack(final double dirX, final double dirY, final Entity entity) {
         PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
@@ -107,7 +99,6 @@ public class GenericFactory {
         return new EntityBuilder()
                 .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(), entityBody.getBodyShape(), MELEE_WIDTH, MELEE_HEIGHT), 0))
                 .add(new BodyComponent(new RectBodyShape(MELEE_WIDTH, MELEE_HEIGHT), false))
-                .add(new VisualDebugComponent(4))
                 .build();
     }
 
