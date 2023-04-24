@@ -59,7 +59,7 @@ public class MapLoaderImpl implements MapLoad {
          * Get the list of all the layer elements into the document.
          */
         layerNodeList = doc.getElementsByTagName("layer");
-        layerElement = (Element) layerNodeList;
+        layerElement = (Element) layerNodeList.item(0);
         width = Integer.parseInt(layerElement.getAttribute("width"));
         height = Integer.parseInt(layerElement.getAttribute("height"));
         /*
@@ -74,7 +74,7 @@ public class MapLoaderImpl implements MapLoad {
     private Tile[][] getTileMatrix(Node item) {
         Element layerElement = (Element) item.getChildNodes();
         NodeList propertyNodes = layerElement.getElementsByTagName("property");
-        Element dataElement = (Element) layerElement.getElementsByTagName("data");
+        Element dataElement = (Element) layerElement.getElementsByTagName("data").item(0);
 
         String[] line = dataElement.getFirstChild().getTextContent().split("[\n|,]");
         List<String> nline = Arrays.stream(line).filter(e -> !e.equals("")).toList();
@@ -87,8 +87,8 @@ public class MapLoaderImpl implements MapLoad {
                     Element property = (Element) propertyNodes.item(l);
                     if (Integer.parseInt((nline.get(k))) == Integer.parseInt(property.getAttribute("tileMapIdInt"))) {
 
-                        if (property.hasAttribute("walkableBool")) {
-                            matrix[i][j] = new Tile(Integer.parseInt(property.getAttribute("tileMapIdInt")) - 1,
+                        if (property.hasAttribute("walkableBool") && property.hasAttribute("tileSetIdInt")) {
+                            matrix[i][j] = new Tile(Integer.parseInt(property.getAttribute("tileSetIdInt")),
                                     Boolean.parseBoolean(property.getAttribute("walkableBool")));
                         }
                     }
