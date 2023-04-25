@@ -21,10 +21,11 @@ public class ClearCollisionSystem extends AbstractSystem {
     /**
      * Removes CollisionComponent from the entity.
      *
-     * @param e the entity to process
+     * @param e  the entity to process
+     * @param dt
      */
     @Override
-    public void process(final Entity e) {
+    public void process(final Entity e, double dt) {
         var cc = (CollisionComponent) e.getComponent(CollisionComponent.class);
         e.removeComponent(cc);
     }

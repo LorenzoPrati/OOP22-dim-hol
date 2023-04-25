@@ -24,7 +24,7 @@ public class AnimationSystem extends AbstractSystem {
     }
 
     @Override
-    public void process(Entity e) {
+    public void process(Entity e, double dt) {
         var animationComp = (AnimationComponent)e.getComponent(AnimationComponent.class);
         var currentState = animationComp.getState();
         if(currentState.equals(animationComp.getLastState())){

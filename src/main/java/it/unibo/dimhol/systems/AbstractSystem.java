@@ -32,17 +32,18 @@ public abstract class AbstractSystem implements GameSystem {
      * {@inheritDoc}
      */
     @Override
-    public void update() {
+    public void update(double dt) {
         this.world.getEntities().stream()
                 .filter(e -> e.hasFamily(this.family))
-                .forEach(e -> this.process(e));
+                .forEach(e -> this.process(e, dt));
     }
 
     /**
      * This method gets called on each entity belonging to the system family.
      * Performs the system specific task.
      *
-     * @param e the entity to process
+     * @param e  the entity to process
+     * @param dt
      */
-    public abstract void process(final Entity e);
+    public abstract void process(final Entity e, double dt);
 }

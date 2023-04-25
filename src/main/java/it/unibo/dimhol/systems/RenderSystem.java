@@ -26,7 +26,7 @@ public class RenderSystem extends AbstractSystem{
     }
 
     @Override
-    public void process(Entity e) {
+    public void process(Entity e, double dt) {
        var pos = (PositionComponent)e.getComponent(PositionComponent.class);
        var animationComp = (AnimationComponent)e.getComponent(AnimationComponent.class);
        this.world.getScene().toList(animationComp.getIndex(),getNumToUse(animationComp.getState(), 

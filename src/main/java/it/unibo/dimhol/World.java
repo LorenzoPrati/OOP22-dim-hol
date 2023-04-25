@@ -108,10 +108,11 @@ public class World {
     /**
      * Gets called each game loop. Updates the world.
      */
-    public void update() {
-        this.systems.forEach(s -> s.update());
+    public void update(double dt) {
+        this.systems.forEach(s -> s.update(dt));
         this.handleEvents();
         //System.out.println("num ent " + this.getEntities().size());
+        this.scene.render();
     }
 
     /**

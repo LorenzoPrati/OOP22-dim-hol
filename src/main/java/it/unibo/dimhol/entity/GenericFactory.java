@@ -24,8 +24,8 @@ public class GenericFactory {
     private static final double BULLET_HEIGHT = 10;
     private static final double MELEE_WIDTH = 60;
     private static final double MELEE_HEIGHT = 60;
-    private static final double PLAYER_SPEED = 6;
-    private static final double ENEMY_SPEED = 3;
+    private static final double PLAYER_SPEED = 400;
+    private static final double ENEMY_SPEED = 300;
     private static final int W = 60;
     private static final int H = 60;
     private final Map<String,Map<String,ArrayList<Integer>>> map = new HashMap<>();

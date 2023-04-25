@@ -66,11 +66,10 @@ public class Scene extends JPanel {
             var imageToCut = loader.getImage(renderList.get(i).getNumImage());
             var img = createCompatibleImage(imageToCut.getSubimage(
                     renderList.get(i).getIndex() * loader.getWidth(renderList.get(i).getNumImage()),
-                    0 * loader.getHeigth(renderList.get(i).getNumImage()),
+                    0,
                     loader.getWidth(renderList.get(i).getNumImage()), loader.getHeigth(renderList.get(i).getNumImage())));
             g2.drawImage(img,
                     (int) renderList.get(i).getX(), (int) renderList.get(i).getY(), 60, 60, null);
-            g2.drawRect((int) renderList.get(i).getX(), (int) renderList.get(i).getY(), 60, 60);
         }
 
         g2.dispose();
@@ -94,5 +93,9 @@ public class Scene extends JPanel {
             g2d.dispose();
             return newImage;
         }
+    }
+
+    public void render() {
+        this.paintImmediately(0,0,this.getWidth(),this.getHeight());
     }
 }
