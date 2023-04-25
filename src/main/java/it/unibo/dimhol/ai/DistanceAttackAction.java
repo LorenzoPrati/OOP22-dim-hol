@@ -24,9 +24,10 @@ public class DistanceAttackAction implements Action {
     private Vector2D playerCentralPos;
     private Vector2D enemyCentralPos;
     private Entity enemy;
+    private Entity player;
 
     @Override
-    public boolean canExecute(Entity player, Entity enemy) {
+    public boolean canExecute(Entity enemy) {
         this.enemy = enemy;
 
         playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
@@ -53,6 +54,11 @@ public class DistanceAttackAction implements Action {
         } else {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public void setPlayer(Entity player) {
+        this.player = player;
     }
 
     private List<Event> shoot() {

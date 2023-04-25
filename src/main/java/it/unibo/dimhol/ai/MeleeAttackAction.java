@@ -23,9 +23,10 @@ public class MeleeAttackAction implements Action {
     private PositionComponent playerPos;
     private PositionComponent enemyPos;
     private Entity enemy;
+    private Entity player;
 
     @Override
-    public boolean canExecute(Entity player, Entity enemy) {
+    public boolean canExecute(Entity enemy) {
         this.enemy = enemy;
 
         playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
@@ -55,6 +56,11 @@ public class MeleeAttackAction implements Action {
             return Optional.empty();
         }
 
+    }
+
+    @Override
+    public void setPlayer(Entity player) {
+        this.player = player;
     }
 
     private List<Event> meleeAttack() {
