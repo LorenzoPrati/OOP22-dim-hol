@@ -53,7 +53,7 @@ public class GenericFactory {
     }
 
     public Entity createHeart(final double x, final double y){
-        return new EntityBuilder().add(new HeartComponent())
+        return new EntityBuilder()
             .add(new PositionComponent(new Vector2D(x, y), 0))
             .add(new BodyComponent(new RectBodyShape(W,H), false))
             .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
