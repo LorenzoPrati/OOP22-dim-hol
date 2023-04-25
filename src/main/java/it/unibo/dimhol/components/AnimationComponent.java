@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AnimationComponent implements Component{
+    private final Map<String,ArrayList<Integer>> map = new HashMap<>();
     private String state; 
     private String lastState;
     private int index; 
-    private final Map<String,ArrayList<Integer>> map = new HashMap<>();
     private int counter;
 
     public AnimationComponent(final Map<String,ArrayList<Integer>> map, String initialState){
@@ -18,47 +18,37 @@ public class AnimationComponent implements Component{
         this.lastState = state;
     }
     
+    public String getState() {
+        return this.state;
+    }
+
+    public String getLastState() {
+        return this.lastState;
+    }
+
     public void setState(final String state) {
         this.lastState = this.state;
         this.state = state;
     }
     
-    
     public int getIndex(){
-        if(state.equals(this.lastState)){
-            int maxIndex = 0;
-            for(var elem : map.entrySet()){
-                if(elem.getKey().equals(this.state)){
-                    maxIndex = elem.getValue().get(0);
-                }
-            }
-            if(this.index == maxIndex-1){ 
-                this.index = 0;
-                this.counter = 0;
-            }
-            else{
-                if(this.counter>=4){
-                    this.index++;
-                    this.counter = 0;
-                } 
-            }
-        }
-        else{
-            this.index = 0;
-        }
-        this.counter++;
         return this.index;
     }
 
-    public int getNumToUse(){
-        int num = -1;
-        for(var elem : map.entrySet()){
-            if(elem.getKey().equals(this.state)){
-                num=  elem.getValue().get(1);
-                return num;
-            }
-        }
-        return num;
+    public void setIndex(final int index) {
+        this.index = index;
+    }
+
+    public int getCounter() {
+        return this.counter;
+    }
+
+    public void setCounter(final int counter) {
+        this.counter = counter;
+    }
+
+    public Map<String, ArrayList<Integer>> getMap() {
+        return this.map;
     }
     
 }
