@@ -17,9 +17,10 @@ public class FollowingAction implements Action {
     private PositionComponent enemyPos;
     private Vector2D playerCentralPos;
     private Vector2D enemyCentralPos;
+    private Entity player;
 
     @Override
-    public boolean canExecute(Entity player, Entity enemy) {
+    public boolean canExecute(Entity enemy) {
 
         playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
         BodyComponent playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
@@ -55,5 +56,10 @@ public class FollowingAction implements Action {
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public void setPlayer(Entity player) {
+        this.player = player;
     }
 }

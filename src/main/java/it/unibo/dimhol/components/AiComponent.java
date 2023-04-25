@@ -9,7 +9,8 @@ import java.util.List;
  */
 public final class AiComponent implements Component {
 
-    private final List<Action> routines;
+    private final List<Action> actions;
+
     private long prevMovTime = System.currentTimeMillis();
 
     /**
@@ -17,7 +18,7 @@ public final class AiComponent implements Component {
      * @param newRoutines are the enemy's behavior routines.
      */
     public AiComponent(final List<Action> newRoutines) {
-        this.routines = newRoutines;
+        this.actions = newRoutines;
     }
 
     /**
@@ -40,7 +41,7 @@ public final class AiComponent implements Component {
      *
      * @return enemy's routines.
      */
-    public List<Action> getRoutines() {
-        return routines;
+    public List<Action> getRoutine() {
+        return actions;
     }
 }

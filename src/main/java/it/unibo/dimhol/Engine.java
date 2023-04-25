@@ -27,7 +27,7 @@ public final class Engine {
     /**
      * True if in debug mode.
      */
-    private boolean debug;
+    private boolean debug = true;
 
     /**
      * Constructs an Engine.

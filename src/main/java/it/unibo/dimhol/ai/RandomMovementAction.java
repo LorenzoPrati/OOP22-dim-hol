@@ -22,13 +22,14 @@ public final class RandomMovementAction implements Action {
     private static final int AGGRO_RAY = 300;
     private final Random rand = new Random();
     private int walkingTimeMillis;
+    private Entity player;
 
     public RandomMovementAction() {
         setWalkingTimeMillis();
     }
 
     @Override
-    public boolean canExecute(final Entity player, final Entity enemy) {
+    public boolean canExecute(final Entity enemy) {
 
         PositionComponent playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
         BodyComponent playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
@@ -60,6 +61,11 @@ public final class RandomMovementAction implements Action {
             setWalkingTimeMillis();
         }
         return Optional.empty();
+    }
+
+    @Override
+    public void setPlayer(Entity player) {
+        this.player = player;
     }
 
     /**
