@@ -15,6 +15,7 @@ public class AnimationComponent implements Component{
         this.index = 0;
         this.map.putAll(map);
         this.state = initialState;
+        this.lastState = state;
     }
     
     public String getState() {
@@ -46,21 +47,8 @@ public class AnimationComponent implements Component{
         this.counter = counter;
     }
 
-    public int getMaxINdex(final String state){
-        return map.entrySet().stream()
-            .filter(e -> e.getKey().equals(state))
-            .map(e -> e.getValue())
-            .findAny()
-            .get()
-            .get(0);
+    public Map<String, ArrayList<Integer>> getMap() {
+        return this.map;
     }
-
-    public int getNumToUse(){
-        return map.entrySet().stream()
-        .filter(e -> e.getKey().equals(state))
-        .map(e -> e.getValue())
-        .findAny()
-        .get()
-        .get(1);
-    }
+    
 }
