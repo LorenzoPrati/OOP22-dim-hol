@@ -13,17 +13,21 @@ public interface Action {
 
     /**
      *
-     * @param player .
-     * @param enemy .
+     * @param entity .
      * @return true if the action is actionable.
      */
-    boolean canExecute(Entity player, Entity enemy);
+    boolean canExecute(Entity entity);
 
     /**
      *
-     * @param enemy is the entity that could execute an action.
+     * @param entity is the entity that could execute an action.
      * @return new entities that enemy could create.
      */
-    Optional<List<Event>> execute(Entity enemy);
+    Optional<List<Event>> execute(Entity entity);
 
+    /**
+     *
+     * @param player .
+     */
+    void setPlayer(Entity player);
 }

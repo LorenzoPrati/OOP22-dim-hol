@@ -30,12 +30,12 @@ public class AnimationSystem extends AbstractSystem {
         if(currentState.equals(animationComp.getLastState())){
             if(animationComp.getIndex() == getMaxIndex(currentState, animationComp.getMap()) - 1 ){
                 animationComp.setIndex(0);
-                System.out.println(animationComp.getIndex());
+
                 animationComp.setCounter(0);
             }
             else{
                 if(animationComp.getCounter() >= 5){
-                    System.out.println(animationComp.getIndex());
+
                     animationComp.setIndex(animationComp.getIndex() + 1);
                     animationComp.setCounter(0);
                 }
