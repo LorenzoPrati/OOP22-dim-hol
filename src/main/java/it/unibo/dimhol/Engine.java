@@ -92,7 +92,7 @@ public final class Engine {
             if (dt >= 1) {
                 if (!this.pause) {
                     this.world.update();
-                    this.window.render();
+                    this.world.getScene().paintImmediately(0, 0, world.getScene().getWidth(), world.getScene().getHeight());
                 }
                 frames++;
                 dt--;
