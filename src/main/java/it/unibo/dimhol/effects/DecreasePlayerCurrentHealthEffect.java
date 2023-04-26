@@ -19,6 +19,6 @@ public class DecreasePlayerCurrentHealthEffect implements Effect{
     @Override
     public void applyOn(Entity entity) {
         var health = (HealthComponent)entity.getComponent(HealthComponent.class);
-        health.setCurrentHealth(health.getCurrentHealth() + this.n);
+        health.setCurrentHealth(health.getCurrentHealth() - this.n);
     }
 }
