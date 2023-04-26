@@ -5,7 +5,7 @@ import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
 
 public class IncreaseMaxHealthEffect implements Effect {
-    private int n;
+    private final int n;
 
     public IncreaseMaxHealthEffect(final int n){
         this.n = n;
