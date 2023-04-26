@@ -84,6 +84,7 @@ public class World {
         this.systems.add(new ItemSystem(this));
         this.systems.add(new CombatSystem(this));
         this.systems.add(new StatSystem(this));
+        this.systems.add(new DeleteDeathEntitiesSystem(this));
         this.systems.add(new ClearCollisionSystem(this));
         this.systems.add( new AnimationSystem(this));
         this.systems.add(new RenderSystem(this));
