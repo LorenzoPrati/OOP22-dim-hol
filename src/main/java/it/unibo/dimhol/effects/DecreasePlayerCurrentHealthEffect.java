@@ -5,7 +5,7 @@ import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
 
 public class DecreasePlayerCurrentHealthEffect implements Effect{
-    private int n;
+    private final int n;
 
     public DecreasePlayerCurrentHealthEffect(final int n){
         this.n = n;
@@ -19,6 +19,6 @@ public class DecreasePlayerCurrentHealthEffect implements Effect{
     @Override
     public void applyOn(Entity entity) {
         var health = (HealthComponent)entity.getComponent(HealthComponent.class);
-        health.setCurrentHealth(health.getCurrentHealth() + this.n);
+        health.setCurrentHealth(health.getCurrentHealth() - this.n);
     }
 }
