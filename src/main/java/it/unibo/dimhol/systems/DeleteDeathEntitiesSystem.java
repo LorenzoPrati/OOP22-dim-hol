@@ -16,10 +16,9 @@ public class DeleteDeathEntitiesSystem extends AbstractSystem {
      * Constructs a system to operates on a given world and family of components.
      *
      * @param w     the world
-     * @param comps the family of components
      */
-    public DeleteDeathEntitiesSystem(World w, Class<? extends Component>... comps) {
-        super(w, HealthComponent.class, PlayerComponent.class);
+    public DeleteDeathEntitiesSystem(World w) {
+        super(w, HealthComponent.class);
     }
 
     @Override
