@@ -4,11 +4,14 @@ import it.unibo.dimhol.ai.MathUtilities;
 import it.unibo.dimhol.ai.RoutineFactory;
 import it.unibo.dimhol.commons.shapes.RectBodyShape;
 import it.unibo.dimhol.components.*;
+import it.unibo.dimhol.effects.DecreaseEnemyCurrentHealthEffect;
+import it.unibo.dimhol.effects.DecreasePlayerCurrentHealthEffect;
 import it.unibo.dimhol.effects.IncreaseCurrentHealthEffect;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.locationtech.jts.math.Vector2D;
 import org.yaml.snakeyaml.Yaml;
@@ -24,8 +27,9 @@ public class GenericFactory {
     private static final double BULLET_HEIGHT = 10;
     private static final double MELEE_WIDTH = 60;
     private static final double MELEE_HEIGHT = 60;
-    private static final double PLAYER_SPEED = 400;
-    private static final double ENEMY_SPEED = 300;
+    private static final double PLAYER_SPEED = 200;
+    private static final double ENEMY_SPEED = 100;
+    private static final double BULLET_SPEED = 300;
     private static final int W = 60;
     private static final int H = 60;
     private final Map<String,Map<String,ArrayList<Integer>>> map = new HashMap<>();
@@ -87,10 +91,23 @@ public class GenericFactory {
         return new EntityBuilder()
                 .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(),
                         entityBody.getBodyShape(), BULLET_WIDTH, BULLET_HEIGHT), 0))
-                .add(new MovementComponent(new Vector2D(dirX, dirY), 3, true))
+                .add(new MovementComponent(new Vector2D(dirX, dirY), BULLET_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
-                .add(new AnimationComponent(map.get("coin"), "idle"))
+                .add(new AnimationComponent(map.get("bullet"), getStringDirection(dirX, dirY)))
+                .add(new AttackComponent(entity, List.of(new DecreasePlayerCurrentHealthEffect(1))))
                 .build();
+    }
+
+    private String getStringDirection(double dirX, double dirY) {
+        if (dirX == 1) {
+            return "right";
+        } else if (dirX == -1) {
+            return "left";
+        } else if (dirY == 1) {
+            return "down";
+        } else {
+            return "up";
+        }
     }
 
     public Entity createMeleeAttack(final double dirX, final double dirY, final Entity entity) {
@@ -99,6 +116,7 @@ public class GenericFactory {
         return new EntityBuilder()
                 .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(), entityBody.getBodyShape(), MELEE_WIDTH, MELEE_HEIGHT), 0))
                 .add(new BodyComponent(new RectBodyShape(MELEE_WIDTH, MELEE_HEIGHT), false))
+                .add(new AttackComponent(entity, List.of(new DecreasePlayerCurrentHealthEffect(1))))
                 .build();
     }
 

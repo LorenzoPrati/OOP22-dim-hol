@@ -22,6 +22,5 @@ public class PauseExampleScreen extends JPanel {
             engine.getWindow().changePanel(new HomeScreen(engine));
         });
         this.add(b1);
-
     }
 }

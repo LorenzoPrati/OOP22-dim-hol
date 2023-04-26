@@ -70,6 +70,7 @@ public class Scene extends JPanel {
                     loader.getWidth(renderList.get(i).getNumImage()), loader.getHeigth(renderList.get(i).getNumImage())));
             g2.drawImage(img,
                     (int) renderList.get(i).getX(), (int) renderList.get(i).getY(), 60, 60, null);
+            g2.drawRect((int) renderList.get(i).getX(), (int) renderList.get(i).getY(), 60, 60);
         }
 
         g2.dispose();
