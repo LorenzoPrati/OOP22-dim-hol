@@ -4,11 +4,14 @@ import it.unibo.dimhol.ai.MathUtilities;
 import it.unibo.dimhol.ai.RoutineFactory;
 import it.unibo.dimhol.commons.shapes.RectBodyShape;
 import it.unibo.dimhol.components.*;
+import it.unibo.dimhol.effects.DecreaseEnemyCurrentHealthEffect;
+import it.unibo.dimhol.effects.DecreasePlayerCurrentHealthEffect;
 import it.unibo.dimhol.effects.IncreaseCurrentHealthEffect;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.locationtech.jts.math.Vector2D;
 import org.yaml.snakeyaml.Yaml;
@@ -87,9 +90,10 @@ public class GenericFactory {
         return new EntityBuilder()
                 .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(),
                         entityBody.getBodyShape(), BULLET_WIDTH, BULLET_HEIGHT), 0))
-                .add(new MovementComponent(new Vector2D(dirX, dirY), 3, true))
+                .add(new MovementComponent(new Vector2D(dirX, dirY), 100, true))
                 .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
                 .add(new AnimationComponent(map.get("coin"), "idle"))
+                .add(new AttackComponent(entity, List.of(new DecreasePlayerCurrentHealthEffect(1))))
                 .build();
     }
 
