@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class DistanceAttackAction implements Action {
+public class DistanceAttackAction extends AbstractAction {
 
     private static final int RELOAD_GUN_TIME = 2000;
     private static final int AGGRO_RAY = 300;
@@ -29,6 +29,7 @@ public class DistanceAttackAction implements Action {
     @Override
     public boolean canExecute(Entity enemy) {
         this.enemy = enemy;
+        this.player = super.getPlayer();
 
         playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
         BodyComponent playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
@@ -56,21 +57,16 @@ public class DistanceAttackAction implements Action {
         }
     }
 
-    @Override
-    public void setPlayer(Entity player) {
-        this.player = player;
-    }
-
     private List<Event> shoot() {
         List<Event> bullets = new ArrayList<>();
 
         double angle = MathUtilities.getAngle(playerCentralPos, enemyCentralPos);
 
         switch (MathUtilities.getVisionZone(angle, playerPos.getPos(), enemyPos.getPos())) {
-            case 1 -> bullets.add(new AddEntityEvent(genericFactory.createBullet(1, 0, enemy)));
-            case 2 -> bullets.add(new AddEntityEvent(genericFactory.createBullet(-1, 0, enemy)));
-            case 3 -> bullets.add(new AddEntityEvent(genericFactory.createBullet(0, 1, enemy)));
-            case 4 -> bullets.add(new AddEntityEvent(genericFactory.createBullet(0, -1, enemy)));
+            case "right" -> bullets.add(new AddEntityEvent(genericFactory.createBullet(1, 0, enemy)));
+            case "left" -> bullets.add(new AddEntityEvent(genericFactory.createBullet(-1, 0, enemy)));
+            case "down" -> bullets.add(new AddEntityEvent(genericFactory.createBullet(0, 1, enemy)));
+            case "up" -> bullets.add(new AddEntityEvent(genericFactory.createBullet(0, -1, enemy)));
         }
 
         return bullets;
