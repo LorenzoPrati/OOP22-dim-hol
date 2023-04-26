@@ -41,6 +41,11 @@ public class ResourceLoader {
             this.imagesMap.put(14, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/coin.png"))), 32, 32));
             this.imagesMap.put(15, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/heart.png"))), 64, 64));
             this.imagesMap.put(16, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/key.png"))), 19, 10));
+
+            this.imagesMap.put(18, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/up.png"))), 123, 127));
+            this.imagesMap.put(19, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/down.png"))), 123, 127));
+            this.imagesMap.put(20, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/left.png"))), 127, 123));
+            this.imagesMap.put(21, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/right.png"))), 127, 123));
         }
         catch(IOException e){
             System.out.println("Error loading images. ");
