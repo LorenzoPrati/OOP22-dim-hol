@@ -56,15 +56,15 @@ public class World {
          */
         var gf = new GenericFactory();
         this.entities.add(gf.createPlayer(10,10));
-        this.entities.add(gf.createZombieEnemy(100,100));
+        this.entities.add(gf.createZombieEnemy(200,100));
         this.entities.add(gf.createZombieEnemy(700,100));
-        this.entities.add(gf.createZombieEnemy(900,100));
-        this.entities.add(gf.createZombieEnemy(880,100));
-        this.entities.add(gf.createShooterEnemy(100,100));
+        this.entities.add(gf.createZombieEnemy(900,300));
+        this.entities.add(gf.createZombieEnemy(880,300));
+        this.entities.add(gf.createShooterEnemy(100,500));
         this.entities.add(gf.createShooterEnemy(700,100));
         this.entities.add(gf.createShooterEnemy(900,550));
         this.entities.add(gf.createZombieEnemy(450,100));
-        this.entities.add(gf.createShooterEnemy(300,100));
+        this.entities.add(gf.createShooterEnemy(300,800));
         this.entities.add(gf.createShooterEnemy(570,550));
         this.entities.add(gf.createZombieEnemy(355,105));
 
