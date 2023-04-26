@@ -5,7 +5,7 @@ import it.unibo.dimhol.components.HealthComponent;
 import it.unibo.dimhol.entity.Entity;
 
 public class DecreaseEnemyCurrentHealthEffect implements Effect{
-    private int n;
+    private final int n;
 
     public DecreaseEnemyCurrentHealthEffect(final int n){
         this.n = n;
