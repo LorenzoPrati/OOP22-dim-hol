@@ -1,6 +1,6 @@
 
     player:
-        attacking_up:
+        attacking up:
             - 6
             - 1
         attacking down:
@@ -12,61 +12,85 @@
         attacking right:
             - 6
             - 4
-        walking up:
-            - 8
+        attacking2 up:
+            - 6
             - 5
-        walking down:
+        attacking2 down:
             - 6
             - 6
-        walking left:
+        attacking2 left:
             - 6
             - 7
-        walking right:
+        attacking2 right:
             - 6
             - 8
-        idle up:
+        attacking3 up:
             - 5
             - 9
-        idle down:
+        attacking3 down:
             - 5
             - 10
-        idle left:
+        attacking3 left:
             - 5
             - 11
-        idle right:
+        attacking3 right:
             - 5
             - 12
+        walking up:
+            - 8
+            - 13
+        walking down:
+            - 6
+            - 14
+        walking left:
+            - 6
+            - 15
+        walking right:
+            - 6
+            - 16
+        idle up:
+            - 5
+            - 17
+        idle down:
+            - 5
+            - 18
+        idle left:
+            - 5
+            - 19
+        idle right:
+            - 5
+            - 20
     enemy:
         idle:
             - 4
-            - 13
+            - 21
     coin:
         idle:
             - 6
-            - 14
+            - 22
     heart:
         idle:
             - 1
-            - 15
+            - 23
     key:
         idle:
             - 1
-            - 16
+            - 24
     chest:
         idle:
             - 2
-            - 17
+            - 25
     bullet:
         up:
             - 1
-            - 18
+            - 26
         down:
             - 1
-            - 19
+            - 27
         left:
             - 1
-            - 20
+            - 28
         right:
             - 1
-            - 21
+            - 29
                
