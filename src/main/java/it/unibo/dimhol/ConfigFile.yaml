@@ -1,6 +1,6 @@
 
     player:
-        attacking_up:
+        attacking up:
             - 6
             - 1
         attacking down:
@@ -12,61 +12,85 @@
         attacking right:
             - 6
             - 4
-        walking up:
-            - 8
+        attacking2 up:
+            - 6
             - 5
-        walking down:
-            - 6
-            - 6
-        walking left:
+        attacking2 down:
             - 6
             - 7
-        walking right:
+        attacking2 left:
             - 6
             - 8
-        idle up:
-            - 5
+        attacking2 right:
+            - 6
             - 9
-        idle down:
+        attacking3 up:
             - 5
             - 10
-        idle left:
+        attacking3 down:
             - 5
             - 11
-        idle right:
+        attacking3 left:
             - 5
             - 12
+        attacking3 right:
+            - 5
+            - 13
+        walking up:
+            - 8
+            - 14
+        walking down:
+            - 6
+            - 15
+        walking left:
+            - 6
+            - 16
+        walking right:
+            - 6
+            - 17
+        idle up:
+            - 5
+            - 18
+        idle down:
+            - 5
+            - 19
+        idle left:
+            - 5
+            - 20
+        idle right:
+            - 5
+            - 21
     enemy:
         idle:
             - 4
-            - 13
+            - 22
     coin:
         idle:
             - 6
-            - 14
+            - 23
     heart:
         idle:
             - 1
-            - 15
+            - 24
     key:
         idle:
             - 1
-            - 16
+            - 25
     chest:
         idle:
             - 2
-            - 17
+            - 26
     bullet:
         up:
             - 1
-            - 18
+            - 27
         down:
             - 1
-            - 19
+            - 28
         left:
             - 1
-            - 20
+            - 29
         right:
             - 1
-            - 21
+            - 30
                
