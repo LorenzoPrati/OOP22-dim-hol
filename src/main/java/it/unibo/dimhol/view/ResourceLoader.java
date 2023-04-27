@@ -27,15 +27,15 @@ public class ResourceLoader {
             this.imagesMap.put(3, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack/WarriorLeftAttack01.png"))), 48, 48));
             this.imagesMap.put(4, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack/WarriorRightAttack01.png"))), 48, 48));
 
-            this.imagesMap.put(5, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack/WarriorUpAttack02.png"))), 48, 48));
-            this.imagesMap.put(6, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack/WarriorDownAttack02.png"))), 48, 48));
-            this.imagesMap.put(7, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack/WarriorLeftAttack02.png"))), 48, 48));
-            this.imagesMap.put(8, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack/WarriorRightAttack02.png"))), 48, 48));
+            this.imagesMap.put(5, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack2/WarriorUpAttack02.png"))), 48, 48));
+            this.imagesMap.put(6, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack2/WarriorDownAttack02.png"))), 48, 48));
+            this.imagesMap.put(7, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack2/WarriorLeftAttack02.png"))), 48, 48));
+            this.imagesMap.put(8, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack2/WarriorRightAttack02.png"))), 48, 48));
 
-            this.imagesMap.put(9, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack/WarriorUpAttack03.png"))), 48, 48));
-            this.imagesMap.put(10, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack/WarriorDownAttack03.png"))), 48, 48));
-            this.imagesMap.put(11, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack/WarriorLeftAttack03.png"))), 48, 48));
-            this.imagesMap.put(12, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack/WarriorRightAttack03.png"))), 48, 48));
+            this.imagesMap.put(9, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack3/WarriorUpAttack03.png"))), 48, 48));
+            this.imagesMap.put(10, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack3/WarriorDownAttack03.png"))), 48, 48));
+            this.imagesMap.put(11, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack3/WarriorLeftAttack03.png"))), 48, 48));
+            this.imagesMap.put(12, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/attack3/WarriorRightAttack03.png"))), 48, 48));
             
             this.imagesMap.put(13, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/walk/WarriorUpWalk.png"))), 48, 48));
             this.imagesMap.put(14, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/walk/WarriorDownWalk.png"))), 48, 48));
