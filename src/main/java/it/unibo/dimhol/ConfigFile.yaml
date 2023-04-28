@@ -60,37 +60,49 @@
         idle right:
             - 5
             - 20
+        hurt up:
+            - 4
+            - 21
+        hurt down:
+            - 4
+            - 22
+        hurt left:
+            - 4
+            - 23
+        hurt right:
+            - 4
+            - 24
     enemy:
         idle:
             - 4
-            - 21
+            - 25
     coin:
         idle:
             - 6
-            - 22
+            - 26
     heart:
         idle:
             - 1
-            - 23
+            - 27
     key:
         idle:
             - 1
-            - 24
+            - 28
     chest:
         idle:
             - 2
-            - 25
+            - 29
     bullet:
         up:
             - 1
-            - 26
+            - 30
         down:
             - 1
-            - 27
+            - 31
         left:
             - 1
-            - 28
+            - 32
         right:
             - 1
-            - 29
+            - 33
                
