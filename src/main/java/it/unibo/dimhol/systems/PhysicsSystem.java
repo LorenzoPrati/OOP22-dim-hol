@@ -21,10 +21,11 @@ public class PhysicsSystem extends AbstractSystem{
     /**
      * Handle physical collision for the entity.
      *
-     * @param e the entity to process
+     * @param e  the entity to process
+     * @param dt
      */
     @Override
-    public void process(Entity e) {
+    public void process(Entity e, double dt) {
         var cc = (CollisionComponent) e.getComponent(CollisionComponent.class);
         var b1 = (BodyComponent) e.getComponent(BodyComponent.class);
         var p1 = (PositionComponent) e.getComponent(PositionComponent.class);

@@ -24,10 +24,11 @@ public class CollisionSystem extends AbstractSystem {
      * Register all the collisions by storing data in a {@link CollisionComponent}
      * so that next system can handle them.
      *
-     * @param e the entity to process
+     * @param e  the entity to process
+     * @param dt
      */
     @Override
-    public void process(final Entity e) {
+    public void process(final Entity e, double dt) {
         for (var o : this.world.getEntities()) {
             if (!o.equals(e) && o.hasComponent(BodyComponent.class)) {
                 this.checkCollision(e, o);

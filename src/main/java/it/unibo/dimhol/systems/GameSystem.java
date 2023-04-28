@@ -8,5 +8,5 @@ public interface GameSystem {
     /**
      * This method gets called every world update cycle.
      */
-    void update();
+    void update(double dt);
 }

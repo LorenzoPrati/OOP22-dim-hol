@@ -9,10 +9,8 @@ public final class Engine {
     /*
     Game loop settings
      */
-    private static final double FRAMES_PER_SECOND = 60;
-    private static double SECOND_TO_NANOSECOND = 1_000_000_000;
-    private static double NANO_SECONDS_PER_FRAME = SECOND_TO_NANOSECOND / FRAMES_PER_SECOND;
-    private static double SECOND_TO_MILLISECOND = 1_000;
+    private static final int FPS = 60;
+    private static final int MS_PER_FRAME = 1_000 / FPS;
 
     private final MainWindow window;
     private World world;
@@ -27,14 +25,14 @@ public final class Engine {
     /**
      * True if in debug mode.
      */
-    private boolean debug;
+    private boolean debug = true;
 
     /**
      * Constructs an Engine.
      */
     public Engine() {
         this.window = new MainWindow(this);
-        //System.setProperty("sun.java2d.opengl", "true");
+        System.setProperty("sun.java2d.opengl", "true");
     }
 
     /**
@@ -81,31 +79,26 @@ public final class Engine {
     }
 
     private void gameLoop() {
-        long prev = System.nanoTime(); //time since previous loop
-        int frames = 0;
-        double dt = 0;
-        double time = System.currentTimeMillis();
+        long prev = System.currentTimeMillis(); //time since previous loop
+        double dt;
         while (this.running) {
-            long now = System.nanoTime();
-            dt += (now - prev) / NANO_SECONDS_PER_FRAME;
-            prev = now;
-            if (dt >= 1) {
-                if (!this.pause) {
-                    this.world.update();
-                    this.window.render();
-                }
-                frames++;
-                dt--;
-                /*
-                Display fps (if in debug mode)
-                 */
-                if(System.currentTimeMillis() - time >= 1 * SECOND_TO_MILLISECOND) {
-                    if (this.debug) {
-                        System.out.println("FPS=" + frames);
-                    }
-                    time += 1 * SECOND_TO_MILLISECOND;
-                    frames = 0;
-                }
+            long curr = System.currentTimeMillis();
+            dt = curr - prev;
+            if (!this.pause) {
+                this.world.update(dt/1000);
+            }
+            this.waitForNextFrame(curr);
+            prev = curr;
+        }
+    }
+
+    private void waitForNextFrame(final long time) {
+        long dt = System.currentTimeMillis() - time;
+        if (dt < MS_PER_FRAME) {
+            try {
+                Thread.sleep(MS_PER_FRAME - dt);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }
