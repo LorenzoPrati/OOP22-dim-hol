@@ -46,16 +46,21 @@ public class ResourceLoader {
             this.imagesMap.put(18, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/idle/WarriorDownIdle.png"))), 48, 48));
             this.imagesMap.put(19, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/idle/WarriorLeftIdle.png"))), 48, 48));
             this.imagesMap.put(20, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/idle/WarriorRightIdle.png"))), 48, 48));
-            
-            this.imagesMap.put(21, new ImmutableTriple<>((ImageIO.read(new File("src/res/enemies/ghost-Sheet.png"))), 32, 32));
-            this.imagesMap.put(22, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/coin.png"))), 32, 32));
-            this.imagesMap.put(23, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/heart.png"))), 64, 64));
-            this.imagesMap.put(24, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/key.png"))), 19, 10));
 
-            this.imagesMap.put(26, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/up.png"))), 123, 127));
-            this.imagesMap.put(27, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/down.png"))), 123, 127));
-            this.imagesMap.put(28, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/left.png"))), 127, 123));
-            this.imagesMap.put(29, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/right.png"))), 127, 123));
+            this.imagesMap.put(21, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/hurt/WarriorUpHurt.png"))), 48, 48));
+            this.imagesMap.put(22, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/hurt/WarriorDownHurt.png"))), 48, 48));
+            this.imagesMap.put(23, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/hurt/WarriorLeftHurt.png"))), 48, 48));
+            this.imagesMap.put(24, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/hurt/WarriorRightHurt.png"))), 48, 48));
+            
+            this.imagesMap.put(25, new ImmutableTriple<>((ImageIO.read(new File("src/res/enemies/ghost-Sheet.png"))), 32, 32));
+            this.imagesMap.put(26, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/coin.png"))), 32, 32));
+            this.imagesMap.put(27, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/heart.png"))), 64, 64));
+            this.imagesMap.put(28, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/key.png"))), 19, 10));
+
+            this.imagesMap.put(30, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/up.png"))), 123, 127));
+            this.imagesMap.put(31, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/down.png"))), 123, 127));
+            this.imagesMap.put(32, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/left.png"))), 127, 123));
+            this.imagesMap.put(33, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/right.png"))), 127, 123));
         }
         catch(IOException e){
             System.out.println("Error loading images. ");
