@@ -56,17 +56,6 @@ public class World {
          */
         var gf = new GenericFactory();
         this.entities.add(gf.createPlayer(15, 15));
-        this.entities.add(gf.createZombieEnemy(2,3));
-        this.entities.add(gf.createZombieEnemy(7, 1));
-        this.entities.add(gf.createZombieEnemy(10, 20));
-        this.entities.add(gf.createZombieEnemy(8, 15));
-        this.entities.add(gf.createShooterEnemy(1, 20));
-        this.entities.add(gf.createShooterEnemy(7, 18));
-        this.entities.add(gf.createShooterEnemy(12, 22));
-        this.entities.add(gf.createZombieEnemy(4, 9));
-        this.entities.add(gf.createShooterEnemy(3, 18));
-        this.entities.add(gf.createShooterEnemy(5, 5));
-        this.entities.add(gf.createZombieEnemy(3, 1));
 
         //set tilemap
         /*
@@ -83,7 +72,6 @@ public class World {
         this.systems.add(new PhysicsSystem(this));
         this.systems.add(new ItemSystem(this));
         this.systems.add(new CombatSystem(this));
-        this.systems.add(new StatSystem(this));
         this.systems.add(new DeleteDeathEntitiesSystem(this));
         this.systems.add(new ClearCollisionSystem(this));
         this.systems.add( new AnimationSystem(this));

@@ -78,7 +78,7 @@ public class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_S -> this.down = false;
             case KeyEvent.VK_A -> this.left = false;
             case KeyEvent.VK_D -> this.right = false;
-            case KeyEvent.VK_Q -> this.specialAttack = true;
+            case KeyEvent.VK_Q -> this.specialAttack = false;
         }
     }
 
