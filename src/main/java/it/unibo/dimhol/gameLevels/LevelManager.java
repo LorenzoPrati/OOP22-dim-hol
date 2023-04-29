@@ -8,6 +8,7 @@ import it.unibo.dimhol.map.MapLoad;
 import it.unibo.dimhol.map.MapLoaderImpl;
 import it.unibo.dimhol.map.Tile;
 
+import java.io.DataOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,6 +18,12 @@ import java.util.Random;
  */
 public class LevelManager {
     private static final int ENEMY_DENSITY = 10;
+    private static final double PLAYER_X_OFFSET = 5.0;
+    private static final double PLAYER_Y_OFFSET = 5.0;
+    private static final double ENEMY_X_OFFSET = 10.0;
+    private static final double ENEMY_Y_OFFSET = 10.0;
+    private static final int NUM_ENEMY_TILES = 10;
+//    private static final String MAP_RESOURCE_PATH = "src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml";
     private final World world;
     private final MapLoad mapLoad = new MapLoaderImpl("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
     private final GenericFactory genericFactory = new GenericFactory();
@@ -45,8 +52,8 @@ public class LevelManager {
             loadMap();
             List<Tile> walkableTiles = getWalkableTiles();
             Tile playerTile = getRandomTile(walkableTiles);
-            placePlayer(playerTile.getX(5.0), playerTile.getY(5.0));
-            placeEnemies(walkableTiles, playerTile, 10.0, 10.0);
+            placePlayer(playerTile.getX(PLAYER_X_OFFSET), playerTile.getY(PLAYER_Y_OFFSET));
+            placeEnemies(walkableTiles, playerTile, ENEMY_X_OFFSET, ENEMY_Y_OFFSET);
         }
     /**
      * Saves the player's entity.
@@ -64,12 +71,15 @@ public class LevelManager {
      */
     private void clearEntities() {
         world.getEntities().clear();
+        world.addEntity(player);
     }
 
     /**
      * Loads the map into the level generator.
      */
     private void loadMap() {
+        //here I'm assuming that the map only has one layer for the tiles -> now it's not true.
+        //TODO: change with the multi-layer already available.
         map = mapLoad.getMapTileLayers().get(0);
     }
 
