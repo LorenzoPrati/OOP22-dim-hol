@@ -7,7 +7,7 @@ import it.unibo.dimhol.map.MapLoaderImpl;
 import java.util.Random;
 
 public class NormalRoomStrategy implements RoomStrategy {
-    private static final int MAX_ENEMIES = 5;
+    private static final int MAX_ENEMIES = 30;
     private static final int MIN_ENEMIES = 1;
     private World world;
 //    private static final int ENEMY_DENSITY = 10;
@@ -24,8 +24,8 @@ public class NormalRoomStrategy implements RoomStrategy {
         int numEnemies = new Random().nextInt(MIN_ENEMIES, MAX_ENEMIES + 1);
         for (int i = 0; i < numEnemies; i++) {
             GenericFactory enemy = new GenericFactory();
-            double x = new Random().nextInt(0, mapLoader.getHeight());
-            double y = new Random().nextInt(0, mapLoader.getWidth());
+            double x = new Random().nextInt(0, mapLoader.getWidth());
+            double y = new Random().nextInt(0, mapLoader.getHeight());
 //        enemy.setPosition(x,y); -> Implemented into the World.
             //Add enemy to list of entities into the world.
             //TODO:change
@@ -33,8 +33,8 @@ public class NormalRoomStrategy implements RoomStrategy {
         }
         //Generate the player:
         GenericFactory player = new GenericFactory();
-        double x = new Random().nextInt(0, mapLoader.getHeight());
-        double y = new Random().nextInt(0, mapLoader.getWidth());
+        double x = new Random().nextInt(0, mapLoader.getWidth() - 1);
+        double y = new Random().nextInt(0, mapLoader.getHeight() - 1);
         world.addEntity(player.createPlayer(x,y));
     }
     @Override
