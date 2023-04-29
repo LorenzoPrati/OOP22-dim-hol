@@ -46,21 +46,21 @@ public class PlayerSystem extends AbstractSystem {
 
         if (input.isNormalAttack()) {
             mov.setEnabled(false);
-            animation.setState("attacking " + " " + DirectionUtil.getStringFromVec(mov.getDir()));
+            animation.setState("normal" + " " + DirectionUtil.getStringFromVec(mov.getDir()));
             //animation.setCompleted(false);
             /*
             spawn normal attack
              */
         } else if (input.isShooting()) {
             mov.setEnabled(false);
-            animation.setState("shooting " + " " + DirectionUtil.getStringFromVec(mov.getDir()));
+            animation.setState("shoot" + " " + DirectionUtil.getStringFromVec(mov.getDir()));
             //animation.setCompleted(false)
             /*
              * spawn bullet
              */
         } else if (input.isSpecialAttack()) {
             mov.setEnabled(false);
-            animation.setState("special attack " + " " + DirectionUtil.getStringFromVec(mov.getDir()));
+            animation.setState("special" + " " + DirectionUtil.getStringFromVec(mov.getDir()));
             //animation.setCompleted(false)
             /*
              * spawn special attack
@@ -76,7 +76,7 @@ public class PlayerSystem extends AbstractSystem {
             } else if (input.isRight()) {
                 mov.setDir(new Vector2D(1, 0));
             }
-            animation.setState((input.isMoving() ? "walking" : "idle")
+            animation.setState((input.isMoving() ? "walk" : "idle")
                     + " " + DirectionUtil.getStringFromVec(mov.getDir()));
         }
     }

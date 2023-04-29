@@ -49,10 +49,10 @@ public class GenericFactory {
     public Entity createPlayer(final double x, final double y) {
         return new EntityBuilder().add(new PlayerComponent())
                 .add(new PositionComponent(new Vector2D(x,y), 0))
-                .add(new MovementComponent(new Vector2D(0,0),PLAYER_SPEED, false))
+                .add(new MovementComponent(new Vector2D(0,1),PLAYER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(W,H), true))
                 .add(new HealthComponent(10))
-                .add(new AnimationComponent(map.get("player"),"walking up"))
+                .add(new AnimationComponent(map.get("player"),"idle down"))
                 .build();
     }
 
