@@ -55,18 +55,18 @@ public class World {
         generate first level
          */
         var gf = new GenericFactory();
-        this.entities.add(gf.createPlayer(10,10));
-        this.entities.add(gf.createZombieEnemy(200,100));
-        this.entities.add(gf.createZombieEnemy(700,100));
-        this.entities.add(gf.createZombieEnemy(900,300));
-        this.entities.add(gf.createZombieEnemy(880,300));
-        this.entities.add(gf.createShooterEnemy(100,500));
-        this.entities.add(gf.createShooterEnemy(700,100));
-        this.entities.add(gf.createShooterEnemy(900,550));
-        this.entities.add(gf.createZombieEnemy(450,100));
-        this.entities.add(gf.createShooterEnemy(300,800));
-        this.entities.add(gf.createShooterEnemy(570,550));
-        this.entities.add(gf.createZombieEnemy(355,105));
+        this.entities.add(gf.createPlayer(15, 15));
+        this.entities.add(gf.createZombieEnemy(2,3));
+        this.entities.add(gf.createZombieEnemy(7, 1));
+        this.entities.add(gf.createZombieEnemy(10, 20));
+        this.entities.add(gf.createZombieEnemy(8, 15));
+        this.entities.add(gf.createShooterEnemy(1, 20));
+        this.entities.add(gf.createShooterEnemy(7, 18));
+        this.entities.add(gf.createShooterEnemy(12, 22));
+        this.entities.add(gf.createZombieEnemy(4, 9));
+        this.entities.add(gf.createShooterEnemy(3, 18));
+        this.entities.add(gf.createShooterEnemy(5, 5));
+        this.entities.add(gf.createZombieEnemy(3, 1));
 
         //set tilemap
         /*
