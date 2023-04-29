@@ -5,6 +5,7 @@ import java.util.Map;
 
 import it.unibo.dimhol.World;
 import it.unibo.dimhol.components.AnimationComponent;
+import it.unibo.dimhol.components.BodyComponent;
 import it.unibo.dimhol.components.PositionComponent;
 import it.unibo.dimhol.entity.Entity;
 
@@ -27,10 +28,12 @@ public class RenderSystem extends AbstractSystem{
 
     @Override
     public void process(Entity e, double dt) {
-       var pos = (PositionComponent)e.getComponent(PositionComponent.class);
+       var posComp = (PositionComponent)e.getComponent(PositionComponent.class);
        var animationComp = (AnimationComponent)e.getComponent(AnimationComponent.class);
+       var bodyComp = (BodyComponent)e.getComponent(BodyComponent.class);
        this.world.getScene().toList(animationComp.getIndex(),getNumToUse(animationComp.getState(), 
-        animationComp.getMap()), pos.getPos().getX(), pos.getPos().getY());
+        animationComp.getMap()), posComp.getPos().getX(), posComp.getPos().getY(), 
+        bodyComp.getBodyShape().getBoundingWidth(), bodyComp.getBodyShape().getBoundingHeight() );
     }
     
 }
