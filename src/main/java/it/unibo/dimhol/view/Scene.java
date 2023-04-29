@@ -77,8 +77,8 @@ public class Scene extends JPanel {
         renderList.clear();
     }
 
-    public void toList (final int index, final int numImage, final double x, final double y){
-        this.renderList.add(new GraphicInfo(index, numImage, x, y));
+    public void toList (final int index, final int numImage, final double x, final double y, final double w,final double h){
+        this.renderList.add(new GraphicInfo(index, numImage, x, y, w,h));
     }
 
     private BufferedImage createCompatibleImage(BufferedImage image) {
@@ -96,7 +96,7 @@ public class Scene extends JPanel {
         }
     }
 
-    public void render() {
+    public void render(){
         this.paintImmediately(0,0,this.getWidth(),this.getHeight());
     }
 }
