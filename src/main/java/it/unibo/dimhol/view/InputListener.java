@@ -14,13 +14,15 @@ public class InputListener implements KeyListener, MouseListener {
 
     private final Engine engine;
     private boolean up, down, left, right;
-    private boolean leftClick, rightClick;
+    private boolean normalAttack;
+    private boolean shooting;
+    private boolean specialAttack;
 
     public InputListener(Engine engine) {
         this.engine = engine;
     }
 
-    public boolean anyMoveKeyPressed() {
+    public boolean isMoving() {
         return up || down || left || right;
     }
 
@@ -40,12 +42,16 @@ public class InputListener implements KeyListener, MouseListener {
         return right;
     }
 
-    public boolean isLeftClick() {
-        return leftClick;
+    public boolean isNormalAttack() {
+        return normalAttack;
     }
 
-    public boolean isRightClick() {
-        return rightClick;
+    public boolean isShooting() {
+        return shooting;
+    }
+
+    public boolean isSpecialAttack() {
+        return specialAttack;
     }
 
     @Override
@@ -60,6 +66,7 @@ public class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_S -> this.down = true;
             case KeyEvent.VK_A -> this.left = true;
             case KeyEvent.VK_D -> this.right = true;
+            case KeyEvent.VK_Q -> this.specialAttack = true;
             case KeyEvent.VK_ESCAPE -> this.engine.stopGame();
         }
     }
@@ -71,6 +78,7 @@ public class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_S -> this.down = false;
             case KeyEvent.VK_A -> this.left = false;
             case KeyEvent.VK_D -> this.right = false;
+            case KeyEvent.VK_Q -> this.specialAttack = true;
         }
     }
 
@@ -82,16 +90,16 @@ public class InputListener implements KeyListener, MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()) {
-            case MouseEvent.BUTTON1 -> this.leftClick = true;
-            case MouseEvent.BUTTON3 -> this.rightClick = true;
+            case MouseEvent.BUTTON1 -> this.normalAttack = true;
+            case MouseEvent.BUTTON3 -> this.shooting = true;
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         switch (e.getButton()) {
-            case MouseEvent.BUTTON1 -> this.leftClick = false;
-            case MouseEvent.BUTTON3 -> this.rightClick = false;
+            case MouseEvent.BUTTON1 -> this.normalAttack = false;
+            case MouseEvent.BUTTON3 -> this.shooting = false;
         }
     }
 
