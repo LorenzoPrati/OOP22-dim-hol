@@ -3,106 +3,139 @@
         attacking up:
             - 6
             - 1
+            - 1
         attacking down:
             - 6
             - 2
+            - 1
         attacking left:
             - 6
             - 3
+            - 1
         attacking right:
             - 6
             - 4
-        attacking2 up:
+            - 1
+        q up:
             - 6
             - 5
-        attacking2 down:
+            - 1
+        q down:
             - 6
             - 6
-        attacking2 left:
+            - 1
+        q left:
             - 6
             - 7
-        attacking2 right:
+            - 1
+        q right:
             - 6
             - 8
-        attacking3 up:
+            - 1
+        shooting up:
             - 5
             - 9
-        attacking3 down:
+            - 1
+        shooting down:
             - 5
             - 10
-        attacking3 left:
+            - 1
+        shooting left:
             - 5
             - 11
-        attacking3 right:
+            - 1
+        shooting right:
             - 5
             - 12
+            - 1
         walking up:
             - 8
             - 13
+            - 0
         walking down:
             - 6
             - 14
+            - 0
         walking left:
             - 6
             - 15
+            - 0
         walking right:
             - 6
             - 16
+            - 0
         idle up:
             - 5
             - 17
+            - 0
         idle down:
             - 5
             - 18
+            - 0
         idle left:
             - 5
             - 19
+            - 0
         idle right:
             - 5
             - 20
+            - 0
         hurt up:
             - 4
             - 21
+            - 1
         hurt down:
             - 4
             - 22
+            - 1
         hurt left:
             - 4
             - 23
+            - 1
         hurt right:
             - 4
             - 24
+            - 1
     enemy:
         idle:
             - 4
             - 25
+            - 0
     coin:
         idle:
             - 6
             - 26
+            - 0
     heart:
         idle:
             - 1
             - 27
+            - 0
     key:
         idle:
             - 1
             - 28
+            - 0
     chest:
         idle:
             - 2
             - 29
+            - 0
     bullet:
         up:
             - 1
             - 30
+            - 0
         down:
             - 1
             - 31
+            - 0
         left:
             - 1
             - 32
+            - 0
         right:
             - 1
             - 33
+            - 0
                
