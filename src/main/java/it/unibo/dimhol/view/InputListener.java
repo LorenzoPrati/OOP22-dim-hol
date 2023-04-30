@@ -26,6 +26,10 @@ public class InputListener implements KeyListener, MouseListener {
         return up || down || left || right;
     }
 
+    public boolean isAttacking() {
+        return normalAttack || specialAttack;
+    }
+
     public boolean isUp() {
         return up;
     }

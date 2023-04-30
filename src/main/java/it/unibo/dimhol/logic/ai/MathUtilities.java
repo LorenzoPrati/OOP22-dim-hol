@@ -1,7 +1,7 @@
-package it.unibo.dimhol.ai;
+package it.unibo.dimhol.logic.ai;
 
-import it.unibo.dimhol.commons.shapes.BodyShape;
-import it.unibo.dimhol.commons.shapes.RectBodyShape;
+import it.unibo.dimhol.logic.collision.BodyShape;
+import it.unibo.dimhol.logic.collision.RectBodyShape;
 import org.locationtech.jts.math.Vector2D;
 
 public class MathUtilities {

@@ -1,7 +1,7 @@
 package it.unibo.dimhol.systems;
 
 import it.unibo.dimhol.World;
-import it.unibo.dimhol.commons.DirectionUtil;
+import it.unibo.dimhol.logic.util.DirectionUtil;
 import it.unibo.dimhol.components.*;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.events.RemoveEntityEvent;

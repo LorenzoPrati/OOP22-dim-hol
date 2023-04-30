@@ -1,4 +1,4 @@
-package it.unibo.dimhol.effects;
+package it.unibo.dimhol.logic.effects;
 
 import it.unibo.dimhol.components.AiComponent;
 import it.unibo.dimhol.components.HealthComponent;
@@ -19,6 +19,6 @@ public class DecreaseEnemyCurrentHealthEffect implements Effect{
     @Override
     public void applyOn(Entity entity) {
         var health = (HealthComponent)entity.getComponent(HealthComponent.class);
-        health.setCurrentHealth(health.getCurrentHealth() + this.n);
+        health.setCurrentHealth(health.getCurrentHealth() - this.n);
     }
 }

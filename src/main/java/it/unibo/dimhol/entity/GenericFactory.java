@@ -1,12 +1,12 @@
 package it.unibo.dimhol.entity;
 
-import it.unibo.dimhol.ai.MathUtilities;
-import it.unibo.dimhol.ai.RoutineFactory;
-import it.unibo.dimhol.commons.shapes.RectBodyShape;
+import it.unibo.dimhol.logic.ai.MathUtilities;
+import it.unibo.dimhol.logic.ai.RoutineFactory;
+import it.unibo.dimhol.logic.collision.RectBodyShape;
 import it.unibo.dimhol.components.*;
-import it.unibo.dimhol.effects.DecreaseEnemyCurrentHealthEffect;
-import it.unibo.dimhol.effects.DecreasePlayerCurrentHealthEffect;
-import it.unibo.dimhol.effects.IncreaseCurrentHealthEffect;
+import it.unibo.dimhol.logic.effects.DecreaseEnemyCurrentHealthEffect;
+import it.unibo.dimhol.logic.effects.DecreasePlayerCurrentHealthEffect;
+import it.unibo.dimhol.logic.effects.IncreaseCurrentHealthEffect;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -72,6 +72,7 @@ public class GenericFactory {
                 .add(new MovementComponent(new Vector2D(0,0), ENEMY_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(W, H), true))
                 .add(new AnimationComponent(map.get("enemy"),"idle"))
+                .add(new HealthComponent(3))
                 .build();
     }
 
@@ -82,6 +83,7 @@ public class GenericFactory {
                 .add(new MovementComponent(new Vector2D(0,0), ENEMY_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(W, H), true))
                 .add(new AnimationComponent(map.get("enemy"),"idle"))
+                .add(new HealthComponent(3))
                 .build();
     }
 
@@ -120,4 +122,26 @@ public class GenericFactory {
                 .build();
     }
 
+    public Entity createPlayerMeleeAttack(final double dirX, final double dirY, final Entity entity) {
+        PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
+        BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
+        return new EntityBuilder()
+                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(), entityBody.getBodyShape(), MELEE_WIDTH, MELEE_HEIGHT), 0))
+                .add(new BodyComponent(new RectBodyShape(MELEE_WIDTH, MELEE_HEIGHT), false))
+                .add(new AttackComponent(entity, List.of(new DecreaseEnemyCurrentHealthEffect(1))))
+                .build();
+    }
+
+    public Entity createPlayerBullet(final double dirX, final double dirY, final Entity entity) {
+        PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
+        BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
+        return new EntityBuilder()
+                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(),
+                        entityBody.getBodyShape(), BULLET_WIDTH, BULLET_HEIGHT), 0))
+                .add(new MovementComponent(new Vector2D(dirX, dirY), BULLET_SPEED, true))
+                .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
+                .add(new AnimationComponent(map.get("bullet"), getStringDirection(dirX, dirY)))
+                .add(new AttackComponent(entity, List.of(new DecreaseEnemyCurrentHealthEffect(1))))
+                .build();
+    }
 }

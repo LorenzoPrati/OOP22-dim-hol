@@ -1,4 +1,4 @@
-package it.unibo.dimhol.effects;
+package it.unibo.dimhol.logic.effects;
 
 import it.unibo.dimhol.entity.Entity;
 

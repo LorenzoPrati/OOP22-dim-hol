@@ -1,4 +1,4 @@
-package it.unibo.dimhol.ai;
+package it.unibo.dimhol.logic.ai;
 
 import java.util.ArrayList;
 import java.util.List;
