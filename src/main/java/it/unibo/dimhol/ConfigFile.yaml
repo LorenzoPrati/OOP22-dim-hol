@@ -53,15 +53,15 @@
             - 13
             - 0
         walk down:
-            - 6
+            - 8
             - 14
             - 0
         walk left:
-            - 6
+            - 8
             - 15
             - 0
         walk right:
-            - 6
+            - 8
             - 16
             - 0
         idle up:
