@@ -29,7 +29,7 @@ public class CombatSystem extends AbstractSystem {
                     if (entity.hasComponent(PlayerComponent.class)) {
                         var state = (AnimationComponent) entity.getComponent(AnimationComponent.class);
                         var mov = (MovementComponent) entity.getComponent((MovementComponent.class));
-                        state.setState("hurt" + DirectionUtil.getStringFromVec(mov.getDir()));
+                        state.setState("hurt" + " " + DirectionUtil.getStringFromVec(mov.getDir()));
                         state.setCompleted(false);
                     }
                 }
