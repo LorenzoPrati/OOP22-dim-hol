@@ -1,6 +1,7 @@
 package it.unibo.dimhol.systems;
 
 import it.unibo.dimhol.World;
+import it.unibo.dimhol.commons.DirectionUtil;
 import it.unibo.dimhol.components.AnimationComponent;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PlayerComponent;
@@ -29,35 +30,54 @@ public class PlayerSystem extends AbstractSystem {
      */
     @Override
     public void process(final Entity e, double dt) {
-        var mov = (MovementComponent) e.getComponent(MovementComponent.class);
-        var an = (AnimationComponent) e.getComponent(AnimationComponent.class);
         var input = this.world.getInputListener();
-        if (input.anyMoveKeyPressed()) {
-            mov.setEnabled(true);
-            if (input.isUp()) {
-                mov.setDir(new Vector2D(0,-1));
-                an.setState("walking up");
-            } else if (input.isDown()) {
-                mov.setDir(new Vector2D(0,1));
-                an.setState("walking down");
-            } else if (input.isLeft()) {
-                mov.setDir(new Vector2D(-1,0));
-                an.setState("walking left");
-            } else if (input.isRight()) {
-                mov.setDir(new Vector2D(1,0));
-                an.setState("walking right");
-            }
-        } else {
+        var mov = (MovementComponent) e.getComponent(MovementComponent.class);
+        var animation = (AnimationComponent) e.getComponent(AnimationComponent.class);
+        var player = (PlayerComponent) e.getComponent(PlayerComponent.class);
+
+        /*
+            Block input reaction if player is blocked executing an action
+         */
+//        if (animation.isBlocking() && !animation.isCompleted()) {
+//            animation.setState(animation.getState());
+//            mov.setEnabled(false);
+//            return;
+//        }
+
+        if (input.isNormalAttack()) {
             mov.setEnabled(false);
-            if (mov.getDir().equals(new Vector2D(0,-1))) {
-                an.setState("idle up");
-            } else if (mov.getDir().equals(new Vector2D(0,1))) {
-                an.setState("idle down");
-            } else if (mov.getDir().equals(new Vector2D(-1,0))) {
-                an.setState("idle left");
-            } else if (mov.getDir().equals(new Vector2D(1,0))) {
-                an.setState("idle right");
+            animation.setState("normal" + " " + DirectionUtil.getStringFromVec(mov.getDir()));
+            //animation.setCompleted(false);
+            /*
+            spawn normal attack
+             */
+        } else if (input.isShooting()) {
+            mov.setEnabled(false);
+            animation.setState("shoot" + " " + DirectionUtil.getStringFromVec(mov.getDir()));
+            //animation.setCompleted(false)
+            /*
+             * spawn bullet
+             */
+        } else if (input.isSpecialAttack()) {
+            mov.setEnabled(false);
+            animation.setState("special" + " " + DirectionUtil.getStringFromVec(mov.getDir()));
+            //animation.setCompleted(false)
+            /*
+             * spawn special attack
+             */
+        } else {
+            mov.setEnabled(input.isMoving());
+            if (input.isUp()) {
+                mov.setDir(new Vector2D(0, -1));
+            } else if (input.isDown()) {
+                mov.setDir(new Vector2D(0, 1));
+            } else if (input.isLeft()) {
+                mov.setDir(new Vector2D(-1, 0));
+            } else if (input.isRight()) {
+                mov.setDir(new Vector2D(1, 0));
             }
+            animation.setState((input.isMoving() ? "walk" : "idle")
+                    + " " + DirectionUtil.getStringFromVec(mov.getDir()));
         }
     }
 }
