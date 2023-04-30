@@ -1,4 +1,4 @@
-package it.unibo.dimhol.commons;
+package it.unibo.dimhol.logic.util;
 
 import org.locationtech.jts.math.Vector2D;
 
