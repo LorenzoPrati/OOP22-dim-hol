@@ -16,10 +16,16 @@ import java.awt.*;
 
 public class Scene extends JPanel {
 
+    private static final int ZOOM = 20;
+
     private List<Triple<Integer,Integer,Integer>> renderQueue = new ArrayList<>();
     private MapLoad mapLoader = new MapLoaderImpl("src/main/java/it/unibo/dimhol/map/mapResources/nice-map.xml");
     private ResourceLoader loader = new ResourceLoader(mapLoader.getTileWidth(), mapLoader.getTileHeight());
     private List<GraphicInfo> renderList = new ArrayList<>();
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private int newTileWidth;
+    private int newTileHeight;
+    private double screenAspectRatio = (double) screenSize.getWidth() / screenSize.getHeight();
 
     public Scene(){
 
@@ -54,10 +60,20 @@ public class Scene extends JPanel {
         for (var layer : layers) {
             for (int i = 0; i < mapLoader.getWidth(); i++) {
                 for (int j = 0; j < mapLoader.getHeight(); j++) {
-                    var drawX = mapLoader.getTileHeight() * j;
-                    var drawY = mapLoader.getTileWidth() * i;
                     var id = layer[i][j].getTileSetId();
-                    g2.drawImage(loader.getTileImage(id), drawX, drawY, mapLoader.getTileWidth(), mapLoader.getTileHeight(), null);
+
+                    var tileImage = loader.getTileImage(id);
+                    double imageAspectRatio = (double) tileImage.getWidth() / tileImage.getHeight();
+                    double scalingFactor = (imageAspectRatio > screenAspectRatio) ?
+                                screenSize.getWidth() / tileImage.getWidth() :
+                                screenSize.getHeight() / tileImage.getHeight();
+                    newTileWidth = (int) (tileImage.getWidth() * (scalingFactor / ZOOM));
+                    newTileHeight = (int) (tileImage.getHeight() * (scalingFactor / ZOOM));
+
+                    var drawX = newTileHeight * j;
+                    var drawY = newTileWidth * i;
+
+                    g2.drawImage(loader.getTileImage(id), drawX, drawY, newTileWidth, newTileHeight, null);
                 }
             }
         }
@@ -68,17 +84,28 @@ public class Scene extends JPanel {
                     renderList.get(i).getIndex() * loader.getWidth(renderList.get(i).getNumImage()),
                     0,
                     loader.getWidth(renderList.get(i).getNumImage()), loader.getHeigth(renderList.get(i).getNumImage())));
+
+            double imageAspectRatio = img.getWidth() / img.getHeight();
+            double scalingFactor = (imageAspectRatio > screenAspectRatio) ?
+                    screenSize.getWidth() / img.getWidth() :
+                    screenSize.getHeight() / img.getHeight();
+
+            double newWidth = img.getWidth() * (scalingFactor / ZOOM) * renderList.get(i).getW();
+            double newHeight = img.getHeight() * (scalingFactor / ZOOM) * renderList.get(i).getH();
+            double newX = renderList.get(i).getX() * newTileWidth;
+            double newY = renderList.get(i).getY() * newTileWidth;
+
             g2.drawImage(img,
-                    (int) renderList.get(i).getX(), (int) renderList.get(i).getY(), 60, 60, null);
-            g2.drawRect((int) renderList.get(i).getX(), (int) renderList.get(i).getY(), 60, 60);
+                    (int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
+            g2.drawRect((int) newX, (int) newY, (int) newWidth, (int) newHeight);
         }
 
         g2.dispose();
         renderList.clear();
     }
 
-    public void toList (final int index, final int numImage, final double x, final double y){
-        this.renderList.add(new GraphicInfo(index, numImage, x, y));
+    public void toList (final int index, final int numImage, final double x, final double y, final double w,final double h){
+        this.renderList.add(new GraphicInfo(index, numImage, x, y, w,h));
     }
 
     private BufferedImage createCompatibleImage(BufferedImage image) {
@@ -96,7 +123,7 @@ public class Scene extends JPanel {
         }
     }
 
-    public void render() {
+    public void render(){
         this.paintImmediately(0,0,this.getWidth(),this.getHeight());
     }
 }

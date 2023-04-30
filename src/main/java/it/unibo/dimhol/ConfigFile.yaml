@@ -1,52 +1,52 @@
 
     player:
-        attacking up:
+        normal up:
             - 6
             - 1
-        attacking down:
+        normal down:
             - 6
             - 2
-        attacking left:
+        normal left:
             - 6
             - 3
-        attacking right:
+        normal right:
             - 6
             - 4
-        attacking2 up:
+        special up:
             - 6
             - 5
-        attacking2 down:
+        special down:
             - 6
             - 6
-        attacking2 left:
+        special left:
             - 6
             - 7
-        attacking2 right:
+        special right:
             - 6
             - 8
-        attacking3 up:
+        shoot up:
             - 5
             - 9
-        attacking3 down:
+        shoot down:
             - 5
             - 10
-        attacking3 left:
+        shoot left:
             - 5
             - 11
-        attacking3 right:
+        shoot right:
             - 5
             - 12
-        walking up:
+        walk up:
             - 8
             - 13
-        walking down:
-            - 6
+        walk down:
+            - 8
             - 14
-        walking left:
-            - 6
+        walk left:
+            - 8
             - 15
-        walking right:
-            - 6
+        walk right:
+            - 8
             - 16
         idle up:
             - 5

@@ -23,15 +23,15 @@ import java.io.File;
  */
 public class GenericFactory {
 
-    private static final double BULLET_WIDTH = 10;
-    private static final double BULLET_HEIGHT = 10;
-    private static final double MELEE_WIDTH = 60;
-    private static final double MELEE_HEIGHT = 60;
-    private static final double PLAYER_SPEED = 200;
-    private static final double ENEMY_SPEED = 100;
-    private static final double BULLET_SPEED = 300;
-    private static final int W = 60;
-    private static final int H = 60;
+    private static final double BULLET_WIDTH = 0.5;
+    private static final double BULLET_HEIGHT = 0.5;
+    private static final double MELEE_WIDTH = 1;
+    private static final double MELEE_HEIGHT = 1;
+    private static final double PLAYER_SPEED = 6;
+    private static final double ENEMY_SPEED = 4;
+    private static final double BULLET_SPEED = 2;
+    private static final double W = 1;
+    private static final double H = 1;
     private final Map<String,Map<String,ArrayList<Integer>>> map = new HashMap<>();
 
     public GenericFactory() {
@@ -49,10 +49,10 @@ public class GenericFactory {
     public Entity createPlayer(final double x, final double y) {
         return new EntityBuilder().add(new PlayerComponent())
                 .add(new PositionComponent(new Vector2D(x,y), 0))
-                .add(new MovementComponent(new Vector2D(0,0),PLAYER_SPEED, false))
+                .add(new MovementComponent(new Vector2D(0,1),PLAYER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(W,H), true))
                 .add(new HealthComponent(10))
-                .add(new AnimationComponent(map.get("player"),"walking up"))
+                .add(new AnimationComponent(map.get("player"),"idle down"))
                 .build();
     }
 
