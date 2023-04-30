@@ -51,6 +51,4 @@ public class AnimationComponent implements Component{
         return this.map;
     }
 
-    public void setCompleted(String aFalse) {
-    }
 }
