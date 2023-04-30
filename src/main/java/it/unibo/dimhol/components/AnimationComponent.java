@@ -50,5 +50,7 @@ public class AnimationComponent implements Component{
     public Map<String, ArrayList<Integer>> getMap() {
         return this.map;
     }
-    
+
+    public void setCompleted(String aFalse) {
+    }
 }
