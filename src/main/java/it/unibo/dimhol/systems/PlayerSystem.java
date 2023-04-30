@@ -6,6 +6,8 @@ import it.unibo.dimhol.components.AnimationComponent;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
+import it.unibo.dimhol.entity.GenericFactory;
+import it.unibo.dimhol.events.AddEntityEvent;
 import org.locationtech.jts.math.Vector2D;
 
 /**
@@ -38,30 +40,30 @@ public class PlayerSystem extends AbstractSystem {
         /*
             Block input reaction if player is blocked executing an action
          */
-//        if (animation.isBlocking() && !animation.isCompleted()) {
-//            animation.setState(animation.getState());
-//            mov.setEnabled(false);
-//            return;
-//        }
+        if (animation.isBlocking() && !animation.isCompleted()) {
+            animation.setState(animation.getState());
+            mov.setEnabled(false);
+            return;
+        }
 
         if (input.isNormalAttack()) {
             mov.setEnabled(false);
             animation.setState("normal" + " " + DirectionUtil.getStringFromVec(mov.getDir()));
-            //animation.setCompleted(false);
+            animation.setCompleted(false);
             /*
             spawn normal attack
              */
         } else if (input.isShooting()) {
             mov.setEnabled(false);
             animation.setState("shoot" + " " + DirectionUtil.getStringFromVec(mov.getDir()));
-            //animation.setCompleted(false)
+            animation.setCompleted(false);
             /*
              * spawn bullet
              */
         } else if (input.isSpecialAttack()) {
             mov.setEnabled(false);
             animation.setState("special" + " " + DirectionUtil.getStringFromVec(mov.getDir()));
-            //animation.setCompleted(false)
+            animation.setCompleted(false);
             /*
              * spawn special attack
              */
