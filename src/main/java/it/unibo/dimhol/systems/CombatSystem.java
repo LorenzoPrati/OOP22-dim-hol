@@ -1,9 +1,8 @@
 package it.unibo.dimhol.systems;
 
 import it.unibo.dimhol.World;
-import it.unibo.dimhol.components.AttackComponent;
-import it.unibo.dimhol.components.CollisionComponent;
-import it.unibo.dimhol.components.Component;
+import it.unibo.dimhol.commons.DirectionUtil;
+import it.unibo.dimhol.components.*;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.events.RemoveEntityEvent;
 
@@ -27,6 +26,12 @@ public class CombatSystem extends AbstractSystem {
                 if (effect.canUseOn(entity)){
                     effect.applyOn(entity);
                     world.notifyEvent(new RemoveEntityEvent(e));
+                    if (entity.hasComponent(PlayerComponent.class)) {
+                        var state = (AnimationComponent) entity.getComponent(AnimationComponent.class);
+                        var mov = (MovementComponent) entity.getComponent((MovementComponent.class));
+                        state.setState("hurt" + DirectionUtil.getStringFromVec(mov.getDir()));
+                        state.setCompleted(false);
+                    }
                 }
             }
         }

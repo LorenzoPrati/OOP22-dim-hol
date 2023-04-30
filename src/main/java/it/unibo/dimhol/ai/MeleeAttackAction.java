@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MeleeAttackAction implements Action {
+public class MeleeAttackAction extends AbstractAction {
 
     private static final int RELOAD_GUN_TIME = 2000;
     private final GenericFactory genericFactory = new GenericFactory();
@@ -28,6 +28,8 @@ public class MeleeAttackAction implements Action {
     @Override
     public boolean canExecute(Entity enemy) {
         this.enemy = enemy;
+        this.player = super.getPlayer();
+
 
         playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
         BodyComponent playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
@@ -58,23 +60,18 @@ public class MeleeAttackAction implements Action {
 
     }
 
-    @Override
-    public void setPlayer(Entity player) {
-        this.player = player;
-    }
-
     private List<Event> meleeAttack() {
-        List<Event> swords = new ArrayList<>();
+        List<Event> attacks = new ArrayList<>();
 
         double angle = MathUtilities.getAngle(playerCentralPos, enemyCentralPos);
 
         switch (MathUtilities.getVisionZone(angle, playerPos.getPos(), enemyPos.getPos())) {
-            case 1 -> swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(1, 0, enemy)));
-            case 2 -> swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(-1, 0, enemy)));
-            case 3 -> swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(0, 1, enemy)));
-            case 4 -> swords.add(new AddEntityEvent(genericFactory.createMeleeAttack(0, -1, enemy)));
+            case "right" -> attacks.add(new AddEntityEvent(genericFactory.createMeleeAttack(1, 0, enemy)));
+            case "left" -> attacks.add(new AddEntityEvent(genericFactory.createMeleeAttack(-1, 0, enemy)));
+            case "down" -> attacks.add(new AddEntityEvent(genericFactory.createMeleeAttack(0, 1, enemy)));
+            case "up" -> attacks.add(new AddEntityEvent(genericFactory.createMeleeAttack(0, -1, enemy)));
         }
 
-        return swords;
+        return attacks;
     }
 }

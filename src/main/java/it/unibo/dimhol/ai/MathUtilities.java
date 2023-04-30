@@ -24,22 +24,22 @@ public class MathUtilities {
         return (Math.atan(m) * 180/Math.PI);
     }
 
-    public static int getVisionZone(double angle, Vector2D playerPos, Vector2D enemyPos) {
+    public static String getVisionZone(double angle, Vector2D playerPos, Vector2D enemyPos) {
         if (angle > -45 && angle < 45) {
             if (playerPos.getX() > enemyPos.getX()) {
                 // right
-                return 1;
+                return "right";
             } else {
                 //left
-                return 2;
+                return "left";
             }
         } else {
             if (playerPos.getY() > enemyPos.getY()) {
                 //down
-                return 3;
+                return "down";
             } else {
                 //up
-                return 4;
+                return "up";
             }
         }
     }
