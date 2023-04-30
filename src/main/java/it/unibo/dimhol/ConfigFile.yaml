@@ -1,66 +1,66 @@
 
     player:
-        attacking up:
+        normal up:
             - 6
             - 1
             - 1
-        attacking down:
+        normal down:
             - 6
             - 2
             - 1
-        attacking left:
+        normal left:
             - 6
             - 3
             - 1
-        attacking right:
+        normal right:
             - 6
             - 4
             - 1
-        q up:
+        special up:
             - 6
             - 5
             - 1
-        q down:
+        special down:
             - 6
             - 6
             - 1
-        q left:
+        special left:
             - 6
             - 7
             - 1
-        q right:
+        special right:
             - 6
             - 8
             - 1
-        shooting up:
+        shoot up:
             - 5
             - 9
             - 1
-        shooting down:
+        shoot down:
             - 5
             - 10
             - 1
-        shooting left:
+        shoot left:
             - 5
             - 11
             - 1
-        shooting right:
+        shoot right:
             - 5
             - 12
             - 1
-        walking up:
+        walk up:
             - 8
             - 13
             - 0
-        walking down:
+        walk down:
             - 6
             - 14
             - 0
-        walking left:
+        walk left:
             - 6
             - 15
             - 0
-        walking right:
+        walk right:
             - 6
             - 16
             - 0
