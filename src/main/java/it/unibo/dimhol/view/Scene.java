@@ -26,6 +26,8 @@ public class Scene extends JPanel {
     private int newTileWidth;
     private int newTileHeight;
     private double screenAspectRatio = (double) screenSize.getWidth() / screenSize.getHeight();
+    private final HUD hud = new HUD(renderList);
+
 
     public Scene(){
 
@@ -93,12 +95,14 @@ public class Scene extends JPanel {
             double newWidth = img.getWidth() * (scalingFactor / ZOOM) * renderList.get(i).getW();
             double newHeight = img.getHeight() * (scalingFactor / ZOOM) * renderList.get(i).getH();
             double newX = renderList.get(i).getX() * newTileWidth;
-            double newY = renderList.get(i).getY() * newTileWidth;
+            double newY = renderList.get(i).getY() * newTileHeight;
 
             g2.drawImage(img,
                     (int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
             g2.drawRect((int) newX, (int) newY, (int) newWidth, (int) newHeight);
         }
+
+        hud.show(g2);
 
         g2.dispose();
         renderList.clear();

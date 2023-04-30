@@ -16,12 +16,10 @@ public class HUD {
         g2.setColor(Color.RED);
         for (int i = 0; i < renderList.size(); i++) {
             var entity = renderList.get(i);
-            //g2.fillRect(entity.getX() - entity.g, 50, 400 / maxHealth * currentHealth, 20);
+            var hudH = entity.getH() / 4;
+            var hudW = entity.getW();
+            g2.fillRect((int) entity.getX() * 32, (int) entity.getY() * 32, 100, 100);
         }
-        g2.drawRect(50, 50, 400, 20);
-        g2.drawString( currentHealth + "  /  " + maxHealth, 50, 85);
-
-        //g2.drawString("coins:" + coinAmount, 10, 60);
     }
 
     public void update(int currentHealth, int maxHealth) {
