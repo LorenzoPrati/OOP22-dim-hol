@@ -10,6 +10,7 @@ public class AnimationComponent implements Component{
     private String lastState;
     private int index; 
     private int counter;
+    private boolean completed;
 
     public AnimationComponent(final Map<String,ArrayList<Integer>> map, String initialState){
         this.index = 0;
@@ -51,4 +52,42 @@ public class AnimationComponent implements Component{
         return this.map;
     }
     
+    public boolean isCompleted(){
+        return this.completed;
+    }
+
+    public void setCompleted(boolean completed){
+        this.completed = completed;
+    }
+
+    public int getMaxIndex(){
+        return map.entrySet().stream()
+            .filter(e -> e.getKey().equals(state))
+            .map(e -> e.getValue())
+            .findAny()
+            .get()
+            .get(0);
+    }
+
+    public boolean isBlocking(){
+        var flag = map.entrySet().stream()
+            .filter(e -> e.getKey().equals(state))
+            .map(e -> e.getValue())
+            .findAny()
+            .get()
+            .get(2)
+            .equals(1);
+        return flag;
+    }
+
+    @Override
+    public String toString(){
+        return "AnimationComponent{ " + 
+            ", state='" + state +'\'' + 
+            ", lastState='" + lastState + '\'' + 
+            ", index=" + index + 
+            ", counter=" + counter +
+            ", completed=" + completed + 
+            '}';
+    }
 }
