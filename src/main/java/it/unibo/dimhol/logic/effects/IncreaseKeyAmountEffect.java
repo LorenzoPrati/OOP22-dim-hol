@@ -1,12 +1,12 @@
-package it.unibo.dimhol.effects;
+package it.unibo.dimhol.logic.effects;
 
 import it.unibo.dimhol.components.KeyPocketComponent;
 import it.unibo.dimhol.entity.Entity;
 
-public class DecreaseKeyAmountEffect implements Effect{
+public class IncreaseKeyAmountEffect implements Effect{
     private final int n;
 
-    public DecreaseKeyAmountEffect(final int n){
+    public IncreaseKeyAmountEffect(final int n){
         this.n = n;
     }
 
