@@ -4,7 +4,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-
+import it.unibo.dimhol.Engine;
+import it.unibo.dimhol.World;
 import it.unibo.dimhol.map.MapLoaderImpl;
 import it.unibo.dimhol.map.*;
 import org.apache.commons.lang3.tuple.Triple;
@@ -24,14 +25,13 @@ public class Scene extends JPanel {
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private int newTileWidth;
     private int newTileHeight;
-    private double screenAspectRatio = (double) screenSize.getWidth() / screenSize.getHeight();
-
-    private final HUD playerHUD = new HUD(loader);
-
+    private int offsetX;
+    private int offsetY;
 
     public Scene(){
 
-        this.setBackground(Color.PINK);
+        this.setDoubleBuffered(true);
+        this.setBackground(Color.BLACK);
 
         /*
         Debug
@@ -57,6 +57,8 @@ public class Scene extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
+        System.out.println(mapLoader.getWidth()); //20
+        System.out.println(mapLoader.getHeight()); //30
         var layers = mapLoader.getMapTileLayers();
 
         for (var layer : layers) {
@@ -64,16 +66,18 @@ public class Scene extends JPanel {
                 for (int j = 0; j < mapLoader.getHeight(); j++) {
                     var id = layer[i][j].getTileSetId();
 
-                    var tileImage = loader.getTileImage(id);
-                    double imageAspectRatio = (double) tileImage.getWidth() / tileImage.getHeight();
-                    double scalingFactor = (imageAspectRatio > screenAspectRatio) ?
-                                screenSize.getWidth() / tileImage.getWidth() :
-                                screenSize.getHeight() / tileImage.getHeight();
-                    newTileWidth = (int) (tileImage.getWidth() * (scalingFactor / ZOOM));
-                    newTileHeight = (int) (tileImage.getHeight() * (scalingFactor / ZOOM));
+                    if (this.getWidth() / mapLoader.getHeight() < this.getHeight() / mapLoader.getWidth()) {
+                        newTileWidth = this.getWidth() / mapLoader.getHeight();
+                        newTileHeight = newTileWidth;
+                    } else {
+                        newTileWidth = this.getHeight() / mapLoader.getWidth();
+                        newTileHeight = newTileWidth;
+                    }
 
-                    var drawX = newTileHeight * j;
-                    var drawY = newTileWidth * i;
+                    offsetX = ((this.getWidth() - mapLoader.getHeight() * newTileWidth) / 2);
+                    offsetY = ((this.getHeight() - mapLoader.getWidth() * newTileHeight) / 2);
+                    var drawX = newTileHeight * j + offsetX;
+                    var drawY = newTileWidth * i + offsetY;
 
                     g2.drawImage(loader.getTileImage(id), drawX, drawY, newTileWidth, newTileHeight, null);
                 }
@@ -87,23 +91,15 @@ public class Scene extends JPanel {
                     0,
                     loader.getWidth(renderList.get(i).getNumImage()), loader.getHeigth(renderList.get(i).getNumImage())));
 
-            int imageAspectRatio = img.getWidth() / img.getHeight();
-            double scalingFactor = (imageAspectRatio > screenAspectRatio) ?
-                    screenSize.getWidth() / img.getWidth() :
-                    screenSize.getHeight() / img.getHeight();
-
-            double newWidth = img.getWidth() * (scalingFactor / ZOOM) * renderList.get(i).getW();
-            double newHeight = img.getHeight() * (scalingFactor / ZOOM) * renderList.get(i).getH();
-            double newX = renderList.get(i).getX() * newTileWidth;
-            double newY = renderList.get(i).getY() * newTileHeight;
+            double newWidth = newTileWidth * renderList.get(i).getW();
+            double newHeight = newTileHeight * renderList.get(i).getH();
+            double newX = renderList.get(i).getX() * newTileWidth + offsetX;
+            double newY = renderList.get(i).getY() * newTileHeight + offsetY;
 
             g2.drawImage(img,
                     (int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
             g2.drawRect((int) newX, (int) newY, (int) newWidth, (int) newHeight);
         }
-
-        playerHUD.show(g2, newTileWidth, newTileHeight);
-
 
         g2.dispose();
         renderList.clear();
@@ -129,11 +125,7 @@ public class Scene extends JPanel {
     }
 
     public void render(){
-        //this.repaint();
-        this.paintImmediately(0,0,this.getWidth(),this.getHeight());
-    }
-
-    public HUD getPlayerHUD() {
-        return playerHUD;
+        this.repaint();
+        //this.paintImmediately(0,0,this.getWidth(),this.getHeight());
     }
 }
