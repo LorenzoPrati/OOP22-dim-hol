@@ -3,19 +3,25 @@ package it.unibo.dimhol.gameLevels;
 import it.unibo.dimhol.World;
 import it.unibo.dimhol.entity.GenericFactory;
 import it.unibo.dimhol.map.MapLoaderImpl;
+import it.unibo.dimhol.map.Tile;
+import org.apache.commons.lang3.tuple.Pair;
+import org.jooq.lambda.tuple.Tuple;
 
 import java.util.Random;
+import java.util.Set;
+import java.util.logging.Level;
 
-public class NormalRoomStrategy implements RoomStrategy {
+public class NormalRoomStrategy implements RoomStrategy, RewardSpawner {
     private static final int MAX_ENEMIES = 30;
     private static final int MIN_ENEMIES = 1;
-    private World world;
-//    private static final int ENEMY_DENSITY = 10;
-    MapLoaderImpl mapLoader = new MapLoaderImpl("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
+    private MapLoaderImpl mapLoader;
+    private LevelManager levelManager;
+    private Set<Pair<Integer, Integer>> occupiedTiles;
 
-    public NormalRoomStrategy(World world) {
-        this.world = world;
-    }
+//    private static final int ENEMY_DENSITY = 10;
+//    public NormalRoomStrategy(MapLoaderImpl mapLoader) {
+//        this.mapLoader = mapLoader;
+//    }
 
     @Override
     public void generate() {
@@ -29,27 +35,23 @@ public class NormalRoomStrategy implements RoomStrategy {
 //        enemy.setPosition(x,y); -> Implemented into the World.
             //Add enemy to list of entities into the world.
             //TODO:change
-            world.addEntity(enemy.createZombieEnemy(x,y));
+//            world.addEntity(enemy.createZombieEnemy(x,y));
         }
-        //Generate the player:
+    }
+
+    @Override
+    public void placePlayer() {
+//        Generate the player:
         GenericFactory player = new GenericFactory();
         double x = new Random().nextInt(0, mapLoader.getWidth() - 1);
         double y = new Random().nextInt(0, mapLoader.getHeight() - 1);
-        world.addEntity(player.createPlayer(x,y));
+        //TODO:change
+//        world.addEntity(player.createPlayer(x,y));
     }
+
     @Override
     public void spawnRewards() {
         //TODO: Algorithm to spawn rewards in a normal room.
         //Actually rewards aren't allowed to spawn in a normal room.
     }
 }
-
-//TAKE A LOOK HERE:
-//    private int calculateNumEnemies(int numWalkableTiles) {
-/* subtracts 1 from the total number of walkable tiles in the game, as the player tile should not be counted as a valid enemy placement tile.
- * Then it's multiplied by the density value */
-//        return (int) Math.ceil((numWalkableTiles - 1) * ENEMY_DENSITY); //ceil do rounding to the result (to negative).
-//    }
-//TODO: Add game objects if needed.
-//...
-//world.setEntities(entities);
