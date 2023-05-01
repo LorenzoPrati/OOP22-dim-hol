@@ -11,13 +11,12 @@ public class HUD {
         this.loader = loader;
     }
 
-    public void show(Graphics2D g2, double newTileWidth, double newTileHeight) {
+    public void show(Graphics2D g2, double newTileWidth, double newTileHeight, int offsetX, int offsetY) {
         var heartImg = loader.getImage(27);
         g2.setColor(Color.RED);
         for (int i = 0; i < playerCurrentHealth; i++) {
-            g2.drawImage(heartImg, (int) (i * 15 + newTileWidth), (int) newTileHeight, (int) newTileWidth * 2, (int) newTileHeight * 2, null);
+            g2.drawImage(heartImg, (int) (i * 15 + newTileWidth + offsetX), (int) newTileHeight + offsetY, (int) newTileWidth * 2, (int) newTileHeight * 2, null);
         }
-        g2.drawString("Heart: " + playerCurrentHealth + " / " + playerMaxHealth, (int) newTileWidth * 2, (int) (3 * newTileHeight));
 
     }
 

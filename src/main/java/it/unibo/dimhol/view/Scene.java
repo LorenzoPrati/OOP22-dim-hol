@@ -8,6 +8,7 @@ import it.unibo.dimhol.Engine;
 import it.unibo.dimhol.World;
 import it.unibo.dimhol.map.MapLoaderImpl;
 import it.unibo.dimhol.map.*;
+import it.unibo.dimhol.systems.GameSystem;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.awt.*;
@@ -15,8 +16,6 @@ import java.awt.*;
 /*A temporary Scene just to debug. */
 
 public class Scene extends JPanel {
-
-    private static final int ZOOM = 20;
 
     private List<Triple<Integer,Integer,Integer>> renderQueue = new ArrayList<>();
     private MapLoad mapLoader = new MapLoaderImpl("src/main/java/it/unibo/dimhol/map/mapResources/nice-map.xml");
@@ -27,6 +26,7 @@ public class Scene extends JPanel {
     private int newTileHeight;
     private int offsetX;
     private int offsetY;
+    private HUD hud = new HUD(loader);
 
     public Scene(){
 
@@ -100,6 +100,7 @@ public class Scene extends JPanel {
                     (int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
             g2.drawRect((int) newX, (int) newY, (int) newWidth, (int) newHeight);
         }
+        hud.show(g2, newTileWidth, newTileHeight, offsetX, offsetY);
 
         g2.dispose();
         renderList.clear();
@@ -125,7 +126,11 @@ public class Scene extends JPanel {
     }
 
     public void render(){
-        this.repaint();
-        //this.paintImmediately(0,0,this.getWidth(),this.getHeight());
+        //this.repaint();
+        this.paintImmediately(0,0,this.getWidth(),this.getHeight());
+    }
+
+    public HUD getPlayerHUD() {
+        return this.hud;
     }
 }
