@@ -1,7 +1,6 @@
 package it.unibo.dimhol.view;
 
 import it.unibo.dimhol.Engine;
-
 import javax.swing.*;
 import java.awt.*;
 

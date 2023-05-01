@@ -14,23 +14,19 @@ import javax.swing.border.EmptyBorder;
 public class HomeScreen extends JPanel {
     private final Engine engine;
     private ImageIcon bg;
-    private Logics logic; 
-    
+
     public HomeScreen(final Engine engine) {
         this.engine = engine;
-        this.logic = new LogicsImpl();
-        this.bg = new ImageIcon("src/res/bg/mainMenu.jpg");
-        final JButton startButton = new JButton("PLAY");
-        final JButton exitButton = new JButton("QUIT");
-        final JButton optionsButton = new JButton("OPTIONS");
+        this.bg = new ImageIcon("src/res/bg/mainMenu3.png");
+        final JButton startButton = new JButton("P L A Y");
+        final JButton exitButton = new JButton("Q U I T");
+        final JButton optionsButton = new JButton("O P T I O N S");
         final JPanel centerPanel = new JPanel();
-        final JPanel northPanel = new JPanel();
         List<JButton> buttons = new LinkedList<>();
-        ImageIcon icon = new ImageIcon("src/res/bg/dimension holiday.png");
+        ImageIcon icon = new ImageIcon("src/res/bg/dimension holiday2.png");
         ImageIcon ghostIcon = new ImageIcon("src/res/bg/ghost.gif");
         JLabel gameName = new JLabel(icon);
-        Font f = new Font("Helvetica", Font.BOLD, 30);
-        Color c = new Color(0, 102,0);
+        Font f = new Font("Helvetica", Font.BOLD, 20);
         GridBagConstraints gbc = new GridBagConstraints();
 
         buttons.add(startButton);
@@ -42,27 +38,25 @@ public class HomeScreen extends JPanel {
         this.setLayout(new GridBagLayout());
        
         startButton.addActionListener(e -> {
-            logic.startGame(engine);
+            engine.newGame();
         });
         exitButton.addActionListener(e -> {
-            logic.quitGame();
+            System.exit(0);
         });
         optionsButton.addActionListener(e ->{
-            logic.setOptionPanel(engine);
+            engine.getWindow().changePanel(new OptionScreen(engine));
         });
 
         for(var button: buttons){
             button.setFont(f);
-            button.setBackground(c);
-            button.setForeground(Color.WHITE);
+            button.setForeground(new Color(102,0,153));
         }
         
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.anchor = GridBagConstraints.NORTH;
 
-        northPanel.add(gameName);
-        northPanel.setBackground(Color.WHITE);
-        this.add(northPanel,gbc);
+    
+        this.add(gameName,gbc);
 
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
