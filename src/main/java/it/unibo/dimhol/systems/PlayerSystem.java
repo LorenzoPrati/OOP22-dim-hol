@@ -5,7 +5,6 @@ import it.unibo.dimhol.components.AnimationComponent;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
-import org.locationtech.jts.math.Vector2D;
 
 /**
  * A system to handle player logic.
@@ -29,35 +28,29 @@ public class PlayerSystem extends AbstractSystem {
      */
     @Override
     public void process(final Entity e, double dt) {
-        var mov = (MovementComponent) e.getComponent(MovementComponent.class);
-        var an = (AnimationComponent) e.getComponent(AnimationComponent.class);
         var input = this.world.getInputListener();
-        if (input.anyMoveKeyPressed()) {
-            mov.setEnabled(true);
-            if (input.isUp()) {
-                mov.setDir(new Vector2D(0,-1));
-                an.setState("walking up");
-            } else if (input.isDown()) {
-                mov.setDir(new Vector2D(0,1));
-                an.setState("walking down");
-            } else if (input.isLeft()) {
-                mov.setDir(new Vector2D(-1,0));
-                an.setState("walking left");
-            } else if (input.isRight()) {
-                mov.setDir(new Vector2D(1,0));
-                an.setState("walking right");
-            }
-        } else {
+        var mov = (MovementComponent) e.getComponent(MovementComponent.class);
+        var animation = (AnimationComponent) e.getComponent(AnimationComponent.class);
+        var player = (PlayerComponent) e.getComponent(PlayerComponent.class);
+        /*
+            Block input reaction if player is blocked
+         */
+        if (animation.isBlocking() && !animation.isCompleted()) {
+            animation.setState(animation.getState());
             mov.setEnabled(false);
-            if (mov.getDir().equals(new Vector2D(0,-1))) {
-                an.setState("idle up");
-            } else if (mov.getDir().equals(new Vector2D(0,1))) {
-                an.setState("idle down");
-            } else if (mov.getDir().equals(new Vector2D(-1,0))) {
-                an.setState("idle left");
-            } else if (mov.getDir().equals(new Vector2D(1,0))) {
-                an.setState("idle right");
-            }
+            return;
         }
+        /*
+        transition state
+         */
+        player.getState().transition(input).ifPresent(player::setState);
+        /*
+        execute state logic
+         */
+        player.getState().update(input, e, dt).forEach(this.world::notifyEvent);
+        /*
+        update animation
+         */
+        animation.setState(player.getState().getDesc());
     }
 }

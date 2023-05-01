@@ -1,19 +1,19 @@
-package it.unibo.dimhol.effects;
+package it.unibo.dimhol.logic.effects;
 
-import it.unibo.dimhol.components.AiComponent;
 import it.unibo.dimhol.components.HealthComponent;
+import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
 
-public class DecreaseEnemyCurrentHealthEffect implements Effect{
+public class DecreasePlayerCurrentHealthEffect implements Effect{
     private final int n;
 
-    public DecreaseEnemyCurrentHealthEffect(final int n){
+    public DecreasePlayerCurrentHealthEffect(final int n){
         this.n = n;
     }
 
     @Override
     public boolean canUseOn(Entity entity) {
-        return entity.hasComponent(AiComponent.class);
+        return entity.hasComponent(PlayerComponent.class);
     }
 
     @Override

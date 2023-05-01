@@ -1,4 +1,4 @@
-package it.unibo.dimhol.commons.shapes;
+package it.unibo.dimhol.logic.collision;
 
 import org.locationtech.jts.geom.Polygon;
 

@@ -1,4 +1,4 @@
-package it.unibo.dimhol.ai;
+package it.unibo.dimhol.logic.ai;
 
 import it.unibo.dimhol.components.BodyComponent;
 import it.unibo.dimhol.components.MovementComponent;
@@ -10,7 +10,7 @@ import org.locationtech.jts.math.Vector2D;
 import java.util.List;
 import java.util.Optional;
 
-public class FollowingAction implements Action {
+public class FollowingAction extends AbstractAction {
 
     private static final int AGGRO_RAY = 300;
     private PositionComponent playerPos;
@@ -21,6 +21,7 @@ public class FollowingAction implements Action {
 
     @Override
     public boolean canExecute(Entity enemy) {
+        this.player = super.getPlayer();
 
         playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
         BodyComponent playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
@@ -58,8 +59,4 @@ public class FollowingAction implements Action {
         return Optional.empty();
     }
 
-    @Override
-    public void setPlayer(Entity player) {
-        this.player = player;
-    }
 }

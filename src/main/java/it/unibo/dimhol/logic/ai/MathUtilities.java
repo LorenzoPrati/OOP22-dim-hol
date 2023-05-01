@@ -1,7 +1,7 @@
-package it.unibo.dimhol.ai;
+package it.unibo.dimhol.logic.ai;
 
-import it.unibo.dimhol.commons.shapes.BodyShape;
-import it.unibo.dimhol.commons.shapes.RectBodyShape;
+import it.unibo.dimhol.logic.collision.BodyShape;
+import it.unibo.dimhol.logic.collision.RectBodyShape;
 import org.locationtech.jts.math.Vector2D;
 
 public class MathUtilities {
@@ -24,22 +24,22 @@ public class MathUtilities {
         return (Math.atan(m) * 180/Math.PI);
     }
 
-    public static int getVisionZone(double angle, Vector2D playerPos, Vector2D enemyPos) {
+    public static String getVisionZone(double angle, Vector2D playerPos, Vector2D enemyPos) {
         if (angle > -45 && angle < 45) {
             if (playerPos.getX() > enemyPos.getX()) {
                 // right
-                return 1;
+                return "right";
             } else {
                 //left
-                return 2;
+                return "left";
             }
         } else {
             if (playerPos.getY() > enemyPos.getY()) {
                 //down
-                return 3;
+                return "down";
             } else {
                 //up
-                return 4;
+                return "up";
             }
         }
     }

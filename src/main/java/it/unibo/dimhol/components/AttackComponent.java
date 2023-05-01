@@ -1,6 +1,6 @@
 package it.unibo.dimhol.components;
 
-import it.unibo.dimhol.effects.Effect;
+import it.unibo.dimhol.logic.effects.Effect;
 import it.unibo.dimhol.entity.Entity;
 
 import java.util.List;

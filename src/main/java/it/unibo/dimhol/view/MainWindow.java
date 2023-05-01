@@ -11,12 +11,11 @@ public class MainWindow extends JFrame {
 
     JPanel currPanel;
     public MainWindow(final Engine engine) {
-        //Taskbar.getTaskbar().setIconImage(new ResourceLoader(32, 32).getImage(13).getSubimage(0,0,32, 32));
         this.engine = engine;
         this.currPanel = new HomeScreen(engine);
         this.getContentPane().add(currPanel);
 
-        this.setUndecorated(true);
+        this.setUndecorated(false);
 
         this.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));

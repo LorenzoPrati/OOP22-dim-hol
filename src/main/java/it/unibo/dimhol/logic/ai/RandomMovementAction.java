@@ -1,4 +1,4 @@
-package it.unibo.dimhol.ai;
+package it.unibo.dimhol.logic.ai;
 
 import it.unibo.dimhol.components.AiComponent;
 import it.unibo.dimhol.components.BodyComponent;
@@ -15,7 +15,7 @@ import java.util.Random;
 /**
  * A random movement behaviour.
  */
-public final class RandomMovementAction implements Action {
+public final class RandomMovementAction extends AbstractAction {
 
     private static final int START_RANGE_TIME = 300;
     private static final int END_RANGE_TIME = 500;
@@ -30,6 +30,7 @@ public final class RandomMovementAction implements Action {
 
     @Override
     public boolean canExecute(final Entity enemy) {
+        this.player = super.getPlayer();
 
         PositionComponent playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
         BodyComponent playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
@@ -61,11 +62,6 @@ public final class RandomMovementAction implements Action {
             setWalkingTimeMillis();
         }
         return Optional.empty();
-    }
-
-    @Override
-    public void setPlayer(Entity player) {
-        this.player = player;
     }
 
     /**

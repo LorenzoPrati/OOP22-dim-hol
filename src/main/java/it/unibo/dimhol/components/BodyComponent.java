@@ -1,6 +1,6 @@
 package it.unibo.dimhol.components;
 
-import it.unibo.dimhol.commons.shapes.BodyShape;
+import it.unibo.dimhol.logic.collision.BodyShape;
 
 /**
  * Holds data about the body of an entity.

@@ -1,6 +1,6 @@
 package it.unibo.dimhol.components;
 
-import it.unibo.dimhol.effects.Effect;
+import it.unibo.dimhol.logic.effects.Effect;
 
 public class PickableComponent implements Component {
     private Effect effect;

@@ -81,7 +81,7 @@ public final class Engine {
     private void gameLoop() {
         long prev = System.currentTimeMillis(); //time since previous loop
         double dt;
-        while (this.running) {
+        while (this.running && !world.isGameOver()) {
             long curr = System.currentTimeMillis();
             dt = curr - prev;
             if (!this.pause) {
@@ -90,6 +90,7 @@ public final class Engine {
             this.waitForNextFrame(curr);
             prev = curr;
         }
+        this.window.changePanel(new ResultScreen(this, world.getResult()));
     }
 
     private void waitForNextFrame(final long time) {
@@ -102,11 +103,6 @@ public final class Engine {
             }
         }
     }
-
-    //private void showMatchResult() {
-        //this.window.changePanel(new ResultScreen(this, world.getResult()));
-    //}
-
 
     /**
      * Gets the main window.

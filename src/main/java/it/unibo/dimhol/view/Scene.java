@@ -16,14 +16,22 @@ import java.awt.*;
 
 public class Scene extends JPanel {
 
+    private static final int ZOOM = 20;
+
     private List<Triple<Integer,Integer,Integer>> renderQueue = new ArrayList<>();
     private MapLoad mapLoader = new MapLoaderImpl("src/main/java/it/unibo/dimhol/map/mapResources/nice-map.xml");
     private ResourceLoader loader = new ResourceLoader(mapLoader.getTileWidth(), mapLoader.getTileHeight());
     private List<GraphicInfo> renderList = new ArrayList<>();
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private int newTileWidth;
+    private int newTileHeight;
+    private int offsetX;
+    private int offsetY;
 
     public Scene(){
 
-        this.setBackground(Color.PINK);
+        this.setDoubleBuffered(true);
+        this.setBackground(Color.BLACK);
 
         /*
         Debug
@@ -49,15 +57,29 @@ public class Scene extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
+        System.out.println(mapLoader.getWidth()); //20
+        System.out.println(mapLoader.getHeight()); //30
         var layers = mapLoader.getMapTileLayers();
 
         for (var layer : layers) {
             for (int i = 0; i < mapLoader.getWidth(); i++) {
                 for (int j = 0; j < mapLoader.getHeight(); j++) {
-                    var drawX = mapLoader.getTileHeight() * j;
-                    var drawY = mapLoader.getTileWidth() * i;
                     var id = layer[i][j].getTileSetId();
-                    g2.drawImage(loader.getTileImage(id), drawX, drawY, mapLoader.getTileWidth(), mapLoader.getTileHeight(), null);
+
+                    if (this.getWidth() / mapLoader.getHeight() < this.getHeight() / mapLoader.getWidth()) {
+                        newTileWidth = this.getWidth() / mapLoader.getHeight();
+                        newTileHeight = newTileWidth;
+                    } else {
+                        newTileWidth = this.getHeight() / mapLoader.getWidth();
+                        newTileHeight = newTileWidth;
+                    }
+
+                    offsetX = ((this.getWidth() - mapLoader.getHeight() * newTileWidth) / 2);
+                    offsetY = ((this.getHeight() - mapLoader.getWidth() * newTileHeight) / 2);
+                    var drawX = newTileHeight * j + offsetX;
+                    var drawY = newTileWidth * i + offsetY;
+
+                    g2.drawImage(loader.getTileImage(id), drawX, drawY, newTileWidth, newTileHeight, null);
                 }
             }
         }
@@ -68,17 +90,23 @@ public class Scene extends JPanel {
                     renderList.get(i).getIndex() * loader.getWidth(renderList.get(i).getNumImage()),
                     0,
                     loader.getWidth(renderList.get(i).getNumImage()), loader.getHeigth(renderList.get(i).getNumImage())));
+
+            double newWidth = newTileWidth * renderList.get(i).getW();
+            double newHeight = newTileHeight * renderList.get(i).getH();
+            double newX = renderList.get(i).getX() * newTileWidth + offsetX;
+            double newY = renderList.get(i).getY() * newTileHeight + offsetY;
+
             g2.drawImage(img,
-                    (int) renderList.get(i).getX(), (int) renderList.get(i).getY(), 60, 60, null);
-            g2.drawRect((int) renderList.get(i).getX(), (int) renderList.get(i).getY(), 60, 60);
+                    (int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
+            g2.drawRect((int) newX, (int) newY, (int) newWidth, (int) newHeight);
         }
 
         g2.dispose();
         renderList.clear();
     }
 
-    public void toList (final int index, final int numImage, final double x, final double y){
-        this.renderList.add(new GraphicInfo(index, numImage, x, y));
+    public void toList (final int index, final int numImage, final double x, final double y, final double w,final double h){
+        this.renderList.add(new GraphicInfo(index, numImage, x, y, w,h));
     }
 
     private BufferedImage createCompatibleImage(BufferedImage image) {
@@ -96,7 +124,8 @@ public class Scene extends JPanel {
         }
     }
 
-    public void render() {
-        this.paintImmediately(0,0,this.getWidth(),this.getHeight());
+    public void render(){
+        this.repaint();
+        //this.paintImmediately(0,0,this.getWidth(),this.getHeight());
     }
 }
