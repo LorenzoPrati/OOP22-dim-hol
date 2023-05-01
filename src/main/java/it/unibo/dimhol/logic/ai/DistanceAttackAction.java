@@ -17,7 +17,7 @@ import java.util.Optional;
 public class DistanceAttackAction extends AbstractAction {
 
     private static final int RELOAD_GUN_TIME = 2000;
-    private static final int AGGRO_RAY = 300;
+    private static final int AGGRO_RAY = 5;
     private final GenericFactory genericFactory = new GenericFactory();
     private PositionComponent playerPos;
     private PositionComponent enemyPos;

@@ -19,7 +19,7 @@ public final class RandomMovementAction extends AbstractAction {
 
     private static final int START_RANGE_TIME = 300;
     private static final int END_RANGE_TIME = 500;
-    private static final int AGGRO_RAY = 300;
+    private static final int AGGRO_RAY = 3;
     private final Random rand = new Random();
     private int walkingTimeMillis;
     private Entity player;

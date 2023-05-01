@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class FollowingAction extends AbstractAction {
 
-    private static final int AGGRO_RAY = 300;
+    private static final int AGGRO_RAY = 3;
     private PositionComponent playerPos;
     private PositionComponent enemyPos;
     private Vector2D playerCentralPos;
