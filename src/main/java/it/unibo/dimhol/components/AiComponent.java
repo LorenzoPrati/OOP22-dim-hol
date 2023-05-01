@@ -1,6 +1,6 @@
 package it.unibo.dimhol.components;
 
-import it.unibo.dimhol.ai.Action;
+import it.unibo.dimhol.logic.ai.Action;
 
 import java.util.List;
 

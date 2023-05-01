@@ -24,23 +24,13 @@ public class World {
      * Class that registers user input.
      */
     private InputListener input;
-    /*
-    state of the game
-     */
+
     private boolean gameOver;
-    //private boolean result;
-    /*
-    world
-     */
+
     private final List<Entity> entities;
     private final List<GameSystem> systems;
     private final List<Event> events;
-    /*
-    map
-     */
-    //parser
-    //level manager
-    //
+
 
     /**
      * Constructs a world.
@@ -56,17 +46,7 @@ public class World {
          */
         var gf = new GenericFactory();
         this.entities.add(gf.createPlayer(15, 15));
-        this.entities.add(gf.createZombieEnemy(2,3));
-        this.entities.add(gf.createZombieEnemy(7, 1));
-        this.entities.add(gf.createZombieEnemy(10, 20));
-        this.entities.add(gf.createZombieEnemy(8, 15));
-        this.entities.add(gf.createShooterEnemy(1, 20));
-        this.entities.add(gf.createShooterEnemy(7, 18));
-        this.entities.add(gf.createShooterEnemy(12, 22));
-        this.entities.add(gf.createZombieEnemy(4, 9));
-        this.entities.add(gf.createShooterEnemy(3, 18));
-        this.entities.add(gf.createShooterEnemy(5, 5));
-        this.entities.add(gf.createZombieEnemy(3, 1));
+        this.entities.add(gf.createShooterEnemy(3,3));
 
         //set tilemap
         /*
@@ -83,8 +63,7 @@ public class World {
         this.systems.add(new PhysicsSystem(this));
         this.systems.add(new ItemSystem(this));
         this.systems.add(new CombatSystem(this));
-        this.systems.add(new StatSystem(this));
-        this.systems.add(new DeleteDeathEntitiesSystem(this));
+        this.systems.add(new CheckHealthSystem(this));
         this.systems.add(new ClearCollisionSystem(this));
         this.systems.add( new AnimationSystem(this));
         this.systems.add(new RenderSystem(this));
@@ -189,14 +168,12 @@ public class World {
         this.gameOver = true;
     }
 
-
-    //public boolean getResult() {
-        //return result;
-    //}
-
-    //public void setResult(final boolean result) {
-        //this.result = result;
-    //}
-
-    //getTileMap()
+    /**
+     * Checks match result.
+     *
+     * @return true if player defeated the boss, false otherwise.
+     */
+    public boolean getResult() {
+        return false;
+    }
 }
