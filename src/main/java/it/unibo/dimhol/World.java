@@ -47,6 +47,8 @@ public class World {
         var gf = new GenericFactory();
         this.entities.add(gf.createPlayer(15, 15));
         this.entities.add(gf.createShooterEnemy(3,3));
+        this.entities.add(gf.createZombieEnemy(4, 9));
+        this.entities.add(gf.createZombieEnemy(9, 9));
 
         //set tilemap
         /*

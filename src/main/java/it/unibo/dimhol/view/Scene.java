@@ -4,8 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import it.unibo.dimhol.Engine;
-import it.unibo.dimhol.World;
+
 import it.unibo.dimhol.map.MapLoaderImpl;
 import it.unibo.dimhol.map.*;
 import org.apache.commons.lang3.tuple.Triple;
@@ -26,7 +25,8 @@ public class Scene extends JPanel {
     private int newTileWidth;
     private int newTileHeight;
     private double screenAspectRatio = (double) screenSize.getWidth() / screenSize.getHeight();
-    private final HUD hud = new HUD(renderList);
+
+    private final HUD playerHUD = new HUD(loader);
 
 
     public Scene(){
@@ -87,7 +87,7 @@ public class Scene extends JPanel {
                     0,
                     loader.getWidth(renderList.get(i).getNumImage()), loader.getHeigth(renderList.get(i).getNumImage())));
 
-            double imageAspectRatio = img.getWidth() / img.getHeight();
+            int imageAspectRatio = img.getWidth() / img.getHeight();
             double scalingFactor = (imageAspectRatio > screenAspectRatio) ?
                     screenSize.getWidth() / img.getWidth() :
                     screenSize.getHeight() / img.getHeight();
@@ -102,7 +102,8 @@ public class Scene extends JPanel {
             g2.drawRect((int) newX, (int) newY, (int) newWidth, (int) newHeight);
         }
 
-        hud.show(g2);
+        playerHUD.show(g2, newTileWidth, newTileHeight);
+
 
         g2.dispose();
         renderList.clear();
@@ -128,6 +129,11 @@ public class Scene extends JPanel {
     }
 
     public void render(){
+        //this.repaint();
         this.paintImmediately(0,0,this.getWidth(),this.getHeight());
+    }
+
+    public HUD getPlayerHUD() {
+        return playerHUD;
     }
 }
