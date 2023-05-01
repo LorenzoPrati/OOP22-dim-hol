@@ -8,7 +8,6 @@ import it.unibo.dimhol.map.MapLoad;
 import it.unibo.dimhol.map.MapLoaderImpl;
 import it.unibo.dimhol.map.Tile;
 
-import java.io.DataOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,20 +27,23 @@ public class LevelManager {
     private final MapLoad mapLoad = new MapLoaderImpl("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
     private final GenericFactory genericFactory = new GenericFactory();
     private Tile[][] map;
+    private MapLoaderImpl mapLoader;
     private final int currentLevel = 0;
     private Entity player;
-    private LevelManager(World world) {
+    public LevelManager(World world) {
         this.world = world;
     }
 
     //Change the level:
-//    public void changeLevel() {
+        //public void changeLevel() {
         //Saving player
         //Clear the room
+        //Puts player
+        //Now call the strategy to generate what necessary
         //Load the map
         //Finds walkable tiles positions -> empty or not
-        //Puts player
         //Puts enemies
+        //
 
         /**
          * Changes the current level.
@@ -53,8 +55,9 @@ public class LevelManager {
             List<Tile> walkableTiles = getWalkableTiles();
             Tile playerTile = getRandomTile(walkableTiles);
             placePlayer(playerTile.getX(PLAYER_X_OFFSET), playerTile.getY(PLAYER_Y_OFFSET));
-            placeEnemies(walkableTiles, playerTile, ENEMY_X_OFFSET, ENEMY_Y_OFFSET);
+            placeEnemies(walkableTiles, playerTile);
         }
+
     /**
      * Saves the player's entity.
      */
@@ -110,23 +113,24 @@ public class LevelManager {
     /**
      * Place the player entity at the specified position.
      *
-     * @param x the x-coordinate of the player entity.
-     * @param y the y-coordinate of the player entity.
+     * @param PLAYER_X_OFFSET the x-coordinate of the player entity.
+     * @param PLAYER_Y_OFFSET the y-coordinate of the player entity.
      */
-    private void placePlayer(double x, double y) {
-        Entity playerEntity = genericFactory.createPlayer(x, y);
-        world.addEntity(playerEntity);
+    //Let this method here:
+    private void placePlayer(double PLAYER_X_OFFSET, double PLAYER_Y_OFFSET) {
+        while (getRandomTile(getWalkableTiles()).isWalkable()) {
+            Entity playerEntity = genericFactory.createPlayer(PLAYER_X_OFFSET, PLAYER_Y_OFFSET);
+            world.addEntity(playerEntity);
 //        world.setPlayer(playerEntity);
+        }
     }
     /**
      * Places enemies entities on random tiles in the game map.
      *
      * @param walkableTiles The list of walkable tiles in the map.
-     * @param playerTile The index of the tile where the player will be placed.
-     * @param x The x-coordinate where enemies should be placed.
-     * @param y The y-coordinate where enemies should be placed.
+     * @param playerTile    The index of the tile where the player will be placed.
      */
-    private void placeEnemies(List<Tile> walkableTiles, Tile playerTile, double x, double y) {
+    private void placeEnemies(List<Tile> walkableTiles, Tile playerTile) {
         int numEnemies = calculateNumEnemies(walkableTiles.size());
         List<Tile> tilesToPlaceEnemiesOn = new ArrayList<>(walkableTiles); //creates a new list to store the tiles where enemies will be placed on.
         tilesToPlaceEnemiesOn.remove(playerTile); //remove the player tile form the list.
@@ -134,7 +138,7 @@ public class LevelManager {
         for (int i = 0; i < numEnemies; i++) {
             int randomIndex = (int) (Math.random() * walkableTiles.size()); //Get a random tile index from the list.
             Tile tilesToPlaceEnemyOn = tilesToPlaceEnemiesOn.get(randomIndex);
-            Entity enemyEntity = spawnEnemy(x, y);
+            Entity enemyEntity = spawnEnemy(LevelManager.ENEMY_X_OFFSET, LevelManager.ENEMY_Y_OFFSET);
             world.addEntity(enemyEntity);
             tilesToPlaceEnemiesOn.remove(tilesToPlaceEnemyOn); //remove the tile from the list so another enemy won't be placed there.
         }
