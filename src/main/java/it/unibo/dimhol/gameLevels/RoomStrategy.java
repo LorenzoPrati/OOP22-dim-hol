@@ -12,9 +12,7 @@ public interface RoomStrategy {
     void generate();
 
     /**
-     * Spawn rewards in the room.
-     * This method should be implemented to create items or bonuses for the player to collect during the gameplay.
+     * Place the player entity at the specified position.
      */
-    void spawnRewards();
+    void placePlayer();
 }
-
