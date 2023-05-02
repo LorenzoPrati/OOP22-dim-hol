@@ -99,6 +99,7 @@ public class Scene extends JPanel {
                     (int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
             g2.drawRect((int) newX, (int) newY, (int) newWidth, (int) newHeight);
         }
+
         hud.show(g2, newTileWidth, newTileHeight, offsetX, offsetY);
 
         g2.dispose();

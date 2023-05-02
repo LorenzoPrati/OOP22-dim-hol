@@ -54,7 +54,7 @@ public class ResourceLoader {
             
             this.imagesMap.put(25, new ImmutableTriple<>((ImageIO.read(new File("src/res/enemies/ghost-Sheet.png"))), 32, 32));
             this.imagesMap.put(26, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/coin.png"))), 32, 32));
-            this.imagesMap.put(27, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/heart.png"))), 64, 64));
+            this.imagesMap.put(27, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/heart.png"))), 21, 21));
             this.imagesMap.put(28, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/key.png"))), 19, 10));
 
             this.imagesMap.put(30, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/up.png"))), 123, 127));

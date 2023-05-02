@@ -8,8 +8,8 @@ public class HUD {
     private int playerCurrentHealth;
     private int playerMaxHealth;
     private final ResourceLoader loader;
-    private final static double W = 0.5;
-    private final static double H = 0.5;
+    private final static double W = 0.7;
+    private final static double H = 0.7;
     private double newTileWidth;
     private double newTileHeight;
     private int offsetX;
@@ -26,9 +26,9 @@ public class HUD {
         this.offsetX = offsetX;
         this.offsetY = offsetY;
 
-        File font_file = new File("src/res/hud/alagard.ttf");
+        File font_file = new File("src/res/hud/monogram.ttf");
         try {
-            font = Font.createFont(Font.ROMAN_BASELINE, font_file).deriveFont((float) newTileHeight / 2);
+            font = Font.createFont(Font.ROMAN_BASELINE, font_file).deriveFont((float) (newTileHeight / 1.5));
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -44,8 +44,9 @@ public class HUD {
         for (int i = 1; i < playerCurrentHealth - 1; i++) {
             g2.drawImage(heartImg, (i * heartW + offsetX), heartH + offsetY, heartW, heartH, null);
         }
+        //g2.drawImage(heartImg, (100 + offsetX), 100 + offsetY, heartW, heartH, null);
         g2.setFont(font);
-        g2.drawString("Heart: " + playerCurrentHealth + " / " + playerMaxHealth, heartW + offsetX, heartH + offsetY);
+        g2.drawString("Heart: " + playerCurrentHealth + "/" + playerMaxHealth, heartW + offsetX, heartH + offsetY);
     }
 
     public void update(int currentHealth, int maxHealth) {
