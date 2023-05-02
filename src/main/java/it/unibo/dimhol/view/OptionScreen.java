@@ -6,13 +6,13 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import it.unibo.dimhol.Engine;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+
+import it.unibo.dimhol.core.Engine;
 
 public class OptionScreen extends JPanel {
     private final Engine engine;

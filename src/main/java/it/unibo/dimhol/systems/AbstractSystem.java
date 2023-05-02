@@ -1,6 +1,6 @@
 package it.unibo.dimhol.systems;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.Component;
 import it.unibo.dimhol.entity.Entity;
 
@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public abstract class AbstractSystem implements GameSystem {
 
-    protected final World world;
+    protected final WorldImpl world;
     private final Set<Class<? extends Component>> family = new HashSet<>();
 
     /**
@@ -23,7 +23,7 @@ public abstract class AbstractSystem implements GameSystem {
      * @param w the world
      * @param comps the family of components
      */
-    public AbstractSystem(final World w, final Class<? extends Component>... comps) {
+    public AbstractSystem(final WorldImpl w, final Class<? extends Component>... comps) {
         this.world = w;
         this.family.addAll(Arrays.asList(comps));
     }

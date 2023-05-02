@@ -1,6 +1,6 @@
 package it.unibo.dimhol.systems;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.AiComponent;
 import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
@@ -17,7 +17,7 @@ public final class AiSystem extends AbstractSystem {
      *
      * @param world .
      */
-    public AiSystem(final World world) {
+    public AiSystem(final WorldImpl world) {
         super(world, AiComponent.class);
         for (var entity : world.getEntities()) {
             if (entity.hasComponent(PlayerComponent.class)) {

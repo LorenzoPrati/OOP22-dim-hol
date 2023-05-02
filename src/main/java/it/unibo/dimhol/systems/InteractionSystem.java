@@ -1,6 +1,6 @@
 package it.unibo.dimhol.systems;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.*;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.events.RemoveEntityEvent;
@@ -12,7 +12,7 @@ public class InteractionSystem extends AbstractSystem{
      *
      * @param w     the world
      */
-    public InteractionSystem(World w) {
+    public InteractionSystem(WorldImpl w) {
         super(w, InteractableComponent.class, CollisionComponent.class);
     }
 
