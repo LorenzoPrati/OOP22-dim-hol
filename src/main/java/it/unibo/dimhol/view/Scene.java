@@ -57,8 +57,8 @@ public class Scene extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        System.out.println(mapLoader.getWidth()); //20
-        System.out.println(mapLoader.getHeight()); //30
+        //System.out.println(mapLoader.getWidth()); //20
+        //System.out.println(mapLoader.getHeight()); //30
         var layers = mapLoader.getMapTileLayers();
 
         for (var layer : layers) {

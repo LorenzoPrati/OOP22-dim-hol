@@ -12,9 +12,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class AttackState extends AbstractPlayerState {
+public class CombatState extends AbstractPlayerState {
 
-    public AttackState() {
+    public CombatState() {
     }
 
     @Override
@@ -23,10 +23,15 @@ public class AttackState extends AbstractPlayerState {
     }
 
     @Override
-    public List<Event> update(InputListener input, Entity e, double dt) {
+    public List<Event> execute(InputListener input, Entity e) {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         mov.setEnabled(false);
-        if (input.isSpecialAttack()) {
+        if (input.isShooting()) {
+            this.setDesc("shoot " + DirectionUtil.getStringFromVec(mov.getDir()));
+            return List.of(new AddEntityEvent(new GenericFactory()
+                    .createPlayerBullet(mov.getDir().getX(), mov.getDir().getY(), e)));
+        }
+        else if (input.isSpecialAttack()) {
             this.setDesc("special " + DirectionUtil.getStringFromVec(mov.getDir()));
             return List.of(new AddEntityEvent(new GenericFactory()
                     .createPlayerMeleeAttack(mov.getDir().getX(), mov.getDir().getY(), e)));
@@ -36,5 +41,10 @@ public class AttackState extends AbstractPlayerState {
                     .createPlayerMeleeAttack(mov.getDir().getX(), mov.getDir().getY(), e)));
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public void updateTime(double dt) {
+
     }
 }

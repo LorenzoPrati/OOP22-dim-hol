@@ -45,8 +45,11 @@ public class World {
         generate first level
          */
         var gf = new GenericFactory();
+
+        //this.entities.add(gf.createShooterEnemy(3,3));
+        this.entities.add(gf.createHeart(10,10));
+        this.entities.add(gf.createHeart(13,13));
         this.entities.add(gf.createPlayer(15, 15));
-        this.entities.add(gf.createShooterEnemy(3,3));
 
         //set tilemap
         /*
@@ -62,6 +65,7 @@ public class World {
         this.systems.add(new CollisionSystem(this));
         this.systems.add(new PhysicsSystem(this));
         this.systems.add(new ItemSystem(this));
+        this.systems.add(new InteractionSystem(this));
         this.systems.add(new CombatSystem(this));
         this.systems.add(new CheckHealthSystem(this));
         this.systems.add(new ClearCollisionSystem(this));

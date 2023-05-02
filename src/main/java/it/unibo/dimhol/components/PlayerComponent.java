@@ -10,6 +10,8 @@ public class PlayerComponent implements Component {
 
     private PlayerState state;
 
+    private boolean blocked;
+
     public PlayerComponent() {
         this.state = new IdleState();
     }
@@ -22,5 +24,11 @@ public class PlayerComponent implements Component {
         this.state = state;
     }
 
+    public boolean isBlocked() {
+        return blocked;
+    }
 
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
 }

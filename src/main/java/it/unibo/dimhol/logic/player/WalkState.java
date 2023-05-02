@@ -18,11 +18,11 @@ public class WalkState extends AbstractPlayerState {
 
     @Override
     public Optional<PlayerState> transition(InputListener input) {
-        if (input.isShooting()) {
-            return Optional.of(new ShootState());
+        if (input.isChargingFireball()) {
+            return Optional.of(new ChargeState());
         }
         if (input.isAttacking()) {
-            return Optional.of(new AttackState());
+            return Optional.of(new CombatState());
         }
         if (!input.isMoving()) {
             return Optional.of(new IdleState());
@@ -31,7 +31,7 @@ public class WalkState extends AbstractPlayerState {
     }
 
     @Override
-    public List<Event> update(InputListener input, Entity e, double dt) {
+    public List<Event> execute(InputListener input, Entity e) {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         mov.setEnabled(true);
         if (input.isUp()) {
@@ -45,5 +45,10 @@ public class WalkState extends AbstractPlayerState {
         }
         this.setDesc("walk " + DirectionUtil.getStringFromVec(mov.getDir()));
         return Collections.emptyList();
+    }
+
+    @Override
+    public void updateTime(double dt) {
+
     }
 }
