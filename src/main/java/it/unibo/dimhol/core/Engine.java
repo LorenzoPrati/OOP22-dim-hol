@@ -1,4 +1,4 @@
-package it.unibo.dimhol;
+package it.unibo.dimhol.core;
 
 import it.unibo.dimhol.view.*;
 
@@ -39,7 +39,7 @@ public final class Engine {
      * Starts a new game.
      */
     public void newGame() {
-        this.world = new World();
+        this.world = new WorldImpl();
         //this.world.setInputListener(new InputListener(this));
         this.resumeGame();
         this.running = true;

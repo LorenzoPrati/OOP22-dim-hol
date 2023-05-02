@@ -1,5 +1,7 @@
 package it.unibo.dimhol;
 
+import it.unibo.dimhol.core.Engine;
+
 /**
  * Launches the game.
  */

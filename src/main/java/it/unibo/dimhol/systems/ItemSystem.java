@@ -1,6 +1,6 @@
 package it.unibo.dimhol.systems;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.CollisionComponent;
 import it.unibo.dimhol.components.PickableComponent;
 import it.unibo.dimhol.entity.Entity;
@@ -8,7 +8,7 @@ import it.unibo.dimhol.events.RemoveEntityEvent;
 
 public class ItemSystem extends AbstractSystem{
 
-    public ItemSystem(World w) {
+    public ItemSystem(WorldImpl w) {
         super(w, PickableComponent.class, CollisionComponent.class);
     }
 

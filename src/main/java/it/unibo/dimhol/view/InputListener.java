@@ -1,7 +1,7 @@
 package it.unibo.dimhol.view;
 
-import it.unibo.dimhol.Engine;
-import it.unibo.dimhol.Input;
+import it.unibo.dimhol.core.Engine;
+import it.unibo.dimhol.core.Input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

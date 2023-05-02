@@ -1,6 +1,6 @@
 package it.unibo.dimhol.systems;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.BodyComponent;
 import it.unibo.dimhol.components.CollisionComponent;
 import it.unibo.dimhol.components.PositionComponent;
@@ -14,7 +14,7 @@ public class PhysicsSystem extends AbstractSystem{
      *
      * @param w the world
      */
-    public PhysicsSystem(World w) {
+    public PhysicsSystem(WorldImpl w) {
         super(w, BodyComponent.class, CollisionComponent.class);
     }
 

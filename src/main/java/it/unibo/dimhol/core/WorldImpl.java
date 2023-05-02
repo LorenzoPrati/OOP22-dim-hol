@@ -1,21 +1,19 @@
-package it.unibo.dimhol;
+package it.unibo.dimhol.core;
 
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.entity.GenericFactory;
 import it.unibo.dimhol.events.Event;
 
 import it.unibo.dimhol.systems.*;
-import it.unibo.dimhol.view.InputListener;
 import it.unibo.dimhol.view.Scene;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class to model the world where the entities exist.
+ * Implementation of World interface.
  */
-public class World {
-
+public class WorldImpl implements World {
 
     private Scene scene;
     private Input input;
@@ -27,7 +25,7 @@ public class World {
     /**
      * Constructs a world.
      */
-    public World() {
+    public WorldImpl() {
         this.entities = new ArrayList<>();
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
@@ -62,93 +60,85 @@ public class World {
     }
 
     /**
-     * Gets called each game loop. Updates the world.
+     * {@inheritDoc}
      */
+    @Override
     public void update(double dt) {
         this.systems.forEach(s -> s.update(dt));
         this.handleEvents();
         this.scene.render();
     }
 
-
-    public void notifyEvent(final Event ev) {
-        this.events.add(ev);
-    }
-
-
-    private void handleEvents() {
-        this.events.stream().forEach(ev -> ev.execute(this));
-        this.events.clear();
-    }
-
     /**
-     * Gets the entities currently alive in the world.
-     *
-     * @return the list of world entities
+     * {@inheritDoc}
      */
+    @Override
     public List<Entity> getEntities() {
         return this.entities;
     }
 
     /**
-     * Adds an entity to the world.
-     *
-     * @param e the entity to add
+     * {@inheritDoc}
      */
+    @Override
     public void addEntity(final Entity e) {
         this.entities.add(e);
     }
 
     /**
-     * Removes an entity from the world.
-     *
-     * @param e the entity to remove
+     * {@inheritDoc}
      */
+    @Override
     public void removeEntity(final Entity e) {
         this.entities.remove(e);
     }
 
     /**
-     * Gets the input.
-     *
-     * @return the world input.
+     * {@inheritDoc}
      */
+    @Override
     public Input getInput() {
         return this.input;
     }
 
     /**
-     * Gets the view representation of the world.
-     *
-     * @return the world scene.
+     * {@inheritDoc}
      */
+    @Override
     public Scene getScene() {
         return this.scene;
     }
 
     /**
-     * Checks if the game is over.
-     *
-     * @return true if the game is complete or the player dies,
-     * false otherwise
+     * {@inheritDoc}
      */
+    @Override
     public boolean isGameOver() {
         return this.gameOver;
     }
 
     /**
-     * Sets that the game is over.
+     * {@inheritDoc}
      */
+    @Override
     public void setGameOver() {
         this.gameOver = true;
     }
 
     /**
-     * Checks match result.
-     *
-     * @return true if player defeated the boss, false otherwise.
+     * {@inheritDoc}
      */
+    @Override
     public boolean getResult() {
         return false;
+    }
+
+    public void notifyEvent(final Event ev) {
+        this.events.add(ev);
+    }
+
+    private void handleEvents() {
+        this.events.stream().forEach(ev -> ev.execute(this));
+        this.events.clear();
     }
 }

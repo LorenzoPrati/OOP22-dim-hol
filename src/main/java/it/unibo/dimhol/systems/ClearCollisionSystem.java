@@ -1,6 +1,6 @@
 package it.unibo.dimhol.systems;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.CollisionComponent;
 import it.unibo.dimhol.entity.Entity;
 
@@ -14,7 +14,7 @@ public class ClearCollisionSystem extends AbstractSystem {
      *
      * @param w the world
      */
-    public ClearCollisionSystem(World w) {
+    public ClearCollisionSystem(WorldImpl w) {
         super(w, CollisionComponent.class);
     }
 

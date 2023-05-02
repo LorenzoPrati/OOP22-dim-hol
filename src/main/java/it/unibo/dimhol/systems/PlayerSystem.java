@@ -1,6 +1,6 @@
 package it.unibo.dimhol.systems;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.AnimationComponent;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PlayerComponent;
@@ -16,7 +16,7 @@ public class PlayerSystem extends AbstractSystem {
      *
      * @param w the world
      */
-    public PlayerSystem(final World w) {
+    public PlayerSystem(final WorldImpl w) {
         super(w, PlayerComponent.class);
     }
 
