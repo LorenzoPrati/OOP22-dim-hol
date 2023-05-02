@@ -4,8 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import it.unibo.dimhol.Engine;
-import it.unibo.dimhol.World;
+
 import it.unibo.dimhol.map.MapLoaderImpl;
 import it.unibo.dimhol.map.*;
 import it.unibo.dimhol.systems.GameSystem;
@@ -57,8 +56,8 @@ public class Scene extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        System.out.println(mapLoader.getWidth()); //20
-        System.out.println(mapLoader.getHeight()); //30
+        //System.out.println(mapLoader.getWidth()); //20
+        //System.out.println(mapLoader.getHeight()); //30
         var layers = mapLoader.getMapTileLayers();
 
         for (var layer : layers) {

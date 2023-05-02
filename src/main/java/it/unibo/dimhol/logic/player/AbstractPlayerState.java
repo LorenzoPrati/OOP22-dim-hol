@@ -14,10 +14,6 @@ public abstract class AbstractPlayerState implements PlayerState{
     public AbstractPlayerState() {
     }
 
-    public abstract Optional<PlayerState> transition(InputListener input);
-
-    public abstract List<Event> update(InputListener input, Entity e, double dt);
-
     @Override
     public String getDesc() {
         return this.desc;

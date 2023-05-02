@@ -61,6 +61,18 @@ public class ResourceLoader {
             this.imagesMap.put(31, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/down.png"))), 123, 127));
             this.imagesMap.put(32, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/left.png"))), 127, 123));
             this.imagesMap.put(33, new ImmutableTriple<>((ImageIO.read(new File("src/res/bullet/right.png"))), 127, 123));
+
+            this.imagesMap.put(34, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorUpDeath.png"))), 48, 48));
+            this.imagesMap.put(35, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorDownDeath.png"))), 48, 48));
+            this.imagesMap.put(36, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorLeftDeath.png"))), 48, 48));
+            this.imagesMap.put(37, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorRightDeath.png"))), 48, 48));
+
+            this.imagesMap.put(38, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorUpClimb.png"))), 48, 48));
+            this.imagesMap.put(39, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorDownClimb.png"))), 48, 48));
+            this.imagesMap.put(40, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorLeftClimb.png"))), 48, 48));
+            this.imagesMap.put(41, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorRightClimb.png"))), 48, 48));
+
+            this.imagesMap.put(42, new ImmutableTriple<>((ImageIO.read(new File("src/res/Purple Portal Sprite Sheet.png"))), 64, 64));
         }
         catch(IOException e){
             System.out.println("Error loading images. ");

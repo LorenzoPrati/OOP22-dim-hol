@@ -1,6 +1,6 @@
 package it.unibo.dimhol.systems;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.logic.util.DirectionUtil;
 import it.unibo.dimhol.components.*;
 import it.unibo.dimhol.entity.Entity;
@@ -12,7 +12,7 @@ public class CombatSystem extends AbstractSystem {
      *
      * @param w     the world
      */
-    public CombatSystem(World w) {
+    public CombatSystem(WorldImpl w) {
         super(w, AttackComponent.class, CollisionComponent.class);
     }
 
