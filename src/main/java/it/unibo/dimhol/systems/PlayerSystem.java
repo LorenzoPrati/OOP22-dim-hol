@@ -28,7 +28,7 @@ public class PlayerSystem extends AbstractSystem {
      */
     @Override
     public void process(final Entity e, double dt) {
-        var input = this.world.getInputListener();
+        var input = this.world.getInput();
         var player = (PlayerComponent) e.getComponent(PlayerComponent.class);
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         var animation = (AnimationComponent) e.getComponent(AnimationComponent.class);

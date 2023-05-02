@@ -40,7 +40,7 @@ public final class Engine {
      */
     public void newGame() {
         this.world = new World();
-        this.world.setInputListener(new InputListener(this));
+        //this.world.setInputListener(new InputListener(this));
         this.resumeGame();
         this.running = true;
         new Thread(new Runnable() {
@@ -67,7 +67,7 @@ public final class Engine {
         /*
          * input is set after the scene is made visible
          */
-        this.world.getScene().setInput(this.world.getInputListener());
+        this.world.getScene().setInput(new InputListener(this, world.getInput()));
         this.pause = false;
     }
 

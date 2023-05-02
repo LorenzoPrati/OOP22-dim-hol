@@ -1,5 +1,6 @@
 package it.unibo.dimhol.logic.player;
 
+import it.unibo.dimhol.Input;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.events.Event;
@@ -16,7 +17,7 @@ public class ChargeState extends AbstractPlayerState {
     private boolean ready;
 
     @Override
-    public Optional<PlayerState> transition(InputListener input) {
+    public Optional<PlayerState> transition(Input input) {
         if (!ready) {
             return input.isChargingFireball() ? Optional.empty() : Optional.of(new IdleState());
         } else {
@@ -25,7 +26,7 @@ public class ChargeState extends AbstractPlayerState {
     }
 
     @Override
-    public List<Event> execute(InputListener input, Entity e) {
+    public List<Event> execute(Input input, Entity e) {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         mov.setEnabled(false);
         this.setDesc("charge " + DirectionUtil.getStringFromVec(mov.getDir()));

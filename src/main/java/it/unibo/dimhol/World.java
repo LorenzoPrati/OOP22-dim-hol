@@ -16,21 +16,13 @@ import java.util.List;
  */
 public class World {
 
-    /**
-     * View representation of the state of the world.
-     */
+
     private Scene scene;
-    /**
-     * Class that registers user input.
-     */
-    private InputListener input;
-
-    private boolean gameOver;
-
+    private Input input;
     private final List<Entity> entities;
     private final List<GameSystem> systems;
     private final List<Event> events;
-
+    private boolean gameOver;
 
     /**
      * Constructs a world.
@@ -40,24 +32,17 @@ public class World {
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
         this.scene = new Scene();
-
+        this.input = new InputImpl();
         /*
         generate first level
          */
         var gf = new GenericFactory();
-
-        //this.entities.add(gf.createShooterEnemy(3,3));
         this.entities.add(gf.createHeart(10,10));
         this.entities.add(gf.createHeart(13,13));
         this.entities.add(gf.createPlayer(15, 15));
         this.entities.add(gf.createZombieEnemy(16,8));
         this.entities.add(gf.createShooterEnemy(13,5));
 
-        //set tilemap
-        /*
-        Setup view
-         */
-        //set map in scene
         /*
         Add systems
          */
@@ -77,54 +62,29 @@ public class World {
     }
 
     /**
-     * Registers an input listener so that the world can react to user input.
-     *
-     * @param input the input listener to register for the world
-     */
-    public void setInputListener(InputListener input) {
-        this.input = input;
-    }
-
-    /**
-     * Gets the Scene registered for the world.
-     *
-     * @return the current Scene
-     */
-    public Scene getScene() {
-        return this.scene;
-    }
-
-    /**
      * Gets called each game loop. Updates the world.
      */
     public void update(double dt) {
         this.systems.forEach(s -> s.update(dt));
         this.handleEvents();
-        //System.out.println("num ent " + this.getEntities().size());
         this.scene.render();
     }
 
-    /**
-     * Notifies an event to the world to handle.
-     *
-     * @param ev the event to notify
-     */
+
     public void notifyEvent(final Event ev) {
         this.events.add(ev);
     }
 
-    /**
-     * Handle all events.
-     */
+
     private void handleEvents() {
         this.events.stream().forEach(ev -> ev.execute(this));
         this.events.clear();
     }
 
     /**
-     * Gets the entities that currently exist in the world.
+     * Gets the entities currently alive in the world.
      *
-     * @return a list containing all the entities in the world
+     * @return the list of world entities
      */
     public List<Entity> getEntities() {
         return this.entities;
@@ -149,12 +109,21 @@ public class World {
     }
 
     /**
-     * Gets the input listener that is registered for the world.
+     * Gets the input.
      *
-     * @return the current input listener
+     * @return the world input.
      */
-    public InputListener getInputListener() {
+    public Input getInput() {
         return this.input;
+    }
+
+    /**
+     * Gets the view representation of the world.
+     *
+     * @return the world scene.
+     */
+    public Scene getScene() {
+        return this.scene;
     }
 
     /**
