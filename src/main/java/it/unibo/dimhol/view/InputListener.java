@@ -17,6 +17,8 @@ public class InputListener implements KeyListener, MouseListener {
     private boolean normalAttack;
     private boolean shooting;
     private boolean specialAttack;
+    private boolean chargingFireball;
+    private boolean interacting;
 
     public InputListener(Engine engine) {
         this.engine = engine;
@@ -27,7 +29,7 @@ public class InputListener implements KeyListener, MouseListener {
     }
 
     public boolean isAttacking() {
-        return normalAttack || specialAttack;
+        return normalAttack || specialAttack || shooting;
     }
 
     public boolean isUp() {
@@ -58,6 +60,14 @@ public class InputListener implements KeyListener, MouseListener {
         return specialAttack;
     }
 
+    public boolean isChargingFireball() {
+        return chargingFireball;
+    }
+
+    public boolean isInteracting() {
+        return interacting;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -71,6 +81,8 @@ public class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_A -> this.left = true;
             case KeyEvent.VK_D -> this.right = true;
             case KeyEvent.VK_Q -> this.specialAttack = true;
+            case KeyEvent.VK_Z -> this.chargingFireball = true;
+            case KeyEvent.VK_E -> this.interacting = true;
             case KeyEvent.VK_ESCAPE -> this.engine.stopGame();
         }
     }
@@ -83,6 +95,8 @@ public class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_A -> this.left = false;
             case KeyEvent.VK_D -> this.right = false;
             case KeyEvent.VK_Q -> this.specialAttack = false;
+            case KeyEvent.VK_E -> this.interacting = false;
+            case KeyEvent.VK_Z -> this.chargingFireball = false;
         }
     }
 

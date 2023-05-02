@@ -11,7 +11,9 @@ public interface PlayerState {
 
     Optional<PlayerState> transition(InputListener input);
 
-    List<Event> update(InputListener input, Entity e, double dt);
+    List<Event> execute(InputListener input, Entity e);
 
     String getDesc();
+
+    void updateTime(double dt);
 }

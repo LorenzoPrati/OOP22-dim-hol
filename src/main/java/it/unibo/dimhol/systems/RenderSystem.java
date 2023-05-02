@@ -6,6 +6,7 @@ import java.util.Map;
 import it.unibo.dimhol.World;
 import it.unibo.dimhol.components.AnimationComponent;
 import it.unibo.dimhol.components.BodyComponent;
+import it.unibo.dimhol.components.InteractorComponent;
 import it.unibo.dimhol.components.PositionComponent;
 import it.unibo.dimhol.entity.Entity;
 

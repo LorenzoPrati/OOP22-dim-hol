@@ -29,28 +29,18 @@ public class PlayerSystem extends AbstractSystem {
     @Override
     public void process(final Entity e, double dt) {
         var input = this.world.getInputListener();
+        var player = (PlayerComponent) e.getComponent(PlayerComponent.class);
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         var animation = (AnimationComponent) e.getComponent(AnimationComponent.class);
-        var player = (PlayerComponent) e.getComponent(PlayerComponent.class);
-        /*
-            Block input reaction if player is blocked
-         */
-        if (animation.isBlocking() && !animation.isCompleted()) {
-            animation.setState(animation.getState());
-            mov.setEnabled(false);
-            return;
+
+        //System.out.println(player.getState().getDesc());
+
+        player.getState().updateTime(dt);
+        if (!animation.isBlocking() || animation.isCompleted()) {
+            player.getState().transition(input).ifPresent(player::setState);
+            player.getState().execute(input, e).forEach(this.world::notifyEvent);
         }
-        /*
-        transition state
-         */
-        player.getState().transition(input).ifPresent(player::setState);
-        /*
-        execute state logic
-         */
-        player.getState().update(input, e, dt).forEach(this.world::notifyEvent);
-        /*
-        update animation
-         */
         animation.setState(player.getState().getDesc());
+
     }
 }

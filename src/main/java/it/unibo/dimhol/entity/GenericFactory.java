@@ -2,17 +2,18 @@ package it.unibo.dimhol.entity;
 
 import it.unibo.dimhol.logic.ai.MathUtilities;
 import it.unibo.dimhol.logic.ai.RoutineFactory;
+import it.unibo.dimhol.logic.collision.CircleBodyShape;
 import it.unibo.dimhol.logic.collision.RectBodyShape;
 import it.unibo.dimhol.components.*;
-import it.unibo.dimhol.logic.effects.DecreaseEnemyCurrentHealthEffect;
-import it.unibo.dimhol.logic.effects.DecreasePlayerCurrentHealthEffect;
-import it.unibo.dimhol.logic.effects.IncreaseCurrentHealthEffect;
+import it.unibo.dimhol.logic.effects.*;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.locationtech.jts.math.Vector2D;
 import org.yaml.snakeyaml.Yaml;
 import java.io.FileInputStream;
@@ -30,8 +31,8 @@ public class GenericFactory {
     private static final double PLAYER_SPEED = 6;
     private static final double ENEMY_SPEED = 4;
     private static final double BULLET_SPEED = 2;
-    private static final double W = 1;
-    private static final double H = 1;
+    private static final double W = 2;
+    private static final double H = 2;
     private final Map<String,Map<String,ArrayList<Integer>>> map = new HashMap<>();
 
     public GenericFactory() {
@@ -53,6 +54,7 @@ public class GenericFactory {
                 .add(new BodyComponent(new RectBodyShape(W,H), true))
                 .add(new HealthComponent(10))
                 .add(new AnimationComponent(map.get("player"),"idle down"))
+                .add(new InteractorComponent())
                 .build();
     }
 
@@ -60,8 +62,9 @@ public class GenericFactory {
         return new EntityBuilder()
             .add(new PositionComponent(new Vector2D(x, y), 0))
             .add(new BodyComponent(new RectBodyShape(W,H), false))
-            .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
+            //.add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
             .add(new AnimationComponent(this.map.get("heart"), "idle"))
+                .add(new InteractableComponent(new IncreaseMaxHealthEffect(10)))
             .build();
     }
 
