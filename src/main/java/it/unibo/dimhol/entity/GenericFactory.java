@@ -31,8 +31,8 @@ public class GenericFactory {
     private static final double PLAYER_SPEED = 6;
     private static final double ENEMY_SPEED = 4;
     private static final double BULLET_SPEED = 2;
-    private static final double W = 1;
-    private static final double H = 1;
+    private static final double W = 3;
+    private static final double H = 3;
     private final Map<String,Map<String,ArrayList<Integer>>> map = new HashMap<>();
 
     public GenericFactory() {
