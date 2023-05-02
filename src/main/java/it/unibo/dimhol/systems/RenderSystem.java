@@ -3,17 +3,17 @@ package it.unibo.dimhol.systems;
 import java.util.ArrayList;
 import java.util.Map;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.AnimationComponent;
 import it.unibo.dimhol.components.BodyComponent;
-import it.unibo.dimhol.components.InteractorComponent;
 import it.unibo.dimhol.components.PositionComponent;
 import it.unibo.dimhol.entity.Entity;
 
 public class RenderSystem extends AbstractSystem{
     private final World world;
 
-    public RenderSystem(World w) {
+    public RenderSystem(WorldImpl w) {
         super(w, AnimationComponent.class);
         this.world = w;
     }

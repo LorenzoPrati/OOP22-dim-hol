@@ -1,6 +1,6 @@
 package it.unibo.dimhol.systems;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.HealthComponent;
 import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
@@ -17,7 +17,7 @@ public class CheckHealthSystem extends AbstractSystem {
      *
      * @param w     the world
      */
-    public CheckHealthSystem(World w) {
+    public CheckHealthSystem(WorldImpl w) {
         super(w, HealthComponent.class);
     }
 

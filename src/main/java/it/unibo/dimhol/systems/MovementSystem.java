@@ -1,10 +1,9 @@
 package it.unibo.dimhol.systems;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PositionComponent;
 import it.unibo.dimhol.entity.Entity;
-import org.locationtech.jts.math.Vector2D;
 
 /**
  * A system to handle movement of entities.
@@ -16,7 +15,7 @@ public class MovementSystem extends AbstractSystem {
      *
      * @param w the world
      */
-    public MovementSystem(World w) {
+    public MovementSystem(WorldImpl w) {
         super(w, MovementComponent.class);
     }
 
