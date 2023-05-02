@@ -33,14 +33,17 @@ public class PlayerSystem extends AbstractSystem {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         var animation = (AnimationComponent) e.getComponent(AnimationComponent.class);
 
-        //System.out.println(player.getState().getDesc());
-
         player.getState().updateTime(dt);
-        if (!animation.isBlocking() || animation.isCompleted()) {
+        if (animation.isBlocking() && !animation.isCompleted()) {
+            animation.setState(animation.getState());
+            mov.setEnabled(false);
+        }
+        else {
             player.getState().transition(input).ifPresent(player::setState);
             player.getState().execute(input, e).forEach(this.world::notifyEvent);
+            animation.setState(player.getState().getDesc());
         }
-        animation.setState(player.getState().getDesc());
+
 
     }
 }

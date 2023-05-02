@@ -31,8 +31,8 @@ public class GenericFactory {
     private static final double PLAYER_SPEED = 6;
     private static final double ENEMY_SPEED = 4;
     private static final double BULLET_SPEED = 2;
-    private static final double W = 2;
-    private static final double H = 2;
+    private static final double W = 1;
+    private static final double H = 1;
     private final Map<String,Map<String,ArrayList<Integer>>> map = new HashMap<>();
 
     public GenericFactory() {
@@ -122,6 +122,7 @@ public class GenericFactory {
                 .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(), entityBody.getBodyShape(), MELEE_WIDTH, MELEE_HEIGHT), 0))
                 .add(new BodyComponent(new RectBodyShape(MELEE_WIDTH, MELEE_HEIGHT), false))
                 .add(new AttackComponent(entity, List.of(new DecreasePlayerCurrentHealthEffect(1))))
+                .add(new AnimationComponent(map.get("heart"), "idle"))
                 .build();
     }
 
