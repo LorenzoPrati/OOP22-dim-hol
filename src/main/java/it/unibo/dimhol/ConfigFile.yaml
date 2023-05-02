@@ -96,6 +96,38 @@
             - 4
             - 24
             - 1
+        interact up:
+          - 5
+          - 34
+          - 1
+        interact down:
+          - 5
+          - 35
+          - 1
+        interact left:
+          - 5
+          - 36
+          - 1
+        interact right:
+          - 5
+          - 37
+          - 1
+        charge up:
+          - 6
+          - 38
+          - 0
+        charge down:
+          - 6
+          - 39
+          - 0
+        charge left:
+          - 6
+          - 40
+          - 0
+        charge right:
+          - 6
+          - 41
+          - 0
     enemy:
         idle:
             - 4
@@ -138,4 +170,8 @@
             - 1
             - 33
             - 0
-               
+    gate:
+      idle:
+        - 8
+        - 42
+        - 0
