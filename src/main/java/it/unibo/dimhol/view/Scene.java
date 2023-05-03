@@ -133,4 +133,7 @@ public class Scene extends JPanel {
     public HUD getPlayerHUD() {
         return this.hud;
     }
+    public MapLoad getMapLoader() {
+        return mapLoader;
+    }
 }
