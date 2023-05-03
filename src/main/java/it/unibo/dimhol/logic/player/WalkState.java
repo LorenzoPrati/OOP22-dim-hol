@@ -1,11 +1,10 @@
 package it.unibo.dimhol.logic.player;
 
+import it.unibo.dimhol.core.Input;
 import it.unibo.dimhol.logic.util.DirectionUtil;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.events.Event;
-import it.unibo.dimhol.view.InputListener;
-import org.locationtech.jts.math.Vector2D;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,12 +16,12 @@ public class WalkState extends AbstractPlayerState {
     }
 
     @Override
-    public Optional<PlayerState> transition(InputListener input) {
-        if (input.isShooting()) {
-            return Optional.of(new ShootState());
+    public Optional<PlayerState> transition(Input input) {
+        if (input.isChargingFireball()) {
+            return Optional.of(new ChargeState());
         }
-        if (input.isAttacking()) {
-            return Optional.of(new AttackState());
+        if (input.isMeele() || input.isShooting()) {
+            return Optional.of(new CombatState());
         }
         if (!input.isMoving()) {
             return Optional.of(new IdleState());
@@ -31,19 +30,16 @@ public class WalkState extends AbstractPlayerState {
     }
 
     @Override
-    public List<Event> update(InputListener input, Entity e, double dt) {
+    public List<Event> execute(Input input, Entity e) {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         mov.setEnabled(true);
-        if (input.isUp()) {
-            mov.setDir(new Vector2D(0, -1));
-        } else if (input.isDown()) {
-            mov.setDir(new Vector2D(0, 1));
-        } else if (input.isLeft()) {
-            mov.setDir(new Vector2D(-1, 0));
-        } else if (input.isRight()) {
-            mov.setDir(new Vector2D(1, 0));
-        }
+        input.getDirection().ifPresent(mov::setDir);
         this.setDesc("walk " + DirectionUtil.getStringFromVec(mov.getDir()));
         return Collections.emptyList();
+    }
+
+    @Override
+    public void updateTime(double dt) {
+
     }
 }

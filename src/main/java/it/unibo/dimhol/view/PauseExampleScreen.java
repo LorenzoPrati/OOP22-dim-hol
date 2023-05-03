@@ -1,9 +1,8 @@
 package it.unibo.dimhol.view;
 
-import it.unibo.dimhol.Engine;
+import it.unibo.dimhol.core.Engine;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class PauseExampleScreen extends JPanel {
     private final Engine engine;

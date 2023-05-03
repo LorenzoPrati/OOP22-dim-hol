@@ -12,22 +12,22 @@ public class RoutineFactory {
      *
      * @return the behaviour of a shooter enemy.
      */
-    public final List<Action> createShooterRoutine() {
+    public final List<AbstractAction> createShooterRoutine() {
         return new ArrayList<>(List.of(
-                new DistanceAttackAction(),
-                new RandomMovementAction()
-        ));
+                new DistanceAttack(8, 2000),
+                new RandomMovement(100, 1000)
+        )).stream().sorted(AbstractAction::getAggro).toList();
     }
 
     /**
      *
      * @return the behaviour of a zombie enemy.
      */
-    public final List<Action> createZombieRoutine() {
+    public final List<AbstractAction> createZombieRoutine() {
         return new ArrayList<>(List.of(
-                new MeleeAttackAction(),
-                new FollowingAction(),
-                new RandomMovementAction()
-        ));
+                new MeleeAttack(1, 2000),
+                new FollowMovement(5),
+                new RandomMovement(100, 1000)
+        )).stream().sorted(AbstractAction::getAggro).toList();
     }
 }

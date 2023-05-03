@@ -1,6 +1,6 @@
 package it.unibo.dimhol.view;
 
-import it.unibo.dimhol.Engine;
+import it.unibo.dimhol.core.Engine;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -23,8 +23,7 @@ public class HomeScreen extends JPanel {
         final JButton optionsButton = new JButton("O P T I O N S");
         final JPanel centerPanel = new JPanel();
         List<JButton> buttons = new LinkedList<>();
-        ImageIcon icon = new ImageIcon("src/res/bg/dimension holiday2.png");
-        ImageIcon ghostIcon = new ImageIcon("src/res/bg/ghost.gif");
+        ImageIcon icon = new ImageIcon("src/res/bg/dimension holiday2.png");ImageIcon ghostIcon = new ImageIcon("src/res/bg/ghost.gif");
         JLabel gameName = new JLabel(icon);
         Font f = new Font("Helvetica", Font.BOLD, 20);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -33,7 +32,7 @@ public class HomeScreen extends JPanel {
         buttons.add(optionsButton);
         buttons.add(exitButton);
 
-        this.setBackground(Color.WHITE);
+        
         setBorder(new EmptyBorder(10, 10, 10, 10));
         this.setLayout(new GridBagLayout());
        
@@ -62,7 +61,6 @@ public class HomeScreen extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         centerPanel.setLayout(new GridBagLayout());
-        centerPanel.setBackground(Color.WHITE);
         centerPanel.add(startButton, gbc);
         centerPanel.add(optionsButton, gbc);
         centerPanel.add(exitButton, gbc);

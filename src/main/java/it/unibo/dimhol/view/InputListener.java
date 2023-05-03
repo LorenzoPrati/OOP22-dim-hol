@@ -1,6 +1,7 @@
 package it.unibo.dimhol.view;
 
-import it.unibo.dimhol.Engine;
+import it.unibo.dimhol.core.Engine;
+import it.unibo.dimhol.core.Input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -13,49 +14,11 @@ import java.awt.event.MouseListener;
 public class InputListener implements KeyListener, MouseListener {
 
     private final Engine engine;
-    private boolean up, down, left, right;
-    private boolean normalAttack;
-    private boolean shooting;
-    private boolean specialAttack;
+    private Input input;
 
-    public InputListener(Engine engine) {
+    public InputListener(final Engine engine, final Input input) {
         this.engine = engine;
-    }
-
-    public boolean isMoving() {
-        return up || down || left || right;
-    }
-
-    public boolean isAttacking() {
-        return normalAttack || specialAttack;
-    }
-
-    public boolean isUp() {
-        return up;
-    }
-
-    public boolean isDown() {
-        return down;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public boolean isNormalAttack() {
-        return normalAttack;
-    }
-
-    public boolean isShooting() {
-        return shooting;
-    }
-
-    public boolean isSpecialAttack() {
-        return specialAttack;
+        this.input = input;
     }
 
     @Override
@@ -66,11 +29,13 @@ public class InputListener implements KeyListener, MouseListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_W -> this.up = true;
-            case KeyEvent.VK_S -> this.down = true;
-            case KeyEvent.VK_A -> this.left = true;
-            case KeyEvent.VK_D -> this.right = true;
-            case KeyEvent.VK_Q -> this.specialAttack = true;
+            case KeyEvent.VK_W -> this.input.setUp(true);
+            case KeyEvent.VK_S -> this.input.setDown(true);
+            case KeyEvent.VK_A -> this.input.setLeft(true);
+            case KeyEvent.VK_D -> this.input.setRight(true);
+            case KeyEvent.VK_Q -> this.input.setSpecialMeele(true);
+            case KeyEvent.VK_Z -> this.input.setChargeFireball(true);
+            case KeyEvent.VK_E -> this.input.setInteract(true);
             case KeyEvent.VK_ESCAPE -> this.engine.stopGame();
         }
     }
@@ -78,11 +43,13 @@ public class InputListener implements KeyListener, MouseListener {
     @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_W -> this.up = false;
-            case KeyEvent.VK_S -> this.down = false;
-            case KeyEvent.VK_A -> this.left = false;
-            case KeyEvent.VK_D -> this.right = false;
-            case KeyEvent.VK_Q -> this.specialAttack = false;
+            case KeyEvent.VK_W -> this.input.setUp(false);
+            case KeyEvent.VK_S -> this.input.setDown(false);
+            case KeyEvent.VK_A -> this.input.setLeft(false);
+            case KeyEvent.VK_D -> this.input.setRight(false);
+            case KeyEvent.VK_Q -> this.input.setSpecialMeele(false);
+            case KeyEvent.VK_Z -> this.input.setChargeFireball(false);
+            case KeyEvent.VK_E -> this.input.setInteract(false);
         }
     }
 
@@ -94,16 +61,16 @@ public class InputListener implements KeyListener, MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()) {
-            case MouseEvent.BUTTON1 -> this.normalAttack = true;
-            case MouseEvent.BUTTON3 -> this.shooting = true;
+            case MouseEvent.BUTTON1 -> this.input.setNormalMeele(true);
+            case MouseEvent.BUTTON3 -> this.input.setShoot(true);
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         switch (e.getButton()) {
-            case MouseEvent.BUTTON1 -> this.normalAttack = false;
-            case MouseEvent.BUTTON3 -> this.shooting = false;
+            case MouseEvent.BUTTON1 -> this.input.setNormalMeele(false);
+            case MouseEvent.BUTTON3 -> this.input.setShoot(false);
         }
     }
 

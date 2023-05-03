@@ -1,12 +1,12 @@
 package it.unibo.dimhol.systems;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.AnimationComponent;
 import it.unibo.dimhol.entity.Entity;
 
 public class AnimationSystem extends AbstractSystem {
 
-    public AnimationSystem(World w) {
+    public AnimationSystem(WorldImpl w) {
         super(w, AnimationComponent.class);
         
     }

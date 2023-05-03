@@ -1,6 +1,6 @@
 package it.unibo.dimhol.components;
 
-import it.unibo.dimhol.logic.ai.Action;
+import it.unibo.dimhol.logic.ai.AbstractAction;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public final class AiComponent implements Component {
 
-    private final List<Action> actions;
+    private final List<AbstractAction> actions;
 
     private long prevMovTime = System.currentTimeMillis();
 
@@ -17,7 +17,7 @@ public final class AiComponent implements Component {
      *
      * @param newRoutines are the enemy's behavior routines.
      */
-    public AiComponent(final List<Action> newRoutines) {
+    public AiComponent(final List<AbstractAction> newRoutines) {
         this.actions = newRoutines;
     }
 
@@ -41,7 +41,7 @@ public final class AiComponent implements Component {
      *
      * @return enemy's routines.
      */
-    public List<Action> getRoutine() {
+    public List<AbstractAction> getRoutine() {
         return actions;
     }
 }

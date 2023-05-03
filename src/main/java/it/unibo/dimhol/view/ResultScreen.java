@@ -1,6 +1,6 @@
 package it.unibo.dimhol.view;
 
-import it.unibo.dimhol.Engine;
+import it.unibo.dimhol.core.Engine;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
