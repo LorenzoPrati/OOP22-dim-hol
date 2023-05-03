@@ -1,4 +1,4 @@
-package it.unibo.dimhol.map.mapcollision;
+package it.unibo.dimhol.systems;
 
 import it.unibo.dimhol.components.BodyComponent;
 import it.unibo.dimhol.components.MovementComponent;
@@ -23,8 +23,8 @@ public class MapCollisionSystem extends AbstractSystem {
      * Constructs a MapCollisionSystem with the specified World instance.
      * @param world The world instance this system is associated.
      */
-    public MapCollisionSystem(World world) {
-        super((WorldImpl) world, PositionComponent.class, BodyComponent.class, MovementComponent.class);
+    public MapCollisionSystem(WorldImpl world) {
+        super(world, PositionComponent.class, BodyComponent.class, MovementComponent.class);
         tileMap = world.getScene().getMapLoader().getTileMap();
     }
 
