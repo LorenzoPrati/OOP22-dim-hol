@@ -13,7 +13,7 @@ import org.locationtech.jts.math.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+/*
 public class MeleeAttackAction extends AbstractAction {
 
     private static final int RELOAD_GUN_TIME = 2000;
@@ -75,3 +75,5 @@ public class MeleeAttackAction extends AbstractAction {
         return attacks;
     }
 }
+
+ */

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/*
 public class DistanceAttackAction extends AbstractAction {
 
     private static final int RELOAD_GUN_TIME = 2000;
@@ -73,3 +74,5 @@ public class DistanceAttackAction extends AbstractAction {
     }
 
 }
+
+ */

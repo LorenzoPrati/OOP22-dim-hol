@@ -1,6 +1,7 @@
 package it.unibo.dimhol.logic.ai;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -14,8 +15,8 @@ public class RoutineFactory {
      */
     public final List<Action> createShooterRoutine() {
         return new ArrayList<>(List.of(
-                new DistanceAttackAction(),
-                new RandomMovementAction()
+                new Random_Movement(10, 1000)
+                //new RandomMovementAction()
         ));
     }
 
@@ -25,9 +26,11 @@ public class RoutineFactory {
      */
     public final List<Action> createZombieRoutine() {
         return new ArrayList<>(List.of(
-                new MeleeAttackAction(),
-                new FollowingAction(),
-                new RandomMovementAction()
+                new Melee_Attack(),
+                new Follow_Movement(5)
+                //new MeleeAttackAction(),
+                //new FollowingAction(),
+                //new RandomMovementAction()
         ));
     }
 }
