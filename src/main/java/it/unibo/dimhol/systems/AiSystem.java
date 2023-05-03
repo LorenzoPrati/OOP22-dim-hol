@@ -32,12 +32,11 @@ public final class AiSystem extends AbstractSystem {
         for (var action : enemyAI.getRoutine()) {
             action.setPlayer(player);
             if (action.canExecute(enemy)) {
-                var routineExecute = action.execute(enemy);
+                var routineExecute = action.execute();
                 if (routineExecute.isPresent()) {
                     for (Event event : routineExecute.get()) {
                         this.world.notifyEvent(event);
                     }
-                    routineExecute.get().clear();
                 }
                 break;
             }

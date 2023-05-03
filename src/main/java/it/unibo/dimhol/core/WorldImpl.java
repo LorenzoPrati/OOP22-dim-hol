@@ -38,7 +38,8 @@ public class WorldImpl implements World {
         this.entities.add(gf.createHeart(10,10));
         this.entities.add(gf.createHeart(13,13));
         this.entities.add(gf.createPlayer(15, 15));
-
+        this.entities.add(gf.createZombieEnemy(10, 4));
+        this.entities.add(gf.createShooterEnemy(10, 7));
         /*
         Add systems
          */

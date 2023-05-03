@@ -22,7 +22,7 @@ import java.io.File;
 /**
  * Implementation of a factory to create various entities.
  */
-public class GenericFactory {
+public class GenericFactory extends AbstractFactory {
 
     private static final double BULLET_WIDTH = 0.5;
     private static final double BULLET_HEIGHT = 0.5;
@@ -31,20 +31,11 @@ public class GenericFactory {
     private static final double PLAYER_SPEED = 6;
     private static final double ENEMY_SPEED = 3;
     private static final double BULLET_SPEED = 2;
-    private static final double W = 3;
-    private static final double H = 3;
-    private final Map<String,Map<String,ArrayList<Integer>>> map = new HashMap<>();
+    private static final double W = 1;
+    private static final double H = 1;
 
     public GenericFactory() {
-        try{
-            InputStream input = new FileInputStream(new File("src/main/java/it/unibo/dimhol/ConfigFile.yaml"));
-            Yaml yaml = new Yaml();
-            Map<String,Map<String,ArrayList<Integer>>> mapLoaded = yaml.load(input);
-            map.putAll(mapLoaded);
-        }
-        catch(FileNotFoundException e){
-            System.out.println("File not found. ");
-        }
+        super();
     }
 
     public Entity createPlayer(final double x, final double y) {
@@ -91,42 +82,6 @@ public class GenericFactory {
                 .build();
     }
 
-    public Entity createBullet(final double dirX, final double dirY, final Entity entity) {
-        PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
-        BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
-        return new EntityBuilder()
-                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(),
-                        entityBody.getBodyShape(), BULLET_WIDTH, BULLET_HEIGHT), 0))
-                .add(new MovementComponent(new Vector2D(dirX, dirY), BULLET_SPEED, true))
-                .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
-                .add(new AnimationComponent(map.get("bullet"), getStringDirection(dirX, dirY)))
-                .add(new AttackComponent(entity, List.of(new DecreasePlayerCurrentHealthEffect(1))))
-                .build();
-    }
-
-    private String getStringDirection(double dirX, double dirY) {
-        if (dirX == 1) {
-            return "right";
-        } else if (dirX == -1) {
-            return "left";
-        } else if (dirY == 1) {
-            return "down";
-        } else {
-            return "up";
-        }
-    }
-
-    public Entity createMeleeAttack(final double dirX, final double dirY, final Entity entity) {
-        PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
-        BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
-        return new EntityBuilder()
-                .add(new PositionComponent(MathUtilities.setAttackPosition(dirX, dirY, entityPos.getPos(), entityBody.getBodyShape(), MELEE_WIDTH, MELEE_HEIGHT), 0))
-                .add(new BodyComponent(new RectBodyShape(MELEE_WIDTH, MELEE_HEIGHT), false))
-                .add(new AttackComponent(entity, List.of(new DecreasePlayerCurrentHealthEffect(1))))
-                .add(new AnimationComponent(map.get("heart"), "idle"))
-                .build();
-    }
-
     public Entity createPlayerMeleeAttack(final double dirX, final double dirY, final Entity entity) {
         PositionComponent entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
         BodyComponent entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
@@ -145,7 +100,7 @@ public class GenericFactory {
                         entityBody.getBodyShape(), BULLET_WIDTH, BULLET_HEIGHT), 0))
                 .add(new MovementComponent(new Vector2D(dirX, dirY), BULLET_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
-                .add(new AnimationComponent(map.get("bullet"), getStringDirection(dirX, dirY)))
+                //.add(new AnimationComponent(map.get("bullet"), getStringDirection(dirX, dirY)))
                 .add(new AttackComponent(entity, List.of(new DecreaseEnemyCurrentHealthEffect(1))))
                 .build();
     }

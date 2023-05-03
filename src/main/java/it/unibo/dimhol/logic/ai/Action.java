@@ -20,10 +20,9 @@ public interface Action {
 
     /**
      *
-     * @param entity is the entity that could execute an action.
      * @return new entities that enemy could create.
      */
-    Optional<List<Event>> execute(Entity entity);
+    Optional<List<Event>> execute();
 
     /**
      *
