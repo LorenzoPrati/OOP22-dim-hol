@@ -4,6 +4,7 @@ import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.entity.GenericFactory;
 import it.unibo.dimhol.events.Event;
 
+import it.unibo.dimhol.map.mapcollision.MapCollisionSystem;
 import it.unibo.dimhol.systems.*;
 import it.unibo.dimhol.view.Scene;
 
@@ -45,6 +46,7 @@ public class WorldImpl implements World {
         this.systems.add(new PlayerSystem(this));
         this.systems.add(new AiSystem(this));
         this.systems.add(new MovementSystem(this));
+        this.systems.add(new MapCollisionSystem(this));
         this.systems.add(new CollisionSystem(this));
         this.systems.add(new PhysicsSystem(this));
         this.systems.add(new ItemSystem(this));
