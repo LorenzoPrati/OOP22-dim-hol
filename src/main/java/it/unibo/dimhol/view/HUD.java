@@ -41,7 +41,7 @@ public class HUD {
         g2.setColor(Color.RED);
         int heartW = (int) (newTileWidth * W);
         int heartH = (int) (newTileHeight * H);
-        for (int i = 1; i < playerCurrentHealth - 1; i++) {
+        for (int i = 1; i < playerCurrentHealth + 1; i++) {
             g2.drawImage(heartImg, (i * heartW + offsetX), heartH + offsetY, heartW, heartH, null);
         }
         //g2.drawImage(heartImg, (100 + offsetX), 100 + offsetY, heartW, heartH, null);
