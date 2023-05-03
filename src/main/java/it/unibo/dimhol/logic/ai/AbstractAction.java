@@ -14,6 +14,7 @@ public abstract class AbstractAction implements Action {
 
     private Entity player;
     protected double aggroRay;
+    protected int waitTime;
     protected Vector2D playerCentralPos;
     protected Vector2D enemyCentralPos;
     protected Entity entity;
@@ -21,6 +22,11 @@ public abstract class AbstractAction implements Action {
     protected PositionComponent entityPos;
     protected BodyComponent entityBody;
     protected PositionComponent playerPos;
+
+    public AbstractAction(int aggroRay, int waitTime) {
+        this.aggroRay = aggroRay;
+        this.waitTime = waitTime;
+    }
 
     public AbstractAction(int aggroRay) {
         this.aggroRay = aggroRay;
