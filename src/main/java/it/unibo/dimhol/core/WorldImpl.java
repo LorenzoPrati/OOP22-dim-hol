@@ -4,7 +4,7 @@ import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.entity.GenericFactory;
 import it.unibo.dimhol.events.Event;
 
-import it.unibo.dimhol.map.mapcollision.MapCollisionSystem;
+import it.unibo.dimhol.systems.MapCollisionSystem;
 import it.unibo.dimhol.systems.*;
 import it.unibo.dimhol.view.Scene;
 
