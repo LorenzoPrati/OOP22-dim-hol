@@ -30,7 +30,11 @@ public interface MapLoad {
      */
     int getTileHeight();
 
-    TileMap getTileMap(); //test
+    /**
+     * Returns the tile map data as a {@link TileMap} object.
+     * @return the tile map data
+     */
+    TileMap getTileMap();
 
     /**
      *
