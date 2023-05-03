@@ -109,6 +109,10 @@ public class MapLoaderImpl implements MapLoad {
         return tileHeight;
     }
 
+    @Override
+    public TileMap getTileMap() {
+        return new TileMap(getMapTileLayers().get(0));
+    }
 
     @Override
     public int getWidth() {
