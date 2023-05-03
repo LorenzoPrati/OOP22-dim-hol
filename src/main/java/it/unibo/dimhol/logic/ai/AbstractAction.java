@@ -53,4 +53,8 @@ public abstract class AbstractAction implements Action {
     public Entity getPlayer() {
         return player;
     }
+
+    public int getAggro(AbstractAction action) {
+        return (int) this.aggroRay;
+    }
 }
