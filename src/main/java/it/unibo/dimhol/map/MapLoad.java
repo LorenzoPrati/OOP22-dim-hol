@@ -30,6 +30,8 @@ public interface MapLoad {
      */
     int getTileHeight();
 
+    TileMap getTileMap(); //test
+
     /**
      *
      * @return map tile layers.
