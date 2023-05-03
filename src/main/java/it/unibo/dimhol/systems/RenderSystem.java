@@ -31,8 +31,9 @@ public class RenderSystem extends AbstractSystem{
        var animationComp = (AnimationComponent)e.getComponent(AnimationComponent.class);
        var bodyComp = (BodyComponent)e.getComponent(BodyComponent.class);
        if (e.hasComponent(PlayerComponent.class)) {
+           var coinPocket = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
            var healthComp = (HealthComponent) e.getComponent(HealthComponent.class);
-           this.world.getScene().getPlayerHUD().update(healthComp.getCurrentHealth(), healthComp.getMaxHealth());
+           this.world.getScene().getPlayerHUD().update(healthComp.getCurrentHealth(), healthComp.getMaxHealth(), coinPocket.getCurrentAmount());
        }
        this.world.getScene().toList(animationComp.getIndex(),getNumToUse(animationComp.getState(), 
         animationComp.getMap()), posComp.getPos().getX(), posComp.getPos().getY(), 
