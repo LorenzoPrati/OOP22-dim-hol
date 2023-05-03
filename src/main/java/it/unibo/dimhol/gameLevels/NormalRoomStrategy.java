@@ -1,6 +1,6 @@
 package it.unibo.dimhol.gameLevels;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.entity.GenericFactory;
 import it.unibo.dimhol.map.MapLoaderImpl;
 import it.unibo.dimhol.map.Tile;

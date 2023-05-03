@@ -1,6 +1,6 @@
 package it.unibo.dimhol.gameLevels;
 
-import it.unibo.dimhol.World;
+import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.entity.GenericFactory;
@@ -23,14 +23,14 @@ public class LevelManager {
     private static final double ENEMY_Y_OFFSET = 10.0;
     private static final int NUM_ENEMY_TILES = 10;
 //    private static final String MAP_RESOURCE_PATH = "src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml";
-    private final World world;
+    private final WorldImpl world;
     private final MapLoad mapLoad = new MapLoaderImpl("src/main/java/it/unibo/dimhol/map/mapResources/FirstTryTiled.xml");
     private final GenericFactory genericFactory = new GenericFactory();
     private Tile[][] map;
     private MapLoaderImpl mapLoader;
     private final int currentLevel = 0;
     private Entity player;
-    public LevelManager(World world) {
+    public LevelManager(WorldImpl world) {
         this.world = world;
     }
 
