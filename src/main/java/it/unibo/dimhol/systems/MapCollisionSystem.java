@@ -3,11 +3,9 @@ package it.unibo.dimhol.systems;
 import it.unibo.dimhol.components.BodyComponent;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PositionComponent;
-import it.unibo.dimhol.core.World;
 import it.unibo.dimhol.core.WorldImpl;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.map.TileMap;
-import it.unibo.dimhol.systems.AbstractSystem;
 import org.locationtech.jts.math.Vector2D;
 
 import java.util.stream.IntStream;
