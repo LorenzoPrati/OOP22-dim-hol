@@ -17,7 +17,7 @@ public class ShopItemFactory extends AbstractFactory{
     
     public Entity createShopHeart(final double x, final double y){
         return new EntityBuilder()
-        .add(new PositionComponent(new Vector2D(x,y), 0))
+        .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
         .add(new InteractableComponent(new IncreaseMaxHealthEffect(MAX_HEALTH_INCREASE)))
         .add(new AnimationComponent(this.map.get("shopHeart"), "idle"))
@@ -26,7 +26,7 @@ public class ShopItemFactory extends AbstractFactory{
 
     public Entity createShopVelocity(final double x, final double y){
         return new EntityBuilder()
-        .add(new PositionComponent(new Vector2D(x,y), 0))
+        .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
         .add(new InteractableComponent(new IncreaseSpeedEffect(VELOCITY_INCREASE)))
         .add(new AnimationComponent(this.map.get("shopSpeed"), "idle"))
