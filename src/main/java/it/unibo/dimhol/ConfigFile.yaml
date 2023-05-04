@@ -98,80 +98,95 @@
             - 1
         interact up:
           - 5
-          - 34
+          - 25
           - 1
         interact down:
           - 5
-          - 35
+          - 26
           - 1
         interact left:
           - 5
-          - 36
+          - 27
           - 1
         interact right:
           - 5
-          - 37
+          - 28
           - 1
         charge up:
           - 6
-          - 38
+          - 29
           - 0
         charge down:
           - 6
-          - 39
+          - 30
           - 0
         charge left:
           - 6
-          - 40
+          - 31
           - 0
         charge right:
           - 6
-          - 41
+          - 32
           - 0
     enemy:
         idle:
             - 4
-            - 25
+            - 33
             - 0
     coin:
         idle:
             - 6
-            - 26
+            - 34
             - 0
     heart:
         idle:
             - 1
-            - 27
+            - 35
             - 0
     key:
         idle:
             - 1
-            - 28
+            - 36
             - 0
     chest:
         idle:
             - 2
-            - 29
+            - 37
             - 0
     bullet:
         up:
             - 1
-            - 30
+            - 38
             - 0
         down:
             - 1
-            - 31
+            - 39
             - 0
         left:
             - 1
-            - 32
+            - 40
             - 0
         right:
             - 1
-            - 33
+            - 41
             - 0
     gate:
       idle:
         - 8
         - 42
+        - 0
+    shopHeart:
+        idle:
+        - 1
+        - 43
+        - 0
+    shopSpeed:
+        idle:
+        - 1
+        - 44
+        - 0
+    shopDamage:
+        idle:
+        - 1
+        - 45
         - 0
