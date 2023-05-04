@@ -1,6 +1,9 @@
-package it.unibo.dimhol.entity;
+package it.unibo.dimhol.entity.factories;
 
 import it.unibo.dimhol.components.*;
+import it.unibo.dimhol.entity.Entity;
+import it.unibo.dimhol.entity.EntityBuilder;
+import it.unibo.dimhol.entity.factories.AbstractFactory;
 import it.unibo.dimhol.logic.collision.RectBodyShape;
 import it.unibo.dimhol.logic.effects.DecreasePlayerCurrentHealthEffect;
 import it.unibo.dimhol.logic.util.DirectionUtil;

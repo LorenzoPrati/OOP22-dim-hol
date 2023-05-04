@@ -4,7 +4,7 @@ import it.unibo.dimhol.core.Input;
 import it.unibo.dimhol.logic.util.DirectionUtil;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.entity.Entity;
-import it.unibo.dimhol.entity.GenericFactory;
+import it.unibo.dimhol.entity.factories.GenericFactory;
 import it.unibo.dimhol.events.AddEntityEvent;
 import it.unibo.dimhol.events.Event;
 
@@ -28,17 +28,17 @@ public class CombatState extends AbstractPlayerState {
         mov.setEnabled(false);
         if (input.isShooting()) {
             this.setDesc("shoot " + DirectionUtil.getStringFromVec(mov.getDir()));
-            return List.of(new AddEntityEvent(new GenericFactory()
-                    .createPlayerBullet(mov.getDir().getX(), mov.getDir().getY(), e)));
+//            return List.of(new AddEntityEvent(new GenericFactory()
+//                    .createPlayerBullet(mov.getDir().getX(), mov.getDir().getY(), e)));
         }
         else if (input.isSpecialMeele()) {
             this.setDesc("special " + DirectionUtil.getStringFromVec(mov.getDir()));
-            return List.of(new AddEntityEvent(new GenericFactory()
-                    .createPlayerMeleeAttack(mov.getDir().getX(), mov.getDir().getY(), e)));
+//            return List.of(new AddEntityEvent(new GenericFactory()
+//                    .createPlayerMeleeAttack(mov.getDir().getX(), mov.getDir().getY(), e)));
         } else if (input.isNormalMeele()) {
             this.setDesc("normal " + DirectionUtil.getStringFromVec(mov.getDir()));
-            return List.of(new AddEntityEvent(new GenericFactory()
-                    .createPlayerMeleeAttack(mov.getDir().getX(), mov.getDir().getY(), e)));
+//            return List.of(new AddEntityEvent(new GenericFactory()
+//                    .createPlayerMeleeAttack(mov.getDir().getX(), mov.getDir().getY(), e)));
         }
         return Collections.emptyList();
     }

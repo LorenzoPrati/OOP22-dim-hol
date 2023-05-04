@@ -1,7 +1,7 @@
 package it.unibo.dimhol.core;
 
 import it.unibo.dimhol.entity.Entity;
-import it.unibo.dimhol.entity.GenericFactory;
+import it.unibo.dimhol.entity.factories.GenericFactory;
 import it.unibo.dimhol.events.Event;
 
 import it.unibo.dimhol.systems.MapCollisionSystem;
@@ -36,11 +36,9 @@ public class WorldImpl implements World {
         generate first level
          */
         var gf = new GenericFactory();
-        this.entities.add(gf.createHeart(10,10));
-        this.entities.add(gf.createHeart(13,13));
+
         this.entities.add(gf.createPlayer(15, 15));
-        this.entities.add(gf.createZombieEnemy(10, 4));
-        this.entities.add(gf.createShooterEnemy(10, 7));
+
         /*
         Add systems
          */

@@ -21,7 +21,7 @@ public class OptionScreen extends JPanel {
     public OptionScreen(Engine e) {
         this.engine = e;
         this.bg = new ImageIcon("src/res/bg/optionMenu.png");
-        ImageIcon iconTitle = new ImageIcon("src/res/bg/options3.png");
+        ImageIcon iconTitle = new ImageIcon("src/res/bg/options.png");
         JButton homeButton = new JButton("RETURN HOME");
         JLabel labelTitle = new JLabel(iconTitle);
         String[] optionsToChoose = {"1280x720", "Full screen"};
