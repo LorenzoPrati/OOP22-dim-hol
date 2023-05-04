@@ -19,7 +19,7 @@ public class ItemFactory extends AbstractFactory {
 
     public Entity createHeart(final double x, final double y){
         return new EntityBuilder()
-        .add(new PositionComponent(new Vector2D(x, y), 0))
+        .add(new PositionComponent(new Vector2D(x, y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new PickableComponent(new IncreaseCurrentHealthEffect(1)))
         .add(new AnimationComponent(this.map.get("heart"), "idle"))
@@ -28,7 +28,7 @@ public class ItemFactory extends AbstractFactory {
 
     public Entity createCoin(final double x, final double y){
         return new EntityBuilder()
-        .add(new PositionComponent(new Vector2D(x,y), 0))
+        .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new PickableComponent(new IncreaseCoinAmountEffect(1)))
         .add(new AnimationComponent(this.map.get("coin"), "idle"))
@@ -37,7 +37,7 @@ public class ItemFactory extends AbstractFactory {
 
     public Entity createKey(final double x, final double y){
         return new EntityBuilder()
-        .add(new PositionComponent(new Vector2D(x,y), 0))
+        .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new PickableComponent(new IncreaseKeyAmountEffect(1)))
         .add(new AnimationComponent(this.map.get("key"), "idle"))
@@ -46,7 +46,7 @@ public class ItemFactory extends AbstractFactory {
 
     public Entity createChest(final double x, final double y){
         return new EntityBuilder()
-        .add(new PositionComponent(new Vector2D(x,y), 0))
+        .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new PickableComponent(new IncreaseCoinAmountEffect(CHEST_INCREASE)))
         .add(new AnimationComponent(this.map.get("chest"), "idle"))

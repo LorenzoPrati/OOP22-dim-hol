@@ -33,7 +33,6 @@ public class GraphicInfo {
         return this.numImage;
     }
 
-    
     public double getW() {
         return this.w;
     }
