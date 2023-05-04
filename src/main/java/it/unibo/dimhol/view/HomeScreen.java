@@ -31,7 +31,6 @@ public class HomeScreen extends JPanel {
         buttons.add(startButton);
         buttons.add(optionsButton);
         buttons.add(exitButton);
-
         
         setBorder(new EmptyBorder(10, 10, 10, 10));
         this.setLayout(new GridBagLayout());

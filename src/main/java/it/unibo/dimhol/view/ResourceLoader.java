@@ -51,16 +51,16 @@ public class ResourceLoader {
             this.imagesMap.put(22, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/hurt/WarriorDownHurt.png"))), 48, 48));
             this.imagesMap.put(23, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/hurt/WarriorLeftHurt.png"))), 48, 48));
             this.imagesMap.put(24, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/hurt/WarriorRightHurt.png"))), 48, 48));
-            
-            this.imagesMap.put(25, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorUpClimb.png"))), 48, 48));
-            this.imagesMap.put(26, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorDownClimb.png"))), 48, 48));
-            this.imagesMap.put(27, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorLeftClimb.png"))), 48, 48));
-            this.imagesMap.put(28, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorRightClimb.png"))), 48, 48));
 
-            this.imagesMap.put(29, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorUpDeath.png"))), 48, 48));
-            this.imagesMap.put(30, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorDownDeath.png"))), 48, 48));
-            this.imagesMap.put(31, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorLeftDeath.png"))), 48, 48));
-            this.imagesMap.put(32, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorRightDeath.png"))), 48, 48));
+            this.imagesMap.put(25, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorUpDeath.png"))), 48, 48));
+            this.imagesMap.put(26, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorDownDeath.png"))), 48, 48));
+            this.imagesMap.put(27, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorLeftDeath.png"))), 48, 48));
+            this.imagesMap.put(28, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorRightDeath.png"))), 48, 48));
+
+            this.imagesMap.put(29, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorUpClimb.png"))), 48, 48));
+            this.imagesMap.put(30, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorDownClimb.png"))), 48, 48));
+            this.imagesMap.put(31, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorLeftClimb.png"))), 48, 48));
+            this.imagesMap.put(32, new ImmutableTriple<>((ImageIO.read(new File("src/res/warrior/WarriorRightClimb.png"))), 48, 48));
 
             this.imagesMap.put(33, new ImmutableTriple<>((ImageIO.read(new File("src/res/enemies/ghost-Sheet.png"))), 32, 32));
             this.imagesMap.put(34, new ImmutableTriple<>((ImageIO.read(new File("src/res/items/coin.png"))), 32, 32));
