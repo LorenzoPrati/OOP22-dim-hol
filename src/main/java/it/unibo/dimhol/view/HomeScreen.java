@@ -17,13 +17,13 @@ public class HomeScreen extends JPanel {
 
     public HomeScreen(final Engine engine) {
         this.engine = engine;
-        this.bg = new ImageIcon("src/res/bg/mainMenu3.png");
+        this.bg = new ImageIcon("src/res/bg/mainMenu.png");
         final JButton startButton = new JButton("P L A Y");
         final JButton exitButton = new JButton("Q U I T");
         final JButton optionsButton = new JButton("O P T I O N S");
         final JPanel centerPanel = new JPanel();
         List<JButton> buttons = new LinkedList<>();
-        ImageIcon icon = new ImageIcon("src/res/bg/dimension holiday2.png");ImageIcon ghostIcon = new ImageIcon("src/res/bg/ghost.gif");
+        ImageIcon icon = new ImageIcon("src/res/bg/dimension holiday.png");ImageIcon ghostIcon = new ImageIcon("src/res/bg/ghost.gif");
         JLabel gameName = new JLabel(icon);
         Font f = new Font("Helvetica", Font.BOLD, 20);
         GridBagConstraints gbc = new GridBagConstraints();

@@ -29,7 +29,7 @@ public class ShopItemFactory extends AbstractFactory{
         .add(new PositionComponent(new Vector2D(x,y), 0))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
         .add(new InteractableComponent(new IncreaseSpeedEffect(VELOCITY_INCREASE)))
-        .add(new AnimationComponent(this.map.get("shopVelocity"), "idle"))
+        .add(new AnimationComponent(this.map.get("shopSpeed"), "idle"))
         .build();
     }
 
