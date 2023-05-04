@@ -1,7 +1,6 @@
 package it.unibo.dimhol.view;
 
 import it.unibo.dimhol.core.Engine;
-
 import javax.swing.*;
 
 public class PauseExampleScreen extends JPanel {

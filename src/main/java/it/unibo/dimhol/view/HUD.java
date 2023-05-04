@@ -48,7 +48,7 @@ public class HUD {
     }
 
     private void showHealthInfo(Graphics2D g2) {
-        var heartImg = loader.getImage(27);
+        var heartImg = loader.getImage(35);
         g2.setColor(Color.RED);
         int heartW = (int) (newTileWidth * W);
         int heartH = (int) (newTileHeight * H);

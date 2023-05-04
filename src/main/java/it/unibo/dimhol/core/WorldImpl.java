@@ -7,6 +7,7 @@ import it.unibo.dimhol.events.Event;
 import it.unibo.dimhol.systems.MapCollisionSystem;
 import it.unibo.dimhol.systems.*;
 import it.unibo.dimhol.view.Scene;
+import it.unibo.dimhol.view.SceneImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class WorldImpl implements World {
         this.entities = new ArrayList<>();
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
-        this.scene = new Scene();
+        this.scene = new SceneImpl();
         this.input = new InputImpl();
         /*
         generate first level

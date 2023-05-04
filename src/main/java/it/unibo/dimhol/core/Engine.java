@@ -63,7 +63,7 @@ public final class Engine {
      * Resume the game.
      */
     public void resumeGame() {
-        this.window.changePanel(this.world.getScene());
+        this.window.changePanel(this.world.getScene().getPanel());
         /*
          * input is set after the scene is made visible
          */
