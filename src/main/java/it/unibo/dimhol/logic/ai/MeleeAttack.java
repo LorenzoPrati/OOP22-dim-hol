@@ -2,7 +2,7 @@ package it.unibo.dimhol.logic.ai;
 
 import it.unibo.dimhol.components.AiComponent;
 import it.unibo.dimhol.components.MovementComponent;
-import it.unibo.dimhol.entity.AttackFactory;
+import it.unibo.dimhol.entity.factories.AttackFactory;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.events.AddEntityEvent;
 import it.unibo.dimhol.events.Event;
