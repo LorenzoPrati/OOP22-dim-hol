@@ -1,4 +1,4 @@
-package it.unibo.dimhol.entity;
+package it.unibo.dimhol.entity.factories;
 
 import org.yaml.snakeyaml.Yaml;
 

@@ -2,7 +2,7 @@ package it.unibo.dimhol.logic.ai;
 
 import it.unibo.dimhol.components.BodyComponent;
 import it.unibo.dimhol.components.PositionComponent;
-import it.unibo.dimhol.entity.AttackFactory;
+import it.unibo.dimhol.entity.factories.AttackFactory;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.events.Event;
 import org.locationtech.jts.math.Vector2D;
