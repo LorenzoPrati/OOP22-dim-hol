@@ -36,8 +36,8 @@ public class RenderSystem extends AbstractSystem{
            this.world.getScene().getPlayerHUD().update(healthComp.getCurrentHealth(), healthComp.getMaxHealth(), coinPocket.getCurrentAmount());
        }
        this.world.getScene().toList(animationComp.getIndex(),getNumToUse(animationComp.getState(), 
-        animationComp.getMap()), posComp.getPos().getX(), posComp.getPos().getY(), 
-        bodyComp.getBodyShape().getBoundingWidth(), bodyComp.getBodyShape().getBoundingHeight() );
+            animationComp.getMap()), posComp.getPos().getX(), posComp.getPos().getY(), 
+            bodyComp.getBodyShape().getBoundingWidth(), bodyComp.getBodyShape().getBoundingHeight() );
     }
     
 }
