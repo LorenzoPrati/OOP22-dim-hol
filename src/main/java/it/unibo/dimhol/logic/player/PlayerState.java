@@ -16,4 +16,6 @@ public interface PlayerState {
     String getDesc();
 
     void updateTime(double dt);
+
+    void exit(Entity e);
 }
