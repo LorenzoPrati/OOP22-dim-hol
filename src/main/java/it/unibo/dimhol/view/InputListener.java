@@ -14,7 +14,7 @@ import java.awt.event.MouseListener;
 public class InputListener implements KeyListener, MouseListener {
 
     private final Engine engine;
-    private Input input;
+    private final Input input;
 
     public InputListener(final Engine engine, final Input input) {
         this.engine = engine;

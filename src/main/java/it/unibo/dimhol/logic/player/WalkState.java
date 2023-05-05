@@ -1,7 +1,6 @@
 package it.unibo.dimhol.logic.player;
 
 import it.unibo.dimhol.core.Input;
-import it.unibo.dimhol.logic.util.DirectionUtil;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.events.Event;
@@ -13,6 +12,7 @@ import java.util.Optional;
 public class WalkState extends AbstractPlayerState {
 
     public WalkState() {
+        super("walk");
     }
 
     @Override
@@ -20,8 +20,14 @@ public class WalkState extends AbstractPlayerState {
         if (input.isChargingFireball()) {
             return Optional.of(new ChargeState());
         }
-        if (input.isMeele() || input.isShooting()) {
-            return Optional.of(new CombatState());
+        if (input.isShooting()) {
+            return Optional.of(new ShootState());
+        }
+        if (input.isSpecialMeele()) {
+            return Optional.of(new SwordAbilityState());
+        }
+        if (input.isNormalMeele()) {
+            return Optional.of(new SwordState());
         }
         if (!input.isMoving()) {
             return Optional.of(new IdleState());
@@ -34,12 +40,17 @@ public class WalkState extends AbstractPlayerState {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         mov.setEnabled(true);
         input.getDirection().ifPresent(mov::setDir);
-        this.setDesc("walk " + DirectionUtil.getStringFromVec(mov.getDir()));
         return Collections.emptyList();
     }
 
     @Override
     public void updateTime(double dt) {
 
+    }
+
+    @Override
+    public void exit(Entity e) {
+        var mov = (MovementComponent) e.getComponent(MovementComponent.class);
+        mov.setEnabled(false);
     }
 }

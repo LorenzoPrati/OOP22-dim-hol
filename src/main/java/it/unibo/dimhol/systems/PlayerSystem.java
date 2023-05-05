@@ -5,6 +5,7 @@ import it.unibo.dimhol.components.AnimationComponent;
 import it.unibo.dimhol.components.MovementComponent;
 import it.unibo.dimhol.components.PlayerComponent;
 import it.unibo.dimhol.entity.Entity;
+import it.unibo.dimhol.logic.util.DirectionUtil;
 
 /**
  * A system to handle player logic.
@@ -36,14 +37,15 @@ public class PlayerSystem extends AbstractSystem {
         player.getState().updateTime(dt);
         if (animation.isBlocking() && !animation.isCompleted()) {
             animation.setState(animation.getState());
-            mov.setEnabled(false);
         }
         else {
-            player.getState().transition(input).ifPresent(player::setState);
+            var newState = player.getState().transition(input);
+            if (newState.isPresent()) {
+                player.getState().exit(e);
+                player.setState(newState.get());
+            }
             player.getState().execute(input, e).forEach(this.world::notifyEvent);
-            animation.setState(player.getState().getDesc());
+            animation.setState(player.getState().getDesc() + " " + DirectionUtil.getStringFromVec(mov.getDir()));
         }
-
-
     }
 }

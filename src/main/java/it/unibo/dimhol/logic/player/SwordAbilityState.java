@@ -1,8 +1,7 @@
 package it.unibo.dimhol.logic.player;
 
-import it.unibo.dimhol.core.Input;
-import it.unibo.dimhol.components.InteractorComponent;
 import it.unibo.dimhol.components.MovementComponent;
+import it.unibo.dimhol.core.Input;
 import it.unibo.dimhol.entity.Entity;
 import it.unibo.dimhol.events.Event;
 
@@ -10,22 +9,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class InteractState extends AbstractPlayerState {
+public class SwordAbilityState extends AbstractPlayerState {
 
-    public InteractState() {
-        super("interact");
+    public SwordAbilityState() {
+        super("special");
     }
 
     @Override
     public Optional<PlayerState> transition(Input input) {
-        return Optional.of(new IdleState());
+        return input.isSpecialMeele()
+                ? Optional.empty()
+                : Optional.of(new IdleState());
     }
 
     @Override
     public List<Event> execute(Input input, Entity e) {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
-        var interactor = (InteractorComponent) e.getComponent(InteractorComponent.class);
-        interactor.setInteracting(true);
+        if (input.isSpecialMeele()) {
+//            return List.of(new AddEntityEvent(new GenericFactory()
+//                    .createPlayerMeleeAttack(mov.getDir().getX(), mov.getDir().getY(), e)));
+        }
         return Collections.emptyList();
     }
 
@@ -36,7 +39,6 @@ public class InteractState extends AbstractPlayerState {
 
     @Override
     public void exit(Entity e) {
-        var interactor = (InteractorComponent) e.getComponent(InteractorComponent.class);
-        interactor.setInteracting(false);
+
     }
 }
