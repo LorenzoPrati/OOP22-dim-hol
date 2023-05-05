@@ -4,8 +4,10 @@ import dimhol.entity.factories.GenericFactory;
 import dimhol.entity.Entity;
 import dimhol.events.Event;
 
+import dimhol.systems.MapCollisionSystem;
 import dimhol.systems.*;
 import dimhol.view.Scene;
+import dimhol.view.SceneImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ public class WorldImpl implements World {
         this.entities = new ArrayList<>();
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
-        this.scene = new Scene();
+        this.scene = new SceneImpl();
         this.input = new InputImpl();
         /*
         generate first level
