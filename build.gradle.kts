@@ -51,7 +51,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("it.unibo.dimhol.Launch")
+    mainClass.set("dimhol.Launch")
 }
 
 tasks.test {
