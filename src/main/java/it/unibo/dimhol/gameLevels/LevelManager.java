@@ -1,12 +1,12 @@
 package it.unibo.dimhol.gameLevels;
 
-import it.unibo.dimhol.core.WorldImpl;
-import it.unibo.dimhol.components.PlayerComponent;
-import it.unibo.dimhol.entity.Entity;
-import it.unibo.dimhol.entity.GenericFactory;
-import it.unibo.dimhol.map.MapLoad;
-import it.unibo.dimhol.map.MapLoaderImpl;
-import it.unibo.dimhol.map.Tile;
+import dimhol.components.PlayerComponent;
+import dimhol.core.WorldImpl;
+import dimhol.entity.Entity;
+import dimhol.entity.factories.GenericFactory;
+import dimhol.map.MapLoad;
+import dimhol.map.MapLoaderImpl;
+import dimhol.map.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,7 +160,8 @@ public class LevelManager {
      * @return The created enemy entity.
      */
     private Entity spawnEnemy(double x, double y) {
-        return genericFactory.createZombieEnemy(x, y);
+//        return genericFactory.createZombieEnemy(x, y);
 //        return genericFactory.createShooterEnemy(x, y);
+        return null;
     }
 }
