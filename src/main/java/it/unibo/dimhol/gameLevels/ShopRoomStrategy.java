@@ -1,8 +1,8 @@
 package it.unibo.dimhol.gameLevels;
 
-import it.unibo.dimhol.core.WorldImpl;
-import it.unibo.dimhol.entity.GenericFactory;
-import it.unibo.dimhol.map.MapLoaderImpl;
+import dimhol.core.WorldImpl;
+import dimhol.entity.factories.GenericFactory;
+import dimhol.map.MapLoaderImpl;
 
 import java.util.Random;
 public class ShopRoomStrategy implements RoomStrategy, RewardSpawner {
