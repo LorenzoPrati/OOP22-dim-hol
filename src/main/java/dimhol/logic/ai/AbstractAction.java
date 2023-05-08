@@ -14,6 +14,10 @@ import java.util.Optional;
 
 public abstract class AbstractAction implements Action {
 
+    /**
+     * Divisor = 2 is util to have half of a body width and height.
+     */
+    private static final int DIVISOR = 2;
     private Entity player;
     protected int aggroRay;
     protected int waitingTime;
@@ -53,8 +57,8 @@ public abstract class AbstractAction implements Action {
     }
 
     private Vector2D getCentralPosition(Vector2D entityPos, BodyShape entityBody) {
-        return new Vector2D(entityPos.getX() + (entityBody.getBoundingWidth() / 2),
-                entityPos.getY() + (entityBody.getBoundingHeight() / 2));
+        return new Vector2D(entityPos.getX() + (entityBody.getBoundingWidth() / DIVISOR),
+                entityPos.getY() + (entityBody.getBoundingHeight() / DIVISOR));
     }
 
 }
