@@ -20,12 +20,8 @@ public final class DistanceAttack extends AbstractAction {
         var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
         var aiComp = (AiComponent) enemy.getComponent(AiComponent.class);
         movComp.setEnabled(false);
-
-        if (System.currentTimeMillis() - aiComp.getPrevMovTime() > waitTime) {
-            aiComp.setPrevMovTime(System.currentTimeMillis());
-            return distanceAttack();
-        }
-        return Optional.empty();
+        aiComp.setPrevMovTime(System.currentTimeMillis());
+        return distanceAttack();
     }
 
     private Optional<List<Event>> distanceAttack() {

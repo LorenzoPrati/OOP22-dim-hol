@@ -1,6 +1,5 @@
 package dimhol.logic.ai;
 
-import dimhol.entity.Entity;
 import dimhol.events.Event;
 
 import java.util.List;
@@ -14,9 +13,7 @@ public interface Action {
     /**
      * @return true if the action is actionable.
      */
-    default boolean canExecute() {
-        return false;
-    }
+    boolean canExecute();
 
     /**
      *

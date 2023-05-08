@@ -35,15 +35,19 @@ public class RoutineFactory {
      * @return the behaviour of a shooter enemy.
      */
     public final List<AbstractAction> createShooterRoutine() {
-        return new ArrayList<>(List.of(
-                new ActionBuilder<>(DistanceAttack::new)
-                        .addAggroRay(DISTANCE_ATTACK_AGGRO)
-                        .addWaitingTime(DISTANCE_ATTACK_RELOAD_TIME)
-                        .build(),
-                new ActionBuilder<>(RandomMovement::new)
-                        .addWaitingTime(CHANGE_DIRECTION_TIME)
-                        .build()
-        ));
+        try {
+            return new ArrayList<>(List.of(
+                    new ActionBuilder<>(DistanceAttack.class)
+                            .addAggroRay(DISTANCE_ATTACK_AGGRO)
+                            .addWaitingTime(DISTANCE_ATTACK_RELOAD_TIME)
+                            .build(),
+                    new ActionBuilder<>(RandomMovement.class)
+                            .addWaitingTime(CHANGE_DIRECTION_TIME)
+                            .build()
+            ));
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -51,19 +55,21 @@ public class RoutineFactory {
      * @return the behaviour of a zombie enemy.
      */
     public final List<AbstractAction> createZombieRoutine() {
-        return new ArrayList<>(List.of(
-                new ActionBuilder<>(BasicMovement::new)
-                        .build(),
-                new ActionBuilder<>(MeleeAttack::new)
-                        .addWaitingTime(MELEE_RELOAD_TIME)
-                        .build(),
-                new ActionBuilder<>(FollowMovement::new)
-                        .addAggroRay(FOLLOW_MOVEMENT_AGGRO)
-                        .build(),
-                new ActionBuilder<>(RandomMovement::new)
-                        .addWaitingTime(CHANGE_DIRECTION_TIME)
-                        .build()
-        ));
+        try {
+            return new ArrayList<>(List.of(
+                    new ActionBuilder<>(MeleeAttack.class)
+                            .addWaitingTime(MELEE_RELOAD_TIME)
+                            .build(),
+                    new ActionBuilder<>(FollowMovement.class)
+                            .addAggroRay(FOLLOW_MOVEMENT_AGGRO)
+                            .build(),
+                    new ActionBuilder<>(RandomMovement.class)
+                            .addWaitingTime(CHANGE_DIRECTION_TIME)
+                            .build()
+            ));
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

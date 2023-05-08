@@ -23,7 +23,7 @@ public final class AiComponent implements Component {
 
     /**
      *
-     * @return prvious time.
+     * @return previous time.
      */
     public long getPrevMovTime() {
         return prevMovTime;

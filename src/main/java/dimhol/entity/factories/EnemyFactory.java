@@ -1,12 +1,6 @@
 package dimhol.entity.factories;
 
-import dimhol.components.PlayerComponent;
-import dimhol.components.PositionComponent;
-import dimhol.components.MovementComponent;
-import dimhol.components.BodyComponent;
-import dimhol.components.HealthComponent;
-import dimhol.components.AnimationComponent;
-import dimhol.components.AiComponent;
+import dimhol.components.*;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.logic.ai.RoutineFactory;
@@ -24,7 +18,7 @@ public class EnemyFactory extends AbstractFactory {
      */
     public static final double ZOMBIE_HEIGHT = 1;
     /**
-     * Zombie spped.
+     * Zombie speed.
      */
     public static final double ZOMBIE_SPEED = 2;
     /**
@@ -37,11 +31,11 @@ public class EnemyFactory extends AbstractFactory {
      */
     public static final double SHOOTER_WIDTH = 1;
     /**
-     * Zombie heght.
+     * Zombie height.
      */
     public static final double SHOOTER_HEIGHT = 1;
     /**
-     * Zombie spped.
+     * Zombie speed.
      */
     public static final double SHOOTER_SPEED = 2;
     /**

@@ -16,7 +16,7 @@ public abstract class AbstractAction implements Action {
 
     private Entity player;
     protected int aggroRay;
-    protected int waitTime;
+    protected int waitingTime;
     protected Vector2D playerCentralPos;
     protected Vector2D enemyCentralPos;
     protected Entity enemy;
@@ -27,8 +27,9 @@ public abstract class AbstractAction implements Action {
     protected BodyComponent playerBody;
     private AiComponent ai;
 
-    public boolean canExecute(Entity entity) {
-        return playerCentralPos.distance(enemyCentralPos) <= aggroRay && ai.getPrevMovTime() >= waitTime;
+    public boolean canExecute() {
+        return playerCentralPos.distance(enemyCentralPos) <= aggroRay
+                && (System.currentTimeMillis() - ai.getPrevMovTime()) >= waitingTime;
     }
     public abstract Optional<List<Event>> execute();
 

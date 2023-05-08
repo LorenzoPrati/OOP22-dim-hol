@@ -10,6 +10,7 @@ public class FollowMovement extends AbstractAction {
 
     @Override
     public Optional<List<Event>> execute() {
+        System.out.println("follow movement");
         var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
         movComp.setEnabled(true);
 

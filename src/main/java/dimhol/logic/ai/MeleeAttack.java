@@ -13,9 +13,9 @@ import java.util.Optional;
 
 public class MeleeAttack extends AbstractAction {
 
-    public boolean canExecute(Entity entity) {
-        aggroRay = AttackUtil.getMeleeRay(enemyPos.getPos(), enemyCentralPos, playerPos.getPos(), playerCentralPos);
-        return super.canExecute(entity);
+    public boolean canExecute() {
+        super.aggroRay = AttackUtil.getMeleeRay(enemyPos.getPos(), enemyCentralPos, playerPos.getPos(), playerCentralPos);
+        return super.canExecute();
     }
 
     @Override
@@ -23,12 +23,8 @@ public class MeleeAttack extends AbstractAction {
         var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
         var aiComp = (AiComponent) enemy.getComponent(AiComponent.class);
         movComp.setEnabled(false);
-
-        if (System.currentTimeMillis() - aiComp.getPrevMovTime() > waitTime) {
-            aiComp.setPrevMovTime(System.currentTimeMillis());
-            return meleeAttack();
-        }
-        return Optional.empty();
+        aiComp.setPrevMovTime(System.currentTimeMillis());
+        return meleeAttack();
     }
 
     private Optional<List<Event>> meleeAttack() {
