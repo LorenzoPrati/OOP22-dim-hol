@@ -18,15 +18,14 @@ public class MeleeAttack extends AbstractAction {
     }
 
     public boolean canExecute(Entity entity) {
-        super.canExecute(entity);
-        aggroRay = AttackUtil.getMeleeRay(entityPos.getPos(), enemyCentralPos, playerPos.getPos(), playerCentralPos);
-        return MathUtilities.getDistance(playerCentralPos, enemyCentralPos) <= aggroRay;
+        aggroRay = Optional.of(AttackUtil.getMeleeRay(enemyPos.getPos(), enemyCentralPos, playerPos.getPos(), playerCentralPos));
+        return super.canExecute(entity);
     }
 
     @Override
     public Optional<List<Event>> execute() {
-        var movComp = (MovementComponent) entity.getComponent(MovementComponent.class);
-        var aiComp = (AiComponent) entity.getComponent(AiComponent.class);
+        var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
+        var aiComp = (AiComponent) enemy.getComponent(AiComponent.class);
         movComp.setEnabled(false);
 
         if (System.currentTimeMillis() - aiComp.getPrevMovTime() > waitTime) {
@@ -39,9 +38,9 @@ public class MeleeAttack extends AbstractAction {
     private Optional<List<Event>> meleeAttack() {
         List<Event> attacks = new ArrayList<>();
         var dir = AttackUtil.getPlayerDirection(playerCentralPos, enemyCentralPos);
-        var pos = AttackUtil.getAttackPos(dir, enemyCentralPos, entityBody.getBodyShape(), AttackFactory.MELEE_WIDTH, AttackFactory.MELEE_HEIGHT);
+        var pos = AttackUtil.getAttackPos(dir, enemyCentralPos, enemyBody.getBodyShape(), AttackFactory.MELEE_WIDTH, AttackFactory.MELEE_HEIGHT);
 
-        attacks.add(new AddEntityEvent(attackFactory.createMeleeAttack(pos, entity)));
+        attacks.add(new AddEntityEvent(attackFactory.createMeleeAttack(pos, enemy)));
         return Optional.of(attacks);
     }
 }

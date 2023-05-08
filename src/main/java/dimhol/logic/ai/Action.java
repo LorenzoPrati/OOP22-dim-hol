@@ -12,11 +12,11 @@ import java.util.Optional;
 public interface Action {
 
     /**
-     *
-     * @param entity .
      * @return true if the action is actionable.
      */
-    boolean canExecute(Entity entity);
+    default boolean canExecute() {
+        return false;
+    }
 
     /**
      *
@@ -24,9 +24,4 @@ public interface Action {
      */
     Optional<List<Event>> execute();
 
-    /**
-     *
-     * @param player .
-     */
-    void setPlayer(Entity player);
 }

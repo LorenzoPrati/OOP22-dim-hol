@@ -65,7 +65,7 @@ public class AttackUtil {
         return new Vector2D(bulletX, bulletY);
     }
 
-    public static double getMeleeRay(Vector2D entityPos, Vector2D enemyCentralPos, Vector2D playerPos, Vector2D playerCentralPos) {
-        return (MathUtilities.getDistance(entityPos, enemyCentralPos)) + (MathUtilities.getDistance(playerPos, playerCentralPos));
+    public static int getMeleeRay(Vector2D entityPos, Vector2D enemyCentralPos, Vector2D playerPos, Vector2D playerCentralPos) {
+        return (int) (entityPos.distance(enemyCentralPos) + playerPos.distance(playerCentralPos));
     }
 }

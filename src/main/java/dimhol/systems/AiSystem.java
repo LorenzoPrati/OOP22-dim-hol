@@ -31,6 +31,7 @@ public final class AiSystem extends AbstractSystem {
         var enemyAI = (AiComponent) enemy.getComponent(AiComponent.class);
         for (var action : enemyAI.getRoutine()) {
             action.setPlayer(player);
+            action.setEnemy(enemy);
             if (action.canExecute(enemy)) {
                 var routineExecute = action.execute();
                 if (routineExecute.isPresent()) {

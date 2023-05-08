@@ -1,5 +1,6 @@
 package dimhol.core;
 
+import dimhol.entity.factories.EnemyFactory;
 import dimhol.entity.factories.GenericFactory;
 import dimhol.entity.Entity;
 import dimhol.events.Event;
@@ -37,8 +38,10 @@ public class WorldImpl implements World {
         generate first level
          */
         var gf = new GenericFactory();
+        var ef = new EnemyFactory();
 
         this.entities.add(gf.createPlayer(15, 15));
+        this.entities.add(ef.createZombie(3, 4));
 
         /*
         Add systems
