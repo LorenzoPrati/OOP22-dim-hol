@@ -1,6 +1,7 @@
 package dimhol.logic.ai;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class RoutineFactory {
         return new ArrayList<>(List.of(
                 new DistanceAttack(8, 2000),
                 new RandomMovement(100, 1000)
-        )).stream().sorted(AbstractAction::getAggro).toList();
+        )).stream().sorted(Comparator.comparingInt(AbstractAction::getAggro)).toList();
     }
 
     /**
@@ -29,6 +30,6 @@ public class RoutineFactory {
                 new MeleeAttack(1, 2000),
                 new FollowMovement(5),
                 new RandomMovement(100, 1000)
-        )).stream().sorted(AbstractAction::getAggro).toList();
+        )).stream().sorted(Comparator.comparingInt(AbstractAction::getAggro)).toList();
     }
 }

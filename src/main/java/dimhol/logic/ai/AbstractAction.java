@@ -64,7 +64,7 @@ public abstract class AbstractAction implements Action {
         return player;
     }
 
-    public int getAggro(AbstractAction action) {
+    public int getAggro() {
         return this.aggroRay.get();
     }
 
