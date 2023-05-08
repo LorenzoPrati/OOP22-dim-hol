@@ -13,12 +13,8 @@ import java.util.Optional;
 
 public class MeleeAttack extends AbstractAction {
 
-    public MeleeAttack(int aggroRay, int waitTime) {
-        super(aggroRay, waitTime);
-    }
-
     public boolean canExecute(Entity entity) {
-        aggroRay = Optional.of(AttackUtil.getMeleeRay(enemyPos.getPos(), enemyCentralPos, playerPos.getPos(), playerCentralPos));
+        aggroRay = AttackUtil.getMeleeRay(enemyPos.getPos(), enemyCentralPos, playerPos.getPos(), playerCentralPos);
         return super.canExecute(entity);
     }
 

@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class DistanceAttack extends AbstractAction {
-
-    public DistanceAttack(int aggroRay, int waitTime) {
-        super(aggroRay, waitTime);
-    }
+/**
+ * Distance attack strategy.
+ */
+public final class DistanceAttack extends AbstractAction {
 
     @Override
     public Optional<List<Event>> execute() {
@@ -32,7 +31,8 @@ public class DistanceAttack extends AbstractAction {
     private Optional<List<Event>> distanceAttack() {
         List<Event> attacks = new ArrayList<>();
         var dir = AttackUtil.getPlayerDirection(playerCentralPos, enemyCentralPos);
-        var pos = AttackUtil.getAttackPos(dir, enemyCentralPos, enemyBody.getBodyShape(), AttackFactory.MELEE_WIDTH, AttackFactory.MELEE_HEIGHT);
+        var pos = AttackUtil.getAttackPos(dir, enemyCentralPos, enemyBody.getBodyShape(),
+                AttackFactory.MELEE_WIDTH, AttackFactory.MELEE_HEIGHT);
 
         attacks.add(new AddEntityEvent(attackFactory.createDistanceAttack(pos, dir, enemy)));
         return Optional.of(attacks);
