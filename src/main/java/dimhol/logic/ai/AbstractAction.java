@@ -29,7 +29,7 @@ public abstract class AbstractAction implements Action {
 
     public boolean canExecute() {
         return playerCentralPos.distance(enemyCentralPos) <= aggroRay
-                && (System.currentTimeMillis() - ai.getPrevMovTime()) >= waitingTime;
+                && (ai.getCurrentTime() - ai.getPrevTime()) >= waitingTime;
     }
     public abstract Optional<List<Event>> execute();
 

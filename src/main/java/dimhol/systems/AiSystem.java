@@ -29,6 +29,7 @@ public final class AiSystem extends AbstractSystem {
     @Override
     public void process(final Entity enemy, double dt) {
         var enemyAI = (AiComponent) enemy.getComponent(AiComponent.class);
+        enemyAI.updateTime(dt);
         for (var action : enemyAI.getRoutine()) {
             action.setPlayer(player);
             action.setEnemy(enemy);

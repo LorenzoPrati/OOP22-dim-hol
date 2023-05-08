@@ -13,10 +13,8 @@ public class FollowMovement extends AbstractAction {
         System.out.println("follow movement");
         var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
         movComp.setEnabled(true);
-
         var newDirection = AttackUtil.getPlayerDirection(playerCentralPos, enemyCentralPos);
         movComp.setDir(newDirection);
-
         return Optional.empty();
     }
 }

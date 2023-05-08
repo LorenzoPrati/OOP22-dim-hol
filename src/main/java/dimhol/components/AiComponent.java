@@ -12,6 +12,8 @@ public final class AiComponent implements Component {
     private final List<AbstractAction> actions;
 
     private long prevMovTime = System.currentTimeMillis();
+    private double currentTime;
+    private double prevTime;
 
     /**
      *
@@ -23,25 +25,25 @@ public final class AiComponent implements Component {
 
     /**
      *
-     * @return previous time.
-     */
-    public long getPrevMovTime() {
-        return prevMovTime;
-    }
-
-    /**
-     *
-     * @param prevMovTime previous time to set.
-     */
-    public void setPrevMovTime(final long prevMovTime) {
-        this.prevMovTime = prevMovTime;
-    }
-
-    /**
-     *
      * @return enemy's routines.
      */
     public List<AbstractAction> getRoutine() {
         return actions;
+    }
+
+    public void updateTime(double currentTime) {
+        this.currentTime += currentTime;
+    }
+
+    public double getPrevTime() {
+        return this.prevTime;
+    }
+
+    public void setPrevTime(final double prevTime) {
+        this.prevTime = prevTime;
+    }
+
+    public double getCurrentTime() {
+        return this.currentTime;
     }
 }

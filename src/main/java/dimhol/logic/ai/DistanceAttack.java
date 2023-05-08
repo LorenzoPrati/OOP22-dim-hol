@@ -20,7 +20,7 @@ public final class DistanceAttack extends AbstractAction {
         var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
         var aiComp = (AiComponent) enemy.getComponent(AiComponent.class);
         movComp.setEnabled(false);
-        aiComp.setPrevMovTime(System.currentTimeMillis());
+        aiComp.setPrevTime(aiComp.getCurrentTime());
         return distanceAttack();
     }
 
