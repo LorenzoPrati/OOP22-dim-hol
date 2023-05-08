@@ -14,6 +14,11 @@ public class EnemyFactory extends AbstractFactory {
     public static final double ZOMBIE_SPEED = 2;
     public static final int ZOMBIE_HEALTH = 2;
 
+    public static final double SHOOTER_WIDTH = 1;
+    public static final double SHOOTER_HEIGHT = 1;
+    public static final double SHOOTER_SPEED = 2;
+    public static final int SHOOTER_HEALTH = 2;
+
     public EnemyFactory() {
         super();
     }
@@ -24,8 +29,19 @@ public class EnemyFactory extends AbstractFactory {
                 .add(new MovementComponent(new Vector2D(0,1), ZOMBIE_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(ZOMBIE_WIDTH, ZOMBIE_HEIGHT), true))
                 .add(new HealthComponent(ZOMBIE_HEALTH))
-                .add(new AnimationComponent(map.get("player"),"idle down"))
+                .add(new AnimationComponent(map.get("enemy"),"idle"))
                 .add(new AiComponent(new RoutineFactory().createZombieRoutine()))
+                .build();
+    }
+
+    public Entity createShooter(final double x, final double y) {
+        return new EntityBuilder().add(new PlayerComponent())
+                .add(new PositionComponent(new Vector2D(x,y), 0))
+                .add(new MovementComponent(new Vector2D(0,1), SHOOTER_SPEED, false))
+                .add(new BodyComponent(new RectBodyShape(SHOOTER_WIDTH, SHOOTER_HEIGHT), true))
+                .add(new HealthComponent(SHOOTER_HEALTH))
+                .add(new AnimationComponent(map.get("enemy"),"idle"))
+                .add(new AiComponent(new RoutineFactory().createShooterRoutine()))
                 .build();
     }
 }
