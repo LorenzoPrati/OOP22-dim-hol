@@ -38,6 +38,16 @@ public class AttackUtil {
         }
     }
 
+    /**
+     * This method positions the attack; whatever it is, next to the body of the entity exactly
+     * centered with respect to its height or width (depending on the direction).
+     * @param dir attack's direction
+     * @param entityCentralPos entity's central position
+     * @param entityBody entity's body shape
+     * @param attackWidth attack width
+     * @param attackHeight attack height
+     * @return the attack position
+     */
     public static Vector2D getAttackPos(Vector2D dir, Vector2D entityCentralPos, BodyShape entityBody, double attackWidth, double attackHeight) {
         double bulletX;
         double bulletY;
@@ -65,6 +75,15 @@ public class AttackUtil {
         return new Vector2D(bulletX, bulletY);
     }
 
+    /**
+     * This method returns the perfect radius that defines the area in which, if the player enters,
+     * the enemy decides to perform a melee attack.
+     * @param entityPos entity's position
+     * @param enemyCentralPos entity's central position
+     * @param playerPos player's position
+     * @param playerCentralPos player's central position
+     * @return the ray's value
+     */
     public static int getMeleeRay(Vector2D entityPos, Vector2D enemyCentralPos, Vector2D playerPos, Vector2D playerCentralPos) {
         return (int) (entityPos.distance(enemyCentralPos) + playerPos.distance(playerCentralPos));
     }

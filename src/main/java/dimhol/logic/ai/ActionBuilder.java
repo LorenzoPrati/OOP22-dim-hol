@@ -1,5 +1,9 @@
 package dimhol.logic.ai;
 
+/**
+ * This builder class is util to build Action with variable parameters.
+ * @param <T>
+ */
 public class ActionBuilder<T extends AbstractAction> {
 
     private final T action;

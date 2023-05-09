@@ -15,7 +15,7 @@ import java.util.Optional;
 public abstract class AbstractAction implements Action {
 
     /**
-     * Divisor = 2 is util to have half of a body width and height.
+     * Divisor = 2 is util to have half of a body's width and height.
      */
     private static final int DIVISOR = 2;
     private Entity player;

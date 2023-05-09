@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Distance attack strategy.
+ * It is a strategy that creates bullets by aiming at the player.
  */
 public final class DistanceAttack extends AbstractAction {
 
