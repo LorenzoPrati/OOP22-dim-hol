@@ -126,6 +126,6 @@ public class MapLoaderImpl implements MapLoad {
 
     @Override
     public List<Tile[][]> getMapTileLayers() {
-        return mapTileLayers;
+        return new ArrayList<>(mapTileLayers);
     }
 }
