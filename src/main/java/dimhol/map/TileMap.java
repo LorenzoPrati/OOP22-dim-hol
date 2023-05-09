@@ -1,5 +1,7 @@
 package dimhol.map;
 
+import java.util.stream.IntStream;
+
 /**
  * The TileMap is a two-dimensional grid of tiles.
  */
@@ -14,9 +16,7 @@ public class TileMap {
         int width = tilemap.length;
         int height = tilemap[0].length;
         Tile[][] copy = new Tile[width][height];
-        for (int i = 0; i < width; i++) {
-            System.arraycopy(tilemap[i], 0, copy[i], 0 ,height);
-        }
+        IntStream.range(0, width).forEach(i -> System.arraycopy(tilemap[i], 0, copy[i], 0, height));
         this.tilemap = copy;
     }
 
