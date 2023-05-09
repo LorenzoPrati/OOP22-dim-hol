@@ -15,6 +15,11 @@ import java.util.Optional;
  */
 public final class DistanceAttack extends AbstractAction {
 
+    public DistanceAttack(int distanceAttackAggro, int distanceAttackReloadTime) {
+        this.aggroRay = distanceAttackAggro;
+        this.waitingTime = distanceAttackReloadTime;
+    }
+
     @Override
     public Optional<List<Event>> execute() {
         var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);

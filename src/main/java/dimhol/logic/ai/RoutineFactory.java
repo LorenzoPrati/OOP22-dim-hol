@@ -35,19 +35,10 @@ public class RoutineFactory {
      * @return the behaviour of a shooter enemy.
      */
     public final List<AbstractAction> createShooterRoutine() {
-        try {
-            return new ArrayList<>(List.of(
-                    new ActionBuilder<>(DistanceAttack.class)
-                            .addAggroRay(DISTANCE_ATTACK_AGGRO)
-                            .addWaitingTime(DISTANCE_ATTACK_RELOAD_TIME)
-                            .build(),
-                    new ActionBuilder<>(RandomMovement.class)
-                            .addWaitingTime(CHANGE_DIRECTION_TIME)
-                            .build()
-            ));
-        } catch (InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        return new ArrayList<>(List.of(
+                new DistanceAttack(DISTANCE_ATTACK_AGGRO, DISTANCE_ATTACK_RELOAD_TIME),
+                new RandomMovement(CHANGE_DIRECTION_TIME)
+        ));
     }
 
     /**
@@ -55,21 +46,11 @@ public class RoutineFactory {
      * @return the behaviour of a zombie enemy.
      */
     public final List<AbstractAction> createZombieRoutine() {
-        try {
-            return new ArrayList<>(List.of(
-                    new ActionBuilder<>(MeleeAttack.class)
-                            .addWaitingTime(MELEE_RELOAD_TIME)
-                            .build(),
-                    new ActionBuilder<>(FollowMovement.class)
-                            .addAggroRay(FOLLOW_MOVEMENT_AGGRO)
-                            .build(),
-                    new ActionBuilder<>(RandomMovement.class)
-                            .addWaitingTime(CHANGE_DIRECTION_TIME)
-                            .build()
-            ));
-        } catch (InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        return new ArrayList<>(List.of(
+                new MeleeAttack(MELEE_RELOAD_TIME),
+                new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
+                new RandomMovement(CHANGE_DIRECTION_TIME)
+        ));
     }
 
 }

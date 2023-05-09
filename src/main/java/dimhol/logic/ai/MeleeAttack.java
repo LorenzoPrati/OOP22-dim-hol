@@ -12,6 +12,10 @@ import java.util.Optional;
 
 public class MeleeAttack extends AbstractAction {
 
+    public MeleeAttack(int meleeReloadTime) {
+        this.waitingTime = meleeReloadTime;
+    }
+
     public boolean canExecute() {
         aggroRay = AttackUtil.getMeleeRay(enemyPos.getPos(), enemyCentralPos, playerPos.getPos(), playerCentralPos);
         return super.canExecute();

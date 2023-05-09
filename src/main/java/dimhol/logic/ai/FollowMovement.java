@@ -11,6 +11,10 @@ import java.util.Optional;
  */
 public final class FollowMovement extends AbstractAction {
 
+    public FollowMovement(int followMovementAggro) {
+        this.aggroRay = followMovementAggro;
+    }
+
     @Override
     public Optional<List<Event>> execute() {
         var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);

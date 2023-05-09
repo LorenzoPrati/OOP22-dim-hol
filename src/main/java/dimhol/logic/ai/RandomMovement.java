@@ -11,6 +11,10 @@ import java.util.Random;
 
 public class RandomMovement extends AbstractAction {
 
+    public RandomMovement(int changeDirectionTime) {
+        this.waitingTime = changeDirectionTime;
+    }
+
     @Override
     public Optional<List<Event>> execute() {
         var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);

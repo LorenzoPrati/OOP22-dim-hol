@@ -19,8 +19,8 @@ public abstract class AbstractAction implements Action {
      */
     private static final int DIVISOR = 2;
     private Entity player;
-    protected int aggroRay;
-    protected int waitingTime;
+    protected int aggroRay = Integer.MAX_VALUE;
+    protected int waitingTime = 0;
     protected Vector2D playerCentralPos;
     protected Vector2D enemyCentralPos;
     protected Entity enemy;
@@ -30,7 +30,6 @@ public abstract class AbstractAction implements Action {
     protected PositionComponent playerPos;
     protected BodyComponent playerBody;
     private AiComponent ai;
-
 
     /**
      * {@inheritDoc}
