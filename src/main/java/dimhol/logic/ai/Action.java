@@ -1,6 +1,5 @@
 package dimhol.logic.ai;
 
-import dimhol.entity.Entity;
 import dimhol.events.Event;
 
 import java.util.List;
@@ -12,21 +11,15 @@ import java.util.Optional;
 public interface Action {
 
     /**
-     *
-     * @param entity .
-     * @return true if the action is actionable.
+     * This method check if an action is executable.
+     * @return boolean
      */
-    boolean canExecute(Entity entity);
+    boolean canExecute();
 
     /**
-     *
-     * @return new entities that enemy could create.
+     * This method executes an Action.
+     * @return an optional list of events
      */
     Optional<List<Event>> execute();
 
-    /**
-     *
-     * @param player .
-     */
-    void setPlayer(Entity player);
 }

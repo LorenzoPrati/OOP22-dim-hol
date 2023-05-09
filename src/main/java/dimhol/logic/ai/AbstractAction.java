@@ -1,10 +1,12 @@
 package dimhol.logic.ai;
 
+import dimhol.components.AiComponent;
 import dimhol.components.BodyComponent;
 import dimhol.components.PositionComponent;
-import dimhol.entity.factories.AttackFactory;
 import dimhol.entity.Entity;
+import dimhol.entity.factories.AttackFactory;
 import dimhol.events.Event;
+import dimhol.logic.collision.BodyShape;
 import org.locationtech.jts.math.Vector2D;
 
 import java.util.List;
@@ -12,49 +14,66 @@ import java.util.Optional;
 
 public abstract class AbstractAction implements Action {
 
+    /**
+     * Divisor = 2 is util to have half of a body's width and height.
+     */
+    private static final int DIVISOR = 2;
     private Entity player;
-    protected double aggroRay;
-    protected int waitTime;
+    protected int aggroRay = Integer.MAX_VALUE;
+    protected int waitingTime = 0;
     protected Vector2D playerCentralPos;
     protected Vector2D enemyCentralPos;
-    protected Entity entity;
+    protected Entity enemy;
     protected AttackFactory attackFactory = new AttackFactory();
-    protected PositionComponent entityPos;
-    protected BodyComponent entityBody;
+    protected PositionComponent enemyPos;
+    protected BodyComponent enemyBody;
     protected PositionComponent playerPos;
+    protected BodyComponent playerBody;
+    private AiComponent ai;
 
-    public AbstractAction(int aggroRay, int waitTime) {
-        this.aggroRay = aggroRay;
-        this.waitTime = waitTime;
+    /**
+     * {@inheritDoc}
+     * @return
+     */
+    public boolean canExecute() {
+        return playerCentralPos.distance(enemyCentralPos) <= aggroRay
+                && (ai.getCurrentTime() - ai.getPrevTime()) >= waitingTime;
     }
 
-    public AbstractAction(int aggroRay) {
-        this.aggroRay = aggroRay;
-    }
-
-    public boolean canExecute(Entity entity) {
-        this.entity = entity;
-        playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
-        var playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
-        entityPos = (PositionComponent) entity.getComponent(PositionComponent.class);
-        entityBody = (BodyComponent) entity.getComponent(BodyComponent.class);
-
-        playerCentralPos = MathUtilities.getCentralPosition(playerPos.getPos(), playerBody.getBodyShape());
-        enemyCentralPos = MathUtilities.getCentralPosition(entityPos.getPos(), entityBody.getBodyShape());
-
-        return MathUtilities.getDistance(playerCentralPos, enemyCentralPos) <= aggroRay;
-    }
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     public abstract Optional<List<Event>> execute();
 
     public void setPlayer(Entity player) {
         this.player = player;
+        playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
+        playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
+        playerCentralPos = getCentralPosition(playerPos.getPos(), playerBody.getBodyShape());
+    }
+
+    public void setEnemy(Entity enemy) {
+        this.enemy = enemy;
+        enemyPos = (PositionComponent) this.enemy.getComponent(PositionComponent.class);
+        enemyBody = (BodyComponent) this.enemy.getComponent(BodyComponent.class);
+        enemyCentralPos = getCentralPosition(enemyPos.getPos(), enemyBody.getBodyShape());
+        ai = (AiComponent) enemy.getComponent(AiComponent.class);
     }
 
     public Entity getPlayer() {
         return player;
     }
 
-    public int getAggro(AbstractAction action) {
-        return (int) this.aggroRay;
+    /**
+     * This method returns an entity's central position.
+     * @param entityPos entity position (top-left point)
+     * @param entityBody entity body
+     * @return central position
+     */
+    private Vector2D getCentralPosition(Vector2D entityPos, BodyShape entityBody) {
+        return new Vector2D(entityPos.getX() + (entityBody.getBoundingWidth() / DIVISOR),
+                entityPos.getY() + (entityBody.getBoundingHeight() / DIVISOR));
     }
+
 }

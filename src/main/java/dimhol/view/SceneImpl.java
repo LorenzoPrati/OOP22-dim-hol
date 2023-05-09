@@ -94,7 +94,7 @@ public class SceneImpl implements Scene{
 
     @Override
     public void render() {
-        this.scenePanel.paintImmediately(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());;
+        this.scenePanel.paintImmediately(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
     }
 
     @Override
