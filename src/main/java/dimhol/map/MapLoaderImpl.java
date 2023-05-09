@@ -19,13 +19,13 @@ import java.util.List;
  * The class is responsible for parsing an XML file and loading a map from it.
  */
 public class MapLoaderImpl implements MapLoad {
-    private int width;
-    private int height;
-    private int tileWidth;
-    private int tileHeight;
-    private List<Tile[][]> mapTileLayers;
-    NodeList layerNodeList;
-    Element layerElement;
+    private final int width;
+    private final int height;
+    private final int tileWidth;
+    private final int tileHeight;
+    private final List<Tile[][]> mapTileLayers;
+    private final NodeList layerNodeList;
+    private final Element layerElement;
 
     /**
      * Constructor for LoadMapImpl that loads a map from an XML file.
@@ -71,7 +71,7 @@ public class MapLoaderImpl implements MapLoad {
         }
     }
 
-    private Tile[][] getTileMatrix(Node item) {
+    private Tile[][] getTileMatrix(final Node item) {
         Element layerElement = (Element) item.getChildNodes();
         NodeList propertyNodes = layerElement.getElementsByTagName("property");
         Element dataElement = (Element) layerElement.getElementsByTagName("data").item(0);
