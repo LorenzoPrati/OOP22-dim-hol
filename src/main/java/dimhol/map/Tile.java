@@ -29,6 +29,12 @@ public class Tile {
     public boolean isWalkable() {
         return walkable;
     }
+
+    /**
+     * Returns the tile set ID.
+     *
+     * @return tileSetID the number of the identifier.
+     */
     public int getTileSetId() {
         return tileSetId;
     }
