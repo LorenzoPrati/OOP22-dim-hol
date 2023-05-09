@@ -11,7 +11,13 @@ public class TileMap {
      * @param tilemap a 2D array of Tiles representing the map.
      */
     public  TileMap(final Tile[][] tilemap) {
-        this.tilemap = tilemap;
+        int width = tilemap.length;
+        int height = tilemap[0].length;
+        Tile[][] copy = new Tile[width][height];
+        for (int i = 0; i < width; i++) {
+            System.arraycopy(tilemap[i], 0, copy[i], 0 ,height);
+        }
+        this.tilemap = copy;
     }
 
     /**
