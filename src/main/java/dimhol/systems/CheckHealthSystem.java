@@ -17,12 +17,12 @@ public class CheckHealthSystem extends AbstractSystem {
      *
      * @param w     the world
      */
-    public CheckHealthSystem(WorldImpl w) {
+    public CheckHealthSystem(final WorldImpl w) {
         super(w, HealthComponent.class);
     }
 
     @Override
-    public void process(Entity e, double dt) {
+    public void process(final Entity e, final double dt) {
         HealthComponent hp = (HealthComponent) e.getComponent(HealthComponent.class);
         if (hp.getCurrentHealth() <= 0) {
             if (e.hasComponent(PlayerComponent.class)) {
