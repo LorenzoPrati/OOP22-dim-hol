@@ -4,26 +4,49 @@ package dimhol.logic.ai;
  * This builder class is util to build Action with variable parameters.
  * @param <T>
  */
-public class ActionBuilder<T extends AbstractAction> {
+public final class ActionBuilder<T extends AbstractAction> {
 
     private final T action;
 
-    public ActionBuilder(Class<T> action) throws InstantiationException, IllegalAccessException {
+    /**
+     * ActionBuilder constructor, set field a default values, and receive
+     * as parameter a .class that define what that ActionBuilder return.
+     * @param action is the .class
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    public ActionBuilder(final Class<T> action) throws InstantiationException, IllegalAccessException {
         this.action = action.newInstance();
         this.action.aggroRay = Integer.MAX_VALUE;
         this.action.waitingTime = 0;
     }
 
-    public ActionBuilder<? extends AbstractAction> addAggroRay(final int aggroRay) {
+    /**
+     * Add aggro ray parameter.
+     * @param aggroRay
+     * @return ActionBuilder<T>
+     */
+    public ActionBuilder<T> addAggroRay(final int aggroRay) {
         this.action.aggroRay = aggroRay;
         return this;
     }
 
-    public ActionBuilder<? extends AbstractAction> addWaitingTime(final int waitingTime) {
+    /**
+     * Add waiting time parameter.
+     * @param waitingTime
+     * @return ActionBuilder<T>
+     */
+    public ActionBuilder<T> addWaitingTime(final int waitingTime) {
         this.action.waitingTime = waitingTime;
         return this;
     }
 
+    /**
+     * Complete the building of a T type object.
+     * @return T object
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
     public T build() throws InstantiationException, IllegalAccessException {
         return action;
     }

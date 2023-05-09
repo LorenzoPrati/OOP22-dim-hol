@@ -13,7 +13,7 @@ import java.util.Optional;
 public class MeleeAttack extends AbstractAction {
 
     public boolean canExecute() {
-        super.aggroRay = AttackUtil.getMeleeRay(enemyPos.getPos(), enemyCentralPos, playerPos.getPos(), playerCentralPos);
+        aggroRay = AttackUtil.getMeleeRay(enemyPos.getPos(), enemyCentralPos, playerPos.getPos(), playerCentralPos);
         return super.canExecute();
     }
 

@@ -1,12 +1,20 @@
 package dimhol.entity.factories;
 
-import dimhol.components.*;
+import dimhol.components.PositionComponent;
+import dimhol.components.BodyComponent;
+import dimhol.components.AiComponent;
+import dimhol.components.MovementComponent;
+import dimhol.components.HealthComponent;
+import dimhol.components.AnimationComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.logic.ai.RoutineFactory;
 import dimhol.logic.collision.RectBodyShape;
 import org.locationtech.jts.math.Vector2D;
 
+/**
+ * It's an enemy factory.
+ */
 public class EnemyFactory extends AbstractFactory {
 
     /**

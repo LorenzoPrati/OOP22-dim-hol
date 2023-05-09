@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * It's a strategy that changes the direction of the AI towards the player.
  */
-public class FollowMovement extends AbstractAction {
+public final class FollowMovement extends AbstractAction {
 
     @Override
     public Optional<List<Event>> execute() {

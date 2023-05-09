@@ -11,13 +11,14 @@ import java.util.Optional;
 public interface Action {
 
     /**
-     * @return true if the action is actionable.
+     * This method check if an action is executable.
+     * @return boolean
      */
     boolean canExecute();
 
     /**
-     *
-     * @return new entities that enemy could create.
+     * This method executes an Action.
+     * @return an optional list of events
      */
     Optional<List<Event>> execute();
 

@@ -31,10 +31,20 @@ public abstract class AbstractAction implements Action {
     protected BodyComponent playerBody;
     private AiComponent ai;
 
+
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     public boolean canExecute() {
         return playerCentralPos.distance(enemyCentralPos) <= aggroRay
                 && (ai.getCurrentTime() - ai.getPrevTime()) >= waitingTime;
     }
+
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     public abstract Optional<List<Event>> execute();
 
     public void setPlayer(Entity player) {
