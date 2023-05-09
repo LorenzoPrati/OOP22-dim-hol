@@ -65,6 +65,12 @@ public abstract class AbstractAction implements Action {
         return player;
     }
 
+    /**
+     * This method returns an entity's central position.
+     * @param entityPos entity position (top-left point)
+     * @param entityBody entity body
+     * @return central position
+     */
     private Vector2D getCentralPosition(Vector2D entityPos, BodyShape entityBody) {
         return new Vector2D(entityPos.getX() + (entityBody.getBoundingWidth() / DIVISOR),
                 entityPos.getY() + (entityBody.getBoundingHeight() / DIVISOR));
