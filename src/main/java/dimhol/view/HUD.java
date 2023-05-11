@@ -17,7 +17,7 @@ public class HUD {
     private int offsetY;
     private Font font;
 
-    public HUD(ResourceLoader loader) {
+    public HUD(final ResourceLoader loader) {
         this.loader = loader;
     }
 

@@ -2,6 +2,7 @@ package dimhol.components;
 
 import dimhol.logic.ai.AbstractAction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,8 +11,6 @@ import java.util.List;
 public final class AiComponent implements Component {
 
     private final List<AbstractAction> actions;
-
-    private long prevMovTime = System.currentTimeMillis();
     private double currentTime;
     private double prevTime;
 
@@ -20,7 +19,7 @@ public final class AiComponent implements Component {
      * @param newRoutines are the enemy's behavior routines.
      */
     public AiComponent(final List<AbstractAction> newRoutines) {
-        this.actions = newRoutines;
+        this.actions = new ArrayList<>(newRoutines);
     }
 
     /**
@@ -28,7 +27,7 @@ public final class AiComponent implements Component {
      * @return enemy's routines.
      */
     public List<AbstractAction> getRoutine() {
-        return actions;
+        return new ArrayList<>(actions);
     }
 
     public void updateTime(double currentTime) {
