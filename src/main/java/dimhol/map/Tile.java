@@ -32,12 +32,4 @@ public class Tile {
     public int getTileSetId() {
         return tileSetId;
     }
-
-    public double getX(double x) {
-        return x;
-    }
-
-    public double getY(double y) {
-        return y;
-    }
 }
