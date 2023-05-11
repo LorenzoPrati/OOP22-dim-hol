@@ -11,15 +11,20 @@ import java.util.Optional;
  */
 public final class FollowMovement extends AbstractAction {
 
-    public FollowMovement(int followMovementAggro) {
-        this.aggroRay = followMovementAggro;
+    /**
+     * Follow Movement constructor.
+     * @param followMovementAggro is the radius of the area in which the presence of an enemy
+     *                            (the player) activates this strategy.
+     */
+    public FollowMovement(final int followMovementAggro) {
+        setAggroRay(followMovementAggro);
     }
 
     @Override
     public Optional<List<Event>> execute() {
-        var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
+        var movComp = (MovementComponent) getEnemy().getComponent(MovementComponent.class);
         movComp.setEnabled(true);
-        var newDirection = AttackUtil.getPlayerDirection(playerCentralPos, enemyCentralPos);
+        var newDirection = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         movComp.setDir(newDirection);
         return Optional.empty();
     }

@@ -15,15 +15,21 @@ import java.util.Optional;
  */
 public final class DistanceAttack extends AbstractAction {
 
-    public DistanceAttack(int distanceAttackAggro, int distanceAttackReloadTime) {
-        this.aggroRay = distanceAttackAggro;
-        this.waitingTime = distanceAttackReloadTime;
+    /**
+     * Distance Attack constructor.
+     * @param distanceAttackAggro is the radius of the area in which the presence
+     *                           of an enemy (the player) activates this strategy
+     * @param distanceAttackReloadTime is the cooldown time of the ranged attac
+     */
+    public DistanceAttack(final int distanceAttackAggro, final int distanceAttackReloadTime) {
+        setAggroRay(distanceAttackAggro);
+        setWaitingTime(distanceAttackReloadTime);
     }
 
     @Override
     public Optional<List<Event>> execute() {
-        var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
-        var aiComp = (AiComponent) enemy.getComponent(AiComponent.class);
+        var movComp = (MovementComponent) getEnemy().getComponent(MovementComponent.class);
+        var aiComp = (AiComponent) getEnemy().getComponent(AiComponent.class);
         movComp.setEnabled(false);
         aiComp.setPrevTime(aiComp.getCurrentTime());
         return distanceAttack();
@@ -31,11 +37,11 @@ public final class DistanceAttack extends AbstractAction {
 
     private Optional<List<Event>> distanceAttack() {
         List<Event> attacks = new ArrayList<>();
-        var dir = AttackUtil.getPlayerDirection(playerCentralPos, enemyCentralPos);
-        var pos = AttackUtil.getAttackPos(dir, enemyCentralPos, enemyBody.getBodyShape(),
+        var dir = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
+        var pos = AttackUtil.getAttackPos(dir, getEnemyCentralPos(), getEnemyBody().getBodyShape(),
                 AttackFactory.MELEE_WIDTH, AttackFactory.MELEE_HEIGHT);
 
-        attacks.add(new AddEntityEvent(attackFactory.createDistanceAttack(pos, dir, enemy)));
+        attacks.add(new AddEntityEvent(getAttackFactory().createDistanceAttack(pos, dir, getEnemy())));
         return Optional.of(attacks);
     }
 }
