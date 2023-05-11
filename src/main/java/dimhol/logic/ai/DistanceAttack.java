@@ -1,10 +1,8 @@
 package dimhol.logic.ai;
 
-import dimhol.components.AiComponent;
-import dimhol.components.MovementComponent;
+import dimhol.entity.factories.AttackFactory;
 import dimhol.events.AddEntityEvent;
 import dimhol.events.Event;
-import dimhol.entity.factories.AttackFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +17,7 @@ public final class DistanceAttack extends AbstractAction {
      * Distance Attack constructor.
      * @param distanceAttackAggro is the radius of the area in which the presence
      *                           of an enemy (the player) activates this strategy
-     * @param distanceAttackReloadTime is the cooldown time of the ranged attac
+     * @param distanceAttackReloadTime is the reload time of the ranged attack
      */
     public DistanceAttack(final int distanceAttackAggro, final int distanceAttackReloadTime) {
         setAggroRay(distanceAttackAggro);
@@ -28,10 +26,8 @@ public final class DistanceAttack extends AbstractAction {
 
     @Override
     public Optional<List<Event>> execute() {
-        var movComp = (MovementComponent) getEnemy().getComponent(MovementComponent.class);
-        var aiComp = (AiComponent) getEnemy().getComponent(AiComponent.class);
-        movComp.setEnabled(false);
-        aiComp.setPrevTime(aiComp.getCurrentTime());
+        getMovComp().setEnabled(false);
+        getAi().setPrevTime(getAi().getCurrentTime());
         return distanceAttack();
     }
 

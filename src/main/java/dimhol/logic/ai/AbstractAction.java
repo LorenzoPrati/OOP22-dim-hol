@@ -2,6 +2,7 @@ package dimhol.logic.ai;
 
 import dimhol.components.AiComponent;
 import dimhol.components.BodyComponent;
+import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.factories.AttackFactory;
@@ -18,7 +19,6 @@ public abstract class AbstractAction implements Action {
      * Divisor = 2 is util to have half of a body's width and height.
      */
     private static final int DIVISOR = 2;
-    private Entity player;
     private int aggroRay = Integer.MAX_VALUE;
     private int waitingTime = 0;
     private Vector2D playerCentralPos;
@@ -28,8 +28,8 @@ public abstract class AbstractAction implements Action {
     private PositionComponent enemyPos;
     private BodyComponent enemyBody;
     private PositionComponent playerPos;
-    private BodyComponent playerBody;
     private AiComponent ai;
+    private MovementComponent movComp;
 
     /**
      * {@inheritDoc}
@@ -51,12 +51,10 @@ public abstract class AbstractAction implements Action {
      * - player's position
      * - player's body
      * - player's central position
-     * @param player
      */
     public final void setPlayer(final Entity player) {
-        this.player = player;
         playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
-        playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
+        BodyComponent playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
         playerCentralPos = getCentralPosition(playerPos.getPos(), playerBody.getBodyShape());
     }
 
@@ -66,7 +64,6 @@ public abstract class AbstractAction implements Action {
      * - enemy's body
      * - enemy's central position
      * - enemy's AI
-     * @param enemy
      */
     public final void setEnemy(final Entity enemy) {
         this.enemy = enemy;
@@ -74,14 +71,7 @@ public abstract class AbstractAction implements Action {
         enemyBody = (BodyComponent) this.enemy.getComponent(BodyComponent.class);
         enemyCentralPos = getCentralPosition(enemyPos.getPos(), enemyBody.getBodyShape());
         ai = (AiComponent) enemy.getComponent(AiComponent.class);
-    }
-
-    /**
-     * Player getter.
-     * @return player
-     */
-    public final Entity getPlayer() {
-        return player;
+        movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
     }
 
     /**
@@ -95,47 +85,80 @@ public abstract class AbstractAction implements Action {
                 entityPos.getY() + (entityBody.getBoundingHeight() / DIVISOR));
     }
 
-    public int getAggroRay() {
-        return aggroRay;
-    }
-
-    public int getWaitingTime() {
-        return waitingTime;
-    }
-
-    public Vector2D getPlayerCentralPos() {
+    /**
+     * Player's central position getter.
+     */
+    protected Vector2D getPlayerCentralPos() {
         return playerCentralPos;
     }
 
-    public Vector2D getEnemyCentralPos() {
+    /**
+     * Enemy' central position getter.
+     */
+    protected Vector2D getEnemyCentralPos() {
         return enemyCentralPos;
     }
 
-    public Entity getEnemy() {
-        return enemy;
-    }
-
-    public AttackFactory getAttackFactory() {
+    /**
+     * Attack Factory getter.
+     */
+    protected final AttackFactory getAttackFactory() {
         return attackFactory;
     }
 
-    public PositionComponent getEnemyPos() {
+    /**
+     * Enemy position getter.
+     */
+    protected final PositionComponent getEnemyPos() {
         return enemyPos;
     }
 
-    public BodyComponent getEnemyBody() {
+    /**
+     * Enemy body getter.
+     */
+    protected final BodyComponent getEnemyBody() {
         return enemyBody;
     }
 
-    public PositionComponent getPlayerPos() {
+    /**
+     * Player position getter.
+     */
+    protected final PositionComponent getPlayerPos() {
         return playerPos;
     }
 
-    public void setAggroRay(int aggroRay) {
+    /**
+     * Aggro ray setter.
+     */
+    protected final void setAggroRay(final int aggroRay) {
         this.aggroRay = aggroRay;
     }
 
-    public void setWaitingTime(int waitingTime) {
+    /**
+     * Waiting time setter.
+     */
+    protected final void setWaitingTime(final int waitingTime) {
         this.waitingTime = waitingTime;
+    }
+
+    /**
+     * Enemy's AI getter.
+     */
+    protected final AiComponent getAi() {
+        return ai;
+    }
+
+    /**
+     * Enemy's movement component getter.
+     */
+    protected final MovementComponent getMovComp() {
+        return movComp;
+    }
+
+    /**
+     * Enemy getter.
+     */
+    protected Entity getEnemy() {
+        return enemy;
     }
 }

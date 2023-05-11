@@ -1,7 +1,5 @@
 package dimhol.logic.ai;
 
-import dimhol.components.AiComponent;
-import dimhol.components.MovementComponent;
 import dimhol.entity.factories.AttackFactory;
 import dimhol.events.AddEntityEvent;
 import dimhol.events.Event;
@@ -29,11 +27,8 @@ public final class MeleeAttack extends AbstractAction {
 
     @Override
     public Optional<List<Event>> execute() {
-        System.out.println("melee...");
-        var movComp = (MovementComponent) getEnemy().getComponent(MovementComponent.class);
-        var aiComp = (AiComponent) getEnemy().getComponent(AiComponent.class);
-        movComp.setEnabled(false);
-        aiComp.setPrevTime(aiComp.getCurrentTime());
+        getMovComp().setEnabled(false);
+        getAi().setPrevTime(getAi().getCurrentTime());
         return meleeAttack();
     }
 

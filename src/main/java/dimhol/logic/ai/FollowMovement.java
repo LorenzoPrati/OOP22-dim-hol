@@ -1,6 +1,5 @@
 package dimhol.logic.ai;
 
-import dimhol.components.MovementComponent;
 import dimhol.events.Event;
 
 import java.util.List;
@@ -22,10 +21,9 @@ public final class FollowMovement extends AbstractAction {
 
     @Override
     public Optional<List<Event>> execute() {
-        var movComp = (MovementComponent) getEnemy().getComponent(MovementComponent.class);
-        movComp.setEnabled(true);
+        getMovComp().setEnabled(true);
         var newDirection = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
-        movComp.setDir(newDirection);
+        getMovComp().setDir(newDirection);
         return Optional.empty();
     }
 }

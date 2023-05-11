@@ -1,8 +1,6 @@
 package dimhol.logic.ai;
 
-import dimhol.components.AiComponent;
 import dimhol.events.Event;
-import dimhol.components.MovementComponent;
 import org.locationtech.jts.math.Vector2D;
 
 import java.util.List;
@@ -24,13 +22,11 @@ public final class RandomMovement extends AbstractAction {
 
     @Override
     public Optional<List<Event>> execute() {
-        var movComp = (MovementComponent) getEnemy().getComponent(MovementComponent.class);
-        movComp.setEnabled(true);
-        var aiComp = (AiComponent) getEnemy().getComponent(AiComponent.class);
+        getMovComp().setEnabled(true);
         Vector2D[] directions = {new Vector2D(0, 1), new Vector2D(0, -1), new Vector2D(1, 0), new Vector2D(-1, 0)};
         int randDirIndex = new Random().nextInt(directions.length);
-        aiComp.setPrevTime(aiComp.getCurrentTime());
-        movComp.setDir(directions[randDirIndex]);
+        getAi().setPrevTime(getAi().getCurrentTime());
+        getMovComp().setDir(directions[randDirIndex]);
         return Optional.empty();
     }
 
