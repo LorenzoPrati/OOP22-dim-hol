@@ -2,7 +2,7 @@ package dimhol.core;
 
 import dimhol.view.InputListener;
 import dimhol.view.MainWindow;
-import dimhol.view.PauseExampleScreen;
+import dimhol.view.PauseScreen;
 import dimhol.view.ResultScreen;
 
 /**
@@ -59,7 +59,7 @@ public final class Engine {
      */
     public void stopGame() {
         this.pause = true;
-        this.window.changePanel(new PauseExampleScreen(this));
+        this.window.changePanel(new PauseScreen(this));
     }
 
     /**
