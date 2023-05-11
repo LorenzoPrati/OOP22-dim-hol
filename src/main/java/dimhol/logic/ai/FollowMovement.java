@@ -6,20 +6,21 @@ import dimhol.events.Event;
 import java.util.List;
 import java.util.Optional;
 
-public class FollowMovement extends AbstractAction {
+/**
+ * It's a strategy that changes the direction of the AI towards the player.
+ */
+public final class FollowMovement extends AbstractAction {
 
-    public FollowMovement(int aggroRay) {
-        super(aggroRay);
+    public FollowMovement(int followMovementAggro) {
+        this.aggroRay = followMovementAggro;
     }
 
     @Override
     public Optional<List<Event>> execute() {
-        var movComp = (MovementComponent) entity.getComponent(MovementComponent.class);
+        var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
         movComp.setEnabled(true);
-
         var newDirection = AttackUtil.getPlayerDirection(playerCentralPos, enemyCentralPos);
         movComp.setDir(newDirection);
-
         return Optional.empty();
     }
 }

@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Abstract Factory.
+ */
 public abstract class AbstractFactory {
 
     protected final Map<String, Map<String, ArrayList<Integer>>> map = new HashMap<>();
