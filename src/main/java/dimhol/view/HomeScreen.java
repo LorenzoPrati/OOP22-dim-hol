@@ -1,41 +1,22 @@
 package dimhol.view;
 
 import dimhol.core.Engine;
-
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
-public class HomeScreen extends JPanel {
-    private final Engine engine;
-    private ImageIcon bg;
+public class HomeScreen extends AbstractScreen {
 
-    public HomeScreen(final Engine engine) {
-        this.engine = engine;
-        this.bg = new ImageIcon("src/main/resources/asset/bg/mainMenu.png");
-        final JButton startButton = new JButton("P L A Y");
-        final JButton exitButton = new JButton("Q U I T");
-        final JButton optionsButton = new JButton("O P T I O N S");
-        final JPanel centerPanel = new JPanel();
-        List<JButton> buttons = new LinkedList<>();
-        ImageIcon icon = new ImageIcon("src/main/resources/asset/bg/dimension holiday.png");ImageIcon ghostIcon = new ImageIcon("src/res/bg/ghost.gif");
-        JLabel gameName = new JLabel(icon);
-        Font f = new Font("Helvetica", Font.BOLD, 20);
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        buttons.add(startButton);
-        buttons.add(optionsButton);
-        buttons.add(exitButton);
-        
-        setBorder(new EmptyBorder(10, 10, 10, 10));
-        this.setLayout(new GridBagLayout());
-       
+    public HomeScreen(Engine engine) {
+        super(engine);
+        this.background = new ImageIcon("src/main/resources/asset/bg/mainMenu.png");
+        this.title = new JLabel(new ImageIcon("src/main/resources/asset/bg/dimension holiday.png"));
+        final JButton startButton = new JButton("PLAY");
+        final JButton exitButton = new JButton("QUIT");
+        final JButton optionsButton = new JButton("OPTIONS");
+        List<JButton> buttons = List.of(startButton,optionsButton,exitButton);
         startButton.addActionListener(e -> {
             engine.newGame();
         });
@@ -45,32 +26,21 @@ public class HomeScreen extends JPanel {
         optionsButton.addActionListener(e ->{
             engine.getWindow().changePanel(new OptionScreen(engine));
         });
-
         for(var button: buttons){
-            button.setFont(f);
+            button.setFont(this.font);
             button.setForeground(new Color(102,0,153));
         }
-        
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.anchor = GridBagConstraints.NORTH;
-
-    
-        this.add(gameName,gbc);
-
+        this.add(this.title,gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-
         centerPanel.setLayout(new GridBagLayout());
         centerPanel.add(startButton, gbc);
         centerPanel.add(optionsButton, gbc);
         centerPanel.add(exitButton, gbc);
-
         gbc.weighty = 1;
-        this.add(centerPanel); 
+        this.add(centerPanel);
     }
-    @Override
-    protected void paintComponent(Graphics g){
-        super.paintComponent(g);
-        g.drawImage(bg.getImage(), 0 , 0, this.getWidth(), this.getHeight(), null);
-    }
+    
 }
