@@ -15,55 +15,55 @@ import java.util.stream.IntStream;
  */
 public class MapCollisionSystem extends AbstractSystem {
 
-    private TileMap tileMap;
+    private final TileMap tileMap;
 
     /**
      * Constructs a MapCollisionSystem with the specified World instance.
      * @param world The world instance this system is associated.
      */
-    public MapCollisionSystem(WorldImpl world) {
+    public MapCollisionSystem(final WorldImpl world) {
         super(world, PositionComponent.class, BodyComponent.class, MovementComponent.class);
         tileMap = world.getScene().getMapLoader().getTileMap();
     }
 
     /**
-     * Checks if the entity represented by the specified components 
-     * @param position
-     * @param body
-     * @param movement
+     * Checks if the entity represented by the specified components.
+     * @param pos The position component of the entity.
+     * @param body The body component of the entity.
+     * @param movement The movement component of the entity.
      * @return true if the entity collides with the game map, false otherwise.
      */
-    private boolean checkMapCollision(PositionComponent position, BodyComponent body, MovementComponent movement) {
-        double x1 = position.getPos().getX();
-        double y1 = position.getPos().getY();
+    private boolean checkMapCollision(final PositionComponent pos, final BodyComponent body, final MovementComponent movement) {
+        var x1 = pos.getPos().getX();
+        var y1 = pos.getPos().getY();
+        var x2 = x1 + body.getBodyShape().getBoundingWidth();
+        var y2 = y1 + body.getBodyShape().getBoundingHeight();
 
-        //Moving UP:
-        if (movement.getDir().equals(new Vector2D(0, -1))) {
-            var x2 = x1 + body.getBodyShape().getBoundingWidth();
-            var y = position.getPos().getY();
-            return IntStream.iterate((int) x1, i -> i <= x2, i -> i + 1).anyMatch(i -> !tileMap.getTile((int) Math.floor(y), (int) Math.floor(i)).isWalkable());
-        } //Moving DOWN:
-        else if (movement.getDir().equals(new Vector2D(0, 1))) {
-            var x2 = x1 + body.getBodyShape().getBoundingWidth();
-            var y = position.getPos().getY() + body.getBodyShape().getBoundingHeight();
-            return IntStream.iterate((int) x1, i -> i <= x2, i -> i + 1).anyMatch(i -> !tileMap.getTile((int) Math.floor(y), (int) Math.floor(i)).isWalkable());
-        } //Moving LEFT:
-        else if (movement.getDir().equals(new Vector2D(-1, 0))) {
-            var x = position.getPos().getX();
-            var y2 = y1 + body.getBodyShape().getBoundingHeight();
-            return IntStream.iterate((int) y1, i -> i <= y2, i -> i + 1).anyMatch(i -> !tileMap.getTile((int) Math.floor(i), (int) Math.floor(x)).isWalkable());
-        } //Moving RIGHT:
-        else if (movement.getDir().equals(new Vector2D(1, 0))) {
-            var x = position.getPos().getX() + body.getBodyShape().getBoundingWidth();
-            var y2 = y1 + body.getBodyShape().getBoundingHeight();
-            return IntStream.iterate((int) y1, i -> i <= y2, i -> i + 1).anyMatch(i -> !tileMap.getTile((int) Math.floor(i), (int) Math.floor(x)).isWalkable());
+        int startY = (int) Math.floor(y1);
+        int endY = (int) Math.floor(y2);
+        int startX = (int) Math.floor(x1);
+        int endX = (int) Math.floor(x2);
+
+        if (movement.getDir().equals(new Vector2D(0, -1))) { // Moving UP
+            return IntStream.rangeClosed(startX, endX)
+                    .anyMatch(i -> !tileMap.getTile(startY, i).isWalkable());
+        } else if (movement.getDir().equals(new Vector2D(0, 1))) { // Moving DOWN
+            return IntStream.rangeClosed(startX, endX)
+                    .anyMatch(i -> !tileMap.getTile(endY, i).isWalkable());
+        } else if (movement.getDir().equals(new Vector2D(-1, 0))) { // Moving LEFT
+            return IntStream.rangeClosed(startY, endY)
+                    .anyMatch(i -> !tileMap.getTile(i, startX).isWalkable());
+        } else if (movement.getDir().equals(new Vector2D(1, 0))) { // Moving RIGHT
+            return IntStream.rangeClosed(startY, endY)
+                    .anyMatch(i -> !tileMap.getTile(i, endX).isWalkable());
         }
-          //Invalid direction
+
+        // Invalid direction
         return false;
     }
 
     @Override
-    public void process(Entity entity, double deltaTime) {
+    public void process(final Entity entity, final double deltaTime) {
         var position = (PositionComponent) entity.getComponent(PositionComponent.class);
         var body = (BodyComponent) entity.getComponent(BodyComponent.class);
         var movement = (MovementComponent) entity.getComponent(MovementComponent.class);
