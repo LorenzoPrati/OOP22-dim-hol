@@ -7,7 +7,7 @@ import dimhol.components.AiComponent;
 import dimhol.components.PlayerComponent;
 
 /**
- * A system for manage enemies.
+ * A system to manage enemies.
  */
 public final class AiSystem extends AbstractSystem {
 
