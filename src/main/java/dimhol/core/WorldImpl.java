@@ -42,6 +42,10 @@ public class WorldImpl implements World {
 
         this.entities.add(gf.createPlayer(15, 15));
         this.entities.add(ef.createZombie(3, 4));
+        this.entities.add(ef.createZombie(7, 4));
+        this.entities.add(ef.createZombie(9, 2));
+        this.entities.add(ef.createZombie(7, 9));
+        this.entities.add(ef.createZombie(6, 6));
 
         /*
         Add systems
