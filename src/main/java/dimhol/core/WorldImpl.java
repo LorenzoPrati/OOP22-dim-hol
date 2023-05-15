@@ -12,6 +12,7 @@ import dimhol.view.Scene;
 import dimhol.view.SceneImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,8 +20,8 @@ import java.util.List;
  */
 public class WorldImpl implements World {
 
-    private Scene scene;
-    private Input input;
+    private final Scene scene;
+    private final Input input;
     private final List<Entity> entities;
     private final List<GameSystem> systems;
     private final List<WorldEvent> events;
@@ -41,8 +42,8 @@ public class WorldImpl implements World {
         var gf = new GenericFactory();
         var ef = new EnemyFactory();
 
-        this.entities.add(gf.createPlayer(15, 15));
-        this.entities.add(ef.createZombie(3, 4));
+        this.entities.add(gf.createPlayer(15,15));
+        this.entities.add(ef.createZombie(3,4));
         this.entities.add(new ItemFactory().createCoin(17,18));
         this.entities.add(new ItemFactory().createCoin(12,18));
         this.entities.add(new ItemFactory().createCoin(10,16));
@@ -63,7 +64,7 @@ public class WorldImpl implements World {
         this.systems.add(new CombatSystem(this));
         this.systems.add(new CheckHealthSystem(this));
         this.systems.add(new ClearCollisionSystem(this));
-        this.systems.add( new AnimationSystem(this));
+        this.systems.add(new AnimationSystem(this));
         this.systems.add(new RenderSystem(this));
 
     }
@@ -72,8 +73,8 @@ public class WorldImpl implements World {
      * {@inheritDoc}
      */
     @Override
-    public void update(double dt) {
-        this.systems.forEach(s -> s.update(dt));
+    public void update(final double deltaTime) {
+        this.systems.forEach(s -> s.update(deltaTime));
         this.handleEvents();
         this.scene.render();
     }
@@ -83,23 +84,23 @@ public class WorldImpl implements World {
      */
     @Override
     public List<Entity> getEntities() {
-        return this.entities;
+        return Collections.unmodifiableList(this.entities);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addEntity(final Entity e) {
-        this.entities.add(e);
+    public void addEntity(final Entity entity) {
+        this.entities.add(entity);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void removeEntity(final Entity e) {
-       this.entities.remove(e);
+    public void removeEntity(final Entity entity) {
+       this.entities.remove(entity);
     }
 
     /**
@@ -138,16 +139,24 @@ public class WorldImpl implements World {
      * {@inheritDoc}
      */
     @Override
-    public boolean getResult() {
+    public boolean isWin() {
         return false;
+        //todo
     }
 
-    public void notifyEvent(final WorldEvent ev) {
-        this.events.add(ev);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyEvent(final WorldEvent event) {
+        this.events.add(event);
     }
 
+    /**
+     * Handles the events present in the event queue.
+     */
     private void handleEvents() {
-        this.events.stream().forEach(ev -> ev.execute(this));
+        this.events.forEach(ev -> ev.execute(this));
         this.events.clear();
     }
 }

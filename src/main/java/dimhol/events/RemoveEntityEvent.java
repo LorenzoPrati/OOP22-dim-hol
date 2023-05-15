@@ -29,7 +29,7 @@ public class RemoveEntityEvent implements WorldEvent {
      */
     @Override
     public void execute(final World world) {
-        var toRemove = world.getEntities().stream()
+        final var toRemove = world.getEntities().stream()
                 .filter(e -> e.getId().equals(this.id))
                 .findAny();
         toRemove.ifPresent(world::removeEntity);
