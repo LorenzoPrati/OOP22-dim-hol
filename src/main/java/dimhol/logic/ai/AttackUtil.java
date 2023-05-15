@@ -7,8 +7,13 @@ import org.locationtech.jts.math.Vector2D;
 /**
  * This class has util method for AI actions.
  */
-public class AttackUtil {
+class AttackUtil {
 
+    /**
+     * This value indicates the angle that forms the viewing quadrant of the entity
+     * (in this case, referring to a view divided into 4 visual zones).
+     */
+    public static final int ANGLE = 45;
     /**
      * This method is used to know in which direction the player is located.
      * @param playerCentralPos is the central player position
@@ -22,7 +27,7 @@ public class AttackUtil {
         double x2 = enemyCentralPos.getX();
         double m = (y1 - y2) / (x1 - x2);
         var angle = (Math.atan(m) * 180 / Math.PI);
-        if (angle > -45 && angle < 45) {
+        if (angle > -ANGLE && angle < ANGLE) {
             if (playerCentralPos.getX() > enemyCentralPos.getX()) {
                 // right
                 return new Vector2D(1, 0);
@@ -88,7 +93,8 @@ public class AttackUtil {
      * @param playerCentralPos player's central position
      * @return the ray's value
      */
-    public static int getMeleeRay(final Vector2D entityPos, final Vector2D enemyCentralPos, final Vector2D playerPos, final Vector2D playerCentralPos) {
-        return (int) (entityPos.distance(enemyCentralPos) + playerPos.distance(playerCentralPos));
+    public static double getMeleeRay(final Vector2D entityPos, final Vector2D enemyCentralPos,
+                                  final Vector2D playerPos, final Vector2D playerCentralPos) {
+        return entityPos.distance(enemyCentralPos) + playerPos.distance(playerCentralPos);
     }
 }

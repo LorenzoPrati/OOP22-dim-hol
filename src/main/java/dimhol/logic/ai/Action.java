@@ -1,5 +1,6 @@
 package dimhol.logic.ai;
 
+import dimhol.entity.Entity;
 import dimhol.events.Event;
 
 import java.util.List;
@@ -22,4 +23,7 @@ public interface Action {
      */
     Optional<List<Event>> execute();
 
+    void setPlayer(Entity player);
+
+    void setEnemy(Entity enemy);
 }

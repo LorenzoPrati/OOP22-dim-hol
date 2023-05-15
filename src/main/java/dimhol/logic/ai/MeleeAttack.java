@@ -1,7 +1,5 @@
 package dimhol.logic.ai;
 
-import dimhol.components.AiComponent;
-import dimhol.components.MovementComponent;
 import dimhol.entity.factories.AttackFactory;
 import dimhol.events.AddEntityEvent;
 import dimhol.events.Event;
@@ -10,33 +8,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MeleeAttack extends AbstractAction {
+public final class MeleeAttack extends AbstractAction {
 
-    public MeleeAttack(int meleeReloadTime) {
-        this.waitingTime = meleeReloadTime;
+    public MeleeAttack(double meleeReloadTime) {
+        setWaitingTime(meleeReloadTime);
     }
 
+    /**
+     * This method, which extends that of the abstract class, is responsible for resetting the aggroRay field so that
+     * the enemy activates its close-range attack strategy with a near certainty of hitting it.
+     * @return if the strategy is executable
+     */
     public boolean canExecute() {
-        aggroRay = AttackUtil.getMeleeRay(enemyPos.getPos(), enemyCentralPos, playerPos.getPos(), playerCentralPos);
+        var newAggro = AttackUtil.getMeleeRay(getEnemyPos().getPos(), getEnemyCentralPos(),
+                getPlayerPos().getPos(), getPlayerCentralPos());
+        setAggroRay(newAggro);
         return super.canExecute();
     }
 
     @Override
     public Optional<List<Event>> execute() {
-        System.out.println("melee...");
-        var movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
-        var aiComp = (AiComponent) enemy.getComponent(AiComponent.class);
-        movComp.setEnabled(false);
-        aiComp.setPrevTime(aiComp.getCurrentTime());
-        return meleeAttack();
+        System.out.println("execute");
+        getMovComp().setEnabled(false);
+        if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
+            getAi().setPrevTime(getAi().getCurrentTime());
+            return meleeAttack();
+        }
+        return Optional.empty();
     }
 
     private Optional<List<Event>> meleeAttack() {
         List<Event> attacks = new ArrayList<>();
-        var dir = AttackUtil.getPlayerDirection(playerCentralPos, enemyCentralPos);
-        var pos = AttackUtil.getAttackPos(dir, enemyCentralPos, enemyBody.getBodyShape(), AttackFactory.MELEE_WIDTH, AttackFactory.MELEE_HEIGHT);
+        var dir = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
+        var pos = AttackUtil.getAttackPos(dir, getEnemyCentralPos(), getEnemyBody().getBodyShape(),
+                AttackFactory.MELEE_WIDTH, AttackFactory.MELEE_HEIGHT);
 
-        attacks.add(new AddEntityEvent(attackFactory.createMeleeAttack(pos, enemy)));
+        attacks.add(new AddEntityEvent(getAttackFactory().createMeleeAttack(pos, getEnemy())));
         return Optional.of(attacks);
     }
 }
