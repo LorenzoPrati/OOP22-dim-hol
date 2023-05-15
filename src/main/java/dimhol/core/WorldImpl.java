@@ -44,6 +44,7 @@ public class WorldImpl implements World {
 
         this.entities.add(gf.createPlayer(15,15));
         this.entities.add(ef.createZombie(3,4));
+        this.entities.add(ef.createShooter(12,9));
         this.entities.add(new ItemFactory().createCoin(17,18));
         this.entities.add(new ItemFactory().createCoin(12,18));
         this.entities.add(new ItemFactory().createCoin(10,16));
