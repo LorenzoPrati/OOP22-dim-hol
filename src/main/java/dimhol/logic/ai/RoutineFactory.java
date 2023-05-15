@@ -11,24 +11,24 @@ public class RoutineFactory {
     /**
      * Distance attack aggro.
      */
-    public static final int DISTANCE_ATTACK_AGGRO = 8;
+    public static final double DISTANCE_ATTACK_AGGRO = 8;
     /**
      * Distance attack reload time.
      */
-    public static final int DISTANCE_ATTACK_RELOAD_TIME = 2;
+    public static final double DISTANCE_ATTACK_RELOAD_TIME = 2;
     /**
      * Random movement changes direction time.
      */
-    public static final int CHANGE_DIRECTION_TIME = 1;
+    public static final double CHANGE_DIRECTION_TIME = 1;
     /**
      * Melee reload time.
      */
-    public static final int MELEE_RELOAD_TIME = 2;
+    public static final double MELEE_RELOAD_TIME = 2;
 
     /**
      * Follow movement aggro.
      */
-    public static final int FOLLOW_MOVEMENT_AGGRO = 5;
+    public static final double FOLLOW_MOVEMENT_AGGRO = 5;
 
     /**
      *

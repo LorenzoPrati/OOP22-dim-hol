@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public final class MeleeAttack extends AbstractAction {
 
-    public MeleeAttack(int meleeReloadTime) {
+    public MeleeAttack(double meleeReloadTime) {
         setWaitingTime(meleeReloadTime);
     }
 
@@ -20,16 +20,21 @@ public final class MeleeAttack extends AbstractAction {
      * @return if the strategy is executable
      */
     public boolean canExecute() {
-        setAggroRay(AttackUtil.getMeleeRay(getEnemyPos().getPos(), getEnemyCentralPos(),
-                getPlayerPos().getPos(), getPlayerCentralPos()));
+        var newAggro = AttackUtil.getMeleeRay(getEnemyPos().getPos(), getEnemyCentralPos(),
+                getPlayerPos().getPos(), getPlayerCentralPos());
+        setAggroRay(newAggro);
         return super.canExecute();
     }
 
     @Override
     public Optional<List<Event>> execute() {
+        System.out.println("execute");
         getMovComp().setEnabled(false);
-        getAi().setPrevTime(getAi().getCurrentTime());
-        return meleeAttack();
+        if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
+            getAi().setPrevTime(getAi().getCurrentTime());
+            return meleeAttack();
+        }
+        return Optional.empty();
     }
 
     private Optional<List<Event>> meleeAttack() {

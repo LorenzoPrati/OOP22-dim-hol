@@ -15,7 +15,7 @@ public final class FollowMovement extends AbstractAction {
      * @param followMovementAggro is the radius of the area in which the presence of an enemy
      *                            (the player) activates this strategy.
      */
-    public FollowMovement(final int followMovementAggro) {
+    public FollowMovement(final double followMovementAggro) {
         setAggroRay(followMovementAggro);
     }
 

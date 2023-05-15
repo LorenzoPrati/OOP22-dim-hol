@@ -19,7 +19,7 @@ public final class DistanceAttack extends AbstractAction {
      *                           of an enemy (the player) activates this strategy
      * @param distanceAttackReloadTime is the reload time of the ranged attack
      */
-    public DistanceAttack(final int distanceAttackAggro, final int distanceAttackReloadTime) {
+    public DistanceAttack(final double distanceAttackAggro, final double distanceAttackReloadTime) {
         setAggroRay(distanceAttackAggro);
         setWaitingTime(distanceAttackReloadTime);
     }

@@ -19,8 +19,8 @@ public abstract class AbstractAction implements Action {
      * Divisor = 2 is util to have half of a body's width and height.
      */
     private static final int DIVISOR = 2;
-    private int aggroRay = Integer.MAX_VALUE;
-    private int waitingTime = 0;
+    private double aggroRay = Double.MAX_VALUE;
+    private double waitingTime = 0;
     private Vector2D playerCentralPos;
     private Vector2D enemyCentralPos;
     private Entity enemy;
@@ -36,8 +36,7 @@ public abstract class AbstractAction implements Action {
      * @return
      */
     public boolean canExecute() {
-        return playerCentralPos.distance(enemyCentralPos) <= aggroRay
-                && (ai.getCurrentTime() - ai.getPrevTime()) >= waitingTime;
+        return playerCentralPos.distance(enemyCentralPos) <= aggroRay;
     }
 
     /**
@@ -130,14 +129,14 @@ public abstract class AbstractAction implements Action {
     /**
      * Aggro ray setter.
      */
-    protected final void setAggroRay(final int aggroRay) {
+    protected final void setAggroRay(final double aggroRay) {
         this.aggroRay = aggroRay;
     }
 
     /**
      * Waiting time setter.
      */
-    protected final void setWaitingTime(final int waitingTime) {
+    protected final void setWaitingTime(final double waitingTime) {
         this.waitingTime = waitingTime;
     }
 
@@ -160,5 +159,9 @@ public abstract class AbstractAction implements Action {
      */
     protected Entity getEnemy() {
         return enemy;
+    }
+
+    public double getWaitingTime() {
+        return waitingTime;
     }
 }

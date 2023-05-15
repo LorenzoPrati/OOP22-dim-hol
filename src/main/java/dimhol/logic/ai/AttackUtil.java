@@ -93,8 +93,8 @@ class AttackUtil {
      * @param playerCentralPos player's central position
      * @return the ray's value
      */
-    public static int getMeleeRay(final Vector2D entityPos, final Vector2D enemyCentralPos,
+    public static double getMeleeRay(final Vector2D entityPos, final Vector2D enemyCentralPos,
                                   final Vector2D playerPos, final Vector2D playerCentralPos) {
-        return (int) (entityPos.distance(enemyCentralPos) + playerPos.distance(playerCentralPos));
+        return entityPos.distance(enemyCentralPos) + playerPos.distance(playerCentralPos);
     }
 }
