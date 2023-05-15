@@ -2,12 +2,14 @@ package dimhol.entity;
 
 import dimhol.components.Component;
 
+import java.util.UUID;
+
 /**
  * A simple builder for entities.
  */
 public class EntityBuilder {
 
-    private final Entity e = new EntityImpl();
+    private final Entity e = new EntityImpl(UUID.randomUUID());
 
     /**
      * Adds the given component to the builder.

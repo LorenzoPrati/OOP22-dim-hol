@@ -2,7 +2,7 @@ package dimhol.systems;
 
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
-import dimhol.events.Event;
+import dimhol.events.WorldEvent;
 import dimhol.components.AiComponent;
 import dimhol.components.PlayerComponent;
 
@@ -36,7 +36,7 @@ public final class AiSystem extends AbstractSystem {
             if (action.canExecute()) {
                 var routineExecute = action.execute();
                 if (routineExecute.isPresent()) {
-                    for (Event event : routineExecute.get()) {
+                    for (WorldEvent event : routineExecute.get()) {
                         this.world.notifyEvent(event);
                     }
                 }

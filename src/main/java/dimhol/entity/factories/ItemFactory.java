@@ -8,8 +8,8 @@ import dimhol.logic.collision.RectBodyShape;
 import dimhol.logic.effects.*;
 
 public class ItemFactory extends AbstractFactory {
-    private static final double W = 3;
-    private static final double H = 3;
+    private static final double W = 1;
+    private static final double H = 1;
     private CoinPocketEffectFactory coinEffectFactory = new CoinPocketEffectFactoryImpl();
     private HealthEffectFactory healthEffectFactory = new HealthEffectsFactoryImpl();
 

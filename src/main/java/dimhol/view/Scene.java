@@ -1,7 +1,6 @@
 package dimhol.view;
 
 import javax.swing.JPanel;
-
 import dimhol.map.MapLoad;
 
 /**
