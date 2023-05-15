@@ -1,11 +1,9 @@
 package dimhol.core;
 
-import dimhol.entity.factories.EnemyFactory;
-import dimhol.entity.factories.GenericFactory;
 import dimhol.entity.Entity;
 import dimhol.events.Event;
-
-import dimhol.systems.MapCollisionSystem;
+import dimhol.gamelevels.LevelManager;
+import dimhol.map.MapLoaderImpl;
 import dimhol.systems.*;
 import dimhol.view.Scene;
 import dimhol.view.SceneImpl;
@@ -24,6 +22,8 @@ public class WorldImpl implements World {
     private final List<GameSystem> systems;
     private final List<Event> events;
     private boolean gameOver;
+    private final MapLoaderImpl mapLoader = new MapLoaderImpl("src/main/resources/config/map/nice-map.xml");
+    private final LevelManager levelManager = new LevelManager(this, mapLoader);
 
     /**
      * Constructs a world.
@@ -37,11 +37,7 @@ public class WorldImpl implements World {
         /*
         generate first level
          */
-        var gf = new GenericFactory();
-        var ef = new EnemyFactory();
-
-        this.entities.add(gf.createPlayer(15, 15));
-        this.entities.add(ef.createZombie(3, 4));
+        this.levelManager.changeLevel();
 
         /*
         Add systems
@@ -110,6 +106,14 @@ public class WorldImpl implements World {
     @Override
     public Scene getScene() {
         return this.scene;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final MapLoaderImpl getMapLoader() {
+        return this.mapLoader;
     }
 
     /**
