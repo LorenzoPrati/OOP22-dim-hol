@@ -93,7 +93,7 @@ public final class Engine {
             this.waitForNextFrame(curr);
             prev = curr;
         }
-        this.window.changePanel(new ResultScreen(this, world.getResult()));
+        this.window.changePanel(new ResultScreen(this, world.isWin()));
     }
 
     private void waitForNextFrame(final long time) {

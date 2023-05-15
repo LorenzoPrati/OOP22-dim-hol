@@ -22,7 +22,7 @@ public class CombatSystem extends AbstractSystem {
         CollisionComponent entityCollision = (CollisionComponent) e.getComponent(CollisionComponent.class);
 
         for (var entity : entityCollision.getCollided()) {
-            for (var effect : entityAttack.getEffets()) {
+            for (var effect : entityAttack.getEffects()) {
                 if (effect.canUseOn(entity)){
                     effect.applyOn(entity);
                     world.notifyEvent(new RemoveEntityEvent(e));

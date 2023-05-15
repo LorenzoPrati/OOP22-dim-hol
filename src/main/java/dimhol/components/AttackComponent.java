@@ -3,23 +3,24 @@ package dimhol.components;
 import dimhol.entity.Entity;
 import dimhol.logic.effects.Effect;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AttackComponent implements Component {
+public final class AttackComponent implements Component {
 
     private final Entity entity;
-    private final List<Effect> effets;
+    private final List<Effect> effects;
 
-    public AttackComponent(final Entity entity, List<Effect> effets) {
+    public AttackComponent(final Entity entity, final List<Effect> effects) {
         this.entity = entity;
-        this.effets = effets;
+        this.effects = new ArrayList<>(effects);
     }
 
     public Entity getEntity() {
         return entity;
     }
 
-    public List<Effect> getEffets() {
-        return effets;
+    public List<Effect> getEffects() {
+        return new ArrayList<>(effects);
     }
 }

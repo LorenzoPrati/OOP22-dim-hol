@@ -2,7 +2,7 @@ package dimhol.logic.player;
 
 import dimhol.core.Input;
 import dimhol.entity.Entity;
-import dimhol.events.Event;
+import dimhol.events.WorldEvent;
 import dimhol.components.InteractorComponent;
 import dimhol.components.MovementComponent;
 
@@ -22,7 +22,7 @@ public class InteractState extends AbstractPlayerState {
     }
 
     @Override
-    public List<Event> execute(Input input, Entity e) {
+    public List<WorldEvent> execute(Input input, Entity e) {
         var mov = (MovementComponent) e.getComponent(MovementComponent.class);
         var interactor = (InteractorComponent) e.getComponent(InteractorComponent.class);
         interactor.setInteracting(true);
