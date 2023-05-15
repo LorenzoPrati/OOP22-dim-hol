@@ -10,7 +10,7 @@ import java.awt.*;
 public class SceneImpl implements Scene{
     //private JFrame frame;
     private List<GraphicInfo> renderList = new ArrayList<>();
-    private MapLoad mapLoader = new MapLoaderImpl("src/main/resources/config/map/nice-map.xml");
+    private MapLoader mapLoader = new MapLoaderImpl("src/main/resources/config/map/nice-map.xml");
     private ResourceLoader loader = new ResourceLoader(mapLoader.getTileWidth(), mapLoader.getTileHeight());
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private HUD hud = new HUD(loader);
@@ -103,7 +103,7 @@ public class SceneImpl implements Scene{
     }
 
     @Override
-    public MapLoad getMapLoader() {
+    public MapLoader getMapLoader() {
         return this.mapLoader;
     }
 
