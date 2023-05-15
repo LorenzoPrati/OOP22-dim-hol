@@ -2,7 +2,7 @@ package dimhol.view;
 
 import javax.swing.JPanel;
 
-import dimhol.map.MapLoad;
+import dimhol.map.MapLoader;
 
 /**
  * Models the scene where all the entities will be drawn. 
@@ -34,7 +34,7 @@ public interface Scene {
     /**
      * @return the MapLoad.
      */
-    MapLoad getMapLoader();
+    MapLoader getMapLoader();
 
     /**
      * 
