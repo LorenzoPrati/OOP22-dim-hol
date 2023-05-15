@@ -36,7 +36,7 @@ import java.util.Set;
         this.map = mapLoader.getTileMap();
         EnemyFactory enemyFactory = new EnemyFactory();
         GenericFactory genericFactory = new GenericFactory();
-        normalRoomStrategy = new NormalRoomStrategy(this.world, this.mapLoader, this, genericFactory, enemyFactory);
+        normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory);
     }
 
     /**
