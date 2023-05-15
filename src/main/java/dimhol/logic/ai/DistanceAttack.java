@@ -2,7 +2,7 @@ package dimhol.logic.ai;
 
 import dimhol.entity.factories.AttackFactory;
 import dimhol.events.AddEntityEvent;
-import dimhol.events.Event;
+import dimhol.events.WorldEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +25,14 @@ public final class DistanceAttack extends AbstractAction {
     }
 
     @Override
-    public Optional<List<Event>> execute() {
+    public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(false);
         getAi().setPrevTime(getAi().getCurrentTime());
         return distanceAttack();
     }
 
-    private Optional<List<Event>> distanceAttack() {
-        List<Event> attacks = new ArrayList<>();
+    private Optional<List<WorldEvent>> distanceAttack() {
+        List<WorldEvent> attacks = new ArrayList<>();
         var dir = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         var pos = AttackUtil.getAttackPos(dir, getEnemyCentralPos(), getEnemyBody().getBodyShape(),
                 AttackFactory.MELEE_WIDTH, AttackFactory.MELEE_HEIGHT);

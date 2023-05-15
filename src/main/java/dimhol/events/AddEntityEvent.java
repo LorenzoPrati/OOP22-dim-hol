@@ -2,20 +2,32 @@ package dimhol.events;
 
 import dimhol.core.World;
 import dimhol.entity.Entity;
+import dimhol.entity.EntityImpl;
 
 /**
- * This event gets called when a new entity needs to be added to the world.
+ * Gets called when a new entity needs to be added to the world.
  */
-public class AddEntityEvent implements Event {
+public final class AddEntityEvent implements WorldEvent {
 
-    private final Entity e;
+    /**
+     * The entity to add.
+     */
+    private final Entity entity;
 
-    public AddEntityEvent(final Entity e) {
-        this.e = e;
+    /**
+     * Constructs an AddEntityEvent.
+     *
+     * @param entity the entity that needs to be added to the world
+     */
+    public AddEntityEvent(final Entity entity) {
+        this.entity = new EntityImpl(entity);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void execute(World w) {
-        w.addEntity(e);
+    public void execute(final World world) {
+        world.addEntity(entity);
     }
 }

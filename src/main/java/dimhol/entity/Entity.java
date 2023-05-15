@@ -3,11 +3,14 @@ package dimhol.entity;
 import dimhol.components.Component;
 
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Represents an entity i.e. an object meant to hold references to {@link Component}.
  */
 public interface Entity {
+
+    UUID getId();
 
     /**
      * Adds a component to the entity.
@@ -44,4 +47,6 @@ public interface Entity {
      * @return true if the entity belongs to @param
      */
     boolean hasFamily(Set<Class<? extends Component>> family);
+
+    Set<Component> getComponents();
 }

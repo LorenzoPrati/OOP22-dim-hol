@@ -6,7 +6,7 @@ import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.factories.AttackFactory;
-import dimhol.events.Event;
+import dimhol.events.WorldEvent;
 import dimhol.logic.collision.BodyShape;
 import org.locationtech.jts.math.Vector2D;
 
@@ -43,7 +43,7 @@ public abstract class AbstractAction implements Action {
      * {@inheritDoc}
      * @return
      */
-    public abstract Optional<List<Event>> execute();
+    public abstract Optional<List<WorldEvent>> execute();
 
     /**
      * Player setter, thi method set also:
