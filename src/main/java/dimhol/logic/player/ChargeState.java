@@ -2,7 +2,7 @@ package dimhol.logic.player;
 
 import dimhol.core.Input;
 import dimhol.entity.Entity;
-import dimhol.events.Event;
+import dimhol.events.WorldEvent;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +31,7 @@ public class ChargeState extends AbstractPlayerState {
     }
 
     @Override
-    public List<Event> execute(Input input, Entity e) {
+    public List<WorldEvent> execute(Input input, Entity e) {
         if (counter >= 3) {
             counter = 0;
             ready = true;

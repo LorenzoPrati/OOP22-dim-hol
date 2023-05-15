@@ -1,7 +1,7 @@
 package dimhol.logic.ai;
 
 import dimhol.entity.Entity;
-import dimhol.events.Event;
+import dimhol.events.WorldEvent;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +21,7 @@ public interface Action {
      * This method executes an Action.
      * @return an optional list of events
      */
-    Optional<List<Event>> execute();
+    Optional<List<WorldEvent>> execute();
 
     void setPlayer(Entity player);
 
