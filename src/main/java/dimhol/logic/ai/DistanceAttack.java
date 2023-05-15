@@ -27,8 +27,11 @@ public final class DistanceAttack extends AbstractAction {
     @Override
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(false);
-        getAi().setPrevTime(getAi().getCurrentTime());
-        return distanceAttack();
+        if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
+            getAi().setPrevTime(getAi().getCurrentTime());
+            return distanceAttack();
+        }
+        return Optional.empty();
     }
 
     private Optional<List<WorldEvent>> distanceAttack() {
