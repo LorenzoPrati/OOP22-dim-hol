@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Abstract Factory.
@@ -16,6 +17,7 @@ import java.util.Map;
 public abstract class AbstractFactory {
 
     protected final Map<String, Map<String, ArrayList<Integer>>> map = new HashMap<>();
+    private UUID id;
 
     /**
      * Abstract Factory contains a map of game entity graphics.

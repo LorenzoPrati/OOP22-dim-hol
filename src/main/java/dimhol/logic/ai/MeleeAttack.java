@@ -2,7 +2,7 @@ package dimhol.logic.ai;
 
 import dimhol.entity.factories.AttackFactory;
 import dimhol.events.AddEntityEvent;
-import dimhol.events.Event;
+import dimhol.events.WorldEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public final class MeleeAttack extends AbstractAction {
     }
 
     @Override
-    public Optional<List<Event>> execute() {
+    public Optional<List<WorldEvent>> execute() {
         System.out.println("execute");
         getMovComp().setEnabled(false);
         if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
@@ -37,8 +37,8 @@ public final class MeleeAttack extends AbstractAction {
         return Optional.empty();
     }
 
-    private Optional<List<Event>> meleeAttack() {
-        List<Event> attacks = new ArrayList<>();
+    private Optional<List<WorldEvent>> meleeAttack() {
+        List<WorldEvent> attacks = new ArrayList<>();
         var dir = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         var pos = AttackUtil.getAttackPos(dir, getEnemyCentralPos(), getEnemyBody().getBodyShape(),
                 AttackFactory.MELEE_WIDTH, AttackFactory.MELEE_HEIGHT);

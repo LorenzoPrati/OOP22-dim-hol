@@ -4,6 +4,7 @@ import dimhol.entity.Entity;
 import dimhol.view.Scene;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Models the world where the entities exist.

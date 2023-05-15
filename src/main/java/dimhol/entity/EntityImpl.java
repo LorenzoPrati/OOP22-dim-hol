@@ -2,14 +2,33 @@ package dimhol.entity;
 
 import dimhol.components.Component;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Implementation of Entity interface.
  */
 public final class EntityImpl implements Entity {
-    private final Set<Component> comps = new HashSet<>();
+
+    private final Set<Component> comps;
+    private final UUID id;
+
+    public EntityImpl(final Entity other) {
+        this.id = other.getId();
+        this.comps = new HashSet<>(other.getComponents());
+    }
+
+    public EntityImpl(final UUID id) {
+        this.id = id;
+        this.comps = new HashSet<>();
+    }
+
+    @Override
+    public UUID getId() {
+        return this.id;
+    }
 
     @Override
     public void addComponent(final Component comp) {
@@ -38,5 +57,10 @@ public final class EntityImpl implements Entity {
     public boolean hasFamily(final Set<Class<? extends Component>> family) {
         return this.comps.stream().filter(c -> family.contains(c.getClass()))
                 .count() == family.size();
+    }
+
+    @Override
+    public Set<Component> getComponents() {
+        return Collections.unmodifiableSet(this.comps);
     }
 }

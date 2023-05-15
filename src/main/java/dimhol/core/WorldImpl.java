@@ -3,7 +3,8 @@ package dimhol.core;
 import dimhol.entity.factories.EnemyFactory;
 import dimhol.entity.factories.GenericFactory;
 import dimhol.entity.Entity;
-import dimhol.events.Event;
+import dimhol.entity.factories.ItemFactory;
+import dimhol.events.WorldEvent;
 
 import dimhol.systems.MapCollisionSystem;
 import dimhol.systems.*;
@@ -22,7 +23,7 @@ public class WorldImpl implements World {
     private Input input;
     private final List<Entity> entities;
     private final List<GameSystem> systems;
-    private final List<Event> events;
+    private final List<WorldEvent> events;
     private boolean gameOver;
 
     /**
@@ -42,6 +43,11 @@ public class WorldImpl implements World {
 
         this.entities.add(gf.createPlayer(15, 15));
         this.entities.add(ef.createZombie(3, 4));
+        this.entities.add(new ItemFactory().createCoin(17,18));
+        this.entities.add(new ItemFactory().createCoin(12,18));
+        this.entities.add(new ItemFactory().createCoin(10,16));
+        this.entities.add(new ItemFactory().createCoin(17,18));
+        this.entities.add(new ItemFactory().createCoin(9,17));
 
         /*
         Add systems
@@ -93,7 +99,7 @@ public class WorldImpl implements World {
      */
     @Override
     public void removeEntity(final Entity e) {
-        this.entities.remove(e);
+       this.entities.remove(e);
     }
 
     /**
@@ -136,7 +142,7 @@ public class WorldImpl implements World {
         return false;
     }
 
-    public void notifyEvent(final Event ev) {
+    public void notifyEvent(final WorldEvent ev) {
         this.events.add(ev);
     }
 
