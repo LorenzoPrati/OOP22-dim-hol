@@ -1,6 +1,7 @@
 package dimhol.core;
 
 import dimhol.entity.Entity;
+import dimhol.map.MapLoaderImpl;
 import dimhol.view.Scene;
 
 import java.util.List;
@@ -49,6 +50,13 @@ public interface World {
      * @return the world scene.
      */
     Scene getScene();
+
+    /**
+     * Gets the logical representation of the map.
+     *
+     * @return the logical map.
+     */
+    MapLoaderImpl getMapLoader();
 
     /**
      * Checks if the game is over.
