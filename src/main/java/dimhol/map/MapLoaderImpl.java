@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * The class is responsible for parsing an XML file and loading a map from it.
  */
-public class MapLoaderImpl implements MapLoad {
+public class MapLoaderImpl implements MapLoader {
     private final int width;
     private final int height;
     private final int tileWidth;
@@ -100,32 +100,32 @@ public class MapLoaderImpl implements MapLoad {
     }
 
     @Override
-    public int getTileWidth() {
+    public final int getTileWidth() {
         return tileWidth;
     }
 
     @Override
-    public int getTileHeight() {
+    public final int getTileHeight() {
         return tileHeight;
     }
 
     @Override
-    public TileMap getTileMap() {
+    public final TileMap getTileMap() {
         return new TileMap(getMapTileLayers().get(0));
     }
 
     @Override
-    public int getWidth() {
+    public final int getWidth() {
         return width;
     }
 
     @Override
-    public  int getHeight() {
+    public  final int getHeight() {
         return height;
     }
 
     @Override
-    public List<Tile[][]> getMapTileLayers() {
+    public final List<Tile[][]> getMapTileLayers() {
         return new ArrayList<>(mapTileLayers);
     }
 }

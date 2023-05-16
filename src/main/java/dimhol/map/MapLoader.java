@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * The LoadMap interface represents a contract for classes that can load and provide information about a tile map.
  */
-public interface MapLoad {
+public interface MapLoader {
     /**
      * Returns the width of the tile map.
      * @return the width of the tile map

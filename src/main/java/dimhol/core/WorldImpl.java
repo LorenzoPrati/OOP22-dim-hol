@@ -1,9 +1,6 @@
 package dimhol.core;
 
-import dimhol.entity.factories.EnemyFactory;
-import dimhol.entity.factories.GenericFactory;
 import dimhol.entity.Entity;
-import dimhol.entity.factories.ItemFactory;
 import dimhol.events.WorldEvent;
 
 import dimhol.systems.MapCollisionSystem;
@@ -36,20 +33,10 @@ public class WorldImpl implements World {
         this.events = new ArrayList<>();
         this.scene = new SceneImpl();
         this.input = new InputImpl();
+
         /*
         generate first level
          */
-        var gf = new GenericFactory();
-        var ef = new EnemyFactory();
-
-        this.entities.add(gf.createPlayer(15,15));
-        this.entities.add(ef.createZombie(3,4));
-        this.entities.add(ef.createShooter(12,9));
-        this.entities.add(new ItemFactory().createCoin(17,18));
-        this.entities.add(new ItemFactory().createCoin(12,18));
-        this.entities.add(new ItemFactory().createCoin(10,16));
-        this.entities.add(new ItemFactory().createCoin(17,18));
-        this.entities.add(new ItemFactory().createCoin(9,17));
 
         /*
         Add systems
