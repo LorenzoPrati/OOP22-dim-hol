@@ -12,6 +12,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -36,7 +37,7 @@ import java.util.Set;
         this.map = mapLoader.getTileMap();
         EnemyFactory enemyFactory = new EnemyFactory();
         GenericFactory genericFactory = new GenericFactory();
-        normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory);
+        normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, new Random());
     }
 
     /**
@@ -44,7 +45,7 @@ import java.util.Set;
      */
      public void changeLevel() {
         var player = savePlayer();
-        clearEntities();
+//        clearEntities();
         //changeMap(); assign a new map to -> Normal, Shop and Boss rooms.
         generateLevel(player);
     }
@@ -69,9 +70,9 @@ import java.util.Set;
     /**
      * Clears all entities in the game world level.
      */
-    private void clearEntities() {
-            world.getEntities().clear();
-    }
+//    private void clearEntities() {
+//        world.getEntities().clear();
+//    }
 
     /**
      * Retrieves the player entity from the game world.
