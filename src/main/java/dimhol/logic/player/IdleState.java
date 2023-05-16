@@ -1,33 +1,29 @@
 package dimhol.logic.player;
 
 import dimhol.core.Input;
-import dimhol.entity.Entity;
-import dimhol.events.WorldEvent;
-import dimhol.components.MovementComponent;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
-public class IdleState extends AbstractPlayerState {
+public class IdleState extends AbstractState {
 
-    public IdleState() {
-        super("idle");
+    @Override
+    public void setup() {
+        this.mov.setEnabled(false);
     }
 
     @Override
-    public Optional<PlayerState> transition(Input input) {
+    public Optional<State> transition(Input input) {
         if (input.isInteracting()) {
             return Optional.of(new InteractState());
         }
         if (input.isChargingFireball()) {
-            return Optional.of(new ChargeState());
+            return Optional.of(new ChargeFireballState());
         }
         if (input.isShooting()) {
             return Optional.of(new ShootState());
         }
         if (input.isSpecialMeele()) {
-            return Optional.of(new SwordAbilityState());
+            return Optional.of(new AreaAttackState());
         }
         if (input.isNormalMeele()) {
             return Optional.of(new SwordState());
@@ -39,18 +35,18 @@ public class IdleState extends AbstractPlayerState {
     }
 
     @Override
-    public List<WorldEvent> execute(Input input, Entity e) {
-        var mov = (MovementComponent) e.getComponent(MovementComponent.class);
-        return Collections.emptyList();
-    }
-
-    @Override
-    public void updateTime(double dt) {
+    public void execute(Input input) {
 
     }
 
-    @Override
-    public void exit(Entity e) {
 
+    @Override
+    public void exit() {
+
+    }
+
+    @Override
+    public void updateAnimation() {
+        this.setAnimationState("idle");
     }
 }

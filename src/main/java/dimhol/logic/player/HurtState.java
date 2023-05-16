@@ -4,34 +4,30 @@ import dimhol.core.Input;
 
 import java.util.Optional;
 
-public class SwordState extends AbstractState {
+public class HurtState extends AbstractState {
 
     @Override
-    public void setup() {
-
+    protected void setup() {
+        this.mov.setEnabled(false);
     }
 
     @Override
     public Optional<State> transition(Input input) {
-        if (input.isNormalMeele()) {
-            return Optional.empty();
-        }
         return Optional.of(new IdleState());
     }
 
     @Override
     public void execute(Input input) {
-        System.out.println("eseguo attacco melee");
+        System.out.println("hurt");
     }
-
 
     @Override
     public void exit() {
-
+        this.mov.setEnabled(true);
     }
 
     @Override
     public void updateAnimation() {
-        this.setAnimationState("normal");
+        this.setAnimationState("hurt");
     }
 }

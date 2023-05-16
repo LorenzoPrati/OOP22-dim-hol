@@ -1,42 +1,33 @@
 package dimhol.logic.player;
 
 import dimhol.core.Input;
-import dimhol.entity.Entity;
-import dimhol.events.WorldEvent;
-import dimhol.components.InteractorComponent;
-import dimhol.components.MovementComponent;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
-public class InteractState extends AbstractPlayerState {
+public class InteractState extends AbstractState{
 
-    public InteractState() {
-        super("interact");
+    @Override
+    protected void setup() {
+        this.interact.setInteracting(true);
     }
 
     @Override
-    public Optional<PlayerState> transition(Input input) {
+    public Optional<State> transition(Input input) {
         return Optional.of(new IdleState());
     }
 
     @Override
-    public List<WorldEvent> execute(Input input, Entity e) {
-        var mov = (MovementComponent) e.getComponent(MovementComponent.class);
-        var interactor = (InteractorComponent) e.getComponent(InteractorComponent.class);
-        interactor.setInteracting(true);
-        return Collections.emptyList();
-    }
-
-    @Override
-    public void updateTime(double dt) {
+    public void execute(Input input) {
 
     }
 
     @Override
-    public void exit(Entity e) {
-        var interactor = (InteractorComponent) e.getComponent(InteractorComponent.class);
-        interactor.setInteracting(false);
+    public void exit() {
+        this.interact.setInteracting(false);
+    }
+
+    @Override
+    public void updateAnimation() {
+        this.setAnimationState("interact");
     }
 }
