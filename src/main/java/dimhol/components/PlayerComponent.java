@@ -1,14 +1,14 @@
 package dimhol.components;
 
 import dimhol.logic.player.IdleState;
-import dimhol.logic.player.PlayerState;
+import dimhol.logic.player.State;
 
 /**
  * Holds data about the player.
  */
 public class PlayerComponent implements Component {
 
-    private PlayerState state;
+    private State state;
 
     private boolean blocked;
 
@@ -16,11 +16,11 @@ public class PlayerComponent implements Component {
         this.state = new IdleState();
     }
 
-    public PlayerState getState() {
+    public State getState() {
         return this.state;
     }
 
-    public void setState(final PlayerState state) {
+    public void setState(final State state) {
         this.state = state;
     }
 
