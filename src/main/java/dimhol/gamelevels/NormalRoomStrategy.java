@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * The strategy to generate a normal room in the game.
@@ -20,18 +21,20 @@ public class NormalRoomStrategy implements RoomStrategy {
     private final EnemyFactory enemyFactory;
     private final Random random;
 
-    private static final int ENEMY_DENSITY = 100;
+    private static final int ENEMY_DENSITY = 50;
+    private static final int MAX_ENEMIES = 10;
 
     /**
      * Constructs a NormalRoomStrategy.
      *
      * @param genericFactory The generic entity factory.
      * @param enemyFactory The enemy entity factory.
+     * @param random The random number generator.
      */
-    public NormalRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory) {
+    public NormalRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory, Random random) {
         this.genericFactory = genericFactory;
         this.enemyFactory = enemyFactory;
-        this.random = new Random();
+        this.random = random;
     }
 
     /**
@@ -47,44 +50,133 @@ public class NormalRoomStrategy implements RoomStrategy {
         List<Entity> entities = new ArrayList<>();
 
         //Place the player:
-        Entity player = genericFactory.createPlayer(getRandomTile(freeTiles).getLeft().doubleValue(),
-                getRandomTile(freeTiles).getRight().doubleValue());
-        placePlayer(player, freeTiles);
+        Entity player = createAndPlacePlayer(freeTiles);
         entities.add(player);
 
         //Place the enemies:
-        int numEnemies = (freeTiles.size() / ENEMY_DENSITY);
-        for (int i = 0; i < numEnemies; i++) {
-            Entity enemy = enemyFactory.createZombie(getRandomTile(freeTiles).getLeft().doubleValue(),
-                    getRandomTile(freeTiles).getRight().doubleValue());
-            placeEnemy(enemy, freeTiles);
-            entities.add(enemy);
-        }
+        int numEnemies = calculateNumEnemies(freeTiles.size());
+        generateZombies(numEnemies, entities, freeTiles);
+        generateShooters(numEnemies, entities, freeTiles);
+
+        //Place coins:
+
+
         return entities;
     }
 
     /**
-     * Places an enemy entity in a random free tile.
+     * Calculates the number of enemies to generate based on the number of free tiles.
      *
-     * @param entity The enemy entity to be placed.
-     * @param freeTiles The set of free tiles in the room.
+     * @param numFreeTiles The number of free tiles in the room.
+     * @return The number of enemies to generate.
      */
-    private void placeEnemy(final Entity entity, final Set<Pair<Integer, Integer>> freeTiles) {
-        var enemyPosition = (PositionComponent) entity.getComponent(PositionComponent.class);
-        var freeRandomTile = freeTiles.stream().toList().get(random.nextInt(freeTiles.size()));
-        enemyPosition.setPos(new Vector2D(freeRandomTile.getLeft(), freeRandomTile.getRight()));
+    private int calculateNumEnemies(final int numFreeTiles) {
+        int maxEnemies = Math.min(MAX_ENEMIES, numFreeTiles / ENEMY_DENSITY);
+        return random.nextInt(maxEnemies) + 1;
     }
 
     /**
-     * Places the player entity in a random free tile.
+     * Generates the specified number of zombie enemies and places them in the room.
      *
-     * @param entity The entity player to be placed.
-     * @param freeTiles The set of free tiles in the room.
+     * @param numZombies The number of zombies to generate.
+     * @param entities   The list of entities to add the generated zombies to.
+     * @param freeTiles  The set of available tiles where zombies can be placed.
      */
-    private void placePlayer(final Entity entity, final Set<Pair<Integer, Integer>> freeTiles) {
-        var playerPosition = (PositionComponent) entity.getComponent(PositionComponent.class);
-        var freeRandomTile = freeTiles.stream().toList().get(random.nextInt(freeTiles.size()));
-        playerPosition.setPos(new Vector2D(freeRandomTile.getLeft(), freeRandomTile.getRight()));
+    private void generateZombies(int numZombies, List<Entity> entities, Set<Pair<Integer, Integer>> freeTiles) {
+        IntStream.range(0, numZombies).mapToObj(i -> createZombie(freeTiles)).forEach(zombie -> {
+            placeEntity(zombie, freeTiles);
+            entities.add(zombie);
+        });
+    }
+
+    /**
+     * Generates the specified number of shooter enemies and places them in the room.
+     *
+     * @param numShooters The number of shooters to generate.
+     * @param entities    The list of entities to add the generated shooters to.
+     * @param freeTiles   The set of available tiles where shooters can be placed.
+     */
+    private void generateShooters(int numShooters, List<Entity> entities, Set<Pair<Integer, Integer>> freeTiles) {
+        IntStream.range(0, numShooters).mapToObj(i -> createShooter(freeTiles)).forEach(shooter -> {
+            placeEntity(shooter, freeTiles);
+            entities.add(shooter);
+        });
+    }
+
+//    /**
+//     * Generates the specified number of enemies and places them in the room.
+//     *
+//     * @param numEnemies The number of enemies to generate.
+//     * @param entities The list of entities to add the generated enemies to.
+//     * @param freeTiles The set of available tiles where enemies can be placed.
+//     */
+//    private void generateEnemies(final int numEnemies, final List<Entity> entities, final Set<Pair<Integer, Integer>> freeTiles) {
+//        IntStream.rangeClosed(0, numEnemies).forEach(i -> {
+//            Entity zombie = createZombie(freeTiles);
+//            Entity shooter = createShooter(freeTiles);
+//            placeEntity(zombie, freeTiles);
+//            placeEntity(shooter, freeTiles);
+//            entities.add(zombie);
+//            entities.add(shooter);
+//        });
+//    }
+
+    /**
+     * Creates a zombie enemy entity and assigns it a random position from the set of free tiles.
+     *
+     * @param freeTiles The set of available tiles where the enemy can be placed.
+     * @return The created zombie enemy entity.
+     */
+    private Entity createZombie(Set<Pair<Integer, Integer>> freeTiles) {
+        return enemyFactory.createZombie(getRandomTile(freeTiles).getLeft().doubleValue(),
+                getRandomTile(freeTiles).getRight().doubleValue());
+    }
+
+    /**
+     * Creates a shooter enemy entity and assigns it a random position from the set of free tiles.
+     *
+     * @param freeTiles The set of available tiles where the enemy can be placed.
+     * @return The created shooter enemy entity.
+     */
+    private Entity createShooter(Set<Pair<Integer, Integer>> freeTiles) {
+        return enemyFactory.createShooter(getRandomTile(freeTiles).getLeft().doubleValue(),
+                getRandomTile(freeTiles).getRight().doubleValue());
+    }
+
+    /**
+     * Creates a player entity and assigns it a random position from the set of free tiles.
+     *
+     * @param freeTiles The set of available tiles where the player can be placed.
+     * @return The created player entity.
+     */
+    private Entity createAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles) {
+        Entity player = createPlayer(freeTiles);
+        placeEntity(player, freeTiles);
+        return player;
+    }
+
+    /**
+     * Creates a player entity with a random position from the set of free tiles.
+     *
+     * @param freeTiles The set of available tiles where the player can be placed.
+     * @return The created player entity.
+     */
+    private Entity createPlayer(Set<Pair<Integer, Integer>> freeTiles) {
+        return genericFactory.createPlayer(getRandomTile(freeTiles).getLeft().doubleValue(),
+                getRandomTile(freeTiles).getRight().doubleValue());
+    }
+
+    /**
+     * Assigns a random position from the set of free tiles to the specified entity.
+     *
+     * @param entity The entity to place.
+     * @param freeTiles The set of available tiles where the entity can be placed.
+     */
+    private void placeEntity(final Entity entity, final Set<Pair<Integer, Integer>> freeTiles) {
+        PositionComponent positionComponent = (PositionComponent) entity.getComponent(PositionComponent.class);
+        Pair<Integer, Integer> randomTile = getRandomTile(freeTiles);
+        Vector2D position = new Vector2D(randomTile.getLeft(), randomTile.getRight());
+        positionComponent.setPos(position);
     }
 
     /**
@@ -92,9 +184,17 @@ public class NormalRoomStrategy implements RoomStrategy {
      *
      * @param freeTiles The set of free tiles in the room.
      * @return A random tile represented as a Pair of coordinates.
+     * @throws IllegalStateException if no free tiles are available.
      */
     private Pair<Integer, Integer> getRandomTile(final Set<Pair<Integer, Integer>> freeTiles) {
-        List<Pair<Integer, Integer>> tiles = new ArrayList<>(freeTiles);
-        return tiles.get(random.nextInt(tiles.size()));
+        int randomIndex = random.nextInt(freeTiles.size());
+        int currentIndex = 0;
+        for (Pair<Integer, Integer> tile : freeTiles) {
+            if (currentIndex == randomIndex) {
+                return tile;
+            }
+            currentIndex++;
+        }
+        throw new IllegalStateException("No free tiles available");
     }
 }
