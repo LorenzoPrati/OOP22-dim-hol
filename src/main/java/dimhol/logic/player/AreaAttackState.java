@@ -4,26 +4,24 @@ import dimhol.core.Input;
 
 import java.util.Optional;
 
-public class SwordState extends AbstractState {
+public class AreaAttackState extends AbstractState {
 
     @Override
-    public void setup() {
+    protected void setup() {
 
     }
 
     @Override
     public Optional<State> transition(Input input) {
-        if (input.isNormalMeele()) {
-            return Optional.empty();
-        }
-        return Optional.of(new IdleState());
+        return input.isSpecialMeele()
+                ? Optional.empty()
+                : Optional.of(new IdleState());
     }
 
     @Override
     public void execute(Input input) {
-        System.out.println("eseguo attacco melee");
+        System.out.println("earth cleaver");
     }
-
 
     @Override
     public void exit() {
@@ -32,6 +30,6 @@ public class SwordState extends AbstractState {
 
     @Override
     public void updateAnimation() {
-        this.setAnimationState("normal");
+        this.setAnimationState("special");
     }
 }

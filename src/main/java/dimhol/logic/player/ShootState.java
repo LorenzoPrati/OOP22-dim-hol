@@ -1,44 +1,36 @@
 package dimhol.logic.player;
 
 import dimhol.core.Input;
-import dimhol.entity.Entity;
-import dimhol.events.WorldEvent;
-import dimhol.components.MovementComponent;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
-public class ShootState extends AbstractPlayerState{
+public class ShootState extends AbstractState {
 
-    public ShootState() {
-        super("shoot");
+    @Override
+    protected void setup() {
+
     }
 
     @Override
-    public Optional<PlayerState> transition(Input input) {
+    public Optional<State> transition(Input input) {
         return input.isShooting()
                 ? Optional.empty()
                 : Optional.of(new IdleState());
     }
 
+
     @Override
-    public List<WorldEvent> execute(Input input, Entity e) {
-        var mov = (MovementComponent) e.getComponent(MovementComponent.class);
-        if (input.isShooting()) {
-//            return List.of(new AddEntityEvent(new GenericFactory()
-//                    .createPlayerMeleeAttack(mov.getDir().getX(), mov.getDir().getY(), e)));
-        }
-        return Collections.emptyList();
+    public void execute(Input input) {
+        System.out.println("sparo proiettile");
     }
 
     @Override
-    public void updateTime(double dt) {
+    public void exit() {
 
     }
 
     @Override
-    public void exit(Entity e) {
-
+    public void updateAnimation() {
+        this.setAnimationState("shoot");
     }
 }

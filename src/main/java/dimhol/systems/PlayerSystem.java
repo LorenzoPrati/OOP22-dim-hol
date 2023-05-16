@@ -31,21 +31,18 @@ public class PlayerSystem extends AbstractSystem {
     public void process(final Entity e, double dt) {
         var input = this.world.getInput();
         var player = (PlayerComponent) e.getComponent(PlayerComponent.class);
-        var mov = (MovementComponent) e.getComponent(MovementComponent.class);
-        var animation = (AnimationComponent) e.getComponent(AnimationComponent.class);
 
-        player.getState().updateTime(dt);
-        if (animation.isBlocking() && !animation.isCompleted()) {
-            animation.setState(animation.getState());
+        var currState = player.getState();
+        currState.update(dt, e);
+        if (currState.canTransition()) {
+            var newState = currState.transition(input);
+            newState.ifPresent(s -> {
+                currState.exit();
+                player.setState(s);
+                s.entry(e);
+            });
+            player.getState().execute(input);
         }
-        else {
-            var newState = player.getState().transition(input);
-            if (newState.isPresent()) {
-                player.getState().exit(e);
-                player.setState(newState.get());
-            }
-            player.getState().execute(input, e).forEach(this.world::notifyEvent);
-            animation.setState(player.getState().getDesc() + " " + DirectionUtil.getStringFromVec(mov.getDir()));
-        }
+        player.getState().updateAnimation();
     }
 }

@@ -4,7 +4,9 @@ import dimhol.core.Input;
 
 import java.util.Optional;
 
-public class FireballState extends AbstractState {
+public class ChargeFireballState extends AbstractState {
+
+    private double waitTime = 3;
 
     @Override
     protected void setup() {
@@ -13,15 +15,18 @@ public class FireballState extends AbstractState {
 
     @Override
     public Optional<State> transition(Input input) {
-        return input.isChargingFireball()
+        return this.time >= this.waitTime
+            ? input.isChargingFireball()
+                ? Optional.empty()
+                : Optional.of(new FireballState())
+            : input.isChargingFireball()
                 ? Optional.empty()
                 : Optional.of(new IdleState());
-
     }
 
     @Override
     public void execute(Input input) {
-        System.out.println("sparo");
+
     }
 
     @Override
@@ -29,9 +34,8 @@ public class FireballState extends AbstractState {
 
     }
 
-
     @Override
     public void updateAnimation() {
-        this.setAnimationState("shoot");
+        this.setAnimationState("charge");
     }
 }
