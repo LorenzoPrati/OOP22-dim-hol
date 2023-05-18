@@ -2,7 +2,7 @@ package dimhol.core;
 
 import dimhol.entity.Entity;
 import dimhol.events.WorldEvent;
-import dimhol.map.MapLoader;
+import dimhol.gamelevels.LevelManager;
 import dimhol.view.Scene;
 
 import java.util.List;
@@ -82,5 +82,5 @@ public interface World {
      */
     void notifyEvent(WorldEvent event);
 
-    MapLoader getMapLoader();
+    LevelManager getLevelManager();
 }
