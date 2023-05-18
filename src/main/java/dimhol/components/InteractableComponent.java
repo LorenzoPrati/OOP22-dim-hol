@@ -3,14 +3,20 @@ package dimhol.components;
 import dimhol.logic.effects.Effect;
 
 public class InteractableComponent implements Component {
+    private Effect effect;
+    private boolean isPickable;
 
-    private final Effect effect;
-
-    public InteractableComponent(final Effect eff) {
-        this.effect = eff;
+    public InteractableComponent(Effect effect, boolean isPickable) {
+        this.effect = effect;
+        this.isPickable = isPickable;
     }
 
     public Effect getEffect() {
-        return this.effect;
+        return effect;
     }
+    
+    public boolean isPickable() {
+        return this.isPickable;
+    }
+
 }

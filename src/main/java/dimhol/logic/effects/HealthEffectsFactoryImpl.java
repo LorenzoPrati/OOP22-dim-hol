@@ -1,21 +1,20 @@
 package dimhol.logic.effects;
 
 import dimhol.components.AiComponent;
+import dimhol.components.Component;
 import dimhol.components.HealthComponent;
 import dimhol.components.PlayerComponent;
 import dimhol.entity.Entity;
 
 public class HealthEffectsFactoryImpl implements HealthEffectFactory {
    
-    private Effect createHealthEffect(final int amount,final boolean increase, 
-        final boolean isPowerUp, final boolean toUseOnPlayer){
+    private Effect createHealthEffect(final Class<? extends Component> componentToCheck,final int amount,final boolean increase, 
+        final boolean isPowerUp){
         return new Effect(){
             @Override
             public boolean canUseOn(Entity entity) {
-                return toUseOnPlayer? entity.hasComponent(PlayerComponent.class) : 
-                    entity.hasComponent(AiComponent.class);
+                return entity.hasComponent(componentToCheck);
             }
-
             @Override
             public void applyOn(Entity entity) {
                 var health = (HealthComponent)entity.getComponent(HealthComponent.class);
@@ -35,22 +34,22 @@ public class HealthEffectsFactoryImpl implements HealthEffectFactory {
     }
 
     @Override
-    public Effect IncreasePlayerCurrentHealthEffect(final int amount){
-        return createHealthEffect(amount, true, false, true);
+    public Effect increasePlayerCurrentHealthEffect(final int amount){
+        return createHealthEffect(PlayerComponent.class,amount, true, false);
     }
 
     @Override
-    public Effect IncreasePlayerMaxHealthEffect(final int amount){
-        return createHealthEffect(amount, true, true, true);
+    public Effect increasePlayerMaxHealthEffect(final int amount){
+        return createHealthEffect(PlayerComponent.class,amount, true, true);
     }
 
     @Override
-    public Effect DecreasePlayerCurrentHealthEffect(final int amout){
-        return createHealthEffect(amout, false, false, true);
+    public Effect decreasePlayerCurrentHealthEffect(final int amount){
+        return createHealthEffect(PlayerComponent.class,amount, false, false);
     }
      
     @Override
-    public Effect DecreaseEnemyCurrentHealthEffect(final int amout){
-        return createHealthEffect(amout, false, false, false);
+    public Effect decreaseEnemyCurrentHealthEffect(final int amount){
+        return createHealthEffect(AiComponent.class,amount, false, false);
     } 
 }

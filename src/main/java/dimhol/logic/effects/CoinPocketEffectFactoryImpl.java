@@ -5,13 +5,13 @@ import dimhol.entity.Entity;
 
 public class CoinPocketEffectFactoryImpl implements CoinPocketEffectFactory{
     
-    private Effect createCoinPocketEffect(final int amount, final boolean increase){
+    private Effect createCoinPocketEffect(final Class<? extends Component> componentToCheck,
+    final int amount, final boolean increase){
         return new Effect(){
             @Override
             public boolean canUseOn(Entity entity) {
-                return entity.hasComponent(PlayerComponent.class);
+                return entity.hasComponent(componentToCheck);
             }
-
             @Override
             public void applyOn(Entity entity) {
                 var coinPocket = (CoinPocketComponent)entity.getComponent(CoinPocketComponent.class);
@@ -25,12 +25,13 @@ public class CoinPocketEffectFactoryImpl implements CoinPocketEffectFactory{
         };
     }
 
-    public Effect IncreaseCoinPocketEffect(final int amount){
-        return createCoinPocketEffect(amount, true);
+    @Override
+    public Effect increaseCoinPocketEffect(final int amount){
+        return createCoinPocketEffect(PlayerComponent.class, amount, true);
     }
 
-    public Effect DecreaseCoinPocketEffect(final int amount){
-        return createCoinPocketEffect(amount, false);
+    @Override
+    public Effect decreaseCoinPocketEffect(final int amount){
+        return createCoinPocketEffect(PlayerComponent.class, amount, false);
     }
-   
 }

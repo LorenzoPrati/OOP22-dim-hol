@@ -4,24 +4,34 @@ import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;
 import dimhol.components.CollisionComponent;
-import dimhol.components.PickableComponent;
+import dimhol.components.InteractableComponent;
+import dimhol.components.InteractorComponent;
 
 public class ItemSystem extends AbstractSystem{
 
     public ItemSystem(WorldImpl w) {
-        super(w, PickableComponent.class, CollisionComponent.class);
+        super(w, InteractableComponent.class, CollisionComponent.class);
     }
 
     @Override
     public void process(Entity e, double dt) {
-       var collided = (CollisionComponent)e.getComponent(CollisionComponent.class);
-       var pickable = (PickableComponent)e.getComponent(PickableComponent.class);
-       var effect = pickable.getEffect();
-       for (var c : collided.getCollided()) {
-           if(effect.canUseOn(c)){
-               effect.applyOn(c);
-               this.world.notifyEvent(new RemoveEntityEvent(e));
-           }
-       }
+        var collisionComp = (CollisionComponent) e.getComponent(CollisionComponent.class);
+        var interactableComp = (InteractableComponent) e.getComponent(InteractableComponent.class);
+        var effect = interactableComp.getEffect();
+
+        for(var c: collisionComp.getCollided()){
+            if(interactableComp.isPickable() && effect.canUseOn(c)){
+                effect.applyOn(c);
+                this.world.notifyEvent(new RemoveEntityEvent(c));
+            }
+            else{
+                if(c.hasComponent(InteractorComponent.class)){
+                    var interactComp = (InteractorComponent)c.getComponent(InteractorComponent.class);
+                    if(interactComp.isInteracting() && effect.canUseOn(c)){
+                        effect.applyOn(c);
+                    }
+                }
+            }
+        }
     }
 }
