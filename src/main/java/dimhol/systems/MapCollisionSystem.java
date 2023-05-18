@@ -5,7 +5,7 @@ import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
-import dimhol.map.TileMap;
+import dimhol.gamelevels.map.TileMap;
 import org.locationtech.jts.math.Vector2D;
 
 import java.math.BigDecimal;
@@ -25,7 +25,7 @@ public final class MapCollisionSystem extends AbstractSystem {
      */
     public MapCollisionSystem(final WorldImpl world) {
         super(world, PositionComponent.class, BodyComponent.class, MovementComponent.class);
-        tileMap = world.getMapLoader().getTileMap();
+        tileMap = world.getLevelManager().getTileMap();
     }
 
     /**
