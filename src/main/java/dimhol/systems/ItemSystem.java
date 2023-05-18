@@ -18,22 +18,17 @@ public class ItemSystem extends AbstractSystem{
         var collisionComp = (CollisionComponent) e.getComponent(CollisionComponent.class);
         var interactableComp = (InteractableComponent) e.getComponent(InteractableComponent.class);
         var effect = interactableComp.getEffect();
-        if(interactableComp.isPickable()){
-            for(var c: collisionComp.getCollided()){
-                if(effect.canUseOn(c)){
-                    effect.applyOn(c);
-                    this.world.notifyEvent(new RemoveEntityEvent(e));
-                }
+
+        for(var c: collisionComp.getCollided()){
+            if(interactableComp.isPickable() && effect.canUseOn(c)){
+                effect.applyOn(c);
+                this.world.notifyEvent(new RemoveEntityEvent(c));
             }
-        }
-        else{
-            for(var c: collisionComp.getCollided()){
+            else{
                 if(c.hasComponent(InteractorComponent.class)){
-                    var interactorComp =  (InteractorComponent) c.getComponent(InteractorComponent.class);
-                    if(interactorComp.isInteracting()){
-                        if(effect.canUseOn(c)){
-                            effect.applyOn(c);
-                        }
+                    var interactComp = (InteractorComponent)c.getComponent(InteractorComponent.class);
+                    if(interactComp.isInteracting() && effect.canUseOn(c)){
+                        effect.applyOn(c);
                     }
                 }
             }
