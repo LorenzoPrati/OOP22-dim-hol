@@ -9,26 +9,26 @@ public interface HealthEffectFactory {
      * @param amount to add to the current health. 
      * @return
      */
-    Effect IncreasePlayerCurrentHealthEffect(final int amount);
+    Effect increasePlayerCurrentHealthEffect(final int amount);
 
     /**
      * A method to create an effect to increase the player's max health.
      * @param amount to add to the max health.
      * @return
      */
-    Effect IncreasePlayerMaxHealthEffect(final int amount);
+    Effect increasePlayerMaxHealthEffect(final int amount);
 
     /**
      * A method to create an effect to decrease the player's current health.
      * @param amout to subtract to the current health.
      * @return
      */
-    Effect DecreasePlayerCurrentHealthEffect(final int amout);
+    Effect decreasePlayerCurrentHealthEffect(final int amout);
 
     /**
      * A method to create an effect to decrease the enemy's current health.
      * @param amout to subtract to the current health.
      * @return
      */
-    Effect DecreaseEnemyCurrentHealthEffect(final int amout);
+    Effect decreaseEnemyCurrentHealthEffect(final int amout);
 }
