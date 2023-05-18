@@ -1,17 +1,20 @@
 package dimhol.view;
 
+import dimhol.core.World;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
-import dimhol.map.*;
-import java.awt.*;
 
-public class SceneImpl implements Scene{
+public class SceneImpl implements Scene {
     //private JFrame frame;
+    private World world;
     private List<GraphicInfo> renderList = new ArrayList<>();
-    private MapLoader mapLoader = new MapLoaderImpl("src/main/resources/config/map/nice-map.xml");
-    private ResourceLoader loader = new ResourceLoader(mapLoader.getTileWidth(), mapLoader.getTileHeight());
+    private int tileMapWidth;
+    private int tileMapHeight;
+    private ResourceLoader loader = new ResourceLoader(tileMapWidth, tileMapHeight);
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private HUD hud = new HUD(loader);
     private int newTileWidth;
@@ -20,7 +23,10 @@ public class SceneImpl implements Scene{
     private int offsetY;
     public GamePanel scenePanel;
 
-    public SceneImpl(){
+    public SceneImpl(World world){
+        this.world = world;
+        this.tileMapWidth = world.getLevelManager().getTileMap().getWidth();
+        this.tileMapHeight = world.getLevelManager().getTileMap().getHeight();
         this.scenePanel =  new GamePanel(screenSize.getWidth(), screenSize.getHeight());;
     }
 
@@ -37,21 +43,21 @@ public class SceneImpl implements Scene{
 
         @Override
         public void paintComponent(Graphics g) {
+            var tileMapLayers = world.getLevelManager().getTileMap().getLayers();
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D)g;
-            var layers = mapLoader.getMapTileLayers();
-            for(var layer: layers){
-            for (int i = 0; i < mapLoader.getWidth(); i++) {
-                for (int j = 0; j < mapLoader.getHeight(); j++) {
+            for(var layer: tileMapLayers){
+            for (int i = 0; i < tileMapWidth; i++) {
+                for (int j = 0; j < tileMapHeight; j++) {
                     var id = layer[i][j].getTileSetId();
-                    if (this.getWidth() / mapLoader.getHeight() < this.getHeight() / mapLoader.getWidth()) {
-                        newTileWidth = this.getWidth() / mapLoader.getHeight();
+                    if (this.getWidth() / tileMapHeight < this.getHeight() / tileMapWidth) {
+                        newTileWidth = this.getWidth() / tileMapHeight;
                     } else {
-                        newTileWidth = this.getHeight() / mapLoader.getWidth();
+                        newTileWidth = this.getHeight() / tileMapWidth;
                     }
                     newTileHeight = newTileWidth;
-                    offsetX = ((this.getWidth() - mapLoader.getHeight() * newTileWidth) / 2);
-                    offsetY = ((this.getHeight() - mapLoader.getWidth() * newTileHeight) / 2);
+                    offsetX = ((this.getWidth() - tileMapHeight * newTileWidth) / 2);
+                    offsetY = ((this.getHeight() - tileMapWidth * newTileHeight) / 2);
                     var drawX = newTileHeight * j + offsetX;
                     var drawY = newTileWidth * i + offsetY;
                     g2.drawImage(loader.getTileImage(id), drawX, drawY, newTileWidth, newTileHeight, null);
@@ -100,11 +106,6 @@ public class SceneImpl implements Scene{
     @Override
     public HUD getPlayerHUD() {
         return this.hud;
-    }
-
-    @Override
-    public MapLoader getMapLoader() {
-        return this.mapLoader;
     }
 
     @Override
