@@ -4,24 +4,39 @@ import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;
 import dimhol.components.CollisionComponent;
-import dimhol.components.PickableComponent;
+import dimhol.components.InteractableComponent;
+import dimhol.components.InteractorComponent;
 
 public class ItemSystem extends AbstractSystem{
 
     public ItemSystem(WorldImpl w) {
-        super(w, PickableComponent.class, CollisionComponent.class);
+        super(w, InteractableComponent.class, CollisionComponent.class);
     }
 
     @Override
     public void process(Entity e, double dt) {
-       var collided = (CollisionComponent)e.getComponent(CollisionComponent.class);
-       var pickable = (PickableComponent)e.getComponent(PickableComponent.class);
-       var effect = pickable.getEffect();
-       for (var c : collided.getCollided()) {
-           if(effect.canUseOn(c)){
-               effect.applyOn(c);
-               this.world.notifyEvent(new RemoveEntityEvent(e));
-           }
-       }
+        var collisionComp = (CollisionComponent) e.getComponent(CollisionComponent.class);
+        var interactableComp = (InteractableComponent) e.getComponent(InteractableComponent.class);
+        var effect = interactableComp.getEffect();
+        if(interactableComp.isPickable()){
+            for(var c: collisionComp.getCollided()){
+                if(effect.canUseOn(c)){
+                    effect.applyOn(c);
+                    this.world.notifyEvent(new RemoveEntityEvent(e));
+                }
+            }
+        }
+        else{
+            for(var c: collisionComp.getCollided()){
+                if(c.hasComponent(InteractorComponent.class)){
+                    var interactorComp =  (InteractorComponent) c.getComponent(InteractorComponent.class);
+                    if(interactorComp.isInteracting()){
+                        if(effect.canUseOn(c)){
+                            effect.applyOn(c);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
