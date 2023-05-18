@@ -21,7 +21,7 @@ public class ItemFactory extends AbstractFactory {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x, y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
-        .add(new PickableComponent(healthEffectFactory.IncreasePlayerCurrentHealthEffect(1)))
+        .add(new InteractableComponent(healthEffectFactory.increasePlayerCurrentHealthEffect(1),true))
         .add(new AnimationComponent(this.map.get("heart"), "idle"))
         .build();
     }
@@ -30,7 +30,7 @@ public class ItemFactory extends AbstractFactory {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
-        .add(new PickableComponent(coinEffectFactory.IncreaseCoinPocketEffect(1)))
+        .add(new InteractableComponent(coinEffectFactory.increaseCoinPocketEffect(1), false))
         .add(new AnimationComponent(this.map.get("coin"), "idle"))
         .build();
     }

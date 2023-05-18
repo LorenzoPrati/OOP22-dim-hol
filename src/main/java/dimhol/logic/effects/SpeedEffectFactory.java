@@ -11,5 +11,5 @@ public interface SpeedEffectFactory {
      * @param amount to add.
      * @return
      */
-    Effect increaseSpeedEffect(final double amount);
+    Effect increasePlayerSpeedEffect(final double amount);
 }
