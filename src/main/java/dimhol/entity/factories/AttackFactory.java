@@ -55,7 +55,7 @@ public final class AttackFactory extends AbstractFactory {
         return new EntityBuilder()
                 .add(new PositionComponent(pos, 0))
                 .add(new BodyComponent(new RectBodyShape(MELEE_WIDTH, MELEE_HEIGHT), false))
-                .add(new AttackComponent(entity, List.of(healthEffectFactory.DecreasePlayerCurrentHealthEffect(1))))
+                .add(new AttackComponent(entity, List.of(healthEffectFactory.decreasePlayerCurrentHealthEffect(1))))
                 //.add(new AnimationComponent(map.get("heart"), "idle"))
                 .build();
     }
@@ -74,7 +74,7 @@ public final class AttackFactory extends AbstractFactory {
                 .add(new MovementComponent(dir, BULLET_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
                 .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(dir)))
-                .add(new AttackComponent(entity, List.of(healthEffectFactory.DecreasePlayerCurrentHealthEffect(1))))
+                .add(new AttackComponent(entity, List.of(healthEffectFactory.decreasePlayerCurrentHealthEffect(1))))
                 .build();
     }
 }
