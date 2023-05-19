@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * The class is responsible for parsing an XML file and loading a map from it.
  */
-public class MapLoaderImpl implements MapLoader {
+public final class MapLoaderImpl implements MapLoader {
     private int width;
     private int height;
     private int tileWidth;
@@ -100,7 +100,7 @@ public class MapLoaderImpl implements MapLoader {
     }
 
     @Override
-    public final List<Tile[][]> getMapTileLayers() {
+    public List<Tile[][]> getMapTileLayers() {
         return new ArrayList<>(mapTileLayers);
     }
 
