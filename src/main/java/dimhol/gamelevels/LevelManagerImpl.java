@@ -20,8 +20,9 @@ import java.util.Set;
  * The LevelGenerator class generates a new level for the game, including the placement of the player and enemies.
  */
 public class LevelManagerImpl implements LevelManager {
-    private final static int BOSS_ROOM_INDEX = 4;
-    private static final int DEFAULT_CYCLE_LENGTH = 5; // This will give us a cyclic pattern of 0, 1, 2, 3, 4, - 0, 1, 2, 3, 4 and so on.
+    private static final int BOSS_ROOM_INDEX = 4;
+    private static final int DEFAULT_CYCLE_LENGTH = 5;
+    // This will give us a cyclic pattern of 0, 1, 2, 3, 4, - 0, 1, 2, 3, 4 and so on.
     private static final int DEFAULT_SHOPS_PER_CYCLE = 3;
     private final World world;
     private final MapLoader mapLoader;
@@ -155,7 +156,7 @@ public class LevelManagerImpl implements LevelManager {
      * @param player The player entity.
      * @param freeTiles The set of free tiles in the room.
      */
-    private void normalRoomEntitiesGenerator(Optional<Entity> player, Set<Pair<Integer, Integer>> freeTiles) {
+    private void normalRoomEntitiesGenerator(final Optional<Entity> player, final Set<Pair<Integer, Integer>> freeTiles) {
         normalRoomStrategy.generate(player, getFreeTiles()).forEach(world::addEntity);
     }
 
@@ -164,7 +165,7 @@ public class LevelManagerImpl implements LevelManager {
      * @param player The player entity.
      * @param freeTiles The set of free tiles in the room.
      */
-    private void shopRoomEntitiesGenerator(Optional<Entity> player, final Set<Pair<Integer, Integer>> freeTiles) {
+    private void shopRoomEntitiesGenerator(final Optional<Entity> player, final Set<Pair<Integer, Integer>> freeTiles) {
         shopRoomStrategy.generate(player, getFreeTiles()).forEach(world::addEntity);
     }
 
@@ -174,7 +175,7 @@ public class LevelManagerImpl implements LevelManager {
      * @param player The player entity.
      * @param freeTiles The set of free tiles in the room.
      */
-    private void bossRoomEntitiesGenerator(Optional<Entity> player, Set<Pair<Integer, Integer>> freeTiles) {
+    private void bossRoomEntitiesGenerator(final Optional<Entity> player, final Set<Pair<Integer, Integer>> freeTiles) {
         bossRoomStrategy.generate(player, getFreeTiles()).forEach(world::addEntity);
     }
 }
