@@ -42,7 +42,11 @@ public class ResourceLoader {
             this.imagesMap.put(45, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/shop/sword.png"))), 900, 900));
             this.imagesMap.put(46, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/hud/font/logo/hudCoin.png"))), 8, 10));
             this.imagesMap.put(47, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/hud/font/logo/hudHeart.png"))), 11, 11));
-
+            this.imagesMap.put(48, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/boss/walk.png"))), 192, 128));
+            this.imagesMap.put(49, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/boss/attack.png"))), 192, 128));
+            this.imagesMap.put(50, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/boss/damage.png"))), 192, 128));
+            this.imagesMap.put(51, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/boss/death.png"))), 192, 128));
+            this.imagesMap.put(52, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/boss/idle.png"))), 192, 128));
         }
         catch(IOException e){
             System.out.println("Error loading images. ");
