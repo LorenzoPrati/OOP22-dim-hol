@@ -2,7 +2,6 @@ package dimhol.core;
 
 import dimhol.entity.Entity;
 import dimhol.events.WorldEvent;
-import dimhol.gamelevels.LevelManager;
 import dimhol.view.Scene;
 
 import java.util.List;
@@ -81,6 +80,4 @@ public interface World {
      * @param event the event that occurred
      */
     void notifyEvent(WorldEvent event);
-
-    LevelManager getLevelManager();
 }

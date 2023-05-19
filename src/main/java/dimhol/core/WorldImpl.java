@@ -3,8 +3,6 @@ package dimhol.core;
 import dimhol.entity.Entity;
 import dimhol.events.WorldEvent;
 
-import dimhol.gamelevels.*;
-import dimhol.gamelevels.map.MapLoaderImpl;
 import dimhol.systems.MapCollisionSystem;
 import dimhol.systems.*;
 import dimhol.view.Scene;
@@ -24,7 +22,6 @@ public class WorldImpl implements World {
     private final List<GameSystem> systems;
     private final List<WorldEvent> events;
     private boolean gameOver;
-    private final LevelManager levelManager;
 
     /**
      * Constructs a world.
@@ -33,14 +30,13 @@ public class WorldImpl implements World {
         this.entities = new ArrayList<>();
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
-        this.levelManager = new LevelManagerImpl(this, new MapLoaderImpl());
         this.scene = new SceneImpl(this);
         this.input = new InputImpl();
 
         /*
         generate first level
          */
-        this.levelManager.changeLevel();
+
         /*
         Add systems
          */
@@ -51,7 +47,6 @@ public class WorldImpl implements World {
         this.systems.add(new CollisionSystem(this));
         this.systems.add(new PhysicsSystem(this));
         this.systems.add(new ItemSystem(this));
-        this.systems.add(new InteractionSystem(this));
         this.systems.add(new CombatSystem(this));
         this.systems.add(new CheckHealthSystem(this));
         this.systems.add(new ClearCollisionSystem(this));
@@ -149,9 +144,5 @@ public class WorldImpl implements World {
     private void handleEvents() {
         this.events.forEach(ev -> ev.execute(this));
         this.events.clear();
-    }
-
-    public LevelManager getLevelManager() {
-        return this.levelManager;
     }
 }
