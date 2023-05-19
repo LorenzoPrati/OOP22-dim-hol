@@ -7,7 +7,7 @@ import org.locationtech.jts.math.Vector2D;
 /**
  * This class has util method for AI actions.
  */
-class AttackUtil {
+public class AttackUtil {
 
     /**
      * This value indicates the angle that forms the viewing quadrant of the entity

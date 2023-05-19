@@ -1,7 +1,10 @@
 package dimhol.logic.player;
 
 import dimhol.core.Input;
+import dimhol.entity.Entity;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class WalkState extends AbstractState {
@@ -35,10 +38,11 @@ public class WalkState extends AbstractState {
     }
 
     @Override
-    public void execute(Input input) {
+    public List<Entity> execute(Input input) {
         if (input.getDirection().isPresent()) {
             this.mov.setDir(input.getDirection().get());
         }
+        return Collections.emptyList();
     }
 
     @Override

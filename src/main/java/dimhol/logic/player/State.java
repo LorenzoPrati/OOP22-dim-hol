@@ -3,6 +3,7 @@ package dimhol.logic.player;
 import dimhol.core.Input;
 import dimhol.entity.Entity;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface State {
@@ -15,7 +16,7 @@ public interface State {
 
     Optional<State> transition(Input input);
 
-    void execute(Input input);
+    List<Entity> execute(Input input);
 
     void exit();
 

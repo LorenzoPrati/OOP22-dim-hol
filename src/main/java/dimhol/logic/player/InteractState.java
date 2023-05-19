@@ -1,7 +1,10 @@
 package dimhol.logic.player;
 
 import dimhol.core.Input;
+import dimhol.entity.Entity;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class InteractState extends AbstractState{
@@ -17,8 +20,8 @@ public class InteractState extends AbstractState{
     }
 
     @Override
-    public void execute(Input input) {
-
+    public List<Entity> execute(Input input) {
+        return Collections.emptyList();
     }
 
     @Override
