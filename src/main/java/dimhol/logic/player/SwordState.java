@@ -1,7 +1,12 @@
 package dimhol.logic.player;
 
 import dimhol.core.Input;
+import dimhol.entity.Entity;
+import dimhol.entity.factories.PlayerAttackFactory;
+import dimhol.logic.ai.AttackUtil;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class SwordState extends AbstractState {
@@ -20,8 +25,9 @@ public class SwordState extends AbstractState {
     }
 
     @Override
-    public void execute(Input input) {
-        System.out.println("eseguo attacco melee");
+    public List<Entity> execute(Input input) {
+        //return List.of(new PlayerAttackFactory().createPlayerMeleeAttack(playerEntity, damage);
+        return Collections.emptyList();
     }
 
 

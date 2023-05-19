@@ -2,6 +2,7 @@ package dimhol.systems;
 
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
+import dimhol.events.AddEntityEvent;
 import dimhol.logic.util.DirectionUtil;
 import dimhol.components.AnimationComponent;
 import dimhol.components.MovementComponent;
@@ -41,7 +42,7 @@ public class PlayerSystem extends AbstractSystem {
                 player.setState(s);
                 s.entry(e);
             });
-            player.getState().execute(input);
+            player.getState().execute(input).forEach(en -> world.notifyEvent(new AddEntityEvent(en)));
         }
         player.getState().updateAnimation();
     }

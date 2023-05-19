@@ -1,9 +1,6 @@
 package dimhol.logic.player;
 
-import dimhol.components.AnimationComponent;
-import dimhol.components.InteractorComponent;
-import dimhol.components.MovementComponent;
-import dimhol.components.PlayerComponent;
+import dimhol.components.*;
 import dimhol.entity.Entity;
 import dimhol.logic.util.DirectionUtil;
 
@@ -16,6 +13,8 @@ public abstract class AbstractState implements State {
     protected MovementComponent mov;
     protected AnimationComponent anim;
     protected InteractorComponent interact;
+    protected PositionComponent pos;
+    protected BodyComponent bodyComponent;
 
     @Override
     public void entry(Entity e) {
@@ -46,6 +45,8 @@ public abstract class AbstractState implements State {
         this.playerComp = (PlayerComponent) entity.getComponent(PlayerComponent.class);
         this.mov = (MovementComponent) entity.getComponent(MovementComponent.class);
         this.anim = (AnimationComponent) entity.getComponent(AnimationComponent.class);
-        this.interact =(InteractorComponent) entity.getComponent(InteractorComponent.class);
+        this.interact = (InteractorComponent) entity.getComponent(InteractorComponent.class);
+        this.pos = (PositionComponent) entity.getComponent(PositionComponent.class);
+        this.bodyComponent = (BodyComponent) entity.getComponent(BodyComponent.class);
     }
 }

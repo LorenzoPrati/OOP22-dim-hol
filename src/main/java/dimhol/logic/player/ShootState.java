@@ -1,7 +1,10 @@
 package dimhol.logic.player;
 
 import dimhol.core.Input;
+import dimhol.entity.Entity;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class ShootState extends AbstractState {
@@ -20,8 +23,8 @@ public class ShootState extends AbstractState {
 
 
     @Override
-    public void execute(Input input) {
-        System.out.println("sparo proiettile");
+    public List<Entity> execute(Input input) {
+        return Collections.emptyList();
     }
 
     @Override
