@@ -5,7 +5,7 @@ import dimhol.components.BodyComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
-import dimhol.entity.factories.AttackFactory;
+import dimhol.entity.factories.EnemyAttackFactory;
 import dimhol.events.WorldEvent;
 import dimhol.logic.collision.BodyShape;
 import org.locationtech.jts.math.Vector2D;
@@ -24,7 +24,7 @@ public abstract class AbstractAction implements Action {
     private Vector2D playerCentralPos;
     private Vector2D enemyCentralPos;
     private Entity enemy;
-    private final AttackFactory attackFactory = new AttackFactory();
+    private final EnemyAttackFactory attackFactory = new EnemyAttackFactory();
     private PositionComponent enemyPos;
     private BodyComponent enemyBody;
     private PositionComponent playerPos;
@@ -101,7 +101,7 @@ public abstract class AbstractAction implements Action {
     /**
      * Attack Factory getter.
      */
-    protected final AttackFactory getAttackFactory() {
+    protected final EnemyAttackFactory getAttackFactory() {
         return attackFactory;
     }
 

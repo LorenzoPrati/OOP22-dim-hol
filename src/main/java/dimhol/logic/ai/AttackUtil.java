@@ -64,18 +64,18 @@ class AttackUtil {
         switch (DirectionUtil.getStringFromVec(dir)) {
             case "right" -> {
                 bulletX = entityCentralPos.getX() + (entityBody.getBoundingWidth() / 2);
-                bulletY = entityCentralPos.getY() - (attackHeight / 4);
+                bulletY = entityCentralPos.getY() - (attackHeight / 2);
             }
             case "left" -> {
                 bulletX = entityCentralPos.getX() - (entityBody.getBoundingWidth() / 2) - attackHeight;
-                bulletY = entityCentralPos.getY() - (attackWidth / 4);
+                bulletY = entityCentralPos.getY() - (attackWidth / 2);
             }
             case "down" -> {
-                bulletX = entityCentralPos.getX() - (attackHeight / 4);
+                bulletX = entityCentralPos.getX() - (attackHeight / 2);
                 bulletY = entityCentralPos.getY() + (entityBody.getBoundingHeight() / 2);
             }
             default -> { // up
-                bulletX = entityCentralPos.getX() - (attackHeight / 4);
+                bulletX = entityCentralPos.getX() - (attackHeight / 2);
                 bulletY = entityCentralPos.getY() - (entityBody.getBoundingHeight() / 2) - attackWidth;
             }
 
