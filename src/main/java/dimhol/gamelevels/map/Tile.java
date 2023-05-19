@@ -1,5 +1,8 @@
 package dimhol.gamelevels.map;
 
+/**
+ * This interface represents a tile in the game map.
+ */
 public interface Tile {
     /**
      * Returns whether this Tile is collidable.
