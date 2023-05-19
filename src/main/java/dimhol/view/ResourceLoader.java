@@ -11,7 +11,6 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 public class ResourceLoader {
     private static final int NUM_PLAYER_SPRITES = 32;
-    private static final int NUM_BOSS_SPRITES = 5;
     private final Map<Integer,ImmutableTriple<BufferedImage,Integer,Integer>> imagesMap = new HashMap<>();
     private BufferedImage tileSet;
     private ArrayList<BufferedImage> tileImages = new ArrayList<>();
@@ -27,11 +26,6 @@ public class ResourceLoader {
             for(i=1; i<=NUM_PLAYER_SPRITES; i++){
                 this.imagesMap.put(i,new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream(("/asset/warrior/" + i + ".png")))),48, 48));
             }
-//            int j;
-//            for (j = 46; j <= NUM_BOSS_SPRITES; j++) {
-//                this.imagesMap.put(j, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/boss/" + j + ".png"))), 192, 128));
-//
-//            }
             this.imagesMap.put(33, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/enemies/ghost-Sheet.png"))), 32, 32));
             this.imagesMap.put(34, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/items/coin.png"))), 32, 32));
             this.imagesMap.put(35, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/items/heart.png"))), 21, 21));
