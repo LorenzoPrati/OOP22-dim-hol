@@ -56,7 +56,6 @@ public class WorldImpl implements World {
         this.systems.add(new CollisionSystem(this));
         this.systems.add(new PhysicsSystem(this));
         this.systems.add(new ItemSystem(this));
-        this.systems.add(new InteractionSystem(this));
         this.systems.add(new CombatSystem(this));
         this.systems.add(new CheckHealthSystem(this));
         this.systems.add(new ClearCollisionSystem(this));

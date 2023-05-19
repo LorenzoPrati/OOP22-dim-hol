@@ -12,7 +12,7 @@ import org.locationtech.jts.math.Vector2D;
 public class GenericFactory extends AbstractFactory {
 
     private static final double PLAYER_SPEED = 3;
-    private static final int PLAYER_HEALTH = 5;
+    private static final int PLAYER_HEALTH = 10;
     private static final double PLAYER_WIDTH = 1;
     private static final double PLAYER_HEIGHT = 1;
 
@@ -25,7 +25,7 @@ public class GenericFactory extends AbstractFactory {
                 .add(new PositionComponent(new Vector2D(x,y), 0))
                 .add(new MovementComponent(new Vector2D(0,1), PLAYER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(PLAYER_WIDTH, PLAYER_HEIGHT), true))
-                .add(new CoinPocketComponent(5))
+                .add(new CoinPocketComponent(20))
                 .add(new HealthComponent(PLAYER_HEALTH))
                 .add(new InteractorComponent())
                 .add(new AnimationComponent(map.get("player"),"idle down"))
