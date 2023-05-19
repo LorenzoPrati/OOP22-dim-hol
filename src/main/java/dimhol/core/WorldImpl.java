@@ -11,6 +11,7 @@ import dimhol.view.Scene;
 import dimhol.view.SceneImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class WorldImpl implements World {
 
     private final Scene scene;
     private final Input input;
-    private final List<Entity> entities;
+    private List<Entity> entities;
     private final List<GameSystem> systems;
     private final List<WorldEvent> events;
     private final LevelManager levelManager;
@@ -33,14 +34,15 @@ public class WorldImpl implements World {
         this.entities = new ArrayList<>();
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
-        this.levelManager = new LevelManagerImpl(this);
+        this.levelManager = new LevelManagerImpl();
         this.scene = new SceneImpl(this);
         this.input = new InputImpl();
 
         /*
         generate first level
          */
-        levelManager.changeLevel();
+        levelManager.changeLevel(this.getEntities()).forEach(this::addEntity);
+
         /*
         Add systems
          */
@@ -56,7 +58,6 @@ public class WorldImpl implements World {
         this.systems.add(new ClearCollisionSystem(this));
         this.systems.add(new AnimationSystem(this));
         this.systems.add(new RenderSystem(this));
-
     }
 
     /**
@@ -74,7 +75,7 @@ public class WorldImpl implements World {
      */
     @Override
     public List<Entity> getEntities() {
-        return this.entities;
+        return Collections.unmodifiableList(this.entities);
     }
 
     /**
@@ -145,6 +146,11 @@ public class WorldImpl implements World {
     @Override
     public LevelManager getLevelManager() {
         return this.levelManager;
+    }
+
+    @Override
+    public void changeLevel() {
+        this.entities = this.levelManager.changeLevel(this.getEntities());
     }
 
     /**

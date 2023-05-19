@@ -20,12 +20,7 @@ public class InputListener implements KeyListener, MouseListener {
         this.engine = engine;
         this.input = input;
     }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
+    
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -54,11 +49,6 @@ public class InputListener implements KeyListener, MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()) {
             case MouseEvent.BUTTON1 -> this.input.setNormalMeele(true);
@@ -75,12 +65,22 @@ public class InputListener implements KeyListener, MouseListener {
     }
 
     @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
     public void mouseEntered(MouseEvent e) {
 
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
 
     }
 }

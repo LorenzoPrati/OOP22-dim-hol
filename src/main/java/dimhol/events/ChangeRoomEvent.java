@@ -12,6 +12,9 @@ public class ChangeRoomEvent implements WorldEvent {
      */
     @Override
     public void execute(final World world) {
-       //todo
+//       world.getLevelManager()
+//               .changeLevel(world.getEntities())
+//               .forEach(world::addEntity);
+        world.changeLevel();
     }
 }

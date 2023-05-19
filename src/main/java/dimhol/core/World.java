@@ -83,4 +83,6 @@ public interface World {
     void notifyEvent(WorldEvent event);
 
     LevelManager getLevelManager();
+
+    void changeLevel();
 }
