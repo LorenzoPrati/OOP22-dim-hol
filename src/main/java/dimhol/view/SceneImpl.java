@@ -14,7 +14,7 @@ public class SceneImpl implements Scene {
     private List<GraphicInfo> renderList = new ArrayList<>();
     private int tileMapWidth;
     private int tileMapHeight;
-    private ResourceLoader loader = new ResourceLoader(tileMapWidth, tileMapHeight);
+    private ResourceLoader loader;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private HUD hud = new HUD(loader);
     private int newTileWidth;
@@ -25,9 +25,11 @@ public class SceneImpl implements Scene {
 
     public SceneImpl(World world){
         this.world = world;
-        this.tileMapWidth = world.getLevelManager().getTileMap().getWidth();
-        this.tileMapHeight = world.getLevelManager().getTileMap().getHeight();
+        var tileMap = world.getLevelManager().getTileMap();
+        this.tileMapWidth = tileMap.getWidth();
+        this.tileMapHeight = tileMap.getHeight();
         this.scenePanel =  new GamePanel(screenSize.getWidth(), screenSize.getHeight());;
+        this.loader = new ResourceLoader(tileMap.getTileWidth(), tileMap.getTileHeight());
     }
 
     class GamePanel extends JPanel{
@@ -77,7 +79,7 @@ public class SceneImpl implements Scene {
                 double newY = renderList.get(i).getY() * newTileHeight + offsetY;
                 g2.drawImage(img,(int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
             }
-            hud.show(g2, newTileWidth, newTileHeight, offsetX, offsetY);
+            //hud.show(g2, newTileWidth, newTileHeight, offsetX, offsetY);
             g2.dispose();
             renderList.clear();
         } 

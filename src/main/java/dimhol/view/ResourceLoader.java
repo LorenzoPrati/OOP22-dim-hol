@@ -60,6 +60,7 @@ public class ResourceLoader {
         catch(IOException e){
             System.out.println("Error loading TileSet image. ");
         }
+        System.out.println(tileWidth + " " +  tileHeight);
         var cols = tileSet.getWidth() / tileWidth;
         var rows = tileSet.getHeight() / tileHeight;
         for(int i=0; i < rows; i++){
