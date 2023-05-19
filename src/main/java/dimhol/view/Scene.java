@@ -27,7 +27,7 @@ public interface Scene {
      * 
      * @return
      */
-    HUD getPlayerHUD();
+    HUD getHUD();
 
     /**
      * 

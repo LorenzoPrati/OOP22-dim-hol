@@ -104,7 +104,7 @@ public class SceneImpl implements Scene {
     }
 
     @Override
-    public HUD getPlayerHUD() {
+    public HUD getHUD() {
         return this.hud;
     }
 

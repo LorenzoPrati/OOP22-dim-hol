@@ -1,6 +1,6 @@
 package dimhol.logic.ai;
 
-import dimhol.entity.factories.AttackFactory;
+import dimhol.entity.factories.EnemyAttackFactory;
 import dimhol.events.AddEntityEvent;
 import dimhol.events.WorldEvent;
 
@@ -41,9 +41,9 @@ public final class MeleeAttack extends AbstractAction {
         List<WorldEvent> attacks = new ArrayList<>();
         var dir = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         var pos = AttackUtil.getAttackPos(dir, getEnemyCentralPos(), getEnemyBody().getBodyShape(),
-                AttackFactory.MELEE_WIDTH, AttackFactory.MELEE_HEIGHT);
+                EnemyAttackFactory.ENEMY_MELEE_WIDTH, EnemyAttackFactory.ENEMY_MELEE_HEIGHT);
 
-        attacks.add(new AddEntityEvent(getAttackFactory().createMeleeAttack(pos, getEnemy())));
+        attacks.add(new AddEntityEvent(getAttackFactory().createEnemyMeleeAttack(pos, getEnemy())));
         return Optional.of(attacks);
     }
 }
