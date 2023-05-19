@@ -186,23 +186,23 @@
         - 44
         - 0
     boss:
-      attack:
-        - 10
-        - 46
-        - 1
-      death:
-        - 10
-        - 47
-        - 1
-      idle:
+      walk:
         - 10
         - 48
         - 1
-      takeHit:
+      attack:
         - 10
         - 49
         - 1
-      walk:
+      takeHit:
         - 10
         - 50
+        - 1
+      death:
+        - 10
+        - 51
+        - 1
+      idle:
+        - 10
+        - 52
         - 1
