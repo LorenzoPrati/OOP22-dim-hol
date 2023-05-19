@@ -7,6 +7,7 @@ import dimhol.entity.factories.BossFactory;
 import dimhol.entity.factories.EnemyFactory;
 import dimhol.entity.factories.GenericFactory;
 import dimhol.gamelevels.map.MapLoader;
+import dimhol.gamelevels.map.MapLoaderImpl;
 import dimhol.gamelevels.map.TileMap;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -36,11 +37,10 @@ public class LevelManagerImpl implements LevelManager {
      * Constructs a LevelManagerImpl object.
      *
      * @param world The game world.
-     * @param mapLoader The map loader.
      */
-    public LevelManagerImpl(final World world, final MapLoader mapLoader) {
+    public LevelManagerImpl(final World world) {
         this.world = world;
-        this.mapLoader = mapLoader;
+        this.mapLoader = new MapLoaderImpl();
         GenericFactory genericFactory = new GenericFactory();
         EnemyFactory enemyFactory = new EnemyFactory();
         Random random = new Random();
