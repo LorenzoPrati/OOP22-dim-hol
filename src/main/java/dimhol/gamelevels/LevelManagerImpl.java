@@ -1,7 +1,6 @@
 package dimhol.gamelevels;
 
 import dimhol.components.PlayerComponent;
-import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.entity.factories.BossFactory;
 import dimhol.entity.factories.EnemyFactory;
@@ -13,6 +12,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -25,7 +25,6 @@ public class LevelManagerImpl implements LevelManager {
     private static final int DEFAULT_CYCLE_LENGTH = 5;
     // This will give us a cyclic pattern of 0, 1, 2, 3, 4, - 0, 1, 2, 3, 4 and so on.
     private static final int DEFAULT_SHOPS_PER_CYCLE = 3;
-    private final World world;
     private final MapLoader mapLoader;
     private final NormalRoomStrategy normalRoomStrategy;
     private final ShopRoomStrategy shopRoomStrategy;
@@ -36,10 +35,8 @@ public class LevelManagerImpl implements LevelManager {
     /**
      * Constructs a LevelManagerImpl object.
      *
-     * @param world The game world.
      */
-    public LevelManagerImpl(final World world) {
-        this.world = world;
+    public LevelManagerImpl() {
         this.mapLoader = new MapLoaderImpl();
         GenericFactory genericFactory = new GenericFactory();
         EnemyFactory enemyFactory = new EnemyFactory();
@@ -55,43 +52,37 @@ public class LevelManagerImpl implements LevelManager {
      * Changes the current level by generating a new level with the placement of the player and enemies.
      */
     @Override
-    public void changeLevel() {
+    public List<Entity> changeLevel(List<Entity> entities) {
         currentLevel++;
-        var player = savePlayer();
-        clearEntities();
-        determineRoomType();
-        changeMap();
-        generateLevel(player);
+        var player = savePlayer(entities);
+        return generateLevel(player);
     }
 
     /**
      * Determines the type of room to generate based on the current level.
      */
-    private void determineRoomType() {
+    private RoomStrategy determineRoomType() {
         // Calculate the room index within the current cycle
         int roomIndex = currentLevel % DEFAULT_CYCLE_LENGTH;
-
         if (roomIndex == BOSS_ROOM_INDEX) {  // Check the room index to determine the room type
             //Generate a boss room
             mapLoader.loadBossRoom();
             System.out.println("Boss");
-        } else if (roomIndex % DEFAULT_SHOPS_PER_CYCLE == 0) {
+            System.out.println("current room " + roomIndex);
+            return bossRoomStrategy;
+        }
+        if (roomIndex % DEFAULT_SHOPS_PER_CYCLE == 0) {
             //Generate a shop
             mapLoader.loadShopRoom();
             System.out.println("Shop");
-        } else {
-            //Generate a normal room
-            mapLoader.loadNormalRoom();
-            System.out.println("Normal");
+            System.out.println("current room " + roomIndex);
+            return shopRoomStrategy;
         }
+        //Generate a normal room
+        mapLoader.loadNormalRoom();
+        System.out.println("Normal");
         System.out.println("current room " + roomIndex);
-    }
-
-    /**
-     * Clears all entities in the game world level.
-     */
-    private void clearEntities() {
-        world.getEntities().clear();
+        return normalRoomStrategy;
     }
 
     /**
@@ -122,19 +113,12 @@ public class LevelManagerImpl implements LevelManager {
     }
 
     /**
-     * Changes the map based on the current level and room.
-     */
-    private void changeMap() {
-        this.tileMap = mapLoader.loadNormalRoom(); //current room
-    }
-
-    /**
      * Retrieves the player entity from the game world.
      *
      * @return The player entity if found, otherwise null.
      */
-    private Optional<Entity> savePlayer() {
-        return world.getEntities().stream()
+    private Optional<Entity> savePlayer(List<Entity> entities) {
+        return entities.stream()
                 .filter(entity -> entity.hasComponent(PlayerComponent.class))
                 .findFirst();
     }
@@ -144,38 +128,7 @@ public class LevelManagerImpl implements LevelManager {
      *
      * @param player The player entity.
      */
-    private void generateLevel(final Optional<Entity> player) {
-        normalRoomEntitiesGenerator(player, getFreeTiles());
-        //TODO: handle them.
-//        shopRoomEntitiesGenerator(player, getFreeTiles());
-//        bossRoomEntitiesGenerator(player, getFreeTiles());
-    }
-
-    /**
-     * Generates entities for a normal room.
-     * @param player The player entity.
-     * @param freeTiles The set of free tiles in the room.
-     */
-    private void normalRoomEntitiesGenerator(final Optional<Entity> player, final Set<Pair<Integer, Integer>> freeTiles) {
-        normalRoomStrategy.generate(player, getFreeTiles()).forEach(world::addEntity);
-    }
-
-    /**
-     * Generates entities for a shop room.
-     * @param player The player entity.
-     * @param freeTiles The set of free tiles in the room.
-     */
-    private void shopRoomEntitiesGenerator(final Optional<Entity> player, final Set<Pair<Integer, Integer>> freeTiles) {
-        shopRoomStrategy.generate(player, getFreeTiles()).forEach(world::addEntity);
-    }
-
-    /**
-     * Generates entities for a normal room.
-     *
-     * @param player The player entity.
-     * @param freeTiles The set of free tiles in the room.
-     */
-    private void bossRoomEntitiesGenerator(final Optional<Entity> player, final Set<Pair<Integer, Integer>> freeTiles) {
-        bossRoomStrategy.generate(player, getFreeTiles()).forEach(world::addEntity);
+    private List<Entity> generateLevel(final Optional<Entity> player) {
+        return this.determineRoomType().generate(player, getFreeTiles());
     }
 }
