@@ -1,20 +1,24 @@
-package dimhol.map;
+package dimhol.gamelevels.map;
 
 import java.util.List;
 
-/**
- * The LoadMap interface represents a contract for classes that can load and provide information about a tile map.
- */
-public interface MapLoader {
+public interface TileMap {
+
+    /**
+     *
+     * @return
+     */
+    Tile getTile(int x, int y);
+
     /**
      * Returns the width of the tile map.
-     * @return the width of the tile map
+     * @return the width of the tile map.
      */
     int getWidth();
 
     /**
      * Returns the height of the tile map.
-     * @return the height of the tile map
+     * @return the height of the tile map.
      */
     int getHeight();
 
@@ -31,14 +35,7 @@ public interface MapLoader {
     int getTileHeight();
 
     /**
-     * Returns the tile map data as a {@link TileMap} object.
-     * @return the tile map data
-     */
-    TileMap getTileMap();
-
-    /**
      *
-     * @return map tile layers.
      */
-    List<Tile[][]> getMapTileLayers();
+    List<Tile[][]> getLayers();
 }

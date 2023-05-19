@@ -3,17 +3,12 @@ package dimhol.core;
 import dimhol.entity.Entity;
 import dimhol.events.WorldEvent;
 
-import dimhol.gamelevels.LevelManager;
-import dimhol.gamelevels.LevelManagerImpl;
-import dimhol.map.MapLoader;
-import dimhol.map.MapLoaderImpl;
 import dimhol.systems.MapCollisionSystem;
 import dimhol.systems.*;
 import dimhol.view.Scene;
 import dimhol.view.SceneImpl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,8 +22,6 @@ public class WorldImpl implements World {
     private final List<GameSystem> systems;
     private final List<WorldEvent> events;
     private boolean gameOver;
-    private final LevelManager levelManager;
-    private final MapLoader mapLoader;
 
     /**
      * Constructs a world.
@@ -37,15 +30,13 @@ public class WorldImpl implements World {
         this.entities = new ArrayList<>();
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
-        this.scene = new SceneImpl();
+        this.scene = new SceneImpl(this);
         this.input = new InputImpl();
-        this.mapLoader = new MapLoaderImpl("src/main/resources/config/map/nice-map.xml");
-        this.levelManager = new LevelManagerImpl(this, mapLoader);
 
         /*
         generate first level
          */
-        this.levelManager.changeLevel();
+
         /*
         Add systems
          */
@@ -79,7 +70,7 @@ public class WorldImpl implements World {
      */
     @Override
     public List<Entity> getEntities() {
-        return Collections.unmodifiableList(this.entities);
+        return this.entities;
     }
 
     /**
@@ -145,11 +136,6 @@ public class WorldImpl implements World {
     @Override
     public void notifyEvent(final WorldEvent event) {
         this.events.add(event);
-    }
-
-    @Override
-    public MapLoader getMapLoader() {
-        return this.mapLoader;
     }
 
     /**

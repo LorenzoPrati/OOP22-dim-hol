@@ -1,9 +1,9 @@
-package dimhol.map;
+package dimhol.gamelevels.map;
 
 /**
  * A Tile represents a single tile in a game map, with information about whether it is collidable.
  */
-public class Tile {
+public class TileImpl implements Tile {
     /**
      * Whether this Tile is collidable.
      */
@@ -16,7 +16,7 @@ public class Tile {
      * @param tileSetId
      * @param walkable   whether this Tile should be collidable.
      */
-    public Tile(final int tileSetId, final boolean walkable) {
+    public TileImpl(final int tileSetId, final boolean walkable) {
         this.tileSetId = tileSetId;
         this.walkable = walkable;
     }

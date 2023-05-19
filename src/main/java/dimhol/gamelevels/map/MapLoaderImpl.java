@@ -1,4 +1,4 @@
-package dimhol.map;
+package dimhol.gamelevels.map;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,19 +19,19 @@ import java.util.List;
  * The class is responsible for parsing an XML file and loading a map from it.
  */
 public class MapLoaderImpl implements MapLoader {
-    private final int width;
-    private final int height;
-    private final int tileWidth;
-    private final int tileHeight;
-    private final List<Tile[][]> mapTileLayers;
-    private final NodeList layerNodeList;
-    private final Element layerElement;
+    private int width;
+    private int height;
+    private int tileWidth;
+    private int tileHeight;
+    private  List<Tile[][]> mapTileLayers;
+    private  NodeList layerNodeList;
+    private  Element layerElement;
 
     /**
      * Constructor for LoadMapImpl that loads a map from an XML file.
      * @param fileName The name of the XML file to load the map from.
      */
-    public MapLoaderImpl(final String fileName) {
+    private void loadMap(final String fileName) {
 
         Element rootElement = null;
         Document doc = null;
@@ -78,7 +78,7 @@ public class MapLoaderImpl implements MapLoader {
 
         String[] line = dataElement.getFirstChild().getTextContent().split("[\n|,]");
         List<String> nline = Arrays.stream(line).filter(e -> !e.equals("")).toList();
-        Tile[][] matrix = new Tile[width][height];
+        TileImpl[][] matrix = new TileImpl[width][height];
 
         int k = 0;
         for (int i = 0; i < width; i++) {
@@ -88,7 +88,7 @@ public class MapLoaderImpl implements MapLoader {
                     if (Integer.parseInt((nline.get(k))) == Integer.parseInt(property.getAttribute("tileMapIdInt"))) {
 
                         if (property.hasAttribute("walkableBool") && property.hasAttribute("tileSetIdInt")) {
-                            matrix[i][j] = new Tile(Integer.parseInt(property.getAttribute("tileSetIdInt")),
+                            matrix[i][j] = new TileImpl(Integer.parseInt(property.getAttribute("tileSetIdInt")),
                                     Boolean.parseBoolean(property.getAttribute("walkableBool")));
                         }
                     }
@@ -100,32 +100,40 @@ public class MapLoaderImpl implements MapLoader {
     }
 
     @Override
-    public final int getTileWidth() {
-        return tileWidth;
-    }
-
-    @Override
-    public final int getTileHeight() {
-        return tileHeight;
-    }
-
-    @Override
-    public final TileMap getTileMap() {
-        return new TileMap(getMapTileLayers().get(0));
-    }
-
-    @Override
-    public final int getWidth() {
-        return width;
-    }
-
-    @Override
-    public  final int getHeight() {
-        return height;
-    }
-
-    @Override
     public final List<Tile[][]> getMapTileLayers() {
         return new ArrayList<>(mapTileLayers);
+    }
+
+    @Override
+    public TileMap loadNormalRoom() {
+        loadMap("src/main/resources/config/map/nice-map.xml");
+        return getMap();
+    }
+
+    private TileMap getMap() {
+        return new TileMapImpl(this.getMapTileLayers(), width, height, tileWidth, tileHeight);
+    }
+
+    @Override
+    public TileMap loadShopRoom() {
+        loadMap("src/main/resources/config/map/nice-map.xml");
+        return getMap();
+    }
+
+    @Override
+    public TileMap loadBossRoom() {
+        loadMap("src/main/resources/config/map/nice-map.xml");
+        return getMap();
+    }
+
+    @Override
+    public TileMap loadCustomMap() {
+        loadMap("");
+        return getMap();
+    }
+
+    @Override
+    public TileMap getTileMap() {
+        return null;
     }
 }
