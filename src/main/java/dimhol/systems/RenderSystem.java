@@ -19,7 +19,7 @@ public class RenderSystem extends AbstractSystem{
     private int getNumToUse(final String state, final Map<String,ArrayList<Integer>> map){
         return map.entrySet().stream()
         .filter(e -> e.getKey().equals(state))
-        .map(e -> e.getValue())
+        .map(Map.Entry::getValue)
         .findAny()
         .get()
         .get(1);

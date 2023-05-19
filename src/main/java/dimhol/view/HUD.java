@@ -22,7 +22,7 @@ public class HUD {
     private int offsetX;
     private int offsetY;
     private Graphics2D g2d;
-    private record EnemyData(int currentHealth, int maxHealth, Vector2D pos, BodyShape body){}
+    private record EnemyData( int currentHealth, int maxHealth, Vector2D pos, BodyShape body){}
     private final List<EnemyData> enemiesData = new ArrayList<>();
 
     public HUD(final ResourceLoader loader) {
@@ -36,10 +36,10 @@ public class HUD {
         this.offsetY = offsetY;
         this.g2d = g2d;
 
-        File font_file = new File("src/main/resources/asset/hud/font/Fipps-Regular.ttf");
         try {
+            File fontFile = new File("src/main/resources/asset/hud/font/Fipps-Regular.ttf");
             double fontSize = newTileHeight / 3;
-            var font = Font.createFont(Font.TRUETYPE_FONT, font_file).deriveFont(Math.round(fontSize));
+            var font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Math.round(fontSize));
             g2d.setFont(font);
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
@@ -51,27 +51,27 @@ public class HUD {
     }
 
     private void showHealthInfo() {
-        var heartImg = resourceLoader.getImage(35);
-        int heartW = (int) (newTileWidth * HUD_IMAGE_WIDTH);
-        int heartH = (int) (newTileHeight * HUD_IMAGE_HEIGHT);
+        var heartImg = resourceLoader.getImage(47);
+        int heartW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
+        int heartH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
 
         g2d.setColor(Color.RED);
+        g2d.drawString("Hearts : " + playerCurrentHealth + " / " + playerMaxHealth, heartW + offsetX, heartH + offsetY);
         for (int i = 1; i < playerCurrentHealth + 1; i++) {
             g2d.drawImage(heartImg, (i * heartW + offsetX), heartH + offsetY, heartW, heartH, null);
         }
-        g2d.drawString("Hearts : " + playerCurrentHealth + " / " + playerMaxHealth, heartW + offsetX, heartH + offsetY);
     }
 
     private void showCoinInfo() {
         var coinImg = resourceLoader.getImage(46);
-        int coinW = (int) (newTileWidth * HUD_IMAGE_WIDTH);
-        int coinH = (int) (newTileHeight * HUD_IMAGE_HEIGHT);
+        int coinW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
+        int coinH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
 
         g2d.setColor(Color.YELLOW);
+        g2d.drawString("Coins : " + coins, coinW + offsetX, coinH * 3 + offsetY);
         for (int i = 1; i < coins / 10 + 1; i++) {
-            g2d.drawImage(coinImg, (i * coinW + offsetX), coinH + 50 + offsetY, coinW, coinH, null);
+            g2d.drawImage(coinImg, (i * coinW + offsetX), coinH * 3 + offsetY, coinW, coinH, null);
         }
-        g2d.drawString("Coins : " + coins, coinW + offsetX, (float) (coinH * 2.9 + offsetY));
     }
 
     public void updatePlayerHUD(int currentHealth, int maxHealth, int currentAmount) {
@@ -89,15 +89,15 @@ public class HUD {
         var rectH = 0.1 * newTileHeight;
         for (var e : enemiesData) {
             g2d.drawRect(
-                    (int) (e.pos().getX() * newTileWidth + offsetX),
-                    (int) (e.pos().getY() * newTileHeight + offsetY - rectH),
-                    (int) (e.body().getBoundingWidth() * newTileWidth),
-                    (int) (rectH));
+                    Math.toIntExact(Math.round(e.pos().getX() * newTileWidth + offsetX)),
+                    Math.toIntExact(Math.round(e.pos().getY() * newTileHeight + offsetY - rectH)),
+                    Math.toIntExact(Math.round(e.body().getBoundingWidth() * newTileWidth)),
+                    Math.toIntExact(Math.round(rectH)));
             g2d.fillRect(
-                    (int) (e.pos().getX() * newTileWidth + offsetX),
-                    (int) (e.pos().getY() * newTileHeight + offsetY - rectH),
-                    (int) (e.body().getBoundingWidth() * newTileWidth / e.maxHealth() * e.currentHealth()),
-                    (int) (rectH));
+                    Math.toIntExact(Math.round(e.pos().getX() * newTileWidth + offsetX)),
+                    Math.toIntExact(Math.round(e.pos().getY() * newTileHeight + offsetY - rectH)),
+                    Math.toIntExact(Math.round(e.body().getBoundingWidth() * newTileWidth / e.maxHealth() * e.currentHealth())),
+                    Math.toIntExact(Math.round(rectH)));
         }
         enemiesData.clear();
     }
