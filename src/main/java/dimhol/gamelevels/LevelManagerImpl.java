@@ -42,7 +42,7 @@ public class LevelManagerImpl implements LevelManager {
         Random random = new Random();
         this.tileMap = mapLoader.loadShopRoom();
         normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, random);
-        shopRoomStrategy = new ShopRoomStrategy(genericFactory, random);
+        shopRoomStrategy = new ShopRoomStrategy(genericFactory, new RandomWrapper());
         bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory(), random);
         this.currentLevel = 0;
     }
