@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 /**
@@ -25,7 +27,7 @@ public final class BossRoomStrategy implements RoomStrategy {
 
     private static final int ENEMY_POWER_MULTIPLIER = 10;
     private static final int NUM_ENEMY_WAVES = 3;
-    private static final int MAX_ENEMIES_PER_TILE = 100;
+    private static final int MAX_ENEMIES_PER_TILE = 500;
     private final GenericFactory genericFactory;
     private final EnemyFactory enemyFactory;
     private final BossFactory bossFactory;
@@ -64,29 +66,63 @@ public final class BossRoomStrategy implements RoomStrategy {
         entities.add(player);
 
         // Place the boss:
-        try {
-            int numBoss = calculateNumEnemies(freeTiles.size());
-            IntStream.range(0, numBoss).mapToObj(i -> createBoss(freeTiles)).forEach(boss -> {
-                placeEntityAtRandomPosition(boss, freeTiles);
-                entities.add(boss);
-            });
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
-        }
+        PlaceBoss(freeTiles, entities);
 
         // Generate enemy waves:
-        try {
-            int numEnemies = calculateNumEnemies(freeTiles.size());
-            IntStream.range(0, NUM_ENEMY_WAVES).forEach(wave -> IntStream.range(0, numEnemies)
-                    .mapToObj(i -> createEnemy(freeTiles, wave)).forEach(enemy -> {
-                        placeEntityAtRandomPosition(enemy, freeTiles);
-                        entities.add(enemy);
-                    }));
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
-        }
+        PlaceEnemyWaves(freeTiles, entities);
 
         return entities;
+    }
+
+    private void PlaceBoss(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        generateEntitiesWithExceptionHandling(() -> calculateNumEnemies(freeTiles.size()),
+                numBoss -> IntStream.range(0, numBoss).mapToObj(i -> createBoss(freeTiles)).forEach(boss -> {
+                    placeEntityAtRandomPosition(boss, freeTiles);
+                    entities.add(boss);
+                }),
+                this::handleEntityGenerationError
+        );
+    }
+
+    private void PlaceEnemyWaves(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        generateEntitiesWithExceptionHandling(() -> calculateNumEnemies(freeTiles.size()),
+                numEnemies -> IntStream.range(0, NUM_ENEMY_WAVES).forEach(wave -> IntStream.range(0, numEnemies)
+                        .mapToObj(i -> createEnemy(freeTiles, wave)).forEach(enemy -> {
+                            placeEntityAtRandomPosition(enemy, freeTiles);
+                            entities.add(enemy);
+                        })),
+                this::handleEntityGenerationError
+        );
+    }
+
+    /**
+     * Generates entities with exception handling.
+     * The generateEntitiesWithExceptionHandling method takes a supplier (entityCountSupplier) to retrieve the number of entities,
+     * a consumer (entityGenerationConsumer) to generate the entities,
+     * and a consumer (errorConsumer) to handle any exceptions that occur during the process.
+     *
+     * @param entityCountSupplier      The supplier to retrieve the number of entities.
+     * @param entityGenerationConsumer The consumer to generate the entities.
+     * @param <T>                      The type of the number of entities.
+     */
+    private <T> void generateEntitiesWithExceptionHandling(Supplier<T> entityCountSupplier, Consumer<T> entityGenerationConsumer,
+                                                           Consumer<Exception> errorConsumer) {
+        try {
+            T entityCount = entityCountSupplier.get();
+            entityGenerationConsumer.accept(entityCount);
+        } catch (Exception e) {
+            errorConsumer.accept(e);
+        }
+    }
+
+    /**
+     * Handles the error that occurs during entity generation.
+     * The handleEntityGenerationError method is responsible for handling any exceptions that occur during entity generation.
+     *
+     * @param e The exception that occurred.
+     */
+    private void handleEntityGenerationError(Exception e) {
+        System.err.println("Error generating entities: " + e.getMessage());
     }
 
     /**
