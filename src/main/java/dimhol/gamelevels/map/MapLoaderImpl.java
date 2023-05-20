@@ -18,17 +18,18 @@ import java.util.List;
 /**
  * The class is responsible for parsing an XML file and loading a map from it.
  */
-public class MapLoaderImpl implements MapLoader {
+public final class MapLoaderImpl implements MapLoader {
     private int width;
     private int height;
     private int tileWidth;
     private int tileHeight;
-    private  List<Tile[][]> mapTileLayers;
-    private  NodeList layerNodeList;
-    private  Element layerElement;
+    private List<Tile[][]> mapTileLayers;
+    private NodeList layerNodeList;
+    private Element layerElement;
 
     /**
      * Constructor for LoadMapImpl that loads a map from an XML file.
+     *
      * @param fileName The name of the XML file to load the map from.
      */
     private void loadMap(final String fileName) {
@@ -100,7 +101,7 @@ public class MapLoaderImpl implements MapLoader {
     }
 
     @Override
-    public final List<Tile[][]> getMapTileLayers() {
+    public List<Tile[][]> getMapTileLayers() {
         return new ArrayList<>(mapTileLayers);
     }
 

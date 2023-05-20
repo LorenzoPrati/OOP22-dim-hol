@@ -7,8 +7,6 @@ import java.util.List;
  */
 public interface MapLoader {
 
-
-
     /**
      * Returns the tile layers of the map.
      *

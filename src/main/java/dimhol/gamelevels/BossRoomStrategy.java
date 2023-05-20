@@ -9,14 +9,19 @@ import dimhol.entity.factories.GenericFactory;
 import org.apache.commons.lang3.tuple.Pair;
 import org.locationtech.jts.math.Vector2D;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 /**
  * BossRoomStrategy is responsible for generating entities for a boss room in the game.
  * It generates the player, boss, and enemy waves for the room.
  */
-public class BossRoomStrategy implements RoomStrategy {
+public final class BossRoomStrategy implements RoomStrategy {
 
     public static final int POWER = 10;
     private final GenericFactory genericFactory;
@@ -24,15 +29,31 @@ public class BossRoomStrategy implements RoomStrategy {
     private final BossFactory bossFactory;
     private final Random random;
 
-    public BossRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory,final BossFactory bossFactory, final Random random) {
+    /**
+     * Constructs a BossRoomStrategy.
+     *
+     * @param genericFactory The factory for creating generic entities.
+     * @param enemyFactory   The factory for creating enemy entities.
+     * @param bossFactory    The factory for creating boss entities.
+     * @param random         The random number generator.
+     */
+    public BossRoomStrategy(final GenericFactory genericFactory,
+                            final EnemyFactory enemyFactory, final BossFactory bossFactory, final Random random) {
         this.genericFactory = genericFactory;
         this.enemyFactory = enemyFactory;
         this.bossFactory = bossFactory;
-        this.random = random;
+        this.random = new Random(random.nextInt());
     }
 
+    /**
+     * Generates entities for a boss room.
+     *
+     * @param entity     The optional entity parameter (not used in this implementation).
+     * @param freeTiles  The set of available tiles where entities can be placed.
+     * @return A list of generated entities.
+     */
     @Override
-    public List<Entity> generate(Optional<Entity> entity, Set<Pair<Integer, Integer>> freeTiles) {
+    public List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles) {
         List<Entity> entities = new ArrayList<>();
 
         //Place the player:
@@ -53,11 +74,12 @@ public class BossRoomStrategy implements RoomStrategy {
     /**
      * Generates enemy waves and places them in the room.
      *
-     * @param numWaves   The number of enemy waves to generate.
-     * @param entities   The list of entities to add the generated enemies to.
-     * @param freeTiles  The set of available tiles where enemies can be placed.
+     * @param numWaves  The number of enemy waves to generate.
+     * @param entities  The list of entities to add the generated enemies to.
+     * @param freeTiles The set of available tiles where enemies can be placed.
      */
-    private void generateEnemyWaves(int numWaves, List<Entity> entities, Set<Pair<Integer, Integer>> freeTiles) {
+    private void generateEnemyWaves(final int numWaves, final List<Entity> entities,
+                                    final Set<Pair<Integer, Integer>> freeTiles) {
         IntStream.rangeClosed(1, numWaves).forEach(wave -> {
             int numEnemies = calculateNumEnemies(freeTiles.size());
             generateEnemies(numEnemies, entities, freeTiles, wave);
@@ -72,7 +94,8 @@ public class BossRoomStrategy implements RoomStrategy {
      * @param freeTiles  The set of available tiles where enemies can be placed.
      * @param wave       The wave number of enemies being generated.
      */
-    private void generateEnemies(int numEnemies, List<Entity> entities, Set<Pair<Integer, Integer>> freeTiles, int wave) {
+    private void generateEnemies(final int numEnemies, final List<Entity> entities,
+                                 final Set<Pair<Integer, Integer>> freeTiles, final int wave) {
         generateZombie(numEnemies, entities, freeTiles, wave);
 //        generateShooter(numEnemies, entities, freeTiles, wave);
     }
@@ -85,7 +108,8 @@ public class BossRoomStrategy implements RoomStrategy {
      * @param freeTiles  The set of available tiles where zombies can be placed.
      * @param wave       The wave number of the enemies being generated.
      */
-    private void generateZombie(int numEnemies, List<Entity> entities, Set<Pair<Integer, Integer>> freeTiles, int wave) {
+    private void generateZombie(final int numEnemies, final List<Entity> entities,
+                                final Set<Pair<Integer, Integer>> freeTiles, final int wave) {
         IntStream.rangeClosed(0, numEnemies).mapToObj(i -> createZombie(freeTiles, wave)).forEach(enemy -> {
             placeEntity(enemy, freeTiles);
             entities.add(enemy);
@@ -112,7 +136,7 @@ public class BossRoomStrategy implements RoomStrategy {
      * @param wave      The wave number of the enemy being created.
      * @return The created zombie entity.
      */
-    private Entity createZombie(Set<Pair<Integer, Integer>> freeTiles, int wave) {
+    private Entity createZombie(final Set<Pair<Integer, Integer>> freeTiles, final int wave) {
         // Customize enemy creation based on wave number
         Entity zombie = enemyFactory.createZombie(getRandomTile(freeTiles).getLeft().doubleValue(),
                 getRandomTile(freeTiles).getRight().doubleValue());
@@ -141,7 +165,7 @@ public class BossRoomStrategy implements RoomStrategy {
      * @param enemy The enemy entity.
      * @param wave  The wave number.
      */
-    private void setEnemyPower(Entity enemy, int wave) {
+    private void setEnemyPower(final Entity enemy, final int wave) {
         double enemyPower = calculateEnemyPower(wave);
         PowerComponent powerComponent = new PowerComponent(enemyPower);
         enemy.addComponent(powerComponent);
@@ -153,8 +177,7 @@ public class BossRoomStrategy implements RoomStrategy {
      * @param wave The wave number.
      * @return The power level of the enemy.
      */
-    private double calculateEnemyPower(int wave) {
-        // Customize enemy power calculation based on wave number
+    private double calculateEnemyPower(final int wave) {
         return wave * POWER;
     }
 
@@ -162,7 +185,7 @@ public class BossRoomStrategy implements RoomStrategy {
      * Creates a boss entity and assigns it a random position from the set of free tiles.
      *
      * @param freeTiles The set of available tiles where the boss can be placed.
-     * @return The created boss entity.
+     * @return The created player entity.
      */
     private Entity createAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles) {
         Entity player = createPlayer(freeTiles);
@@ -176,7 +199,7 @@ public class BossRoomStrategy implements RoomStrategy {
      * @param freeTiles The set of available tiles where the player can be placed.
      * @return The created player entity.
      */
-    private Entity createPlayer(Set<Pair<Integer, Integer>> freeTiles) {
+    private Entity createPlayer(final Set<Pair<Integer, Integer>> freeTiles) {
         return genericFactory.createPlayer(getRandomTile(freeTiles).getLeft().doubleValue(),
                 getRandomTile(freeTiles).getRight().doubleValue());
     }
@@ -184,7 +207,7 @@ public class BossRoomStrategy implements RoomStrategy {
     /**
      * Assigns a random position from the set of free tiles to the specified entity.
      *
-     * @param entity The entity to place.
+     * @param entity    The entity to place.
      * @param freeTiles The set of available tiles where the entity can be placed.
      */
     private void placeEntity(final Entity entity, final Set<Pair<Integer, Integer>> freeTiles) {
@@ -211,11 +234,11 @@ public class BossRoomStrategy implements RoomStrategy {
     /**
      * Generates the specified number of boss entities and places them in the room.
      *
-     * @param numBoss    The number of boss entities to generate.
-     * @param entities   The list of entities to add the generated bosses to.
-     * @param freeTiles  The set of available tiles where bosses can be placed.
+     * @param numBoss   The number of boss entities to generate.
+     * @param entities  The list of entities to add the generated bosses to.
+     * @param freeTiles The set of available tiles where bosses can be placed.
      */
-    private void generateBoss(int numBoss, List<Entity> entities, Set<Pair<Integer, Integer>> freeTiles) {
+    private void generateBoss(final int numBoss, final List<Entity> entities, final Set<Pair<Integer, Integer>> freeTiles) {
         IntStream.range(0, numBoss).mapToObj(i -> createBoss(freeTiles)).forEach(boss -> {
             placeEntity(boss, freeTiles);
             entities.add(boss);
@@ -228,7 +251,7 @@ public class BossRoomStrategy implements RoomStrategy {
      * @param freeTiles The set of available tiles where the boss can be placed.
      * @return The created boss entity.
      */
-    private Entity createBoss(Set<Pair<Integer, Integer>> freeTiles) {
+    private Entity createBoss(final Set<Pair<Integer, Integer>> freeTiles) {
         return bossFactory.createBoss(getRandomTile(freeTiles).getLeft().doubleValue(),
                 getRandomTile(freeTiles).getRight().doubleValue());
     }
