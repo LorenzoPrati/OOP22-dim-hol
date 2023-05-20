@@ -29,12 +29,11 @@ public class LevelManagerImpl implements LevelManager {
     private final NormalRoomStrategy normalRoomStrategy;
     private final ShopRoomStrategy shopRoomStrategy;
     private final BossRoomStrategy bossRoomStrategy;
-    private TileMap tileMap;
+    private final TileMap tileMap;
     private int currentLevel;
 
     /**
      * Constructs a LevelManagerImpl object.
-     *
      */
     public LevelManagerImpl() {
         this.mapLoader = new MapLoaderImpl();
@@ -50,9 +49,12 @@ public class LevelManagerImpl implements LevelManager {
 
     /**
      * Changes the current level by generating a new level with the placement of the player and enemies.
+     *
+     * @param entities The list of entities in the game world.
+     * @return The list of entities for the new level.
      */
     @Override
-    public List<Entity> changeLevel(List<Entity> entities) {
+    public List<Entity> changeLevel(final List<Entity> entities) {
         currentLevel++;
         var player = savePlayer(entities);
         return generateLevel(player);
@@ -60,6 +62,8 @@ public class LevelManagerImpl implements LevelManager {
 
     /**
      * Determines the type of room to generate based on the current level.
+     *
+     * @return The room strategy for generating the current room.
      */
     private RoomStrategy determineRoomType() {
         // Calculate the room index within the current cycle
@@ -115,9 +119,10 @@ public class LevelManagerImpl implements LevelManager {
     /**
      * Retrieves the player entity from the game world.
      *
+     * @param entities The list of entities in the game world.
      * @return The player entity if found, otherwise null.
      */
-    private Optional<Entity> savePlayer(List<Entity> entities) {
+    private Optional<Entity> savePlayer(final List<Entity> entities) {
         return entities.stream()
                 .filter(entity -> entity.hasComponent(PlayerComponent.class))
                 .findFirst();
@@ -126,7 +131,8 @@ public class LevelManagerImpl implements LevelManager {
     /**
      * Generates the level by adding entities (player, enemies) to the world.
      *
-     * @param player The player entity.
+     * @param player    The player entity.
+     * @return The list of entities for the new level.
      */
     private List<Entity> generateLevel(final Optional<Entity> player) {
         return this.determineRoomType().generate(player, getFreeTiles());
