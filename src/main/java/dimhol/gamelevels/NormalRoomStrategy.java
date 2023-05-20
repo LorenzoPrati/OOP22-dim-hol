@@ -34,7 +34,7 @@ public class NormalRoomStrategy implements RoomStrategy {
     public NormalRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory, final Random random) {
         this.genericFactory = genericFactory;
         this.enemyFactory = enemyFactory;
-        this.random = random;
+        this.random = new Random(random.nextInt());
     }
 
     static Pair<Integer, Integer> findRandomFreeTiles(final Set<Pair<Integer, Integer>> freeTiles, final Random random) {
