@@ -23,12 +23,13 @@ public final class MapLoaderImpl implements MapLoader {
     private int height;
     private int tileWidth;
     private int tileHeight;
-    private  List<Tile[][]> mapTileLayers;
-    private  NodeList layerNodeList;
-    private  Element layerElement;
+    private List<Tile[][]> mapTileLayers;
+    private NodeList layerNodeList;
+    private Element layerElement;
 
     /**
      * Constructor for LoadMapImpl that loads a map from an XML file.
+     *
      * @param fileName The name of the XML file to load the map from.
      */
     private void loadMap(final String fileName) {
