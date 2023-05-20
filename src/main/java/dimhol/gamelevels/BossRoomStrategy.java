@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -32,7 +31,6 @@ public final class BossRoomStrategy implements RoomStrategy {
     private final GenericFactory genericFactory;
     private final EnemyFactory enemyFactory;
     private final BossFactory bossFactory;
-    private final Random random;
 
     /**
      * Constructs a BossRoomStrategy.
@@ -40,14 +38,12 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param genericFactory The factory for creating generic entities.
      * @param enemyFactory   The factory for creating enemy entities.
      * @param bossFactory    The factory for creating boss entities.
-     * @param random         The random number generator.
      */
     public BossRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory,
-                            final BossFactory bossFactory, final Random random) {
+                            final BossFactory bossFactory) {
         this.genericFactory = genericFactory;
         this.enemyFactory = enemyFactory;
         this.bossFactory = bossFactory;
-        this.random = new Random(random.nextInt());
     }
 
     /**
