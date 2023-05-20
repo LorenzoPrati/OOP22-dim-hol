@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
  * The strategy to generate a normal room in the game.
  */
 public class NormalRoomStrategy implements RoomStrategy {
-    private static final int ENEMY_DENSITY = 50;
+    private static final int ENEMY_DENSITY = 100;
     private static final int MAX_ENEMIES = 10;
     private final GenericFactory genericFactory;
     private final EnemyFactory enemyFactory;
@@ -69,6 +69,8 @@ public class NormalRoomStrategy implements RoomStrategy {
         int numEnemies = calculateNumEnemies(freeTiles.size());
         generateZombies(numEnemies, entities, freeTiles);
         generateShooters(numEnemies, entities, freeTiles);
+
+        System.out.println(freeTiles.size());
 
         //Place coins:
 
