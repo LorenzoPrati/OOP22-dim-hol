@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public class ShopRoomStrategy implements RoomStrategy {
     private final GenericFactory genericFactory;
-    private final Random random;
+    private final RandomWrapper random;
 
     /**
      * Constructs a ShopRoomStrategy object with the specified generic factory and random number generator.
@@ -26,7 +26,7 @@ public class ShopRoomStrategy implements RoomStrategy {
      * @param genericFactory The generic factory used for creating entities.
      * @param random         The random number generator used for generating random positions.
      */
-    public ShopRoomStrategy(final GenericFactory genericFactory, final Random random) {
+    public ShopRoomStrategy(final GenericFactory genericFactory, final RandomWrapper random) {
         this.genericFactory = genericFactory;
         this.random = random;
     }
@@ -39,7 +39,7 @@ public class ShopRoomStrategy implements RoomStrategy {
      * @return A Pair representing the coordinates of the random free tile.
      * @throws IllegalStateException if no free tiles are available.
      */
-    static Pair<Integer, Integer> findRandomFreeTiles(final Set<Pair<Integer, Integer>> freeTiles, final Random random) {
+    static Pair<Integer, Integer> findRandomFreeTiles(final Set<Pair<Integer, Integer>> freeTiles, final RandomWrapper random) {
         int randomIndex = random.nextInt(freeTiles.size());
         int currentIndex = 0;
         for (Pair<Integer, Integer> tile : freeTiles) {
