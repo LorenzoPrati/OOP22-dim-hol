@@ -41,8 +41,8 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param bossFactory    The factory for creating boss entities.
      * @param random         The random number generator.
      */
-    public BossRoomStrategy(final GenericFactory genericFactory,
-                            final EnemyFactory enemyFactory, final BossFactory bossFactory, final Random random) {
+    public BossRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory,
+                            final BossFactory bossFactory, final Random random) {
         this.genericFactory = genericFactory;
         this.enemyFactory = enemyFactory;
         this.bossFactory = bossFactory;
@@ -73,13 +73,25 @@ public final class BossRoomStrategy implements RoomStrategy {
         return entities;
     }
 
-    private Entity generateAndPlacePlayer(Set<Pair<Integer, Integer>> freeTiles) {
+    /**
+     * Generates and places the player entity in a random position.
+     *
+     * @param freeTiles The set of available tiles where the player can be placed.
+     * @return The generated player entity.
+     */
+    private Entity generateAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles) {
         Entity player = createPlayer(freeTiles);
         placeEntityAtRandomPosition(player, freeTiles);
         return player;
     }
 
-    private void generateAndPlaceBoss(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    /**
+     * Generates and places the boss entity in a random position.
+     *
+     * @param freeTiles The set of available tiles where the boss can be placed.
+     * @param entities  The list of entities where the boss will be added.
+     */
+    private void generateAndPlaceBoss(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         generateEntitiesWithExceptionHandling(() -> calculateNumEnemies(freeTiles.size()),
                 numBoss -> IntStream.range(0, numBoss).mapToObj(i -> createBoss(freeTiles)).forEach(boss -> {
                     placeEntityAtRandomPosition(boss, freeTiles);
@@ -89,7 +101,13 @@ public final class BossRoomStrategy implements RoomStrategy {
         );
     }
 
-    private void generateAndPlaceEnemyWaves(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    /**
+     * Generates and places the enemy waves in random positions.
+     *
+     * @param freeTiles The set of available tiles where the enemies can be placed.
+     * @param entities  The list of entities where the enemies will be added.
+     */
+    private void generateAndPlaceEnemyWaves(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         generateEntitiesWithExceptionHandling(() -> calculateNumEnemies(freeTiles.size()),
                 numEnemies -> IntStream.range(0, NUM_ENEMY_WAVES).forEach(wave -> IntStream.range(0, numEnemies)
                         .mapToObj(i -> createEnemy(freeTiles, wave)).forEach(enemy -> {
@@ -108,10 +126,13 @@ public final class BossRoomStrategy implements RoomStrategy {
      *
      * @param entityCountSupplier      The supplier to retrieve the number of entities.
      * @param entityGenerationConsumer The consumer to generate the entities.
+     * @param errorConsumer            The consumer to handle any exceptions that occur during generation.
      * @param <T>                      The type of the number of entities.
      */
-    private <T> void generateEntitiesWithExceptionHandling(Supplier<T> entityCountSupplier, Consumer<T> entityGenerationConsumer,
-                                                           Consumer<Exception> errorConsumer) {
+    private <T> void generateEntitiesWithExceptionHandling(
+            final Supplier<T> entityCountSupplier,
+            final Consumer<T> entityGenerationConsumer,
+            final Consumer<Exception> errorConsumer) {
         try {
             T entityCount = entityCountSupplier.get();
             entityGenerationConsumer.accept(entityCount);
@@ -126,7 +147,7 @@ public final class BossRoomStrategy implements RoomStrategy {
      *
      * @param e The exception that occurred.
      */
-    private void handleEntityGenerationError(Exception e) {
+    private void handleEntityGenerationError(final Exception e) {
         System.err.println("Error generating entities: " + e.getMessage());
     }
 
@@ -139,8 +160,10 @@ public final class BossRoomStrategy implements RoomStrategy {
      */
     private Entity createEnemy(final Set<Pair<Integer, Integer>> freeTiles, final int wave) {
         // Customize enemy creation based on wave number
-        Entity enemy = wave % 2 == 0 ?
-                enemyFactory.createZombie(0, 0) :
+        Entity enemy = wave % 2 == 0
+                ?
+                enemyFactory.createZombie(0, 0)
+                :
                 enemyFactory.createShooter(0, 0);
         setEnemyPower(enemy, wave);
         placeEntity(enemy, freeTiles);
@@ -234,6 +257,7 @@ public final class BossRoomStrategy implements RoomStrategy {
      *
      * @param numFreeTiles The number of free tiles in the room.
      * @return The number of enemies to generate.
+     * @throws IllegalArgumentException if the number of free tiles is less than the entities spawned.
      */
     private int calculateNumEnemies(final int numFreeTiles) {
         if (numFreeTiles < MAX_ENEMIES_PER_TILE) {
