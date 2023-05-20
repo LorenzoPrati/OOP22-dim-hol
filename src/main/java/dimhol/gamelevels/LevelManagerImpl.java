@@ -131,7 +131,7 @@ public class LevelManagerImpl implements LevelManager {
     /**
      * Generates the level by adding entities (player, enemies) to the world.
      *
-     * @param player    The player entity.
+     * @param player The player entity.
      * @return The list of entities for the new level.
      */
     private List<Entity> generateLevel(final Optional<Entity> player) {
