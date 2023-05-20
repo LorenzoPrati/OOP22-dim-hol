@@ -1,5 +1,7 @@
 package dimhol.gamelevels.map;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,19 +18,20 @@ public final class TileMapImpl implements TileMap {
     /**
      * Creates a new TileMap with the given tiles.
      *
-     * @param tilemap A 2D array of Tiles representing the map.
-     * @param width The width of the map in tiles.
-     * @param height The height of the map in tiles.
-     * @param tileWidth The width of each tile in pixels.
+     * @param tilemap    A 2D array of Tiles representing the map.
+     * @param width      The width of the map in tiles.
+     * @param height     The height of the map in tiles.
+     * @param tileWidth  The width of each tile in pixels.
      * @param tileHeight The height of each tile in pixels.
      */
-    public TileMapImpl(final List<Tile[][]> tilemap, final int width, final int height, final int tileWidth, final int tileHeight) {
+    public TileMapImpl(final List<Tile[][]> tilemap, final int width, final int height,
+                       final int tileWidth, final int tileHeight) {
         this.tilemap = tilemap.get(0);
         this.width = width;
         this.height = height;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
-        this.layers = tilemap;
+        this.layers = new ArrayList<>(tilemap);
     }
 
     /**
@@ -83,16 +86,16 @@ public final class TileMapImpl implements TileMap {
 
     @Override
     public List<Tile[][]> getLayers() {
-        return this.layers;
+        return Collections.unmodifiableList(this.layers);
     }
 
     /**
      * Sets the new tile map for the TileMap instance.
      * This method allows replacing the entire map with a new one.
      *
-     * @param newMap  the new TileMap to set.
+     * @param newMap the new TileMap to set.
      */
-    public void setTileMap(TileMapImpl newMap) {
+    public void setTileMap(final TileMapImpl newMap) {
         // TODO: Implementation of setTileMap method will be added here
     }
 }
