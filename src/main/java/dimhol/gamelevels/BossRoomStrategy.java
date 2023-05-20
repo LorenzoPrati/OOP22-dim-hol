@@ -26,6 +26,7 @@ import java.util.stream.IntStream;
 public final class BossRoomStrategy implements RoomStrategy {
 
     private static final int ENEMY_POWER_MULTIPLIER = 10;
+    private static final int NUM_ENEMIES_PER_WAVE = 3;
     private static final int NUM_ENEMY_WAVES = 3;
     private static final int MAX_ENEMIES_PER_TILE = 100;
     private final GenericFactory genericFactory;
@@ -263,7 +264,8 @@ public final class BossRoomStrategy implements RoomStrategy {
         if (numFreeTiles < MAX_ENEMIES_PER_TILE) {
             throw new IllegalArgumentException("The number of free tiles is less than the entities spawned!");
         }
-        int maxNumOfEnemies = Math.min(1, numFreeTiles / MAX_ENEMIES_PER_TILE);
-        return random.nextInt(maxNumOfEnemies) + 1;
+        int maxNumOfEnemies = numFreeTiles / MAX_ENEMIES_PER_TILE;
+        int numEnemies = Math.min(NUM_ENEMIES_PER_WAVE, maxNumOfEnemies);
+        return numEnemies > 0 ? numEnemies : 1;
     }
 }
