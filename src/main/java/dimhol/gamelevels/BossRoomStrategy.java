@@ -27,7 +27,7 @@ public final class BossRoomStrategy implements RoomStrategy {
 
     private static final int ENEMY_POWER_MULTIPLIER = 10;
     private static final int NUM_ENEMY_WAVES = 3;
-    private static final int MAX_ENEMIES_PER_TILE = 500;
+    private static final int MAX_ENEMIES_PER_TILE = 100;
     private final GenericFactory genericFactory;
     private final EnemyFactory enemyFactory;
     private final BossFactory bossFactory;
@@ -61,20 +61,25 @@ public final class BossRoomStrategy implements RoomStrategy {
         List<Entity> entities = new ArrayList<>();
 
         // Place the player:
-        Entity player = createPlayer(freeTiles);
-        placeEntityAtRandomPosition(player, freeTiles);
+        Entity player = generateAndPlacePlayer(freeTiles);
         entities.add(player);
 
         // Place the boss:
-        PlaceBoss(freeTiles, entities);
+        generateAndPlaceBoss(freeTiles, entities);
 
         // Generate enemy waves:
-        PlaceEnemyWaves(freeTiles, entities);
+        generateAndPlaceEnemyWaves(freeTiles, entities);
 
         return entities;
     }
 
-    private void PlaceBoss(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    private Entity generateAndPlacePlayer(Set<Pair<Integer, Integer>> freeTiles) {
+        Entity player = createPlayer(freeTiles);
+        placeEntityAtRandomPosition(player, freeTiles);
+        return player;
+    }
+
+    private void generateAndPlaceBoss(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
         generateEntitiesWithExceptionHandling(() -> calculateNumEnemies(freeTiles.size()),
                 numBoss -> IntStream.range(0, numBoss).mapToObj(i -> createBoss(freeTiles)).forEach(boss -> {
                     placeEntityAtRandomPosition(boss, freeTiles);
@@ -84,7 +89,7 @@ public final class BossRoomStrategy implements RoomStrategy {
         );
     }
 
-    private void PlaceEnemyWaves(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    private void generateAndPlaceEnemyWaves(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
         generateEntitiesWithExceptionHandling(() -> calculateNumEnemies(freeTiles.size()),
                 numEnemies -> IntStream.range(0, NUM_ENEMY_WAVES).forEach(wave -> IntStream.range(0, numEnemies)
                         .mapToObj(i -> createEnemy(freeTiles, wave)).forEach(enemy -> {
