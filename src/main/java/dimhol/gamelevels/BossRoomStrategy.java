@@ -42,7 +42,7 @@ public final class BossRoomStrategy implements RoomStrategy {
         this.genericFactory = genericFactory;
         this.enemyFactory = enemyFactory;
         this.bossFactory = bossFactory;
-        this.random = random;
+        this.random = new Random(random.nextInt());
     }
 
     /**
