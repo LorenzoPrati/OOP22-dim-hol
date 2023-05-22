@@ -36,11 +36,7 @@ public final class DistanceAttack extends AbstractAction {
 
     private Optional<List<WorldEvent>> distanceAttack() {
         List<WorldEvent> attacks = new ArrayList<>();
-        var dir = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
-        var pos = AttackUtil.getAttackPos(dir, getEnemyCentralPos(), getEnemyBody().getBodyShape(),
-                EnemyAttackFactory.BULLET_WIDTH, EnemyAttackFactory.BULLET_HEIGHT);
-
-        attacks.add(new AddEntityEvent(getAttackFactory().createDistanceAttack(pos, dir, getEnemy())));
+        attacks.add(new AddEntityEvent(getAttackFactory().createDistanceAttack(getEnemy())));
         return Optional.of(attacks);
     }
 }

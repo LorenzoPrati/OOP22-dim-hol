@@ -11,7 +11,7 @@ import org.locationtech.jts.math.Vector2D;
 
 import java.util.List;
 
-public class PlayerAttackFactory extends AbstractFactory {
+public class PlayerAttackFactory extends AbstractAttackFactory {
 
     /*
      * Prima di chiamre questi metodi è importante setttare la posizione del
@@ -30,20 +30,20 @@ public class PlayerAttackFactory extends AbstractFactory {
 
     private final HealthEffectFactory healthEffectFactory = new HealthEffectsFactoryImpl();
 
-    public Entity createAttack(final Vector2D pos, final Entity entity) {
+    public Entity createAttack(final Entity entity) {
         return new EntityBuilder()
-                .add(new PositionComponent(pos, 0))
+                .add(new PositionComponent(getAttackPos(entity, MELEE_WIDTH, MELEE_HEIGHT), 0))
                 .add(new BodyComponent(new RectBodyShape(MELEE_WIDTH, MELEE_HEIGHT), false))
                 .add(new AttackComponent(entity, List.of(healthEffectFactory.decreasePlayerCurrentHealthEffect(1))))
                 .build();
     }
 
-    public Entity createDistanceAttack(final Vector2D pos, final Vector2D dir, final Entity entity) {
+    public Entity createDistanceAttack(final Entity entity) {
         return new EntityBuilder()
-                .add(new PositionComponent(pos, 0))
-                .add(new MovementComponent(dir, BULLET_SPEED, true))
+                .add(new PositionComponent(getAttackPos(entity, BULLET_WIDTH, BULLET_HEIGHT), 0))
+                .add(new MovementComponent(getDirection(entity), BULLET_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(BULLET_WIDTH, BULLET_HEIGHT), false))
-                .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(dir)))
+                .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
                 .add(new AttackComponent(entity, List.of(healthEffectFactory.decreasePlayerCurrentHealthEffect(1))))
                 .build();
     }
