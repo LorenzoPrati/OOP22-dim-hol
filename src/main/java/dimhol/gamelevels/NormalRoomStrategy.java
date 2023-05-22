@@ -7,36 +7,52 @@ import dimhol.entity.factories.GenericFactory;
 import org.apache.commons.lang3.tuple.Pair;
 import org.locationtech.jts.math.Vector2D;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 /**
  * The strategy to generate a normal room in the game.
  */
 public class NormalRoomStrategy implements RoomStrategy {
+    private static final int ENEMY_DENSITY = 100;
+    private static final int MAX_ENEMIES = 10;
     private final GenericFactory genericFactory;
     private final EnemyFactory enemyFactory;
     private final Random random;
-    private static final int ENEMY_DENSITY = 50;
-    private static final int MAX_ENEMIES = 10;
 
     /**
      * Constructs a NormalRoomStrategy.
      *
      * @param genericFactory The generic entity factory.
-     * @param enemyFactory The enemy entity factory.
-     * @param random The random number generator.
+     * @param enemyFactory   The enemy entity factory.
+     * @param random         The random number generator.
      */
-    public NormalRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory, Random random) {
+    public NormalRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory, final Random random) {
         this.genericFactory = genericFactory;
         this.enemyFactory = enemyFactory;
-        this.random = random;
+        this.random = new Random(random.nextInt());
+    }
+
+    static Pair<Integer, Integer> findRandomFreeTiles(final Set<Pair<Integer, Integer>> freeTiles, final Random random) {
+        int randomIndex = random.nextInt(freeTiles.size());
+        int currentIndex = 0;
+        for (Pair<Integer, Integer> tile : freeTiles) {
+            if (currentIndex == randomIndex) {
+                return tile;
+            }
+            currentIndex++;
+        }
+        throw new IllegalStateException("No free tiles available");
     }
 
     /**
      * Generates entities for the normal room.
      *
-     * @param entity The main entity is the player of the game room.
+     * @param entity    The main entity is the player of the game room.
      * @param freeTiles The set of available tiles within the room, where entities can be placed.
      * @return A list of generated entities.
      */
@@ -53,6 +69,8 @@ public class NormalRoomStrategy implements RoomStrategy {
         int numEnemies = calculateNumEnemies(freeTiles.size());
         generateZombies(numEnemies, entities, freeTiles);
         generateShooters(numEnemies, entities, freeTiles);
+
+        System.out.println(freeTiles.size());
 
         //Place coins:
 
@@ -78,7 +96,8 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @param entities   The list of entities to add the generated zombies to.
      * @param freeTiles  The set of available tiles where zombies can be placed.
      */
-    private void generateZombies(int numZombies, List<Entity> entities, Set<Pair<Integer, Integer>> freeTiles) {
+    private void generateZombies(final int numZombies, final List<Entity> entities,
+                                 final Set<Pair<Integer, Integer>> freeTiles) {
         IntStream.range(0, numZombies).mapToObj(i -> createZombie(freeTiles)).forEach(zombie -> {
             placeEntity(zombie, freeTiles);
             entities.add(zombie);
@@ -92,7 +111,8 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @param entities    The list of entities to add the generated shooters to.
      * @param freeTiles   The set of available tiles where shooters can be placed.
      */
-    private void generateShooters(int numShooters, List<Entity> entities, Set<Pair<Integer, Integer>> freeTiles) {
+    private void generateShooters(final int numShooters, final List<Entity> entities,
+                                  final Set<Pair<Integer, Integer>> freeTiles) {
         IntStream.range(0, numShooters).mapToObj(i -> createShooter(freeTiles)).forEach(shooter -> {
             placeEntity(shooter, freeTiles);
             entities.add(shooter);
@@ -103,8 +123,8 @@ public class NormalRoomStrategy implements RoomStrategy {
      * Generates the specified number of enemies and places them in the room.
      *
      * @param numEnemies The number of enemies to generate.
-     * @param entities The list of entities to add the generated enemies to.
-     * @param freeTiles The set of available tiles where enemies can be placed.
+     * @param entities   The list of entities to add the generated enemies to.
+     * @param freeTiles  The set of available tiles where enemies can be placed.
      */
     private void generateEnemies(final int numEnemies, final List<Entity> entities, final Set<Pair<Integer, Integer>> freeTiles) {
         IntStream.rangeClosed(0, numEnemies).forEach(i -> {
@@ -123,7 +143,7 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @param freeTiles The set of available tiles where the enemy can be placed.
      * @return The created zombie enemy entity.
      */
-    private Entity createZombie(Set<Pair<Integer, Integer>> freeTiles) {
+    private Entity createZombie(final Set<Pair<Integer, Integer>> freeTiles) {
         return enemyFactory.createZombie(getRandomTile(freeTiles).getLeft().doubleValue(),
                 getRandomTile(freeTiles).getRight().doubleValue());
     }
@@ -134,7 +154,7 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @param freeTiles The set of available tiles where the enemy can be placed.
      * @return The created shooter enemy entity.
      */
-    private Entity createShooter(Set<Pair<Integer, Integer>> freeTiles) {
+    private Entity createShooter(final Set<Pair<Integer, Integer>> freeTiles) {
         return enemyFactory.createShooter(getRandomTile(freeTiles).getLeft().doubleValue(),
                 getRandomTile(freeTiles).getRight().doubleValue());
     }
@@ -157,7 +177,7 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @param freeTiles The set of available tiles where the player can be placed.
      * @return The created player entity.
      */
-    private Entity createPlayer(Set<Pair<Integer, Integer>> freeTiles) {
+    private Entity createPlayer(final Set<Pair<Integer, Integer>> freeTiles) {
         return genericFactory.createPlayer(getRandomTile(freeTiles).getLeft().doubleValue(),
                 getRandomTile(freeTiles).getRight().doubleValue());
     }
@@ -165,7 +185,7 @@ public class NormalRoomStrategy implements RoomStrategy {
     /**
      * Assigns a random position from the set of free tiles to the specified entity.
      *
-     * @param entity The entity to place.
+     * @param entity    The entity to place.
      * @param freeTiles The set of available tiles where the entity can be placed.
      */
     private void placeEntity(final Entity entity, final Set<Pair<Integer, Integer>> freeTiles) {
@@ -184,17 +204,5 @@ public class NormalRoomStrategy implements RoomStrategy {
      */
     private Pair<Integer, Integer> getRandomTile(final Set<Pair<Integer, Integer>> freeTiles) {
         return findRandomFreeTiles(freeTiles, random);
-    }
-
-    static Pair<Integer, Integer> findRandomFreeTiles(Set<Pair<Integer, Integer>> freeTiles, Random random) {
-        int randomIndex = random.nextInt(freeTiles.size());
-        int currentIndex = 0;
-        for (Pair<Integer, Integer> tile : freeTiles) {
-            if (currentIndex == randomIndex) {
-                return tile;
-            }
-            currentIndex++;
-        }
-        throw new IllegalStateException("No free tiles available");
     }
 }

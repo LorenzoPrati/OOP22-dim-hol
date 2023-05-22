@@ -17,7 +17,8 @@ public interface RoomStrategy {
      * Generate entities for the game room.
      * This method should be implemented to create the enemies, the player,
      * and position them into the room according to the specific strategy of the room.
-     * @param entity The main entity is the player of the game room.
+     *
+     * @param entity    The main entity is the player of the game room.
      * @param freeTiles The set of available tiles within the room, where entities can be placed.
      * @return A List of entities generated for the game room.
      */

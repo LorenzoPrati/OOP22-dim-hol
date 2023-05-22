@@ -7,22 +7,25 @@ import dimhol.logic.ai.RoutineFactory;
 import dimhol.logic.collision.RectBodyShape;
 import org.locationtech.jts.math.Vector2D;
 
+/**
+ * The BossFactory class is responsible for creating Boss entities in the game.
+ */
 public class BossFactory extends AbstractFactory {
 
     /**
-     * Boss width.
+     * The width of the Boss.
      */
-    public static final double BOSS_WIDTH = 4;
+    public static final double BOSS_WIDTH = 1;
     /**
-     * Boss height.
+     * The height of the Boss.
      */
-    public static final double BOSS_HEIGHT = 3;
+    public static final double BOSS_HEIGHT = 1;
     /**
-     * Boss speed.
+     * The speed of the Boss.
      */
     public static final double BOSS_SPEED = 3;
     /**
-     * Boss health.
+     * The health of the Boss.
      */
     public static final int BOSS_HEALTH = 10;
 

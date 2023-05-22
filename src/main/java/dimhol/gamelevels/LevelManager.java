@@ -11,9 +11,10 @@ import java.util.List;
 public interface LevelManager {
 
     /**
-     * Changes the current level in the game
-     * @param entities
-     * @return
+     * Changes the current level in the game and returns the updated list of entities.
+     *
+     * @param entities the list of entities in the current level.
+     * @return the updated list of entities for the new level.
      */
     List<Entity> changeLevel(List<Entity> entities);
 
@@ -22,5 +23,5 @@ public interface LevelManager {
      *
      * @return the tile map for the current level.
      */
-     TileMap getTileMap();
+    TileMap getTileMap();
 }
