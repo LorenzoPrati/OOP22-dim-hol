@@ -41,9 +41,9 @@ public final class MeleeAttack extends AbstractAction {
         List<WorldEvent> attacks = new ArrayList<>();
         var dir = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         var pos = AttackUtil.getAttackPos(dir, getEnemyCentralPos(), getEnemyBody().getBodyShape(),
-                EnemyAttackFactory.ENEMY_MELEE_WIDTH, EnemyAttackFactory.ENEMY_MELEE_HEIGHT);
+                EnemyAttackFactory.MELEE_WIDTH, EnemyAttackFactory.MELEE_HEIGHT);
 
-        attacks.add(new AddEntityEvent(getAttackFactory().createEnemyMeleeAttack(pos, getEnemy())));
+        attacks.add(new AddEntityEvent(getAttackFactory().createMeleeAttack(pos, getEnemy())));
         return Optional.of(attacks);
     }
 }
