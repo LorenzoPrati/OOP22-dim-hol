@@ -21,7 +21,7 @@ public class RandomWrapper {
      * @param bound the upper bound (exclusive). Must be positive.
      * @return the next pseudorandom, uniformly distributed int value between 0 (inclusive) and bound (exclusive).
      */
-    public int nextInt(int bound) {
+    public int nextInt(final int bound) {
         return random.nextInt(bound);
     }
 }
