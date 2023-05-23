@@ -31,6 +31,26 @@ public class RoutineFactory {
     public static final double FOLLOW_MOVEMENT_AGGRO = 5;
 
     /**
+     * Boss melee reload time.
+     */
+    public static final double BOSS_MELEE_RELOAD_TIME = 2;
+    /**
+     * Boss distance attack reload time.
+     */
+    public static final double BOSS_DISTANCE_ATTACK_RELOAD_TIME = 3;
+    /**
+     * Boss Summon minions number.
+     */
+    public static final int BOSS_SUMMON_MINS_NUMBER = 3;
+    /**
+     * Boss damage for area aggro.
+     */
+    public static final double BOSS_AREA_ATTACK_AGGRO = 3;
+    private static final double BOSS_AREA_ATTACK_DAMAGE = 0.5;
+    private static final double CHARGE_SPEED = 5;
+    private static final int CHARGE_ATTACK_DAMAGE = 3;
+
+    /**
      *
      * @return the behaviour of a shooter enemy.
      */
@@ -53,4 +73,20 @@ public class RoutineFactory {
         ));
     }
 
+    public List<Action> createBossRoutine() {
+        return new ArrayList<>(List.of(
+                new MeleeAttack(MELEE_RELOAD_TIME),
+//                new SummonMinions(),
+                new AreaOfAttack(BOSS_AREA_ATTACK_AGGRO, BOSS_AREA_ATTACK_DAMAGE)
+//                new ChargeAttack(CHARGE_SPEED, CHARGE_ATTACK_DAMAGE)
+        ));
+    }
+
+    public List<Action> createMinsRuotine() {
+        return new ArrayList<>(List.of(
+                new MeleeAttack(MELEE_RELOAD_TIME),
+                new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
+                new RandomMovement(CHANGE_DIRECTION_TIME)
+        ));
+    }
 }
