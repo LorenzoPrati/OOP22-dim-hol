@@ -1,10 +1,13 @@
 package dimhol.logic.effects;
 
+import java.util.Optional;
+
 import dimhol.components.AiComponent;
 import dimhol.components.Component;
 import dimhol.components.HealthComponent;
 import dimhol.components.PlayerComponent;
 import dimhol.entity.Entity;
+import dimhol.events.WorldEvent;
 
 public class HealthEffectsFactoryImpl implements HealthEffectFactory {
    
@@ -16,7 +19,7 @@ public class HealthEffectsFactoryImpl implements HealthEffectFactory {
                 return entity.hasComponent(componentToCheck);
             }
             @Override
-            public void applyOn(Entity entity) {
+            public Optional<WorldEvent> applyOn(Entity entity) {
                 var health = (HealthComponent)entity.getComponent(HealthComponent.class);
                 if(!isPowerUp){
                     if(increase){
@@ -29,6 +32,7 @@ public class HealthEffectsFactoryImpl implements HealthEffectFactory {
                 else{
                     health.setMaxHealth(health.getMaxHealth() + amount);
                 }
+                return Optional.empty();
             }
         };
     }

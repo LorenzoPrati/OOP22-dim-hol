@@ -1,9 +1,12 @@
 package dimhol.logic.effects;
 
+import java.util.Optional;
+
 import dimhol.components.Component;
 import dimhol.components.MovementComponent;
 import dimhol.components.PlayerComponent;
 import dimhol.entity.Entity;
+import dimhol.events.WorldEvent;
 
 public class SpeedEffectFactoryImpl implements SpeedEffectFactory {
     private Effect createSpeedEffect(final Class<? extends Component> componentToCheck,final double amount, 
@@ -14,7 +17,7 @@ public class SpeedEffectFactoryImpl implements SpeedEffectFactory {
                 return entity.hasComponent(componentToCheck);
             }
             @Override
-            public void applyOn(Entity entity) {
+            public Optional<WorldEvent> applyOn(Entity entity) {
                 var move = (MovementComponent)entity.getComponent(MovementComponent.class);
                 if(increase){
                     move.setSpeed(move.getSpeed() + amount);
@@ -22,6 +25,7 @@ public class SpeedEffectFactoryImpl implements SpeedEffectFactory {
                 else{
                     move.setSpeed(move.getSpeed() - amount);
                 } 
+                return Optional.empty();
             }
         };
     }
