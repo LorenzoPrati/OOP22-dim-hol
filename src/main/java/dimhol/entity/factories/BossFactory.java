@@ -1,6 +1,11 @@
 package dimhol.entity.factories;
 
-import dimhol.components.*;
+import dimhol.components.AiComponent;
+import dimhol.components.AnimationComponent;
+import dimhol.components.BodyComponent;
+import dimhol.components.HealthComponent;
+import dimhol.components.MovementComponent;
+import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.logic.ai.RoutineFactory;
@@ -15,11 +20,11 @@ public class BossFactory extends AbstractFactory {
     /**
      * The width of the Boss.
      */
-    public static final double BOSS_WIDTH = 1;
+    public static final double BOSS_WIDTH = 4;
     /**
      * The height of the Boss.
      */
-    public static final double BOSS_HEIGHT = 1;
+    public static final double BOSS_HEIGHT = 3;
     /**
      * The speed of the Boss.
      */
@@ -44,7 +49,7 @@ public class BossFactory extends AbstractFactory {
                 .add(new BodyComponent(new RectBodyShape(BOSS_WIDTH, BOSS_HEIGHT), true))
                 .add(new HealthComponent(BOSS_HEALTH))
                 .add(new AnimationComponent(map.get("boss"), "walk"))
-                .add(new AiComponent(new RoutineFactory().createZombieRoutine()))
+                .add(new AiComponent(new RoutineFactory().createBossRoutine()))
                 .build();
     }
 }
