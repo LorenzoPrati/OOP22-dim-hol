@@ -5,6 +5,7 @@ import java.util.Map;
 import dimhol.components.*;
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
+import dimhol.view.GraphicInfo;
 import dimhol.view.Scene;
 
 public class RenderSystem extends AbstractSystem{
@@ -37,9 +38,9 @@ public class RenderSystem extends AbstractSystem{
            var healthComp = (HealthComponent) e.getComponent(HealthComponent.class);
            this.scene.getHUD().updateEnemiesHUD(healthComp.getCurrentHealth(), healthComp.getMaxHealth(), posComp.getPos(), bodyComp.getBodyShape());
        }
-       this.scene.toList(animationComp.getIndex(),getNumToUse(animationComp.getState(), 
+       this.scene.toList(new GraphicInfo(animationComp.getIndex(),getNumToUse(animationComp.getState(), 
             animationComp.getMap()), posComp.getPos().getX(), posComp.getPos().getY(), 
-            bodyComp.getBodyShape().getBoundingWidth(), bodyComp.getBodyShape().getBoundingHeight() );
+            bodyComp.getBodyShape().getBoundingWidth(), bodyComp.getBodyShape().getBoundingHeight()));
     }
     
 }
