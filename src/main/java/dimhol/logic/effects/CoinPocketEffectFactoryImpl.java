@@ -1,7 +1,10 @@
 package dimhol.logic.effects;
 
+import java.util.Optional;
+
 import dimhol.components.*;
 import dimhol.entity.Entity;
+import dimhol.events.WorldEvent;
 
 public class CoinPocketEffectFactoryImpl implements CoinPocketEffectFactory{
     
@@ -13,7 +16,7 @@ public class CoinPocketEffectFactoryImpl implements CoinPocketEffectFactory{
                 return entity.hasComponent(componentToCheck);
             }
             @Override
-            public void applyOn(Entity entity) {
+            public Optional<WorldEvent> applyOn(Entity entity) {
                 var coinPocket = (CoinPocketComponent)entity.getComponent(CoinPocketComponent.class);
                 if(increase){
                     coinPocket.setAmount(coinPocket.getCurrentAmount() + amount);
@@ -21,6 +24,7 @@ public class CoinPocketEffectFactoryImpl implements CoinPocketEffectFactory{
                 else{
                     coinPocket.setAmount(coinPocket.getCurrentAmount() - amount);
                 }
+                return Optional.empty();
             }
         };
     }
