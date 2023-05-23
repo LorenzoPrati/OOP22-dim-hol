@@ -52,6 +52,14 @@ public class EnemyFactory extends AbstractFactory {
     public static final int SHOOTER_HEALTH = 2;
 
     /**
+     * Mins infos:
+     */
+    private static final double MINS_SPEED = 1;
+    private static final double MINS_WIDTH = 0.5;
+    private static final double MINS_HEIGHT = 0.5;
+    private static final int MINS_HEALTH = 1;
+
+    /**
      * Create a Zombie Entity that follows and attack you is you are in his aggro zone.
      * @param x coordinate
      * @param y coordinate
@@ -84,4 +92,22 @@ public class EnemyFactory extends AbstractFactory {
                 .add(new AiComponent(new RoutineFactory().createShooterRoutine()))
                 .build();
     }
+
+    /**
+     * Create a minion Entity that hits you is you are in his aggro zone.
+     * @param x coordinate
+     * @param y coordinate
+     * @return minion entity
+     */
+    public Entity createMinion(final double x, final double y) {
+        return new EntityBuilder()
+                .add(new PositionComponent(new Vector2D(x,y), 0))
+                .add(new MovementComponent(new Vector2D(0,1), MINS_SPEED, false ))
+                .add(new BodyComponent(new RectBodyShape(MINS_WIDTH, MINS_HEIGHT), true))
+                .add(new AnimationComponent(map.get("enemy"), "idle"))
+                .add(new AiComponent(new RoutineFactory().createMinsRuotine()))
+                .build();
+    }
+
+
 }
