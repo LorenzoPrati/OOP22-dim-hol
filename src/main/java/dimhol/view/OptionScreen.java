@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,13 +18,13 @@ import java.util.Map;
 import dimhol.core.Engine;
 
 public class OptionScreen extends AbstractScreen {
-    private final Map<String, Pair<Integer, Integer>> mapResolutions =  new HashMap<>() {
+    private final Map<String, Dimension> mapResolutions =  new HashMap<>() {
         {
-            put("800x600", new ImmutablePair<>(800, 600));
-            put("1280x720", new ImmutablePair<>(1280, 720));
-            put("1280x1024", new ImmutablePair<>(1280, 1024));
-            put("1600x900", new ImmutablePair<>(1600, 900));
-            put("1920x1080 (recommended)", new ImmutablePair<>(1920, 1080));
+            put("800x600", new Dimension(800, 600));
+            put("1280x720", new Dimension(1280, 720));
+            put("1280x1024", new Dimension(1280, 1024));
+            put("1600x900", new Dimension(1600, 900));
+            put("1920x1080 (recommended)", new Dimension(1920, 1080));
         }
     };
     public OptionScreen(Engine engine) {
@@ -42,7 +44,7 @@ public class OptionScreen extends AbstractScreen {
         doneButton.addActionListener(l ->{
             var selecteResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
             var res = mapResolutions.get(selecteResolution);
-            engine.getWindow().setSize(res.getLeft(), res.getRight());
+            engine.getWindow().setDimension(new Dimension(res));
         });
         optionListPanel.setLayout(new GridBagLayout());
         comboBox.setFont(font2);

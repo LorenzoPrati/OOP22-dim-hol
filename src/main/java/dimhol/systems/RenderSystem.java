@@ -2,18 +2,17 @@ package dimhol.systems;
 
 import java.util.ArrayList;
 import java.util.Map;
-
 import dimhol.components.*;
-import dimhol.core.World;
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
+import dimhol.view.Scene;
 
 public class RenderSystem extends AbstractSystem{
-    private final World world;
+    private final Scene scene;
 
-    public RenderSystem(WorldImpl w) {
+    public RenderSystem(final WorldImpl w, Scene s) {
         super(w, AnimationComponent.class);
-        this.world = w;
+        this.scene = s;
     }
 
     private int getNumToUse(final String state, final Map<String,ArrayList<Integer>> map){
@@ -33,12 +32,12 @@ public class RenderSystem extends AbstractSystem{
        if (e.hasComponent(PlayerComponent.class)) {
            var healthComp = (HealthComponent) e.getComponent(HealthComponent.class);
            var coinPocket = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
-           this.world.getScene().getHUD().updatePlayerHUD(healthComp.getCurrentHealth(), healthComp.getMaxHealth(), coinPocket.getCurrentAmount());
+           this.scene.getHUD().updatePlayerHUD(healthComp.getCurrentHealth(), healthComp.getMaxHealth(), coinPocket.getCurrentAmount());
        } else if (e.hasComponent(AiComponent.class)) {
            var healthComp = (HealthComponent) e.getComponent(HealthComponent.class);
-           this.world.getScene().getHUD().updateEnemiesHUD(healthComp.getCurrentHealth(), healthComp.getMaxHealth(), posComp.getPos(), bodyComp.getBodyShape());
+           this.scene.getHUD().updateEnemiesHUD(healthComp.getCurrentHealth(), healthComp.getMaxHealth(), posComp.getPos(), bodyComp.getBodyShape());
        }
-       this.world.getScene().toList(animationComp.getIndex(),getNumToUse(animationComp.getState(), 
+       this.scene.toList(animationComp.getIndex(),getNumToUse(animationComp.getState(), 
             animationComp.getMap()), posComp.getPos().getX(), posComp.getPos().getY(), 
             bodyComp.getBodyShape().getBoundingWidth(), bodyComp.getBodyShape().getBoundingHeight() );
     }
