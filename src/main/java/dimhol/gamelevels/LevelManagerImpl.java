@@ -31,6 +31,8 @@ public class LevelManagerImpl implements LevelManager {
     private final BossRoomStrategy bossRoomStrategy;
     private final TileMap tileMap;
     private int currentLevel;
+    private final int bossWidth = 4;
+    private final int bossHeight = 3;
 
     /**
      * Constructs a LevelManagerImpl object.
@@ -43,7 +45,7 @@ public class LevelManagerImpl implements LevelManager {
         this.tileMap = mapLoader.loadShopRoom();
         normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, random);
         shopRoomStrategy = new ShopRoomStrategy(genericFactory, new RandomWrapper());
-        bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory());
+        bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory(), bossWidth, bossHeight);
         this.currentLevel = 0;
     }
 
