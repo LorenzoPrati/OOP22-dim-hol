@@ -42,6 +42,13 @@ public final class EnemyAttackFactory extends AbstractFactory {
      */
     public static final double ENEMY_MELEE_HEIGHT = 1;
 
+    public static final double BOSS_AREA_ATTACK_WIDTH = 3;
+    public static final double BOSS_AREA_ATTACK_HEIGHT = 3;
+    public static final double BOSS_MELEE_ATTACK_WIDTH = 2;
+    public static final double BOSS_MELEE_ATTACK_HEIGHT = 2;
+    public static final double ENEMY_MINS_WIDTH = 0.5;
+    public static final double ENEMY_MINS_HEIGHT = 0.5;
+
     private final HealthEffectFactory healthEffectFactory = new HealthEffectsFactoryImpl();
 
     /**
@@ -74,6 +81,22 @@ public final class EnemyAttackFactory extends AbstractFactory {
                 .add(new MovementComponent(dir, ENEMY_BULLET_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(ENEMY_BULLET_WIDTH, ENEMY_BULLET_HEIGHT), false))
                 .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(dir)))
+                .add(new AttackComponent(entity, List.of(healthEffectFactory.decreasePlayerCurrentHealthEffect(1))))
+                .build();
+    }
+
+    public Entity createBossAreaAttack(final Vector2D pos, final Entity entity) {
+        return new EntityBuilder()
+                .add(new PositionComponent(pos, 0))
+                .add(new BodyComponent(new RectBodyShape(BOSS_AREA_ATTACK_WIDTH, BOSS_AREA_ATTACK_HEIGHT), false))
+                .add(new AttackComponent(entity, List.of(healthEffectFactory.decreasePlayerCurrentHealthEffect(2))))
+                .build();
+    }
+
+    public Entity summonerEntityMinions(final Vector2D pos, final Entity entity) {
+        return new EntityBuilder()
+                .add(new PositionComponent(pos, 0))
+                .add(new BodyComponent(new RectBodyShape(ENEMY_MINS_WIDTH, ENEMY_MINS_HEIGHT), false))
                 .add(new AttackComponent(entity, List.of(healthEffectFactory.decreasePlayerCurrentHealthEffect(1))))
                 .build();
     }
