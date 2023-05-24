@@ -2,7 +2,6 @@ package dimhol.view;
 
 import dimhol.core.World;
 import dimhol.gamelevels.LevelManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
