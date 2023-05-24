@@ -47,7 +47,6 @@ public class HUD {
 
         showHealthInfo();
         showCoinInfo();
-        showEnemiesHealth();
     }
 
     private void showHealthInfo() {
@@ -80,10 +79,16 @@ public class HUD {
         this.coins = currentAmount;
     }
 
+    // TODO: 24/05/23 remove this method
+    /*
     public void updateEnemiesHUD(int currentHealth, int maxHealth, final Vector2D pos, final BodyShape bodyShape) {
         this.enemiesData.add(new EnemyData(currentHealth, maxHealth, pos, bodyShape));
     }
 
+     */
+
+    // TODO: 24/05/23 remove this method
+    /*
     private void showEnemiesHealth() {
         g2d.setColor(Color.RED);
         var rectH = 0.1 * newTileHeight;
@@ -101,4 +106,6 @@ public class HUD {
         }
         enemiesData.clear();
     }
+
+     */
 }

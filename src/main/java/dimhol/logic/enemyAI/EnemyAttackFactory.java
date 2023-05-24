@@ -8,6 +8,8 @@ import dimhol.entity.factories.AbstractAttackFactory;
 import dimhol.logic.collision.RectBodyShape;
 import dimhol.logic.util.DirectionUtil;
 
+import java.util.function.Predicate;
+
 /**
  * This class creates attack.
  */
@@ -42,6 +44,8 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
      */
     private static final int ENEMY_BULLET_DAMAGE = 1;
 
+    private Predicate<Entity> checkPlayer = entity -> entity.hasComponent(PlayerComponent.class);
+
     /**
      * Create a melee attack near the entity's body facing the direction
      * the entity is turned against.
@@ -52,7 +56,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(entity, ENEMY_MELEE_WIDTH, ENEMY_MELEE_HEIGHT), 0))
                 .add(new BodyComponent(new RectBodyShape(ENEMY_MELEE_WIDTH, ENEMY_MELEE_HEIGHT), false))
-                .add(new AttackComponent(ENEMY_MELEE_DAMAGE, entity, new ))
+                .add(new AttackComponent(ENEMY_MELEE_DAMAGE, checkPlayer))
                 .add(new CollisionComponent())
                 .add(new AnimationComponent(map.get("heart"), "idle"))
                 .build();
@@ -71,7 +75,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new BodyComponent(new RectBodyShape(ENEMY_BULLET_WIDTH, ENEMY_BULLET_HEIGHT), false))
                 .add(new CollisionComponent())
                 .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
-                .add(new AttackComponent(ENEMY_BULLET_DAMAGE, entity))
+                .add(new AttackComponent(ENEMY_BULLET_DAMAGE, checkPlayer))
                 .build();
     }
 }
