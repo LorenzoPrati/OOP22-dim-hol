@@ -4,10 +4,7 @@ import dimhol.components.*;
 import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
-import dimhol.events.ChangeRoomEvent;
-import dimhol.events.MaxHealthIncreasedEvent;
-import dimhol.events.SpeedIncresedEvent;
-import java.util.Optional;
+import dimhol.events.ChangeLevelEvent;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
@@ -40,7 +37,6 @@ public class InteractableObjectFactory extends AbstractFactory {
         if(checkCoins.test(e, MAX_HEALTH_PRICE )){
             var healthComp = (HealthComponent)e.getComponent(HealthComponent.class);
             healthComp.setMaxHealth(healthComp.getMaxHealth() + MAX_HEALTH_INCREASE);
-            w.notifyEvent(new MaxHealthIncreasedEvent());
         }
     };
 
@@ -48,13 +44,12 @@ public class InteractableObjectFactory extends AbstractFactory {
         if(checkCoins.test(e, VELOCITY_PRICE)){
             var moveComp = (MovementComponent)e.getComponent(MovementComponent.class);
             moveComp.setSpeed(moveComp.getSpeed() + VELOCITY_INCREASE);
-            w.notifyEvent(new SpeedIncresedEvent());
         } 
     };
 
     BiConsumer<Entity, World> useGate = (e,w)->{
         if(checkAllEnemyAreDead.test(w)){
-            w.notifyEvent(new ChangeRoomEvent());
+            w.notifyEvent(new ChangeLevelEvent());
         }
     };
     
@@ -62,7 +57,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
-        .add(new InteractableComponent(powerUpMaxHealth, Optional.of(MAX_HEALTH_PRICE))) //TO DO
+        .add(new InteractableComponent(powerUpMaxHealth))
         .add(new AnimationComponent(this.map.get("shopHeart"), "idle"))
         .build();
     }
@@ -71,7 +66,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
-        .add(new InteractableComponent(powerUpSpeed, Optional.of(VELOCITY_PRICE)))
+        .add(new InteractableComponent(powerUpSpeed))
         .add(new AnimationComponent(this.map.get("shopSpeed"), "idle"))
         .build();
     }
@@ -80,7 +75,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
-        .add(new InteractableComponent(useGate, Optional.empty()))
+        .add(new InteractableComponent(useGate))
         .add(new AnimationComponent(this.map.get("heart"), "idle")) //TO DO add gate sprites
         .build();
     }

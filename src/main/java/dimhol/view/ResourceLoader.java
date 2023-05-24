@@ -14,10 +14,11 @@ public class ResourceLoader {
     private final Map<Integer,ImmutableTriple<BufferedImage,Integer,Integer>> imagesMap = new HashMap<>();
     private BufferedImage tileSet;
     private ArrayList<BufferedImage> tileImages = new ArrayList<>();
+    
 
-    public ResourceLoader(final int tileWidth, final int tileHeight){
+    public ResourceLoader(){
         load();
-        loadTileSetImages(tileWidth,tileHeight);
+        loadTileSetImages(32,32);
     }
     
     private void load(){

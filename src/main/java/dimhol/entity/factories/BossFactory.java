@@ -3,7 +3,7 @@ package dimhol.entity.factories;
 import dimhol.components.*;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
-import dimhol.logic.ai.RoutineFactory;
+import dimhol.logic.enemyAI.RoutineFactory;
 import dimhol.logic.collision.RectBodyShape;
 import org.locationtech.jts.math.Vector2D;
 

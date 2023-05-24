@@ -1,4 +1,4 @@
-package dimhol.logic.ai;
+package dimhol.logic.enemyAI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,10 @@ import java.util.List;
  */
 public class RoutineFactory {
 
+    /**
+     * Melee attack aggro.
+     */
+    public static final double MELEE_ATTACK_AGGRO = 1.5;
     /**
      * Distance attack aggro.
      */
@@ -47,7 +51,7 @@ public class RoutineFactory {
      */
     public final List<Action> createZombieRoutine() {
         return new ArrayList<>(List.of(
-                new MeleeAttack(MELEE_RELOAD_TIME),
+                new MeleeAttack(MELEE_ATTACK_AGGRO, MELEE_RELOAD_TIME),
                 new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
                 new RandomMovement(CHANGE_DIRECTION_TIME)
         ));
