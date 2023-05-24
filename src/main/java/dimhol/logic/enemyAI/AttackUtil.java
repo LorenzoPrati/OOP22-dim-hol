@@ -1,7 +1,5 @@
-package dimhol.logic.ai;
+package dimhol.logic.enemyAI;
 
-import dimhol.logic.collision.BodyShape;
-import dimhol.logic.util.DirectionUtil;
 import org.locationtech.jts.math.Vector2D;
 
 /**
@@ -47,44 +45,6 @@ public class AttackUtil {
     }
 
     /**
-     * This method positions the attack; whatever it is, next to the body of the entity exactly
-     * centered with respect to its height or width (depending on the direction).
-     * @param dir attack's direction
-     * @param entityCentralPos entity's central position
-     * @param entityBody entity's body shape
-     * @param attackWidth attack width
-     * @param attackHeight attack height
-     * @return the attack position
-     */
-    public static Vector2D getAttackPos(final Vector2D dir, final Vector2D entityCentralPos, final BodyShape entityBody,
-                                        final double attackWidth, final double attackHeight) {
-        double bulletX;
-        double bulletY;
-
-        switch (DirectionUtil.getStringFromVec(dir)) {
-            case "right" -> {
-                bulletX = entityCentralPos.getX() + (entityBody.getBoundingWidth() / 2);
-                bulletY = entityCentralPos.getY() - (attackHeight / 2);
-            }
-            case "left" -> {
-                bulletX = entityCentralPos.getX() - (entityBody.getBoundingWidth() / 2) - attackHeight;
-                bulletY = entityCentralPos.getY() - (attackWidth / 2);
-            }
-            case "down" -> {
-                bulletX = entityCentralPos.getX() - (attackHeight / 2);
-                bulletY = entityCentralPos.getY() + (entityBody.getBoundingHeight() / 2);
-            }
-            default -> { // up
-                bulletX = entityCentralPos.getX() - (attackHeight / 2);
-                bulletY = entityCentralPos.getY() - (entityBody.getBoundingHeight() / 2) - attackWidth;
-            }
-
-        }
-
-        return new Vector2D(bulletX, bulletY);
-    }
-
-    /**
      * This method returns the perfect radius that defines the area in which, if the player enters,
      * the enemy decides to perform a melee attack.
      * @param entityPos entity's position
@@ -93,8 +53,10 @@ public class AttackUtil {
      * @param playerCentralPos player's central position
      * @return the ray's value
      */
-    public static double getMeleeRay(final Vector2D entityPos, final Vector2D enemyCentralPos,
+    /*public static double getMeleeRay(final Vector2D entityPos, final Vector2D enemyCentralPos,
                                   final Vector2D playerPos, final Vector2D playerCentralPos) {
         return entityPos.distance(enemyCentralPos) + playerPos.distance(playerCentralPos);
     }
+
+     */
 }

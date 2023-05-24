@@ -1,26 +1,23 @@
 package dimhol.components;
 
 import dimhol.entity.Entity;
-import dimhol.logic.effects.Effect;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Predicate;
 
 public final class AttackComponent implements Component {
 
-    private final Entity entity;
-    private final List<Effect> effects;
+    private final int damage;
+    private final Predicate<Entity> predicate;
 
-    public AttackComponent(final Entity entity, final List<Effect> effects) {
-        this.entity = entity;
-        this.effects = new ArrayList<>(effects);
+    public AttackComponent(int damage, Predicate<Entity> predicate) {
+        this.damage = damage;
+        this.predicate = predicate;
     }
 
-    public Entity getEntity() {
-        return entity;
+    public int getDamage() {
+        return damage;
     }
 
-    public List<Effect> getEffects() {
-        return new ArrayList<>(effects);
+    public Predicate<Entity> getPredicate() {
+        return predicate;
     }
 }

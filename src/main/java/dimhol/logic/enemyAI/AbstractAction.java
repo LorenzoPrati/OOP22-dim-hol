@@ -1,11 +1,11 @@
-package dimhol.logic.ai;
+package dimhol.logic.enemyAI;
 
 import dimhol.components.AiComponent;
 import dimhol.components.BodyComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
-import dimhol.entity.factories.EnemyAttackFactory;
+import dimhol.entity.EntityImpl;
 import dimhol.events.WorldEvent;
 import dimhol.logic.collision.BodyShape;
 import org.locationtech.jts.math.Vector2D;
@@ -65,7 +65,7 @@ public abstract class AbstractAction implements Action {
      * - enemy's AI
      */
     public final void setEnemy(final Entity enemy) {
-        this.enemy = enemy;
+        this.enemy = new EntityImpl(enemy);
         enemyPos = (PositionComponent) this.enemy.getComponent(PositionComponent.class);
         enemyBody = (BodyComponent) this.enemy.getComponent(BodyComponent.class);
         enemyCentralPos = getCentralPosition(enemyPos.getPos(), enemyBody.getBodyShape());

@@ -1,6 +1,5 @@
-package dimhol.logic.ai;
+package dimhol.logic.enemyAI;
 
-import dimhol.entity.factories.EnemyAttackFactory;
 import dimhol.events.AddEntityEvent;
 import dimhol.events.WorldEvent;
 
@@ -36,11 +35,7 @@ public final class DistanceAttack extends AbstractAction {
 
     private Optional<List<WorldEvent>> distanceAttack() {
         List<WorldEvent> attacks = new ArrayList<>();
-        var dir = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
-        var pos = AttackUtil.getAttackPos(dir, getEnemyCentralPos(), getEnemyBody().getBodyShape(),
-                EnemyAttackFactory.ENEMY_BULLET_WIDTH, EnemyAttackFactory.ENEMY_BULLET_HEIGHT);
-
-        attacks.add(new AddEntityEvent(getAttackFactory().createEnemyDistanceAttack(pos, dir, getEnemy())));
+        attacks.add(new AddEntityEvent(getAttackFactory().createDistanceAttack(getEnemy())));
         return Optional.of(attacks);
     }
 }
