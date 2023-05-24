@@ -3,6 +3,7 @@ package dimhol.entity.factories;
 import dimhol.components.*;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
+import java.util.Optional;
 import org.locationtech.jts.math.Vector2D;
 import dimhol.logic.collision.RectBodyShape;
 import dimhol.logic.effects.*;
@@ -12,6 +13,8 @@ public class ShopItemFactory extends AbstractFactory {
     private static final double H = 3;
     private static final int MAX_HEALTH_INCREASE = 10;
     private static final double VELOCITY_INCREASE = 0.5;
+    private static final int MAX_HEALTH_PRICE = 10;
+    private static final int VELOCITY_PRICE = 15;
     private HealthEffectFactory healthEffectFactory = new HealthEffectsFactoryImpl();
     private SpeedEffectFactory speedEffectFactory = new SpeedEffectFactoryImpl();
 
@@ -23,7 +26,8 @@ public class ShopItemFactory extends AbstractFactory {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
-        .add(new InteractableComponent(healthEffectFactory.increasePlayerMaxHealthEffect(MAX_HEALTH_INCREASE),false))
+        .add(new InteractableComponent(healthEffectFactory.increasePlayerMaxHealthEffect(MAX_HEALTH_INCREASE),
+            false, Optional.of(MAX_HEALTH_PRICE) ))
         .add(new AnimationComponent(this.map.get("shopHeart"), "idle"))
         .build();
     }
@@ -32,7 +36,8 @@ public class ShopItemFactory extends AbstractFactory {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
-        .add(new InteractableComponent(speedEffectFactory.increasePlayerSpeedEffect(VELOCITY_INCREASE),false))
+        .add(new InteractableComponent(speedEffectFactory.increasePlayerSpeedEffect(VELOCITY_INCREASE),
+            false, Optional.of(VELOCITY_PRICE)))
         .add(new AnimationComponent(this.map.get("shopSpeed"), "idle"))
         .build();
     }

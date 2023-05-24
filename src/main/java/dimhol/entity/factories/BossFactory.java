@@ -15,11 +15,11 @@ public class BossFactory extends AbstractFactory {
     /**
      * The width of the Boss.
      */
-    public static final double BOSS_WIDTH = 4;
+    public static final double BOSS_WIDTH = 1;
     /**
      * The height of the Boss.
      */
-    public static final double BOSS_HEIGHT = 3;
+    public static final double BOSS_HEIGHT = 1;
     /**
      * The speed of the Boss.
      */

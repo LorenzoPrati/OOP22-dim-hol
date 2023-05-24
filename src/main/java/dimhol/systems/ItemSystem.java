@@ -3,6 +3,7 @@ package dimhol.systems;
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;
+import dimhol.components.CoinPocketComponent;
 import dimhol.components.CollisionComponent;
 import dimhol.components.InteractableComponent;
 import dimhol.components.InteractorComponent;
@@ -28,7 +29,18 @@ public class ItemSystem extends AbstractSystem{
                 if(c.hasComponent(InteractorComponent.class)){
                     var interactComp = (InteractorComponent)c.getComponent(InteractorComponent.class);
                     if(interactComp.isInteracting() && effect.canUseOn(c)){
-                        effect.applyOn(c);
+                        if(interactableComp.hasPriceToPay()){
+                            if(c.hasComponent(CoinPocketComponent.class)){
+                                var coinPocketComp = (CoinPocketComponent)c.getComponent(CoinPocketComponent.class);
+                                if(interactableComp.getPrice().get()<=coinPocketComp.getCurrentAmount()){
+                                    effect.applyOn(c);
+                                }
+                            }
+                        }
+                        else{
+                            var eventToNotify = effect.applyOn(c);
+                            this.world.notifyEvent(eventToNotify.get());
+                        } 
                     }
                 }
             }
