@@ -4,7 +4,7 @@ import dimhol.components.*;
 import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
-import dimhol.events.ChangeRoomEvent;
+import dimhol.events.ChangeLevelEvent;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
@@ -50,7 +50,7 @@ public class InteractableObjectFactory extends AbstractFactory {
 
     BiConsumer<Entity, World> useGate = (e,w)->{
         if(checkAllEnemyAreDead.test(w)){
-            w.notifyEvent(new ChangeRoomEvent());
+            w.notifyEvent(new ChangeLevelEvent());
         }
     };
     
