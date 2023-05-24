@@ -1,19 +1,19 @@
 package dimhol.systems;
 
-import dimhol.core.WorldImpl;
+import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.components.AnimationComponent;
 
 public class AnimationSystem extends AbstractSystem {
 
-    public AnimationSystem(WorldImpl w) {
-        super(w, AnimationComponent.class);
+    public AnimationSystem() {
+        super(AnimationComponent.class);
         
     }
 
     @Override
-    public void process(Entity e, double dt) {
-        var animationComp = (AnimationComponent)e.getComponent(AnimationComponent.class);
+    public void process(final Entity entity, final double dt, final World world) {
+        var animationComp = (AnimationComponent)entity.getComponent(AnimationComponent.class);
         var currentState = animationComp.getState();
         if(animationComp.isBlocking()){
             animationComp.setCompleted(false);
