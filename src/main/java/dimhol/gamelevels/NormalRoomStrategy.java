@@ -83,16 +83,16 @@ public class NormalRoomStrategy implements RoomStrategy {
         System.out.println(freeTiles.size());
 
         //Place coins:
-        itemFactory.createCoin(getRandomTile(freeTiles).getLeft().doubleValue(),
-                getRandomTile(freeTiles).getRight().doubleValue());
+        entities.add(itemFactory.createCoin(getRandomTile(freeTiles).getLeft().doubleValue(),
+                getRandomTile(freeTiles).getRight().doubleValue()));
 
         //Place hearth:
-        itemFactory.createHeart(getRandomTile(freeTiles).getLeft().doubleValue(),
-                getRandomTile(freeTiles).getRight().doubleValue());
+        entities.add(itemFactory.createHeart(getRandomTile(freeTiles).getLeft().doubleValue(),
+                getRandomTile(freeTiles).getRight().doubleValue()));
 
         //Place gate:
-        interactableObjectFactory.createGate(getRandomTile(freeTiles).getLeft().doubleValue(),
-                getRandomTile(freeTiles).getRight().doubleValue());
+        entities.add(interactableObjectFactory.createGate(getRandomTile(freeTiles).getLeft().doubleValue(),
+                getRandomTile(freeTiles).getRight().doubleValue()));
 
 
         return entities;
