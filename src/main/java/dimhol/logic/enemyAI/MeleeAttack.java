@@ -2,6 +2,7 @@ package dimhol.logic.enemyAI;
 
 import dimhol.events.AddEntityEvent;
 import dimhol.events.WorldEvent;
+import org.locationtech.jts.math.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,5 +29,10 @@ public final class MeleeAttack extends AbstractAction {
         List<WorldEvent> attacks = new ArrayList<>();
         attacks.add(new AddEntityEvent(getAttackFactory().createMeleeAttack(getEnemy())));
         return Optional.of(attacks);
+    }
+
+    double getMeleeRay(final Vector2D entityPos, final Vector2D enemyCentralPos,
+                       final Vector2D playerPos, final Vector2D playerCentralPos) {
+        return entityPos.distance(enemyCentralPos) + playerPos.distance(playerCentralPos);
     }
 }
