@@ -1,14 +1,15 @@
 package dimhol.components;
 
 import dimhol.entity.Entity;
+
 import java.util.function.Predicate;
 
-public final class AttackComponent implements Component {
+public class AbstractAttackComponent implements Component {
 
     private final int damage;
     private final Predicate<Entity> predicate;
 
-    public AttackComponent(int damage, Predicate<Entity> predicate) {
+    public AbstractAttackComponent(final int damage, final Predicate<Entity> predicate) {
         this.damage = damage;
         this.predicate = predicate;
     }
@@ -20,4 +21,5 @@ public final class AttackComponent implements Component {
     public Predicate<Entity> getPredicate() {
         return predicate;
     }
+
 }

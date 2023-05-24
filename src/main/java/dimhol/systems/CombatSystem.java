@@ -7,12 +7,12 @@ import dimhol.entity.Entity;
 public class CombatSystem extends AbstractSystem {
 
     public CombatSystem() {
-        super(AttackComponent.class, CollisionComponent.class);
+        super(MeleeAttackComponent.class, CollisionComponent.class);
     }
 
     @Override
     public void process(final Entity entity, final double dt, final World world) {
-        AttackComponent attackComp = (AttackComponent) entity.getComponent(AttackComponent.class);
+        MeleeAttackComponent attackComp = (MeleeAttackComponent) entity.getComponent(MeleeAttackComponent.class);
         CollisionComponent collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
 
         for (var collided : collisionComp.getCollided()) {
