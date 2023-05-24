@@ -1,10 +1,12 @@
 package dimhol.systems;
 
 import dimhol.components.BodyComponent;
+import dimhol.components.BulletComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
 import dimhol.core.World;
 import dimhol.entity.Entity;
+import dimhol.events.RemoveEntityEvent;
 import dimhol.gamelevels.map.TileMap;
 import org.locationtech.jts.math.Vector2D;
 
@@ -70,7 +72,10 @@ public final class MapCollisionSystem extends AbstractSystem {
         var body = (BodyComponent) entity.getComponent(BodyComponent.class);
         var movement = (MovementComponent) entity.getComponent(MovementComponent.class);
         if (checkMapCollision(position, body, movement, world.getLevelManager().getTileMap())) {
-            position.resetToLastPos();
+            if (entity.hasComponent(BulletComponent.class)) {
+                world.notifyEvent(new RemoveEntityEvent(entity));
+            } else
+                position.resetToLastPos();
         }
     }
 }
