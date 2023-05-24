@@ -1,6 +1,5 @@
 package dimhol.systems;
 
-import dimhol.components.MeleeAttackComponent;
 import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;

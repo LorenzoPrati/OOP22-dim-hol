@@ -75,7 +75,8 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new BodyComponent(new RectBodyShape(ENEMY_BULLET_WIDTH, ENEMY_BULLET_HEIGHT), false))
                 .add(new CollisionComponent())
                 .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
-                .add(new BulletAttackomponent(ENEMY_BULLET_DAMAGE, checkPlayer))
+                .add(new MeleeAttackComponent(ENEMY_BULLET_DAMAGE, checkPlayer))
+                .add(new BulletTagComponent())
                 .build();
     }
 }
