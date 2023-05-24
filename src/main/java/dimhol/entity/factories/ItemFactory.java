@@ -6,7 +6,7 @@ import dimhol.entity.EntityBuilder;
 import java.util.function.BiConsumer;
 import org.locationtech.jts.math.Vector2D;
 import dimhol.logic.collision.RectBodyShape;
-import dimhol.view.ItemComponent;
+import dimhol.components.ItemComponent;
 
 public class ItemFactory extends AbstractFactory {
     private static final double W = 1;

@@ -5,8 +5,6 @@ import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.events.ChangeRoomEvent;
-import dimhol.events.MaxHealthIncreasedEvent;
-import dimhol.events.SpeedIncresedEvent;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
@@ -40,7 +38,6 @@ public class InteractableObjectFactory extends AbstractFactory {
         if(checkCoins.test(e, MAX_HEALTH_PRICE )){
             var healthComp = (HealthComponent)e.getComponent(HealthComponent.class);
             healthComp.setMaxHealth(healthComp.getMaxHealth() + MAX_HEALTH_INCREASE);
-            w.notifyEvent(new MaxHealthIncreasedEvent());
         }
     };
 
@@ -48,7 +45,6 @@ public class InteractableObjectFactory extends AbstractFactory {
         if(checkCoins.test(e, VELOCITY_PRICE)){
             var moveComp = (MovementComponent)e.getComponent(MovementComponent.class);
             moveComp.setSpeed(moveComp.getSpeed() + VELOCITY_INCREASE);
-            w.notifyEvent(new SpeedIncresedEvent());
         } 
     };
 

@@ -3,7 +3,7 @@ package dimhol.systems;
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;
-import dimhol.view.ItemComponent;
+import dimhol.components.ItemComponent;
 import dimhol.components.CollisionComponent;
 import dimhol.components.PlayerComponent;
 
