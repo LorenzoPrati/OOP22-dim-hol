@@ -2,6 +2,8 @@ package dimhol.view;
 
 import dimhol.core.World;
 import dimhol.gamelevels.LevelManager;
+import dimhol.gamelevels.map.TileMap;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,13 +24,9 @@ public class SceneImpl implements Scene {
     private LevelManager levelManager;
     public GamePanel scenePanel;
 
-    public SceneImpl(LevelManager levelManager){
-        this.levelManager = levelManager;
-        var tileMap = levelManager.getTileMap();
-        this.tileMapWidth = tileMap.getWidth();
-        this.tileMapHeight = tileMap.getHeight();
+    public SceneImpl(){
         this.scenePanel =  new GamePanel(screenSize.getWidth(), screenSize.getHeight());;
-        this.loader = new ResourceLoader(tileMap.getTileWidth(), tileMap.getTileHeight());
+        this.loader = new ResourceLoader();
     }
 
     class GamePanel extends JPanel{
@@ -110,7 +108,7 @@ public class SceneImpl implements Scene {
     }
 
     @Override
-    public void toList(final GraphicInfo graphicInfo) {
+    public void updateList(final GraphicInfo graphicInfo) {
         this.renderList.add(graphicInfo);
     }
 
@@ -125,5 +123,11 @@ public class SceneImpl implements Scene {
     @Override
     public JPanel getPanel() {
         return this.scenePanel;
+    }
+
+    @Override
+    public void setMap(TileMap tileMap) {
+        this.tileMapWidth = tileMap.getWidth();
+        this.tileMapHeight = tileMap.getHeight();
     }
 }

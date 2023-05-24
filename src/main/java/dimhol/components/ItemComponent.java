@@ -1,7 +1,6 @@
-package dimhol.view;
+package dimhol.components;
 
 import java.util.function.BiConsumer;
-import dimhol.components.Component;
 import dimhol.entity.Entity;
 
 public class ItemComponent implements Component {

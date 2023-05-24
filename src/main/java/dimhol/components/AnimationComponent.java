@@ -70,6 +70,15 @@ public class AnimationComponent implements Component{
             .get(0);
     }
 
+    public int getImage(){
+        return map.entrySet().stream()
+                .filter(e -> e.getKey().equals(state))
+                .map(Map.Entry::getValue)
+                .findAny()
+                .get()
+                .get(1);
+    }
+
     public boolean isBlocking(){
         var flag = map.entrySet().stream()
             .filter(e -> e.getKey().equals(state))
