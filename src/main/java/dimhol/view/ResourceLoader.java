@@ -33,10 +33,10 @@ public class ResourceLoader {
             this.imagesMap.put(36, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/items/key.png"))), 19, 10));
             this.imagesMap.put(37, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/items/chest.png"))), 21, 18));
 
-            this.imagesMap.put(38, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/up.png"))), 123, 127));
-            this.imagesMap.put(39, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/down.png"))), 123, 127));
-            this.imagesMap.put(40, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/left.png"))), 127, 123));
-            this.imagesMap.put(41, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/right.png"))), 127, 123));
+            this.imagesMap.put(38, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/up.png"))), 35, 35));
+            this.imagesMap.put(39, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/down.png"))), 35, 35));
+            this.imagesMap.put(40, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/left.png"))), 35, 35));
+            this.imagesMap.put(41, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/right.png"))), 35, 35));
 
             this.imagesMap.put(43, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/items/heart.png"))), 21, 21));
             this.imagesMap.put(44, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/shop/thunder.png"))), 512, 512) );
