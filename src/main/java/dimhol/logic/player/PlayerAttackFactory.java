@@ -60,6 +60,7 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
                 .add(new BodyComponent(new RectBodyShape(PLAYER_BIG_BULLET_WIDTH, PLAYER_BIG_BULLET_HEIGHT), false))
                 .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
                 .add(new AttackComponent(PLAYER_BIG_BULLET_DAMAGE, checkEnemy))
+                .add(new BulletComponent())
                 .build();
     }
 
