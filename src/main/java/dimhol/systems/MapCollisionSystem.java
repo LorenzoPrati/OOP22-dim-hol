@@ -3,7 +3,7 @@ package dimhol.systems;
 import dimhol.components.BodyComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
-import dimhol.core.WorldImpl;
+import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.gamelevels.map.TileMap;
 import org.locationtech.jts.math.Vector2D;
@@ -16,16 +16,11 @@ import java.util.stream.IntStream;
  */
 public final class MapCollisionSystem extends AbstractSystem {
 
-    private final TileMap tileMap;
-
     /**
      * Constructs a MapCollisionSystem with the specified World instance.
-     *
-     * @param world The world instance this system is associated.
      */
-    public MapCollisionSystem(final WorldImpl world) {
-        super(world, PositionComponent.class, BodyComponent.class, MovementComponent.class);
-        tileMap = world.getLevelManager().getTileMap();
+    public MapCollisionSystem() {
+        super(PositionComponent.class, BodyComponent.class, MovementComponent.class);
     }
 
     /**
@@ -36,7 +31,7 @@ public final class MapCollisionSystem extends AbstractSystem {
      * @param movement The movement component of the entity.
      * @return true if the entity collides with the game map, false otherwise.
      */
-    private boolean checkMapCollision(final PositionComponent pos, final BodyComponent body, final MovementComponent movement) {
+    private boolean checkMapCollision(final PositionComponent pos, final BodyComponent body, final MovementComponent movement, final TileMap tileMap) {
         var x1 = pos.getPos().getX();
         var x2 = x1 + body.getBodyShape().getBoundingWidth();
         var y1 = pos.getPos().getY();
@@ -51,10 +46,10 @@ public final class MapCollisionSystem extends AbstractSystem {
         Vector2D vector = movement.getDir();
         if (vector.getX() == 0) {
             return IntStream.rangeClosed(startX, endX)
-                    .anyMatch(i -> isTileWalkable(vector.getY() < 0 ? startY : endY, i));
+                    .anyMatch(i -> isTileWalkable(tileMap, vector.getY() < 0 ? startY : endY, i));
         } else {
             return IntStream.rangeClosed(startY, endY)
-                    .anyMatch(i -> isTileWalkable(i, vector.getX() < 0 ? startX : endX));
+                    .anyMatch(i -> isTileWalkable(tileMap, i, vector.getX() < 0 ? startX : endX));
         }
     }
 
@@ -65,16 +60,16 @@ public final class MapCollisionSystem extends AbstractSystem {
      * @param cols The cols index of the tile.
      * @return true if the tile is walkable, false otherwise.
      */
-    private boolean isTileWalkable(final int rows, final int cols) {
+    private boolean isTileWalkable(final TileMap tileMap, final int rows, final int cols) {
         return !tileMap.getTile(rows, cols).isWalkable();
     }
 
     @Override
-    public void process(final Entity entity, final double deltaTime) {
+    public void process(final Entity entity, final double deltaTime, final World world) {
         var position = (PositionComponent) entity.getComponent(PositionComponent.class);
         var body = (BodyComponent) entity.getComponent(BodyComponent.class);
         var movement = (MovementComponent) entity.getComponent(MovementComponent.class);
-        if (checkMapCollision(position, body, movement)) {
+        if (checkMapCollision(position, body, movement, world.getLevelManager().getTileMap())) {
             position.resetToLastPos();
         }
     }
