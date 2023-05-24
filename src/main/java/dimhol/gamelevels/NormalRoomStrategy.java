@@ -4,6 +4,8 @@ import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.factories.EnemyFactory;
 import dimhol.entity.factories.GenericFactory;
+import dimhol.entity.factories.InteractableObjectFactory;
+import dimhol.entity.factories.ItemFactory;
 import org.apache.commons.lang3.tuple.Pair;
 import org.locationtech.jts.math.Vector2D;
 
@@ -22,6 +24,9 @@ public class NormalRoomStrategy implements RoomStrategy {
     private static final int MAX_ENEMIES = 10;
     private final GenericFactory genericFactory;
     private final EnemyFactory enemyFactory;
+    private final ItemFactory itemFactory;
+    private final InteractableObjectFactory interactableObjectFactory;
+
     private final Random random;
 
     /**
@@ -31,9 +36,14 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @param enemyFactory   The enemy entity factory.
      * @param random         The random number generator.
      */
-    public NormalRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory, final Random random) {
+    public NormalRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory,
+                              final ItemFactory itemFactory,
+                              final InteractableObjectFactory interactableObjectFactory,
+                              final Random random) {
         this.genericFactory = genericFactory;
         this.enemyFactory = enemyFactory;
+        this.itemFactory = itemFactory;
+        this.interactableObjectFactory = interactableObjectFactory;
         this.random = new Random(random.nextInt());
     }
 
@@ -73,6 +83,16 @@ public class NormalRoomStrategy implements RoomStrategy {
         System.out.println(freeTiles.size());
 
         //Place coins:
+        itemFactory.createCoin(getRandomTile(freeTiles).getLeft().doubleValue(),
+                getRandomTile(freeTiles).getRight().doubleValue());
+
+        //Place hearth:
+        itemFactory.createHeart(getRandomTile(freeTiles).getLeft().doubleValue(),
+                getRandomTile(freeTiles).getRight().doubleValue());
+
+        //Place gate:
+        interactableObjectFactory.createGate(getRandomTile(freeTiles).getLeft().doubleValue(),
+                getRandomTile(freeTiles).getRight().doubleValue());
 
 
         return entities;
