@@ -5,7 +5,6 @@ import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.events.ChangeLevelEvent;
-import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
@@ -58,7 +57,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
-        .add(new InteractableComponent(powerUpMaxHealth, Optional.of(MAX_HEALTH_PRICE))) //TO DO
+        .add(new InteractableComponent(powerUpMaxHealth))
         .add(new AnimationComponent(this.map.get("shopHeart"), "idle"))
         .build();
     }
@@ -67,7 +66,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
-        .add(new InteractableComponent(powerUpSpeed, Optional.of(VELOCITY_PRICE)))
+        .add(new InteractableComponent(powerUpSpeed))
         .add(new AnimationComponent(this.map.get("shopSpeed"), "idle"))
         .build();
     }
@@ -76,7 +75,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
-        .add(new InteractableComponent(useGate, Optional.empty()))
+        .add(new InteractableComponent(useGate))
         .add(new AnimationComponent(this.map.get("heart"), "idle")) //TO DO add gate sprites
         .build();
     }
