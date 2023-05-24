@@ -1,7 +1,6 @@
 package dimhol.systems;
 
 import dimhol.core.World;
-import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.components.Component;
 
@@ -40,8 +39,8 @@ public abstract class AbstractSystem implements GameSystem {
      * This method gets called on each entity belonging to the system family.
      * Performs the system specific task.
      *
-     * @param e  the entity to process
+     * @param entity  the entity to process
      * @param dt the delta time
      */
-    public abstract void process(final Entity e, final double dt, final World world);
+    public abstract void process(final Entity entity, final double dt, final World world);
 }

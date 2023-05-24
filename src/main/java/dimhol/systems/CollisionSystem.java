@@ -1,5 +1,6 @@
 package dimhol.systems;
 
+import dimhol.core.World;
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.components.BodyComponent;
@@ -13,49 +14,47 @@ public class CollisionSystem extends AbstractSystem {
 
     /**
      * Constructs a CollisionSystem. Iterates through entities with {@link BodyComponent}.
-     *
-     * @param w the world
      */
-    public CollisionSystem(final WorldImpl w) {
-        super(w, BodyComponent.class);
+    public CollisionSystem() {
+        super(BodyComponent.class);
     }
 
     /**
      * Register all the collisions by storing data in a {@link CollisionComponent}
      * so that next system can handle them.
      *
-     * @param e  the entity to process
+     * @param entity the entity to process
      * @param dt
      */
     @Override
-    public void process(final Entity e, double dt) {
-        for (var o : this.world.getEntities()) {
-            if (!o.equals(e) && o.hasComponent(BodyComponent.class)) {
-                this.checkCollision(e, o);
+    public void process(final Entity entity, final double dt, final World world) {
+        for (var other : world.getEntities()) {
+            if (!other.equals(entity) && other.hasComponent(BodyComponent.class)) {
+                this.checkCollision(entity, other);
             }
         }
     }
 
-    private void checkCollision(final Entity e, final Entity o) {
-        var p1 = (PositionComponent) e.getComponent(PositionComponent.class);
-        var b1 = (BodyComponent) e.getComponent(BodyComponent.class);
-        var p2 = (PositionComponent) o.getComponent(PositionComponent.class);
-        var b2 = (BodyComponent) o.getComponent(BodyComponent.class);
+    private void checkCollision(final Entity entity, final Entity other) {
+        var p1 = (PositionComponent) entity.getComponent(PositionComponent.class);
+        var b1 = (BodyComponent) entity.getComponent(BodyComponent.class);
+        var p2 = (PositionComponent) other.getComponent(PositionComponent.class);
+        var b2 = (BodyComponent) other.getComponent(BodyComponent.class);
         if (this.collisionHappens(p1,p2,b1,b2)) {
-            this.registerCollision(e, o);
+            this.registerCollision(entity, other);
         }
     }
 
-    private void registerCollision(final Entity e, final Entity o) {
-        if (!e.hasComponent(CollisionComponent.class)) {
-            e.addComponent(new CollisionComponent());
+    private void registerCollision(final Entity entity, final Entity other) {
+        if (!entity.hasComponent(CollisionComponent.class)) {
+            entity.addComponent(new CollisionComponent());
         }
-        var cc = (CollisionComponent) e.getComponent(CollisionComponent.class);
-        cc.addCollided(o);
+        var cc = (CollisionComponent) entity.getComponent(CollisionComponent.class);
+        cc.addCollided(other);
     }
 
-    private boolean collisionHappens(PositionComponent p1, PositionComponent p2,
-                                     BodyComponent b1, BodyComponent b2) {
+    private boolean collisionHappens(final PositionComponent p1, final PositionComponent p2,
+                                     final BodyComponent b1, final BodyComponent b2) {
                 return b1.getBodyShape().getShape(p1.getPos().getX(),p1.getPos().getY())
                         .intersects(b2.getBodyShape().getShape(p2.getPos().getX(),p2.getPos().getY()));
     }

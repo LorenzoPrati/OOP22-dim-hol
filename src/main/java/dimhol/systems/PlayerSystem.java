@@ -1,5 +1,6 @@
 package dimhol.systems;
 
+import dimhol.core.World;
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.events.AddEntityEvent;
@@ -15,32 +16,30 @@ public class PlayerSystem extends AbstractSystem {
 
     /**
      * Constructs a PlayerSystem. Iterates through entities that has {@link PlayerComponent}.
-     *
-     * @param w the world
      */
-    public PlayerSystem(final WorldImpl w) {
-        super(w, PlayerComponent.class);
+    public PlayerSystem() {
+        super(PlayerComponent.class);
     }
 
     /**
      * Handle player logic.
      *
-     * @param e  the entity to process
+     * @param entity  the entity to process
      * @param dt
      */
     @Override
-    public void process(final Entity e, double dt) {
-        var input = this.world.getInput();
-        var player = (PlayerComponent) e.getComponent(PlayerComponent.class);
+    public void process(final Entity entity, final double dt, final World world) {
+        var input = world.getInput();
+        var player = (PlayerComponent) entity.getComponent(PlayerComponent.class);
 
         var currState = player.getState();
-        currState.update(dt, e);
+        currState.update(dt, entity);
         if (currState.canTransition()) {
             var newState = currState.transition(input);
             newState.ifPresent(s -> {
                 currState.exit();
                 player.setState(s);
-                s.entry(e);
+                s.entry(entity);
             });
             player.getState().execute(input).forEach(en -> world.notifyEvent(new AddEntityEvent(en)));
         }
