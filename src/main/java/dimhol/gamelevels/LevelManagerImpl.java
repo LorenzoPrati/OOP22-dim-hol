@@ -2,9 +2,7 @@ package dimhol.gamelevels;
 
 import dimhol.components.PlayerComponent;
 import dimhol.entity.Entity;
-import dimhol.entity.factories.BossFactory;
-import dimhol.entity.factories.EnemyFactory;
-import dimhol.entity.factories.GenericFactory;
+import dimhol.entity.factories.*;
 import dimhol.gamelevels.map.MapLoader;
 import dimhol.gamelevels.map.MapLoaderImpl;
 import dimhol.gamelevels.map.TileMap;
@@ -39,9 +37,11 @@ public class LevelManagerImpl implements LevelManager {
         this.mapLoader = new MapLoaderImpl();
         GenericFactory genericFactory = new GenericFactory();
         EnemyFactory enemyFactory = new EnemyFactory();
+        ItemFactory itemFactory = new ItemFactory();
+        InteractableObjectFactory interactableObjectFactory = new InteractableObjectFactory();
         Random random = new Random();
         this.tileMap = mapLoader.loadShopRoom();
-        normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, random);
+        normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, itemFactory, interactableObjectFactory, random);
         shopRoomStrategy = new ShopRoomStrategy(genericFactory, new RandomWrapper());
         bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory());
         this.currentLevel = 0;
