@@ -7,16 +7,9 @@ import javax.swing.JPanel;
  */
 public interface Scene {
     /**
-     * A method wich adds to the list all the following information about each entity.
-     * @param index the current sprite to be drawn.
-     * @param numImage the number to get the image from the resource loader.
-     * @param x the x of the entity's position.
-     * @param y the y of the entity's position.
-     * @param w the bodyComponent's width.
-     * @param h the bodyComponent's height.
+     * A method wich adds to the list, a graphic component foreach entity.
      */
-    void toList(final int index, final int numImage, final double x, final double y,
-        final double w,final double h);
+    void toList(GraphicInfo graphicInfo);
 
     /**
      * 
