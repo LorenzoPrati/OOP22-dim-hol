@@ -1,18 +1,18 @@
 package dimhol.view;
 
+import org.locationtech.jts.math.Vector2D;
+
 public class GraphicInfo {
     private final int numImage;
     private final int index;
-    private final double x;
-    private final double y;
+    private Vector2D position;
     private final double w;
     private final double h;
 
-    public GraphicInfo(final int index, final int numImage, final double x, final double y, final double w, final double h){
+    public GraphicInfo(final int index, final int numImage, Vector2D position, final double w, final double h){
         this.index = index;
         this.numImage = numImage;
-        this.x = x;
-        this.y = y;
+        this.position = position;
         this.w = w;
         this.h = h;
     }
@@ -22,11 +22,11 @@ public class GraphicInfo {
     }
 
     public double getX() {
-        return this.x;
+        return this.position.getX();
     }
 
     public double getY() {
-        return this.y;
+        return this.position.getY();
     }
 
     public int getNumImage() {

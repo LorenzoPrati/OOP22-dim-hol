@@ -1,17 +1,19 @@
 package dimhol.core;
 
+import dimhol.components.*;
 import dimhol.entity.Entity;
 import dimhol.events.WorldEvent;
-
 import dimhol.gamelevels.LevelManager;
 import dimhol.gamelevels.LevelManagerImpl;
-import dimhol.systems.MapCollisionSystem;
-import dimhol.systems.*;
+import dimhol.systems.GameSystem;
+import dimhol.systems.PlayerSystem;
+import dimhol.view.GraphicInfo;
 import dimhol.view.Scene;
-import dimhol.view.SceneImpl;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -19,45 +21,34 @@ import java.util.List;
  */
 public class WorldImpl implements World {
 
-    private final Scene scene;
-    private final Input input;
-    private List<Entity> entities;
+    private final List<Entity> entities;
     private final List<GameSystem> systems;
     private final List<WorldEvent> events;
     private final LevelManager levelManager;
     private boolean gameOver;
+    private boolean win;
+
+    private final Scene scene;
+    private final Input input;
 
     /**
      * Constructs a world.
      */
-    public WorldImpl() {
+    public WorldImpl(Scene scene) {
         this.entities = new ArrayList<>();
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
         this.levelManager = new LevelManagerImpl();
-        this.scene = new SceneImpl(this);
+        this.scene = scene;
         this.input = new InputImpl();
-
         /*
         generate first level
          */
-        levelManager.changeLevel(this.getEntities()).forEach(this::addEntity);
-
+        this.entities.addAll(levelManager.changeLevel(this.getEntities()));
         /*
         Add systems
          */
         this.systems.add(new PlayerSystem(this));
-        this.systems.add(new AiSystem(this));
-        this.systems.add(new MovementSystem(this));
-        this.systems.add(new MapCollisionSystem(this));
-        this.systems.add(new CollisionSystem(this));
-        this.systems.add(new PhysicsSystem(this));
-        this.systems.add(new ItemSystem(this));
-        this.systems.add(new CombatSystem(this));
-        this.systems.add(new CheckHealthSystem(this));
-        this.systems.add(new ClearCollisionSystem(this));
-        this.systems.add(new AnimationSystem(this));
-        this.systems.add(new RenderSystem(this));
     }
 
     /**
@@ -65,9 +56,46 @@ public class WorldImpl implements World {
      */
     @Override
     public void update(final double deltaTime) {
-        this.systems.forEach(s -> s.update(deltaTime));
+        this.systems.forEach(s -> s.update(this, deltaTime));
         this.handleEvents();
+        this.prepareRender();
         this.scene.render();
+    }
+
+    /**
+     * Find entities that need to be rendered on screen and update scene.
+     */
+    private void prepareRender() {
+        var renderList = new ArrayList<Pair<Integer,GraphicInfo>>();
+        this.getEntities().stream()
+                .filter(e -> e.hasComponent(AnimationComponent.class))
+                .forEach(e -> {
+                    /*
+                    Gets generic entity graphics elements
+                     */
+                    var pos = (PositionComponent) e.getComponent(PositionComponent.class);
+                    var body = (BodyComponent) e.getComponent(BodyComponent.class);
+                    var anim = (AnimationComponent) e.getComponent(AnimationComponent.class);
+                    renderList.add(new ImmutablePair<>(pos.getZ(),
+                            new GraphicInfo(anim.getIndex(),
+                                    anim.getImage(),
+                                    pos.getPos(),
+                                    body.getBodyShape().getBoundingWidth(),
+                                    body.getBodyShape().getBoundingHeight())));
+                    /*
+                     * Gets hud elements
+                     */
+                    if (e.hasComponent(PlayerComponent.class)) {
+                        var health = (HealthComponent) e.getComponent(HealthComponent.class);
+                        var coins = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
+                        this.scene.getHUD().updatePlayerHUD(health.getCurrentHealth(),
+                                                            health.getMaxHealth(),
+                                                            coins.getCurrentAmount());
+                    }
+                });
+        renderList.stream()
+                .sorted(Comparator.comparing(Pair::getKey))
+                .forEach(l -> this.scene.updateList(l.getValue()));
     }
 
     /**
@@ -75,7 +103,23 @@ public class WorldImpl implements World {
      */
     @Override
     public List<Entity> getEntities() {
-        return Collections.unmodifiableList(this.entities);
+        return new ArrayList<>(this.entities);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyEvent(final WorldEvent event) {
+        this.events.add(event);
+    }
+
+    /**
+     * Handles the events present in the event queue.
+     */
+    private void handleEvents() {
+        this.events.forEach(ev -> ev.execute(this));
+        this.events.clear();
     }
 
     /**
@@ -94,20 +138,32 @@ public class WorldImpl implements World {
        this.entities.remove(entity);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
-    public Input getInput() {
-        return this.input;
+    public void changeLevel() {
+        var newEntities = this.levelManager.changeLevel(this.getEntities());
+        this.entities.clear();
+        this.entities.addAll(newEntities);
+        //set new map in scene
+    }
+
+    @Override
+    public LevelManager getLevelManager() {
+        return this.levelManager;
+    }
+
+    @Override
+    public void setWin(boolean win) {
+        this.win = win;
+        this.gameOver = true;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Scene getScene() {
-        return this.scene;
+    public boolean isWin() {
+        return this.win;
     }
 
     /**
@@ -122,42 +178,15 @@ public class WorldImpl implements World {
      * {@inheritDoc}
      */
     @Override
-    public void setGameOver() {
-        this.gameOver = true;
+    public Input getInput() {
+        return this.input;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean isWin() {
-        return false;
-        //todo
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void notifyEvent(final WorldEvent event) {
-        this.events.add(event);
-    }
-
-    @Override
-    public LevelManager getLevelManager() {
-        return this.levelManager;
-    }
-
-    @Override
-    public void changeLevel() {
-        this.entities = this.levelManager.changeLevel(this.getEntities());
-    }
-
-    /**
-     * Handles the events present in the event queue.
-     */
-    private void handleEvents() {
-        this.events.forEach(ev -> ev.execute(this));
-        this.events.clear();
+    public Scene getScene() {
+        return this.scene;
     }
 }

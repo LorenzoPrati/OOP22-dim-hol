@@ -1,6 +1,7 @@
 package dimhol.components;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +50,7 @@ public class AnimationComponent implements Component{
     }
 
     public Map<String, ArrayList<Integer>> getMap() {
-        return this.map;
+        return Collections.unmodifiableMap(this.map);
     }
     
     public boolean isCompleted(){
@@ -67,6 +68,15 @@ public class AnimationComponent implements Component{
             .findAny()
             .get()
             .get(0);
+    }
+
+    public int getImage(){
+        return map.entrySet().stream()
+                .filter(e -> e.getKey().equals(state))
+                .map(Map.Entry::getValue)
+                .findAny()
+                .get()
+                .get(1);
     }
 
     public boolean isBlocking(){

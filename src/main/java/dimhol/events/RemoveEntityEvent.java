@@ -1,5 +1,7 @@
 package dimhol.events;
 
+import dimhol.components.BossComponent;
+import dimhol.components.PlayerComponent;
 import dimhol.core.World;
 import dimhol.entity.Entity;
 
@@ -32,7 +34,17 @@ public class RemoveEntityEvent implements WorldEvent {
         final var toRemove = world.getEntities().stream()
                 .filter(e -> e.getId().equals(this.id))
                 .findAny();
-        toRemove.ifPresent(world::removeEntity);
-        //todo record stats
+
+        toRemove.ifPresent(entity -> {
+            if (entity.hasComponent(PlayerComponent.class)) {
+                world.setWin(false);
+            }
+            /*
+            if (entity.hasComponent(BossComponent.class)) {
+                world.setWin(true);
+            }
+            */
+            world.removeEntity(entity);
+        });
     }
 }

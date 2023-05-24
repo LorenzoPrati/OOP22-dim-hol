@@ -1,22 +1,17 @@
 package dimhol.components;
 
-import dimhol.logic.effects.Effect;
+import java.util.function.BiConsumer;
+import dimhol.core.World;
+import dimhol.entity.Entity;
 
 public class InteractableComponent implements Component {
-    private Effect effect;
-    private boolean isPickable;
+    private BiConsumer<Entity,World> effect;
 
-    public InteractableComponent(Effect effect, boolean isPickable) {
+    public InteractableComponent(BiConsumer<Entity,World> effect) {
         this.effect = effect;
-        this.isPickable = isPickable;
     }
 
-    public Effect getEffect() {
-        return effect;
-    }
-    
-    public boolean isPickable() {
-        return this.isPickable;
-    }
-
+    public void applyEffect(Entity entity, World world){
+        this.effect.accept(entity, world);
+    } 
 }

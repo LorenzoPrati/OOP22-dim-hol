@@ -1,5 +1,6 @@
 package dimhol.systems;
 
+import dimhol.core.World;
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.components.Component;
@@ -14,17 +15,14 @@ import java.util.Set;
  */
 public abstract class AbstractSystem implements GameSystem {
 
-    protected final WorldImpl world;
     private final Set<Class<? extends Component>> family = new HashSet<>();
 
     /**
      * Constructs a system to operates on a given world and family of components.
      *
-     * @param w the world
      * @param comps the family of components
      */
-    public AbstractSystem(final WorldImpl w, final Class<? extends Component>... comps) {
-        this.world = w;
+    public AbstractSystem(final Class<? extends Component>... comps) {
         this.family.addAll(Arrays.asList(comps));
     }
 
@@ -32,10 +30,10 @@ public abstract class AbstractSystem implements GameSystem {
      * {@inheritDoc}
      */
     @Override
-    public void update(double dt) {
-        this.world.getEntities().stream()
+    public void update(final World world, final double dt) {
+        world.getEntities().stream()
                 .filter(e -> e.hasFamily(this.family))
-                .forEach(e -> this.process(e, dt));
+                .forEach(e -> this.process(e, dt, world));
     }
 
     /**
@@ -43,7 +41,7 @@ public abstract class AbstractSystem implements GameSystem {
      * Performs the system specific task.
      *
      * @param e  the entity to process
-     * @param dt
+     * @param dt the delta time
      */
-    public abstract void process(final Entity e, double dt);
+    public abstract void process(final Entity e, final double dt, final World world);
 }
