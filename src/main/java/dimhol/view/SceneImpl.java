@@ -1,7 +1,7 @@
 package dimhol.view;
 
 import dimhol.core.World;
-
+import dimhol.gamelevels.LevelManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SceneImpl implements Scene {
-    //private JFrame frame;
-    private World world;
     private List<GraphicInfo> renderList = new ArrayList<>();
     private int tileMapWidth;
     private int tileMapHeight;
@@ -21,11 +19,12 @@ public class SceneImpl implements Scene {
     private int newTileHeight;
     private int offsetX;
     private int offsetY;
+    private LevelManager levelManager;
     public GamePanel scenePanel;
 
-    public SceneImpl(World world){
-        this.world = world;
-        var tileMap = world.getLevelManager().getTileMap();
+    public SceneImpl(LevelManager levelManager){
+        this.levelManager = levelManager;
+        var tileMap = levelManager.getTileMap();
         this.tileMapWidth = tileMap.getWidth();
         this.tileMapHeight = tileMap.getHeight();
         this.scenePanel =  new GamePanel(screenSize.getWidth(), screenSize.getHeight());;
@@ -45,26 +44,26 @@ public class SceneImpl implements Scene {
 
         @Override
         public void paintComponent(Graphics g) {
-            var tileMapLayers = world.getLevelManager().getTileMap().getLayers();
+            var tileMapLayers = levelManager.getTileMap().getLayers();
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D)g;
             for(var layer: tileMapLayers){
-            for (int i = 0; i < tileMapWidth; i++) {
-                for (int j = 0; j < tileMapHeight; j++) {
-                    var id = layer[i][j].getTileSetId();
-                    if (this.getWidth() / tileMapHeight < this.getHeight() / tileMapWidth) {
-                        newTileWidth = this.getWidth() / tileMapHeight;
-                    } else {
-                        newTileWidth = this.getHeight() / tileMapWidth;
+                for (int i = 0; i < tileMapWidth; i++) {
+                    for (int j = 0; j < tileMapHeight; j++) {
+                        var id = layer[i][j].getTileSetId();
+                        if (this.getWidth() / tileMapHeight < this.getHeight() / tileMapWidth) {
+                            newTileWidth = this.getWidth() / tileMapHeight;
+                        } else {
+                            newTileWidth = this.getHeight() / tileMapWidth;
+                        }
+                        newTileHeight = newTileWidth;
+                        offsetX = ((this.getWidth() - tileMapHeight * newTileWidth) / 2);
+                        offsetY = ((this.getHeight() - tileMapWidth * newTileHeight) / 2);
+                        var drawX = newTileHeight * j + offsetX;
+                        var drawY = newTileWidth * i + offsetY;
+                        g2.drawImage(loader.getTileImage(id), drawX, drawY, newTileWidth, newTileHeight, null);
                     }
-                    newTileHeight = newTileWidth;
-                    offsetX = ((this.getWidth() - tileMapHeight * newTileWidth) / 2);
-                    offsetY = ((this.getHeight() - tileMapWidth * newTileHeight) / 2);
-                    var drawX = newTileHeight * j + offsetX;
-                    var drawY = newTileWidth * i + offsetY;
-                    g2.drawImage(loader.getTileImage(id), drawX, drawY, newTileWidth, newTileHeight, null);
                 }
-            }
             }
             
             for (int i = 0; i < renderList.size(); i++) {
@@ -111,8 +110,8 @@ public class SceneImpl implements Scene {
     }
 
     @Override
-    public void toList(int index, int numImage, double x, double y, double w, double h) {
-        this.renderList.add(new GraphicInfo(index, numImage, x, y, w,h));
+    public void toList(final GraphicInfo graphicInfo) {
+        this.renderList.add(graphicInfo);
     }
 
     @Override
