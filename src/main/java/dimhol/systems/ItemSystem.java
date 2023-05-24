@@ -1,49 +1,25 @@
 package dimhol.systems;
 
-import dimhol.core.WorldImpl;
+import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;
-import dimhol.components.CoinPocketComponent;
+import dimhol.components.ItemComponent;
 import dimhol.components.CollisionComponent;
-import dimhol.components.InteractableComponent;
-import dimhol.components.InteractorComponent;
+import dimhol.components.PlayerComponent;
 
 public class ItemSystem extends AbstractSystem{
 
-    public ItemSystem(WorldImpl w) {
-        super(w, InteractableComponent.class, CollisionComponent.class);
+    public ItemSystem() {
+        super(ItemComponent.class, CollisionComponent.class);
     }
 
     @Override
-    public void process(Entity e, double dt) {
-        var collisionComp = (CollisionComponent) e.getComponent(CollisionComponent.class);
-        var interactableComp = (InteractableComponent) e.getComponent(InteractableComponent.class);
-        var effect = interactableComp.getEffect();
-
+    public void process(final Entity entity, final double dt, final World world) {
+        var collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
+        var itemComp = (ItemComponent) entity.getComponent(ItemComponent.class);
         for(var c: collisionComp.getCollided()){
-            if(interactableComp.isPickable() && effect.canUseOn(c)){
-                effect.applyOn(c);
-                this.world.notifyEvent(new RemoveEntityEvent(c));
-            }
-            else{
-                if(c.hasComponent(InteractorComponent.class)){
-                    var interactComp = (InteractorComponent)c.getComponent(InteractorComponent.class);
-                    if(interactComp.isInteracting() && effect.canUseOn(c)){
-                        if(interactableComp.hasPriceToPay()){
-                            if(c.hasComponent(CoinPocketComponent.class)){
-                                var coinPocketComp = (CoinPocketComponent)c.getComponent(CoinPocketComponent.class);
-                                if(interactableComp.getPrice().get()<=coinPocketComp.getCurrentAmount()){
-                                    effect.applyOn(c);
-                                }
-                            }
-                        }
-                        else{
-                            var eventToNotify = effect.applyOn(c);
-                            this.world.notifyEvent(eventToNotify.get());
-                        } 
-                    }
-                }
-            }
+            itemComp.applyEffect(entity, PlayerComponent.class);
+            world.notifyEvent(new RemoveEntityEvent(c));
         }
     }
 }

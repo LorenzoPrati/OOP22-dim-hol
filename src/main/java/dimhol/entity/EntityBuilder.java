@@ -2,23 +2,31 @@ package dimhol.entity;
 
 import dimhol.components.Component;
 
-import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A simple builder for entities.
  */
 public class EntityBuilder {
 
-    private final Entity e = new EntityImpl(UUID.randomUUID());
+    private final Set<Component> components;
+
+    /**
+     * Constructs an entity builder.
+     */
+    public EntityBuilder() {
+        this.components = new HashSet<>();
+    }
 
     /**
      * Adds the given component to the builder.
      *
-     * @param c the component to be added
+     * @param component the component to be added
      * @return the builder
      */
-    public EntityBuilder add(Component c) {
-        e.addComponent(c);
+    public EntityBuilder add(final Component component) {
+        this.components.add(component);
         return this;
     }
 
@@ -29,6 +37,6 @@ public class EntityBuilder {
      * @return the complete entity
      */
     public Entity build() {
-        return this.e;
+        return new EntityImpl(this.components);
     }
 }

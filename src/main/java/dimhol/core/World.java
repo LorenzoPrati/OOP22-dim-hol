@@ -27,6 +27,13 @@ public interface World {
     List<Entity> getEntities();
 
     /**
+     * Notifies the World that an event is occurred.
+     *
+     * @param event the event that occurred
+     */
+    void notifyEvent(WorldEvent event);
+
+    /**
      * Adds an entity to the world.
      *
      * @param entity the entity to add
@@ -39,6 +46,41 @@ public interface World {
      * @param entity the entity to remove
      */
     void removeEntity(Entity entity);
+
+
+    /**
+     * Handles the level change.
+     */
+    void changeLevel();
+
+    /**
+     * Gets the level manager.
+     *
+     * @return the level manager.
+     */
+    LevelManager getLevelManager();
+
+    /**
+     * Sets if the player has won.
+     *
+     * @param win the match result. True if player defeated the boss.
+     */
+    void setWin(boolean win);
+
+    /**
+     * Checks if the match ended with a win.
+     *
+     * @return true if the match ended with a win
+     */
+    boolean isWin();
+
+    /**
+     * Checks if the game is over.
+     *
+     * @return true if the game is complete or the player is dead,
+     * false otherwise
+     */
+    boolean isGameOver();
 
     /**
      * Gets the input.
@@ -53,36 +95,4 @@ public interface World {
      * @return the world scene
      */
     Scene getScene();
-
-    /**
-     * Checks if the game is over.
-     *
-     * @return true if the game is complete or the player is dead,
-     * false otherwise
-     */
-    boolean isGameOver();
-
-    /**
-     * Sets that the game is over.
-     */
-    void setGameOver();
-
-    /**
-     * Checks match result.
-     *
-     * @return true if the player completed the game,
-     * false otherwise
-     */
-    boolean isWin();
-
-    /**
-     * Notifies the World that an event is occurred.
-     *
-     * @param event the event that occurred
-     */
-    void notifyEvent(WorldEvent event);
-
-    LevelManager getLevelManager();
-
-    void changeLevel();
 }
