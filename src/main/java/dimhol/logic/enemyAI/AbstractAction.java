@@ -1,11 +1,10 @@
-package dimhol.logic.ai;
+package dimhol.logic.enemyAI;
 
 import dimhol.components.AiComponent;
 import dimhol.components.BodyComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
-import dimhol.entity.factories.EnemyAttackFactory;
 import dimhol.events.WorldEvent;
 import dimhol.logic.collision.BodyShape;
 import org.locationtech.jts.math.Vector2D;

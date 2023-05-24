@@ -18,19 +18,21 @@ public class CombatSystem extends AbstractSystem {
 
     @Override
     public void process(Entity e, double dt) {
-        AttackComponent entityAttack = (AttackComponent) e.getComponent(AttackComponent.class);
-        CollisionComponent entityCollision = (CollisionComponent) e.getComponent(CollisionComponent.class);
+        AttackComponent attackComp = (AttackComponent) e.getComponent(AttackComponent.class);
+        CollisionComponent collisionComp = (CollisionComponent) e.getComponent(CollisionComponent.class);
 
-        for (var entity : entityCollision.getCollided()) {
-            for (var effect : entityAttack.getEffects()) {
-                if (effect.canUseOn(entity)){
-                    effect.applyOn(entity);
-                    world.notifyEvent(new RemoveEntityEvent(e));
-                    if (entity.hasComponent(PlayerComponent.class)) {
-                        var state = (AnimationComponent) entity.getComponent(AnimationComponent.class);
-                        var mov = (MovementComponent) entity.getComponent((MovementComponent.class));
-                        state.setState("hurt" + " " + DirectionUtil.getStringFromVec(mov.getDir()));
-                    }
+        if (attackComp.getEntity().hasComponent(AiComponent.class)) {
+            for (var entity : collisionComp.getCollided()) {
+                if (entity.hasComponent(PlayerComponent.class)) {
+                    var healthComp = (HealthComponent) entity.getComponent(HealthComponent.class);
+                    healthComp.setCurrentHealth(healthComp.getCurrentHealth()-attackComp.getDamage());
+                }
+            }
+        } else if (attackComp.getEntity().hasComponent(PlayerComponent.class)) {
+            for (var entity : collisionComp.getCollided()) {
+                if (entity.hasComponent(AiComponent.class)) {
+                    var healthComp = (HealthComponent) entity.getComponent(HealthComponent.class);
+                    healthComp.setCurrentHealth(healthComp.getCurrentHealth()-attackComp.getDamage());
                 }
             }
         }

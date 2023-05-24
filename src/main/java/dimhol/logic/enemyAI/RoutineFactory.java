@@ -1,4 +1,4 @@
-package dimhol.logic.ai;
+package dimhol.logic.enemyAI;
 
 import java.util.ArrayList;
 import java.util.List;

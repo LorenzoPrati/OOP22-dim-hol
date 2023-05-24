@@ -2,7 +2,6 @@ package dimhol.logic.player;
 
 import dimhol.core.Input;
 import dimhol.entity.Entity;
-import dimhol.entity.factories.PlayerAttackFactory;
 
 import java.util.Collections;
 import java.util.List;

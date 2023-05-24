@@ -1,6 +1,5 @@
-package dimhol.logic.ai;
+package dimhol.logic.enemyAI;
 
-import dimhol.entity.factories.EnemyAttackFactory;
 import dimhol.events.AddEntityEvent;
 import dimhol.events.WorldEvent;
 
@@ -17,7 +16,6 @@ public final class MeleeAttack extends AbstractAction {
 
     @Override
     public Optional<List<WorldEvent>> execute() {
-        System.out.println("execute");
         getMovComp().setEnabled(false);
         if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
             getAi().setPrevTime(getAi().getCurrentTime());

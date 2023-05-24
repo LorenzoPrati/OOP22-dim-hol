@@ -1,7 +1,5 @@
-package dimhol.logic.ai;
+package dimhol.logic.enemyAI;
 
-import dimhol.logic.collision.BodyShape;
-import dimhol.logic.util.DirectionUtil;
 import org.locationtech.jts.math.Vector2D;
 
 /**

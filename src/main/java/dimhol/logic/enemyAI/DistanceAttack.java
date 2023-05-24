@@ -1,6 +1,5 @@
-package dimhol.logic.ai;
+package dimhol.logic.enemyAI;
 
-import dimhol.entity.factories.EnemyAttackFactory;
 import dimhol.events.AddEntityEvent;
 import dimhol.events.WorldEvent;
 
