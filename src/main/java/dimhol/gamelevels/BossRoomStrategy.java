@@ -11,6 +11,7 @@ import org.locationtech.jts.math.Vector2D;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -30,6 +31,8 @@ public final class BossRoomStrategy implements RoomStrategy {
     private static final int NUM_ENEMY_WAVES = 3;
     private static final int MAX_ENEMIES_PER_TILE = 100;
     private static final int NUM_BOSS_ENTITIES = 1;
+    private static final int BOSS_WIDTH = 4;
+    private static final int BOSS_HEIGHT = 3;
     private final GenericFactory genericFactory;
     private final EnemyFactory enemyFactory;
     private final BossFactory bossFactory;
@@ -137,7 +140,8 @@ public final class BossRoomStrategy implements RoomStrategy {
      */
     private List<Pair<Integer, Integer>> findValidTilesWithDimension(Set<Pair<Integer, Integer>> freeTiles, int width, int height) {
         List<Pair<Integer, Integer>> validTiles = new ArrayList<>();
-        for (Pair<Integer, Integer> tile : freeTiles) {
+        for (Iterator<Pair<Integer, Integer>> iterator = freeTiles.iterator(); iterator.hasNext(); ) {
+            Pair<Integer, Integer> tile = iterator.next();
             int tileX = tile.getLeft();
             int tileY = tile.getRight();
             boolean isValid = true;
@@ -169,10 +173,10 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @throws IllegalArgumentException if the number of free tiles is less than the entities spawned or the entity dimensions are invalid.
      */
     private int calculateNumEntities(final int numFreeTiles) {
-        if (numFreeTiles < calculateRequiredTiles(4, 3)) {
+        if (numFreeTiles < calculateRequiredTiles(BOSS_WIDTH, BOSS_HEIGHT)) {
             throw new IllegalArgumentException("Not enough free tiles to spawn the boss entity with the specified dimensions!");
         }
-        int maxNumOfEntities = numFreeTiles / calculateRequiredTiles(4, 3);
+        int maxNumOfEntities = numFreeTiles / calculateRequiredTiles(BOSS_WIDTH, BOSS_HEIGHT);
         int numEntities = Math.min(NUM_BOSS_ENTITIES, maxNumOfEntities);
         return numEntities > 0 ? numEntities : 1;
     }
