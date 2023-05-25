@@ -77,7 +77,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         .add(new PositionComponent(new Vector2D(x,y), 0))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new InteractableComponent(useGate))
-        .add(new AnimationComponent(this.map.get("heart"), "idle")) //TO DO add gate sprites
+        .add(new AnimationComponent(this.map.get("gate"), "idle")) //TO DO add gate sprites
         .build();
     }
 }

@@ -143,66 +143,64 @@
             - 1
             - 35
             - 0
-    key:
-        idle:
-            - 1
-            - 36
-            - 0
-    chest:
-        idle:
-            - 2
-            - 37
-            - 0
     bullet:
         up:
             - 1
-            - 38
+            - 36
             - 0
         down:
             - 1
-            - 39
+            - 37
             - 0
         left:
             - 1
-            - 40
+            - 38
             - 0
         right:
             - 1
-            - 41
+            - 39
             - 0
     gate:
       idle:
-        - 8
-        - 42
+        - 5
+        - 40
         - 0
     shopHeart:
         idle:
         - 1
-        - 43
+        - 41
         - 0
     shopSpeed:
         idle:
+        - 1
+        - 42
+        - 0
+    hudCoin:
+        - 1
+        - 43
+        - 0
+    hudHeart:
         - 1
         - 44
         - 0
     boss:
       walk:
         - 10
-        - 48
+        - 45
         - 1
       attack:
         - 10
-        - 49
+        - 46
         - 1
       takeHit:
         - 10
-        - 50
+        - 47
         - 1
       death:
         - 10
-        - 51
+        - 48
         - 1
       idle:
         - 10
-        - 52
+        - 49
         - 1
