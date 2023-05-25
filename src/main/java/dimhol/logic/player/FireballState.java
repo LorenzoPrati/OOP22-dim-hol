@@ -2,6 +2,7 @@ package dimhol.logic.player;
 
 import dimhol.core.Input;
 import dimhol.entity.Entity;
+import dimhol.entity.factories.PlayerAttackFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +25,7 @@ public class FireballState extends AbstractState {
 
     @Override
     public List<Entity> execute(Input input) {
-        return Collections.emptyList();
+        return List.of(new PlayerAttackFactory().createBigBulletAttack(this.playerEntity));
     }
 
     @Override

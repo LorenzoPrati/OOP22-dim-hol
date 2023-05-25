@@ -1,4 +1,4 @@
-package dimhol.logic.enemyAI;
+package dimhol.entity.factories;
 
 
 import dimhol.components.*;
