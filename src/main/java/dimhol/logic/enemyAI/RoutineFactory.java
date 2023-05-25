@@ -1,7 +1,9 @@
 package dimhol.logic.enemyAI;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of enemy's behaviour routines.
@@ -42,7 +44,8 @@ public class RoutineFactory {
         return new ArrayList<>(List.of(
                 new DistanceAttack(DISTANCE_ATTACK_AGGRO, DISTANCE_ATTACK_RELOAD_TIME),
                 new RandomMovement(CHANGE_DIRECTION_TIME)
-        ));
+        )).stream().sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
+
     }
 
     /**
@@ -54,7 +57,7 @@ public class RoutineFactory {
                 new MeleeAttack(MELEE_ATTACK_AGGRO, MELEE_RELOAD_TIME),
                 new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
                 new RandomMovement(CHANGE_DIRECTION_TIME)
-        ));
+        )).stream().sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
     }
 
 }
