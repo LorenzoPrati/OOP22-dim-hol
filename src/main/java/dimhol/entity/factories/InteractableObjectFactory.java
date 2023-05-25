@@ -28,10 +28,11 @@ public class InteractableObjectFactory extends AbstractFactory {
         return currentCoins.getCurrentAmount() >= i;
     };
 
-    Predicate<World> checkAllEnemyAreDead = (w) -> {
-        var entities = w.getEntities();
-        return entities.size() == 1 && entities.get(0).hasComponent(PlayerComponent.class);
-    };
+    Predicate<World> checkAllEnemyAreDead = (w) -> w.getEntities()
+        .stream()
+        .noneMatch(e -> e.hasComponent(AiComponent.class));
+        
+    
 
     BiConsumer<Entity, World> powerUpMaxHealth = (e,w)->{
         if(checkCoins.test(e, MAX_HEALTH_PRICE )){
@@ -73,8 +74,8 @@ public class InteractableObjectFactory extends AbstractFactory {
 
     public Entity createGate(final double x, final double y){
         return new EntityBuilder()
-        .add(new PositionComponent(new Vector2D(x,y), 1))
-        .add(new BodyComponent(new RectBodyShape(W,H), true))
+        .add(new PositionComponent(new Vector2D(x,y), 0))
+        .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new InteractableComponent(useGate))
         .add(new AnimationComponent(this.map.get("heart"), "idle")) //TO DO add gate sprites
         .build();

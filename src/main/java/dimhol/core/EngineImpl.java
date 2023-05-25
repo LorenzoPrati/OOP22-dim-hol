@@ -1,9 +1,6 @@
 package dimhol.core;
 
-import dimhol.view.InputListener;
-import dimhol.view.MainWindow;
-import dimhol.view.PauseScreen;
-import dimhol.view.ResultScreen;
+import dimhol.view.*;
 
 /**
  * EngineImpl class.
@@ -17,6 +14,7 @@ public final class EngineImpl implements Engine {
 
     private final MainWindow window;
     private World world;
+    private Scene scene;
     /**
      * True if the game needs to be paused.
      */
@@ -30,8 +28,7 @@ public final class EngineImpl implements Engine {
      * Constructs an EngineImpl.
      */
     public EngineImpl() {
-        this.window = new MainWindow(this);
-        System.setProperty("sun.java2d.opengl", "true");
+        this.window = new MainWindowImpl(this);
     }
 
     /**
@@ -39,9 +36,8 @@ public final class EngineImpl implements Engine {
      */
     @Override
     public void newGame() {
-        this.world = new WorldImpl();
-        //this.world.setInputListener(new InputListener(this));
-        this.resumeGame();
+        this.scene = new SceneImpl();
+        this.world = new WorldImpl(window, this);
         this.running = true;
         new Thread(new Runnable() {
             @Override
@@ -65,11 +61,11 @@ public final class EngineImpl implements Engine {
      */
     @Override
     public void resumeGame() {
-        this.window.changePanel(this.world.getScene().getPanel());
+        this.window.changePanel(this.scene.getPanel());
         /*
          * input is set after the scene is made visible
          */
-        this.world.getScene().setInput(new InputListener(this, world.getInput()));
+        //this.world.getScene().setInput(new InputListener(this, world.getInput()));
         this.pause = false;
     }
 

@@ -2,7 +2,11 @@ package dimhol.gamelevels;
 
 import dimhol.components.PlayerComponent;
 import dimhol.entity.Entity;
-import dimhol.entity.factories.*;
+import dimhol.entity.factories.BossFactory;
+import dimhol.entity.factories.EnemyFactory;
+import dimhol.entity.factories.GenericFactory;
+import dimhol.entity.factories.InteractableObjectFactory;
+import dimhol.entity.factories.ItemFactory;
 import dimhol.gamelevels.map.MapLoader;
 import dimhol.gamelevels.map.MapLoaderImpl;
 import dimhol.gamelevels.map.TileMap;
