@@ -22,7 +22,7 @@ public class GenericFactory extends AbstractFactory {
 
     public Entity createPlayer(final double x, final double y) {
         return new EntityBuilder().add(new PlayerComponent())
-                .add(new PositionComponent(new Vector2D(x,y), 0))
+                .add(new PositionComponent(new Vector2D(x,y), 1))
                 .add(new MovementComponent(new Vector2D(0,1), PLAYER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(PLAYER_WIDTH, PLAYER_HEIGHT), true))
                 .add(new CoinPocketComponent(20))

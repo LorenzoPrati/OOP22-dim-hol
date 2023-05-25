@@ -6,6 +6,7 @@ import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityImpl;
+import dimhol.entity.factories.EnemyAttackFactory;
 import dimhol.events.WorldEvent;
 import dimhol.logic.collision.BodyShape;
 import org.locationtech.jts.math.Vector2D;
