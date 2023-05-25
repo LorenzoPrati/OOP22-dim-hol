@@ -23,6 +23,7 @@ public class SceneImpl implements Scene {
     private int offsetY;
     private LevelManager levelManager;
     public GamePanel scenePanel;
+    private TileMap tileMap;
 
     public SceneImpl(){
         this.scenePanel =  new GamePanel(screenSize.getWidth(), screenSize.getHeight());;
@@ -42,7 +43,7 @@ public class SceneImpl implements Scene {
 
         @Override
         public void paintComponent(Graphics g) {
-            var tileMapLayers = levelManager.getTileMap().getLayers();
+            var tileMapLayers = tileMap.getLayers();
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D)g;
             for(var layer: tileMapLayers){
@@ -127,6 +128,7 @@ public class SceneImpl implements Scene {
 
     @Override
     public void setMap(TileMap tileMap) {
+        this.tileMap = tileMap;
         this.tileMapWidth = tileMap.getWidth();
         this.tileMapHeight = tileMap.getHeight();
     }
