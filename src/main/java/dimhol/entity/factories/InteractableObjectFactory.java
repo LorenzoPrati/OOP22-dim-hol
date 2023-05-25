@@ -19,7 +19,7 @@ public class InteractableObjectFactory extends AbstractFactory {
     private static final int MAX_HEALTH_PRICE = 10;
     private static final int VELOCITY_PRICE = 15;
 
-    public InteractableObjectFactory(){
+    public InteractableObjectFactory() {
         super();
     }
 
@@ -34,27 +34,27 @@ public class InteractableObjectFactory extends AbstractFactory {
         
     
 
-    BiConsumer<Entity, World> powerUpMaxHealth = (e,w)->{
-        if(checkCoins.test(e, MAX_HEALTH_PRICE )){
+    BiConsumer<Entity, World> powerUpMaxHealth = (e,w)-> {
+        if(checkCoins.test(e, MAX_HEALTH_PRICE )) {
             var healthComp = (HealthComponent)e.getComponent(HealthComponent.class);
             healthComp.setMaxHealth(healthComp.getMaxHealth() + MAX_HEALTH_INCREASE);
         }
     };
 
-    BiConsumer<Entity, World> powerUpSpeed = (e,w)->{
-        if(checkCoins.test(e, VELOCITY_PRICE)){
+    BiConsumer<Entity, World> powerUpSpeed = (e,w)-> {
+        if(checkCoins.test(e, VELOCITY_PRICE)) {
             var moveComp = (MovementComponent)e.getComponent(MovementComponent.class);
             moveComp.setSpeed(moveComp.getSpeed() + VELOCITY_INCREASE);
         } 
     };
 
-    BiConsumer<Entity, World> useGate = (e,w)->{
-        if(checkAllEnemyAreDead.test(w)){
+    BiConsumer<Entity, World> useGate = (e,w)-> {
+        if(checkAllEnemyAreDead.test(w)) {
             w.notifyEvent(new ChangeLevelEvent());
         }
     };
     
-    public Entity createShopHeart(final double x, final double y){
+    public Entity createShopHeart(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
@@ -63,7 +63,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         .build();
     }
 
-    public Entity createShopVelocity(final double x, final double y){
+    public Entity createShopVelocity(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), true))
@@ -72,7 +72,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         .build();
     }
 
-    public Entity createGate(final double x, final double y){
+    public Entity createGate(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 0))
         .add(new BodyComponent(new RectBodyShape(W,H), false))

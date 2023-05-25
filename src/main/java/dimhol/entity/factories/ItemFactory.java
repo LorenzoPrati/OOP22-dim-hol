@@ -14,24 +14,24 @@ public class ItemFactory extends AbstractFactory {
     public static final int INCREASE_CURRENT_HEALTH = 1;
     private static final int INCREASE_CURRENT_COINS = 1;
 
-    public ItemFactory(){
+    public ItemFactory() {
         super();
     }
 
-    BiFunction<Entity, Class<? extends Component>, Boolean>increaseCurrentHealth = (e,c)->{
-        if(e.hasComponent(c)){
+    BiFunction<Entity, Class<? extends Component>, Boolean>increaseCurrentHealth = (e, c) -> {
+        if(e.hasComponent(c)) {
             var healthComp = (HealthComponent)e.getComponent(HealthComponent.class);
-            if(healthComp.getCurrentHealth() < healthComp.getMaxHealth()){
-            healthComp.setCurrentHealth(healthComp.getCurrentHealth() + INCREASE_CURRENT_HEALTH);
-            return true;
+            if(healthComp.getCurrentHealth() < healthComp.getMaxHealth()) {
+                healthComp.setCurrentHealth(healthComp.getCurrentHealth() + INCREASE_CURRENT_HEALTH);
+                return true;
             }
             return false;
         }
         return false;
     };
 
-    BiFunction<Entity, Class<? extends Component>, Boolean>increaseCurrentCoinsAmount = (e,c)->{
-        if(e.hasComponent(c)){
+    BiFunction<Entity, Class<? extends Component>, Boolean>increaseCurrentCoinsAmount = (e, c) -> {
+        if(e.hasComponent(c)) {
             var coinPocketComp = (CoinPocketComponent)e.getComponent(CoinPocketComponent.class);
             coinPocketComp.setAmount(coinPocketComp.getCurrentAmount() + INCREASE_CURRENT_COINS);
             return true;
@@ -39,7 +39,7 @@ public class ItemFactory extends AbstractFactory {
         return false;
     };
 
-    public Entity createHeart(final double x, final double y){
+    public Entity createHeart(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x, y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
@@ -48,7 +48,7 @@ public class ItemFactory extends AbstractFactory {
         .build();
     }
 
-    public Entity createCoin(final double x, final double y){
+    public Entity createCoin(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 1))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
