@@ -6,7 +6,6 @@ import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.logic.collision.RectBodyShape;
 import dimhol.logic.util.DirectionUtil;
-import org.locationtech.jts.math.Vector2D;
 
 import java.util.function.Predicate;
 
@@ -59,7 +58,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new AttackComponent(ENEMY_MELEE_DAMAGE, checkPlayer))
                 .add(new MeleeComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("heart"), "idle"))
+                .add(new AnimationComponent(map.get("enemyMeleeAttack"), "idle"))
                 .build();
     }
 
