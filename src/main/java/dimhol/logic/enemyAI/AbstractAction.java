@@ -20,24 +20,24 @@ public abstract class AbstractAction implements Action {
      * Divisor = 2 is util to have half of a body's width and height.
      */
     private static final int DIVISOR = 2;
+
     private double aggroRay = Double.MAX_VALUE;
     private double waitingTime = 0;
     private Vector2D playerCentralPos;
     private Vector2D enemyCentralPos;
     private Entity enemy;
     private final EnemyAttackFactory attackFactory = new EnemyAttackFactory();
-    private PositionComponent enemyPos;
-    private BodyComponent enemyBody;
-    private PositionComponent playerPos;
     private AiComponent ai;
     private MovementComponent movComp;
+    private Vector2D enemyPos;
+    private Vector2D playerPos;
 
     /**
      * {@inheritDoc}
      * @return
      */
     public boolean canExecute() {
-        return playerCentralPos.distance(enemyCentralPos) <= aggroRay;
+        return getPlayerCentralPos().distance(getEnemyCentralPos()) <= aggroRay;
     }
 
     /**
@@ -53,9 +53,10 @@ public abstract class AbstractAction implements Action {
      * - player's central position
      */
     public final void setPlayer(final Entity player) {
-        playerPos = (PositionComponent) player.getComponent(PositionComponent.class);
-        BodyComponent playerBody = (BodyComponent) player.getComponent(BodyComponent.class);
-        playerCentralPos = getCentralPosition(playerPos.getPos(), playerBody.getBodyShape());
+        PositionComponent playerPosComp = (PositionComponent) player.getComponent(PositionComponent.class);
+        BodyComponent playerBodyComp = (BodyComponent) player.getComponent(BodyComponent.class);
+        playerCentralPos = getCentralPosition(playerPosComp.getPos(), playerBodyComp.getBodyShape());
+        playerPos = playerPosComp.getPos();
     }
 
     /**
@@ -67,9 +68,10 @@ public abstract class AbstractAction implements Action {
      */
     public final void setEnemy(final Entity enemy) {
         this.enemy = new EntityImpl(enemy);
-        enemyPos = (PositionComponent) this.enemy.getComponent(PositionComponent.class);
-        enemyBody = (BodyComponent) this.enemy.getComponent(BodyComponent.class);
-        enemyCentralPos = getCentralPosition(enemyPos.getPos(), enemyBody.getBodyShape());
+        PositionComponent enemyPosComp = (PositionComponent) enemy.getComponent(PositionComponent.class);
+        BodyComponent enemyBodyComp = (BodyComponent) enemy.getComponent(BodyComponent.class);
+        enemyPos = enemyPosComp.getPos();
+        enemyCentralPos = getCentralPosition(enemyPos, enemyBodyComp.getBodyShape());
         ai = (AiComponent) enemy.getComponent(AiComponent.class);
         movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
     }
@@ -104,27 +106,6 @@ public abstract class AbstractAction implements Action {
      */
     protected final EnemyAttackFactory getAttackFactory() {
         return attackFactory;
-    }
-
-    /**
-     * Enemy position getter.
-     */
-    protected final PositionComponent getEnemyPos() {
-        return enemyPos;
-    }
-
-    /**
-     * Enemy body getter.
-     */
-    protected final BodyComponent getEnemyBody() {
-        return enemyBody;
-    }
-
-    /**
-     * Player position getter.
-     */
-    protected final PositionComponent getPlayerPos() {
-        return playerPos;
     }
 
     /**
@@ -164,5 +145,17 @@ public abstract class AbstractAction implements Action {
 
     public double getWaitingTime() {
         return waitingTime;
+    }
+
+    public double getAggroRay() {
+        return aggroRay;
+    }
+
+    public Vector2D getEnemyPos() {
+        return this.enemyPos;
+    }
+
+    public Vector2D getPlayerPos() {
+        return this.playerPos;
     }
 }

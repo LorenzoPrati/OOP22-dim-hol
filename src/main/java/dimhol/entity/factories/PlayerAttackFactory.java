@@ -3,7 +3,6 @@ package dimhol.entity.factories;
 import dimhol.components.*;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
-import dimhol.entity.factories.AbstractAttackFactory;
 import dimhol.logic.collision.RectBodyShape;
 import dimhol.logic.util.DirectionUtil;
 
@@ -11,29 +10,52 @@ import java.util.function.Predicate;
 
 public class PlayerAttackFactory extends AbstractAttackFactory {
 
-    public static final int PLAYER_MELEE_WIDTH = 1;
-
-    public static final int PLAYER_MELEE_HEIGHT = 1;
-
+    /**
+     * Player melee width.
+     */
+    public static final double PLAYER_MELEE_WIDTH = 1;
+    /**
+     * Player melee height.
+     */
+    public static final double PLAYER_MELEE_HEIGHT = 1;
+    /**
+     * Player melee attack damage.
+     */
     private static final int PLAYER_MELEE_DAMAGE = 1;
-
-    public static final int PLAYER_LITTLE_BULLET_WIDTH = 1;
-
-    public static final int PLAYER_LITTLE_BULLET_HEIGHT = 1;
-
+    /**
+     * Player little bullet width.
+     */
+    public static final double PLAYER_LITTLE_BULLET_WIDTH = 0.5;
+    /**
+     * Player little bullet height.
+     */
+    public static final double PLAYER_LITTLE_BULLET_HEIGHT = 0.5;
+    /**
+     * Player little bullet speed.
+     */
     public static final int PLAYER_LITTLE_BULLET_SPEED = 3;
-
+    /**
+     * Player little bullet damage.
+     */
     private static final int PLAYER_LITTLE_BULLET_DAMAGE = 1;
-
-    public static final int PLAYER_BIG_BULLET_WIDTH = 2;
-
-    public static final int PLAYER_BIG_BULLET_HEIGHT = 2;
-
+    /**
+     * Player big bullet width.
+     */
+    public static final double PLAYER_BIG_BULLET_WIDTH = 1;
+    /**
+     * Player big bullet height.
+     */
+    public static final double PLAYER_BIG_BULLET_HEIGHT = 1;
+    /**
+     * Player big bullet speed.
+     */
     public static final int PLAYER_BIG_BULLET_SPEED = 3;
-
+    /**
+     * Player big bullet damage.
+     */
     private static final int PLAYER_BIG_BULLET_DAMAGE = 2;
 
-    private Predicate<Entity> checkEnemy = entity -> entity.hasComponent(AiComponent.class);
+    private final Predicate<Entity> checkEnemy = entity -> entity.hasComponent(AiComponent.class);
 
     public Entity createMeleeAttack(final Entity entity) {
         return new EntityBuilder()
