@@ -24,4 +24,6 @@ public interface LevelManager {
      * @return the tile map for the current level.
      */
     TileMap getTileMap();
+
+    int getCurrentRoomIndex();
 }

@@ -104,6 +104,15 @@ public class LevelManagerImpl implements LevelManager {
     }
 
     /**
+     * Level index getter.
+     * @return level index.
+     */
+    @Override
+    public int getCurrentRoomIndex() {
+        return this.currentLevel;
+    }
+
+    /**
      * Retrieves the set of free tiles in the map.
      *
      * @return The set of free tiles as pairs of (x,y) coordinates.
@@ -141,4 +150,6 @@ public class LevelManagerImpl implements LevelManager {
     private List<Entity> generateLevel(final Optional<Entity> player) {
         return this.determineRoomType().generate(player, getFreeTiles());
     }
+
+
 }
