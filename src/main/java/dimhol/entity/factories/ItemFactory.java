@@ -41,7 +41,7 @@ public class ItemFactory extends AbstractFactory {
 
     public Entity createHeart(final double x, final double y) {
         return new EntityBuilder()
-        .add(new PositionComponent(new Vector2D(x, y), 1))
+        .add(new PositionComponent(new Vector2D(x, y), 0))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new ItemComponent(increaseCurrentHealth))
         .add(new AnimationComponent(this.map.get("heart"), "idle"))
@@ -50,7 +50,7 @@ public class ItemFactory extends AbstractFactory {
 
     public Entity createCoin(final double x, final double y) {
         return new EntityBuilder()
-        .add(new PositionComponent(new Vector2D(x,y), 1))
+        .add(new PositionComponent(new Vector2D(x,y), 0))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new ItemComponent(increaseCurrentCoinsAmount))
         .add(new AnimationComponent(this.map.get("coin"), "idle"))
