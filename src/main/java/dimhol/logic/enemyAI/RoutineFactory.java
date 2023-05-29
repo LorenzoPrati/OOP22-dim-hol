@@ -52,8 +52,17 @@ public class RoutineFactory {
      * Boss damage for area aggro.
      */
     public static final double BOSS_AREA_ATTACK_AGGRO = 3;
+    /**
+     * Boss attack area damage.
+     */
     private static final double BOSS_AREA_ATTACK_DAMAGE = 0.5;
+    /**
+     * Boss attack charge attack speed.
+     */
     private static final double CHARGE_SPEED = 5;
+    /**
+     * Boss charge attack damage.
+     */
     private static final int CHARGE_ATTACK_DAMAGE = 3;
 
     /**
@@ -77,6 +86,21 @@ public class RoutineFactory {
                 new MeleeAttack(MELEE_ATTACK_AGGRO, MELEE_RELOAD_TIME),
                 new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
                 new RandomMovement(CHANGE_DIRECTION_TIME)
+        )).stream().sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
+    }
+
+    /**
+     * Create the behaviour routine for a boss enemy.
+     * @return the list of actions in the boss routine
+     */
+    public List<Action> createBossRoutine() {
+        return new ArrayList<>(List.of(
+                new MeleeAttack(MELEE_ATTACK_AGGRO, BOSS_MELEE_RELOAD_TIME),
+                new DistanceAttack(DISTANCE_ATTACK_AGGRO, BOSS_DISTANCE_ATTACK_RELOAD_TIME),
+                new AreaAttack(BOSS_AREA_ATTACK_AGGRO, BOSS_AREA_ATTACK_DAMAGE),
+                new ChargeAttack(CHARGE_SPEED, CHARGE_ATTACK_DAMAGE),
+                new SummonMinions(BOSS_SUMMON_MINS_NUMBER)
+//                new DefensiveShield()
         )).stream().sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
     }
 }
