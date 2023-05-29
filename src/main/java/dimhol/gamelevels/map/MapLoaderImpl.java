@@ -63,6 +63,15 @@ public final class MapLoaderImpl implements MapLoader {
         layerElement = (Element) layerNodeList.item(0);
         width = Integer.parseInt(layerElement.getAttribute("width"));
         height = Integer.parseInt(layerElement.getAttribute("height"));
+
+        /*
+         * Validate the width and height values.
+         * If they are not positive, display an error and set default values.
+         */
+        if (width <= 0 || height <= 0) {
+            System.err.println("Invalid width or height values in the XML file.");
+        }
+
         /*
          * Get the first layer element by using "item(0)" and store it in a "node" variable "layerNode".
          */
