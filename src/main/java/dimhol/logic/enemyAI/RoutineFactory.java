@@ -79,21 +79,4 @@ public class RoutineFactory {
                 new RandomMovement(CHANGE_DIRECTION_TIME)
         )).stream().sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
     }
-
-    public List<Action> createBossRoutine() {
-        return new ArrayList<>(List.of(
-                new MeleeAttack(MELEE_RELOAD_TIME),
-//                new SummonMinions(),
-                new AreaOfAttack(BOSS_AREA_ATTACK_AGGRO, BOSS_AREA_ATTACK_DAMAGE)
-//                new ChargeAttack(CHARGE_SPEED, CHARGE_ATTACK_DAMAGE)
-        ));
-    }
-
-    public List<Action> createMinsRuotine() {
-        return new ArrayList<>(List.of(
-                new MeleeAttack(MELEE_RELOAD_TIME),
-                new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
-                new RandomMovement(CHANGE_DIRECTION_TIME)
-        ));
-    }
 }
