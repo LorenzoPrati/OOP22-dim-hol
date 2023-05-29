@@ -77,7 +77,7 @@ public final class BossRoomStrategy implements RoomStrategy {
         generateAndPlaceEnemyWaves(freeTiles, entities);
 
         //generate Mins:
-        enemyFactory.createMinion(freeTiles.size(), freeTiles.size());
+        bossFactory.createMinion(freeTiles.size(), freeTiles.size());
         System.out.println("DONE");
 
         return entities;
