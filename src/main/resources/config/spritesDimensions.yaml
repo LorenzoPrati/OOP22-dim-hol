@@ -1,0 +1,33 @@
+player:
+  - 48
+  - 48
+enemy:
+  - 32
+  - 32
+coin: 
+  - 32
+  - 32
+heart:
+  - 21
+  - 21
+bullet:
+  - 35
+  - 35
+gate:
+  - 180
+  - 34
+shopHeart:
+  - 21
+  - 21
+shopSpeed:
+  - 512
+  - 512
+hudCoin:
+  - 8
+  - 10
+hudHeart:
+  - 11
+  - 11
+boss:
+  - 128
+  - 128
