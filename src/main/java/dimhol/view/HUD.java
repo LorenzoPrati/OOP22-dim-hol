@@ -50,7 +50,7 @@ public class HUD {
     }
 
     private void showHealthInfo() {
-        var heartImg = resourceLoader.getImage(47);
+        var heartImg = resourceLoader.getImage(45);
         int heartW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
         int heartH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
 
@@ -62,7 +62,7 @@ public class HUD {
     }
 
     private void showCoinInfo() {
-        var coinImg = resourceLoader.getImage(46);
+        var coinImg = resourceLoader.getImage(44);
         int coinW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
         int coinH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
 

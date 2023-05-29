@@ -136,76 +136,76 @@
     enemyMeleeAttack:
         idle:
           - 1
-          - 53
+          - 34
           - 0
     coin:
         idle:
             - 6
-            - 34
+            - 35
             - 0
     heart:
         idle:
             - 1
-            - 35
+            - 36
             - 0
     bullet:
         up:
             - 1
-            - 36
+            - 37
             - 0
         down:
             - 1
-            - 37
+            - 38
             - 0
         left:
             - 1
-            - 38
+            - 39
             - 0
         right:
             - 1
-            - 39
+            - 40
             - 0
     gate:
       idle:
         - 5
-        - 40
+        - 41
         - 0
     shopHeart:
         idle:
         - 1
-        - 41
+        - 42
         - 0
     shopSpeed:
         idle:
         - 1
-        - 42
+        - 43
         - 0
     hudCoin:
         - 1
-        - 43
+        - 44
         - 0
     hudHeart:
         - 1
-        - 44
+        - 45
         - 0
     boss:
       walk:
         - 10
-        - 45
+        - 46
         - 1
       attack:
         - 10
-        - 46
+        - 47
         - 1
       takeHit:
         - 10
-        - 47
+        - 48
         - 1
       death:
         - 10
-        - 48
+        - 49
         - 1
       idle:
         - 10
-        - 49
+        - 50
         - 1
