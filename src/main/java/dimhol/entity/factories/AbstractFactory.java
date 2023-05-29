@@ -17,7 +17,6 @@ import java.util.UUID;
 public abstract class AbstractFactory {
 
     protected final Map<String, Map<String, ArrayList<Integer>>> map = new HashMap<>();
-    private UUID id;
 
     /**
      * Abstract Factory contains a map of game entity graphics.

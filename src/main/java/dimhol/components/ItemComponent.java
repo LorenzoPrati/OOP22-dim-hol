@@ -1,16 +1,16 @@
 package dimhol.components;
 
-import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import dimhol.entity.Entity;
 
 public class ItemComponent implements Component {
-    private BiConsumer<Entity, Class<? extends Component>> effect; 
+    private BiFunction<Entity, Class<? extends Component>, Boolean> effect; 
 
-    public ItemComponent(BiConsumer<Entity, Class<? extends Component>> effect){
+    public ItemComponent(BiFunction<Entity, Class<? extends Component>, Boolean> effect){
         this.effect = effect;
     }
 
-    public void applyEffect(Entity entity, Class<? extends Component> component){
-        this.effect.accept(entity, component);
+    public boolean applyEffect(Entity entity, Class<? extends Component> component){
+        return this.effect.apply(entity, component);
     }  
 }

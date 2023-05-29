@@ -5,10 +5,8 @@ import dimhol.entity.Entity;
 import dimhol.events.WorldEvent;
 import dimhol.gamelevels.LevelManager;
 import dimhol.gamelevels.LevelManagerImpl;
-import dimhol.systems.GameSystem;
-import dimhol.systems.PlayerSystem;
-import dimhol.view.GraphicInfo;
-import dimhol.view.Scene;
+import dimhol.systems.*;
+import dimhol.view.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -29,26 +27,35 @@ public class WorldImpl implements World {
     private boolean win;
 
     private final Scene scene;
-    private final Input input;
 
     /**
      * Constructs a world.
      */
-    public WorldImpl(Scene scene) {
+    public WorldImpl(final Engine engine) {
         this.entities = new ArrayList<>();
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
         this.levelManager = new LevelManagerImpl();
-        this.scene = scene;
-        this.input = new InputImpl();
-        /*
-        generate first level
-         */
-        this.entities.addAll(levelManager.changeLevel(this.getEntities()));
+        this.scene = new SceneImpl(engine);
+        this.scene.setupInput();
+
+        this.scene.setMap(this.getLevelManager().getTileMap());
         /*
         Add systems
          */
-        this.systems.add(new PlayerSystem(this));
+        this.systems.add(new PlayerSystem());
+        this.systems.add(new EnemyAiSystem());
+        this.systems.add(new MovementSystem());
+        this.systems.add(new MapCollisionSystem());
+        this.systems.add(new CollisionSystem());
+        this.systems.add(new PhysicsSystem());
+        this.systems.add(new ItemSystem());
+        this.systems.add(new InteractableSystem());
+        this.systems.add(new CombatSystem());
+        this.systems.add(new CheckHealthSystem());
+        this.systems.add(new ClearAttackSystem());
+        this.systems.add(new ClearCollisionSystem());
+        this.systems.add(new AnimationSystem());
     }
 
     /**
@@ -144,7 +151,7 @@ public class WorldImpl implements World {
         var newEntities = this.levelManager.changeLevel(this.getEntities());
         this.entities.clear();
         this.entities.addAll(newEntities);
-        //set new map in scene
+        this.scene.setMap(this.getLevelManager().getTileMap());
     }
 
     @Override
@@ -179,14 +186,6 @@ public class WorldImpl implements World {
      */
     @Override
     public Input getInput() {
-        return this.input;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Scene getScene() {
-        return this.scene;
+        return this.scene.getInput();
     }
 }

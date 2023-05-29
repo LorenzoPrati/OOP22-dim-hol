@@ -2,6 +2,8 @@ package dimhol.view;
 
 import java.util.List;
 import javax.swing.JPanel;
+
+import dimhol.core.Input;
 import dimhol.gamelevels.map.TileMap;
 
 /**
@@ -26,9 +28,9 @@ public interface Scene {
 
     /**
      * 
-     * @param input
+     * 
      */
-    void setInput(final InputListener input);
+    void setupInput();
 
     /**
      * @return the scene's panel.
@@ -40,5 +42,7 @@ public interface Scene {
      * @param tileMap
      */
     void setMap(TileMap tileMap);
+
+    Input getInput();
     
 }

@@ -2,88 +2,127 @@ package dimhol.view;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.yaml.snakeyaml.Yaml;
 
-public class ResourceLoader {
+public final class ResourceLoader {
     private static final int NUM_PLAYER_SPRITES = 32; 
-    private final Map<Integer,ImmutableTriple<BufferedImage,Integer,Integer>> imagesMap = new HashMap<>();
+    private static final int TILE_WIDTH = 32;
+    private static final int TILE_HEIGHT = 32;
+    private final Map<Integer, ImmutableTriple<BufferedImage, Integer, Integer>> imagesMap = new HashMap<>();
     private BufferedImage tileSet;
     private ArrayList<BufferedImage> tileImages = new ArrayList<>();
-    
+    private Map<String, ArrayList<Integer>> dimensions = new HashMap<>();
 
-    public ResourceLoader(){
-        load();
-        loadTileSetImages(32,32);
-    }
-    
-    private void load(){
-        try{
-            int i;
-            for(i=1; i<=NUM_PLAYER_SPRITES; i++){
-                this.imagesMap.put(i,new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream(("/asset/warrior/" + i + ".png")))),48, 48));
-            }
-            this.imagesMap.put(33, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/enemies/ghost-Sheet.png"))), 32, 32));
-            this.imagesMap.put(34, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/items/coin.png"))), 32, 32));
-            this.imagesMap.put(35, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/items/heart.png"))), 21, 21));
-            this.imagesMap.put(36, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/items/key.png"))), 19, 10));
-            this.imagesMap.put(37, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/items/chest.png"))), 21, 18));
-
-            this.imagesMap.put(38, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/up.png"))), 123, 127));
-            this.imagesMap.put(39, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/down.png"))), 123, 127));
-            this.imagesMap.put(40, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/left.png"))), 127, 123));
-            this.imagesMap.put(41, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/bullet/right.png"))), 127, 123));
-
-            this.imagesMap.put(43, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/items/heart.png"))), 21, 21));
-            this.imagesMap.put(44, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/shop/thunder.png"))), 512, 512) );
-            this.imagesMap.put(45, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/shop/sword.png"))), 900, 900));
-            this.imagesMap.put(46, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/hud/font/logo/hudCoin.png"))), 8, 10));
-            this.imagesMap.put(47, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/hud/font/logo/hudHeart.png"))), 11, 11));
-            this.imagesMap.put(48, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/boss/walk.png"))), 192, 128));
-            this.imagesMap.put(49, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/boss/attack.png"))), 192, 128));
-            this.imagesMap.put(50, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/boss/damage.png"))), 192, 128));
-            this.imagesMap.put(51, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/boss/death.png"))), 192, 128));
-            this.imagesMap.put(52, new ImmutableTriple<>((ImageIO.read(this.getClass().getResourceAsStream("/asset/boss/idle.png"))), 192, 128));
+    public ResourceLoader() {
+        try {
+            InputStream input = new FileInputStream(new File("src/main/resources/config/spritesDimensions.yaml"));
+            Yaml yaml = new Yaml();
+            Map<String, ArrayList<Integer>> mapLoaded = yaml.load(input);
+            dimensions.putAll(mapLoaded);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found. ");
         }
-        catch(IOException e){
+        load();
+        loadTileSetImages(TILE_WIDTH,TILE_HEIGHT);
+    } 
+    
+    private void load() {
+        try {
+            int i;
+            for (i=1; i <= NUM_PLAYER_SPRITES; i++) {
+                this.imagesMap.put(i, new ImmutableTriple<>((ImageIO.read(this.getClass()
+                .getResourceAsStream(("/asset/warrior/" + i + ".png")))), dimensions.get("player").get(0),
+                 dimensions.get("player").get(1)));
+            }
+          
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+                .getResourceAsStream("/asset/enemies/ghost-Sheet.png"))), dimensions.get("enemy").get(0),
+                dimensions.get("enemy").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/enemies/enemiesAttack/enemyAttack.png"))), dimensions.get("enemyMeleeAttack").get(0),
+            dimensions.get("enemyMeleeAttack").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/items/coin.png"))), dimensions.get("coin").get(0), dimensions.get("coin").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/items/heart.png"))), dimensions.get("heart").get(0), dimensions.get("heart").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/bullet/up.png"))), dimensions.get("bullet").get(0), dimensions.get("bullet").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/bullet/down.png"))), dimensions.get("bullet").get(0), dimensions.get("bullet").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/bullet/left.png"))), dimensions.get("bullet").get(0), dimensions.get("bullet").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/bullet/right.png"))), dimensions.get("bullet").get(0), dimensions.get("bullet").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()   
+            .getResourceAsStream("/asset/gate.png"))), dimensions.get("gate").get(0), dimensions.get("gate").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/items/heart.png"))), dimensions.get("shopHeart").get(0), 
+            dimensions.get("shopHeart").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/shop/thunder.png"))), dimensions.get("shopSpeed").get(0), 
+            dimensions.get("shopSpeed").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/hud/font/logo/hudCoin.png"))), dimensions.get("hudCoin").get(0), 
+            dimensions.get("hudCoin").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/hud/font/logo/hudHeart.png"))), dimensions.get("hudHeart").get(0), 
+            dimensions.get("hudHeart").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/boss/walk.png"))), dimensions.get("boss").get(0), 
+            dimensions.get("boss").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/boss/attack.png"))), dimensions.get("boss").get(0), dimensions.get("boss").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/boss/damage.png"))), dimensions.get("boss").get(0), dimensions.get("boss").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/boss/death.png"))), dimensions.get("boss").get(0), dimensions.get("boss").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/boss/idle.png"))), dimensions.get("boss").get(0), dimensions.get("boss").get(1)));
+        }
+        catch (IOException e) {
             System.out.println("Error loading images. ");
         }
     }
 
-    private void loadTileSetImages(int tileWidth, int tileHeight) {
-        try{
+    private void loadTileSetImages(final int tileWidth, final int tileHeight) {
+        try {
             this.tileSet = ImageIO.read(new File("src/main/resources/asset/map/ArtTileSet.png"));
         }
-        catch(IOException e){
+        catch (IOException e) {
             System.out.println("Error loading TileSet image. ");
         }
         System.out.println(tileWidth + " " +  tileHeight);
         var cols = tileSet.getWidth() / tileWidth;
         var rows = tileSet.getHeight() / tileHeight;
-        for(int i=0; i < rows; i++){
-            for(int j=0; j < cols; j++){
-                this.tileImages.add(tileSet.getSubimage(j*tileWidth,i*tileHeight, tileWidth, tileHeight));
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                this.tileImages.add(tileSet.getSubimage(j * tileWidth, i * tileHeight, tileWidth, tileHeight));
             }
         }
     }
 
-    public BufferedImage getImage(final int numImage){
+    public BufferedImage getImage(final int numImage) {
         return this.imagesMap.get(numImage).getLeft();
     }
 
-    public int getWidth(final int numImage){
+    public int getWidth(final int numImage) {
         return this.imagesMap.get(numImage).getMiddle();
     }
 
-    public int getHeigth(final int numImage){
+    public int getHeigth(final int numImage) {
         return this.imagesMap.get(numImage).getRight();
     }
 
-    public BufferedImage getTileImage(final int index){
+    public BufferedImage getTileImage(final int index) {
         return this.tileImages.get(index);
     }
 }

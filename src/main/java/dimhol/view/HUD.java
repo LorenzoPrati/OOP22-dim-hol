@@ -47,11 +47,10 @@ public class HUD {
 
         showHealthInfo();
         showCoinInfo();
-        showEnemiesHealth();
     }
 
     private void showHealthInfo() {
-        var heartImg = resourceLoader.getImage(47);
+        var heartImg = resourceLoader.getImage(45);
         int heartW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
         int heartH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
 
@@ -63,7 +62,7 @@ public class HUD {
     }
 
     private void showCoinInfo() {
-        var coinImg = resourceLoader.getImage(46);
+        var coinImg = resourceLoader.getImage(44);
         int coinW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
         int coinH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
 
@@ -80,10 +79,16 @@ public class HUD {
         this.coins = currentAmount;
     }
 
+    // TODO: 24/05/23 remove this method
+    /*
     public void updateEnemiesHUD(int currentHealth, int maxHealth, final Vector2D pos, final BodyShape bodyShape) {
         this.enemiesData.add(new EnemyData(currentHealth, maxHealth, pos, bodyShape));
     }
 
+     */
+
+    // TODO: 24/05/23 remove this method
+    /*
     private void showEnemiesHealth() {
         g2d.setColor(Color.RED);
         var rectH = 0.1 * newTileHeight;
@@ -101,4 +106,6 @@ public class HUD {
         }
         enemiesData.clear();
     }
+
+     */
 }

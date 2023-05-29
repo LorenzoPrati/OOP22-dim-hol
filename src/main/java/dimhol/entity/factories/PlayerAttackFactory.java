@@ -1,35 +1,90 @@
 package dimhol.entity.factories;
 
-import dimhol.components.AttackComponent;
-import dimhol.components.BodyComponent;
-import dimhol.components.PositionComponent;
+import dimhol.components.*;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.logic.collision.RectBodyShape;
-import dimhol.logic.effects.HealthEffectFactory;
-import dimhol.logic.effects.HealthEffectsFactoryImpl;
-import org.locationtech.jts.math.Vector2D;
+import dimhol.logic.util.DirectionUtil;
 
-import java.util.List;
+import java.util.function.Predicate;
 
-public class PlayerAttackFactory extends AbstractFactory {
+public class PlayerAttackFactory extends AbstractAttackFactory {
 
-    /*
-     * Prima di chiamre questi metodi è importante setttare la posizione del
-     * attacco usando AttackUtili.getAttackPosition(...)
+    /**
+     * Player melee width.
      */
+    public static final double PLAYER_MELEE_WIDTH = 1;
+    /**
+     * Player melee height.
+     */
+    public static final double PLAYER_MELEE_HEIGHT = 1;
+    /**
+     * Player melee attack damage.
+     */
+    private static final int PLAYER_MELEE_DAMAGE = 1;
+    /**
+     * Player little bullet width.
+     */
+    public static final double PLAYER_LITTLE_BULLET_WIDTH = 0.5;
+    /**
+     * Player little bullet height.
+     */
+    public static final double PLAYER_LITTLE_BULLET_HEIGHT = 0.5;
+    /**
+     * Player little bullet speed.
+     */
+    public static final int PLAYER_LITTLE_BULLET_SPEED = 3;
+    /**
+     * Player little bullet damage.
+     */
+    private static final int PLAYER_LITTLE_BULLET_DAMAGE = 1;
+    /**
+     * Player big bullet width.
+     */
+    public static final double PLAYER_BIG_BULLET_WIDTH = 1;
+    /**
+     * Player big bullet height.
+     */
+    public static final double PLAYER_BIG_BULLET_HEIGHT = 1;
+    /**
+     * Player big bullet speed.
+     */
+    public static final int PLAYER_BIG_BULLET_SPEED = 3;
+    /**
+     * Player big bullet damage.
+     */
+    private static final int PLAYER_BIG_BULLET_DAMAGE = 2;
 
-    public static final int PLAYER_MELEE_WIDTH = 1;
+    private final Predicate<Entity> checkEnemy = entity -> entity.hasComponent(AiComponent.class);
 
-    public static final int PLAYER_MELEE_HEIGHT = 1;
-
-    private final HealthEffectFactory healthEffectFactory = new HealthEffectsFactoryImpl();
-
-    public Entity createPlayerMeleeAttack(final Vector2D pos, final Entity entity) {
+    public Entity createMeleeAttack(final Entity entity) {
         return new EntityBuilder()
-                .add(new PositionComponent(pos, 0))
+                .add(new PositionComponent(getAttackPos(entity, PLAYER_MELEE_WIDTH, PLAYER_MELEE_HEIGHT), 0))
                 .add(new BodyComponent(new RectBodyShape(PLAYER_MELEE_WIDTH, PLAYER_MELEE_HEIGHT), false))
-                .add(new AttackComponent(entity, List.of(healthEffectFactory.decreasePlayerCurrentHealthEffect(1))))
+                .add(new AttackComponent(PLAYER_MELEE_DAMAGE, checkEnemy))
+                .add(new MeleeComponent())
+                .build();
+    }
+
+    public Entity createLittleBulletAttack(final Entity entity) {
+        return new EntityBuilder()
+                .add(new PositionComponent(getAttackPos(entity, PLAYER_LITTLE_BULLET_WIDTH, PLAYER_LITTLE_BULLET_HEIGHT), 0))
+                .add(new MovementComponent(getDirection(entity), PLAYER_LITTLE_BULLET_SPEED, true))
+                .add(new BodyComponent(new RectBodyShape(PLAYER_LITTLE_BULLET_WIDTH, PLAYER_LITTLE_BULLET_HEIGHT), false))
+                .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
+                .add(new AttackComponent(PLAYER_LITTLE_BULLET_DAMAGE, checkEnemy))
+                .add(new BulletComponent())
+                .build();
+    }
+
+    public Entity createBigBulletAttack(final Entity entity) {
+        return new EntityBuilder()
+                .add(new PositionComponent(getAttackPos(entity, PLAYER_BIG_BULLET_WIDTH, PLAYER_BIG_BULLET_HEIGHT), 0))
+                .add(new MovementComponent(getDirection(entity), PLAYER_BIG_BULLET_SPEED, true))
+                .add(new BodyComponent(new RectBodyShape(PLAYER_BIG_BULLET_WIDTH, PLAYER_BIG_BULLET_HEIGHT), false))
+                .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
+                .add(new AttackComponent(PLAYER_BIG_BULLET_DAMAGE, checkEnemy))
+                .add(new BulletComponent())
                 .build();
     }
 

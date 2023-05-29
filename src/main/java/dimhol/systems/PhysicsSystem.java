@@ -1,5 +1,6 @@
 package dimhol.systems;
 
+import dimhol.core.World;
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.components.BodyComponent;
@@ -11,11 +12,9 @@ public class PhysicsSystem extends AbstractSystem{
     /**
      * Constructs a PhysicSystem. Iterates through entities with {@link BodyComponent}
      * and {@link CollisionComponent}.
-     *
-     * @param w the world
      */
-    public PhysicsSystem(WorldImpl w) {
-        super(w, BodyComponent.class, CollisionComponent.class);
+    public PhysicsSystem() {
+        super(BodyComponent.class, CollisionComponent.class);
     }
 
     /**
@@ -25,12 +24,12 @@ public class PhysicsSystem extends AbstractSystem{
      * @param dt
      */
     @Override
-    public void process(Entity e, double dt) {
+    public void process(final Entity e, final double dt, final World world) {
         var cc = (CollisionComponent) e.getComponent(CollisionComponent.class);
         var b1 = (BodyComponent) e.getComponent(BodyComponent.class);
         var p1 = (PositionComponent) e.getComponent(PositionComponent.class);
-        for (var c : cc.getCollided()) {
-            var b2 = (BodyComponent) c.getComponent(BodyComponent.class);
+        for (var collided : cc.getCollided()) {
+            var b2 = (BodyComponent) collided.getComponent(BodyComponent.class);
             if (b1.isSolid() && b2.isSolid()) {
                 p1.resetToLastPos();
                 break;

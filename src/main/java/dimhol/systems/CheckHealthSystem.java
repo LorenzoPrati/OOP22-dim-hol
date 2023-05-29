@@ -1,10 +1,9 @@
 package dimhol.systems;
 
-import dimhol.core.WorldImpl;
+import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;
 import dimhol.components.HealthComponent;
-import dimhol.components.PlayerComponent;
 
 /**
  * A system that removes entities from the game world if they are dead.
@@ -14,22 +13,16 @@ public class CheckHealthSystem extends AbstractSystem {
 
     /**
      * Constructs a system to operates on a given world and family of components.
-     *
-     * @param w     the world
      */
-    public CheckHealthSystem(final WorldImpl w) {
-        super(w, HealthComponent.class);
+    public CheckHealthSystem() {
+        super(HealthComponent.class);
     }
 
     @Override
-    public void process(final Entity e, final double dt) {
-        HealthComponent hp = (HealthComponent) e.getComponent(HealthComponent.class);
+    public void process(final Entity entity, final double dt, final World world) {
+        HealthComponent hp = (HealthComponent) entity.getComponent(HealthComponent.class);
         if (hp.getCurrentHealth() <= 0) {
-            if (e.hasComponent(PlayerComponent.class)) {
-                this.world.setGameOver();
-            } else {
-                world.notifyEvent(new RemoveEntityEvent(e));
-            }
+            world.notifyEvent(new RemoveEntityEvent(entity));
         }
     }
 }

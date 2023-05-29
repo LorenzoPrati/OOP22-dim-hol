@@ -18,8 +18,10 @@ public class ItemSystem extends AbstractSystem{
         var collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
         var itemComp = (ItemComponent) entity.getComponent(ItemComponent.class);
         for(var c: collisionComp.getCollided()){
-            itemComp.applyEffect(entity, PlayerComponent.class);
-            world.notifyEvent(new RemoveEntityEvent(c));
+            var picked = itemComp.applyEffect(c, PlayerComponent.class);
+            if(picked){
+                world.notifyEvent(new RemoveEntityEvent(entity));
+            }
         }
     }
 }

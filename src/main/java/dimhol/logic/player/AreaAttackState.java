@@ -2,7 +2,6 @@ package dimhol.logic.player;
 
 import dimhol.core.Input;
 import dimhol.entity.Entity;
-import dimhol.entity.factories.PlayerAttackFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +16,7 @@ public class AreaAttackState extends AbstractState {
 
     @Override
     public Optional<State> transition(Input input) {
-        return input.isSpecialMeele()
+        return input.isSpecialMelee()
                 ? Optional.empty()
                 : Optional.of(new IdleState());
     }

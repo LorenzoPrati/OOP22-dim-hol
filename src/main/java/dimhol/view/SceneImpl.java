@@ -1,5 +1,7 @@
 package dimhol.view;
 
+import dimhol.core.Engine;
+import dimhol.core.Input;
 import dimhol.core.World;
 import dimhol.gamelevels.LevelManager;
 import dimhol.gamelevels.map.TileMap;
@@ -16,17 +18,22 @@ public class SceneImpl implements Scene {
     private int tileMapHeight;
     private ResourceLoader loader;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private HUD hud = new HUD(loader);
+    private HUD hud;
     private int newTileWidth;
     private int newTileHeight;
     private int offsetX;
     private int offsetY;
     private LevelManager levelManager;
-    public GamePanel scenePanel;
+    public final GamePanel scenePanel;
+    private TileMap tileMap;
+    private InputListener inputListener;
 
-    public SceneImpl(){
+    public SceneImpl(Engine engine){
         this.scenePanel =  new GamePanel(screenSize.getWidth(), screenSize.getHeight());;
         this.loader = new ResourceLoader();
+        this.hud = new HUD(loader);
+        this.inputListener = new InputListener(engine, this);
+        engine.getMainWindow().changePanel(this.scenePanel);
     }
 
     class GamePanel extends JPanel{
@@ -42,7 +49,7 @@ public class SceneImpl implements Scene {
 
         @Override
         public void paintComponent(Graphics g) {
-            var tileMapLayers = levelManager.getTileMap().getLayers();
+            var tileMapLayers = tileMap.getLayers();
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D)g;
             for(var layer: tileMapLayers){
@@ -76,7 +83,7 @@ public class SceneImpl implements Scene {
                 double newY = renderList.get(i).getY() * newTileHeight + offsetY;
                 g2.drawImage(img,(int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
             }
-            //hud.show(g2, newTileWidth, newTileHeight, offsetX, offsetY);
+            hud.show(g2, newTileWidth, newTileHeight, offsetX, offsetY);
             g2.dispose();
             renderList.clear();
         } 
@@ -113,11 +120,11 @@ public class SceneImpl implements Scene {
     }
 
     @Override
-    public void setInput(InputListener input) {
+    public void setupInput() {
         this.scenePanel.setFocusable(true);
         this.scenePanel.requestFocus();
-        this.scenePanel.addKeyListener(input);
-        this.scenePanel.addMouseListener(input);
+        this.scenePanel.addKeyListener(this.inputListener);
+        this.scenePanel.addMouseListener(this.inputListener);
     }
 
     @Override
@@ -127,7 +134,13 @@ public class SceneImpl implements Scene {
 
     @Override
     public void setMap(TileMap tileMap) {
+        this.tileMap = tileMap;
         this.tileMapWidth = tileMap.getWidth();
         this.tileMapHeight = tileMap.getHeight();
+    }
+
+    @Override
+    public Input getInput() {
+        return this.inputListener.getInput();
     }
 }

@@ -88,11 +88,4 @@ public interface World {
      * @return the world input
      */
     Input getInput();
-
-    /**
-     * Gets the view representation of the world.
-     *
-     * @return the world scene
-     */
-    Scene getScene();
 }

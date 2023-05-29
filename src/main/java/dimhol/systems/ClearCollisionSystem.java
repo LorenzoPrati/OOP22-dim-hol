@@ -1,5 +1,6 @@
 package dimhol.systems;
 
+import dimhol.core.World;
 import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.components.CollisionComponent;
@@ -11,22 +12,20 @@ public class ClearCollisionSystem extends AbstractSystem {
 
     /**
      * Constructs a ClearCollisionSystem. Iterates through {@link CollisionComponent}.
-     *
-     * @param w the world
      */
-    public ClearCollisionSystem(WorldImpl w) {
-        super(w, CollisionComponent.class);
+    public ClearCollisionSystem() {
+        super(CollisionComponent.class);
     }
 
     /**
      * Removes CollisionComponent from the entity.
      *
-     * @param e  the entity to process
+     * @param entity  the entity to process
      * @param dt
      */
     @Override
-    public void process(final Entity e, double dt) {
-        var cc = (CollisionComponent) e.getComponent(CollisionComponent.class);
-        e.removeComponent(cc);
+    public void process(final Entity entity, final double dt, final World world) {
+        var cc = (CollisionComponent) entity.getComponent(CollisionComponent.class);
+        entity.removeComponent(cc);
     }
 }

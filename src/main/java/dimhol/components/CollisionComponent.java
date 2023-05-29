@@ -34,6 +34,6 @@ public class CollisionComponent implements Component {
      * @return the list containing the collided entities
      */
     public List<Entity> getCollided() {
-        return this.collidedList;
+        return new ArrayList<>(this.collidedList);
     }
 }

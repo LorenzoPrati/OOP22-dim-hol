@@ -6,11 +6,9 @@ import java.awt.*;
 
 public class MainWindowImpl implements MainWindow {
     private final JFrame frame;
-    JPanel currPanel;
     public MainWindowImpl(final Engine engine) {
         this.frame = new JFrame();
-        this.currPanel = new HomeScreen(engine);
-        this.frame.getContentPane().add(currPanel);
+        this.frame.getContentPane().add(new HomeScreen(engine));
         this.frame.setUndecorated(false);
         this.frame.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
@@ -22,15 +20,14 @@ public class MainWindowImpl implements MainWindow {
 
     @Override
     public void changePanel(final JPanel panel) {
-        this.frame.remove(currPanel);
+        this.frame.remove(frame.getContentPane().getComponents()[frame.getContentPane().getComponentCount()-1]);
         this.frame.add(panel);
-        this.currPanel = panel;
         this.frame.repaint();
         this.frame.revalidate();
     }
 
     @Override
-    public void setDimension(final Dimension dimension) {
-        this.frame.setSize(dimension);
+    public void changeResolution(final Dimension dimension) {
+        this.frame.setSize(new Dimension(dimension));
     }
 }
