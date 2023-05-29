@@ -12,5 +12,5 @@ public interface Engine {
 
     void endGame();
 
-    MainWindow getWindow();
+    MainWindow getMainWindow();
 }

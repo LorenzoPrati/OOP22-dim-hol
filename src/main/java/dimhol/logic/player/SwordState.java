@@ -17,7 +17,7 @@ public class SwordState extends AbstractState {
 
     @Override
     public Optional<State> transition(Input input) {
-        if (input.isNormalMeele()) {
+        if (input.isNormalMelee()) {
             return Optional.empty();
         }
         return Optional.of(new IdleState());
