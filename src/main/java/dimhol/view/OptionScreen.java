@@ -40,11 +40,11 @@ public class OptionScreen extends AbstractScreen {
         for(var resolution: mapResolutions.keySet()){
             comboBox.addItem(resolution);
         }
-        homeButton.addActionListener(l -> engine.getWindow().changePanel(new HomeScreen(engine)));
+        homeButton.addActionListener(l -> engine.getMainWindow().changePanel(new HomeScreen(engine)));
         doneButton.addActionListener(l ->{
             var selecteResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
             var res = mapResolutions.get(selecteResolution);
-            engine.getWindow().setDimension(new Dimension(res));
+            engine.getMainWindow().setDimension(new Dimension(res));
         });
         optionListPanel.setLayout(new GridBagLayout());
         comboBox.setFont(font2);

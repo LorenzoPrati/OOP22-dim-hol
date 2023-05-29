@@ -1,5 +1,7 @@
 package dimhol.view;
 
+import dimhol.core.Engine;
+import dimhol.core.Input;
 import dimhol.core.World;
 import dimhol.gamelevels.LevelManager;
 import dimhol.gamelevels.map.TileMap;
@@ -22,13 +24,16 @@ public class SceneImpl implements Scene {
     private int offsetX;
     private int offsetY;
     private LevelManager levelManager;
-    public GamePanel scenePanel;
+    public final GamePanel scenePanel;
     private TileMap tileMap;
+    private InputListener inputListener;
 
-    public SceneImpl(){
+    public SceneImpl(Engine engine){
         this.scenePanel =  new GamePanel(screenSize.getWidth(), screenSize.getHeight());;
         this.loader = new ResourceLoader();
         this.hud = new HUD(loader);
+        this.inputListener = new InputListener(engine, this);
+        engine.getWindow().changePanel(this.scenePanel);
     }
 
     class GamePanel extends JPanel{
@@ -115,11 +120,11 @@ public class SceneImpl implements Scene {
     }
 
     @Override
-    public void setInput(InputListener input) {
+    public void setupInput() {
         this.scenePanel.setFocusable(true);
         this.scenePanel.requestFocus();
-        this.scenePanel.addKeyListener(input);
-        this.scenePanel.addMouseListener(input);
+        this.scenePanel.addKeyListener(this.inputListener);
+        this.scenePanel.addMouseListener(this.inputListener);
     }
 
     @Override
@@ -132,5 +137,10 @@ public class SceneImpl implements Scene {
         this.tileMap = tileMap;
         this.tileMapWidth = tileMap.getWidth();
         this.tileMapHeight = tileMap.getHeight();
+    }
+
+    @Override
+    public Input getInput() {
+        return this.inputListener.getInput();
     }
 }

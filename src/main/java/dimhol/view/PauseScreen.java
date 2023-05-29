@@ -9,7 +9,7 @@ import javax.swing.*;
 
 public class PauseScreen extends AbstractScreen {
 
-    public PauseScreen(Engine engine) {
+    public PauseScreen(Engine engine, final Scene scene) {
         super(engine);
         this.background = new ImageIcon("src/main/resources/asset/bg/pauseScreen.jpg");
         this.title = new JLabel(new ImageIcon("src/main/resources/asset/bg/pauseTitle.png"));
@@ -17,10 +17,13 @@ public class PauseScreen extends AbstractScreen {
         final JButton homeButton = new JButton("HOME");
         List<JButton> buttons = List.of(resumeButton, homeButton);
         resumeButton.addActionListener(e -> {
+            engine.getMainWindow().changePanel(scene.getPanel());
+            scene.setupInput();
             engine.resumeGame();
+
         });
         homeButton.addActionListener(e -> {
-            engine.getWindow().changePanel(new HomeScreen(engine));
+            engine.getMainWindow().changePanel(new HomeScreen(engine));
             engine.endGame();
         });
         for(var button: buttons){
