@@ -9,9 +9,9 @@ import dimhol.events.WorldEvent;
 /**
  * A system to manage enemies.
  */
-public final class AiSystem extends AbstractSystem {
+public final class EnemyAiSystem extends AbstractSystem {
 
-    public AiSystem() {
+    public EnemyAiSystem() {
         super(AiComponent.class);
     }
 

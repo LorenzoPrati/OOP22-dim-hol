@@ -22,7 +22,6 @@ public final class RandomMovement extends AbstractAction {
 
     @Override
     public Optional<List<WorldEvent>> execute() {
-        System.out.println(this.getWaitingTime());
         getMovComp().setEnabled(true);
         Vector2D[] directions = {new Vector2D(0, 1), new Vector2D(0, -1), new Vector2D(1, 0), new Vector2D(-1, 0)};
         if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {

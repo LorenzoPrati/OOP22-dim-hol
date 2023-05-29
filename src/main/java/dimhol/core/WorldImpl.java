@@ -50,7 +50,7 @@ public class WorldImpl implements World {
         Add systems
          */
         this.systems.add(new PlayerSystem());
-        this.systems.add(new AiSystem());
+        this.systems.add(new EnemyAiSystem());
         this.systems.add(new MovementSystem());
         this.systems.add(new MapCollisionSystem());
         this.systems.add(new CollisionSystem());

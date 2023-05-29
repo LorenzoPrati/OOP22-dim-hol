@@ -4,7 +4,6 @@ package dimhol.entity.factories;
 import dimhol.components.*;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
-import dimhol.entity.factories.AbstractAttackFactory;
 import dimhol.logic.collision.RectBodyShape;
 import dimhol.logic.util.DirectionUtil;
 
@@ -26,7 +25,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
     /**
      * Bullet speed.
      */
-    private static final double ENEMY_BULLET_SPEED = 3;
+    private static final int ENEMY_BULLET_SPEED = 3;
     /**
      * Melee Width.
      */
@@ -44,7 +43,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
      */
     private static final int ENEMY_BULLET_DAMAGE = 1;
 
-    private Predicate<Entity> checkPlayer = entity -> entity.hasComponent(PlayerComponent.class);
+    private final Predicate<Entity> checkPlayer = entity -> entity.hasComponent(PlayerComponent.class);
 
     /**
      * Create a melee attack near the entity's body facing the direction
@@ -59,7 +58,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new AttackComponent(ENEMY_MELEE_DAMAGE, checkPlayer))
                 .add(new MeleeComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("heart"), "idle"))
+                .add(new AnimationComponent(map.get("enemyMeleeAttack"), "idle"))
                 .build();
     }
 
