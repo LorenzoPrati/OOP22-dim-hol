@@ -1,5 +1,6 @@
 package dimhol.gamelevels.map;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -38,9 +39,10 @@ public interface MapLoader {
     /**
      * Loads a custom map tile map.
      *
+     * @param inputStream The input stream xml file.
      * @return the loaded custom map tile map
      */
-    TileMap loadCustomMap();
+    TileMap loadCustomMap(InputStream inputStream);
 
 
     /**
