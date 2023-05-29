@@ -49,7 +49,7 @@ public class BossFactory extends AbstractFactory {
                 .add(new BodyComponent(new RectBodyShape(BOSS_WIDTH, BOSS_HEIGHT), true))
                 .add(new HealthComponent(BOSS_HEALTH))
                 .add(new AnimationComponent(map.get("boss"), "walk"))
-                .add(new AiComponent(new RoutineFactory().createBossRoutine()))
+//                .add(new AiComponent(new RoutineFactory().createBossRoutine()))
                 .build();
     }
 }

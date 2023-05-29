@@ -105,7 +105,7 @@ public class EnemyFactory extends AbstractFactory {
                 .add(new MovementComponent(new Vector2D(0,1), MINS_SPEED, false ))
                 .add(new BodyComponent(new RectBodyShape(MINS_WIDTH, MINS_HEIGHT), true))
                 .add(new AnimationComponent(map.get("enemy"), "idle"))
-                .add(new AiComponent(new RoutineFactory().createMinsRuotine()))
+//                .add(new AiComponent(new RoutineFactory().createMinsRuotine()))
                 .build();
     }
 
