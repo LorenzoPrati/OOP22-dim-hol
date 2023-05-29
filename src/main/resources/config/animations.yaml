@@ -133,6 +133,11 @@
             - 4
             - 33
             - 0
+    enemyMeleeAttack:
+        idle:
+          - 1
+          - 53
+          - 0
     coin:
         idle:
             - 6

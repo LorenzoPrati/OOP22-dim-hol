@@ -18,6 +18,8 @@ public final class MeleeAttack extends AbstractAction {
     @Override
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(false);
+        var direction = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
+        getMovComp().setDir(direction);
         if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
             getAi().setPrevTime(getAi().getCurrentTime());
             return meleeAttack();
@@ -31,8 +33,4 @@ public final class MeleeAttack extends AbstractAction {
         return Optional.of(attacks);
     }
 
-    double getMeleeRay(final Vector2D entityPos, final Vector2D enemyCentralPos,
-                       final Vector2D playerPos, final Vector2D playerCentralPos) {
-        return entityPos.distance(enemyCentralPos) + playerPos.distance(playerCentralPos);
-    }
 }
