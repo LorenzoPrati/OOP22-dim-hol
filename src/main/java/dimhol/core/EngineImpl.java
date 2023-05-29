@@ -12,9 +12,8 @@ public final class EngineImpl implements Engine {
     private static final int FPS = 60;
     private static final int MS_PER_FRAME = 1_000 / FPS;
 
-    private final MainWindow window;
+    private final MainWindow mainWindow;
     private World world;
-    private Scene scene;
     /**
      * True if the game needs to be paused.
      */
@@ -28,7 +27,7 @@ public final class EngineImpl implements Engine {
      * Constructs an EngineImpl.
      */
     public EngineImpl() {
-        this.window = new MainWindowImpl(this);
+        this.mainWindow = new MainWindowImpl(this);
     }
 
     /**
@@ -36,9 +35,10 @@ public final class EngineImpl implements Engine {
      */
     @Override
     public void newGame() {
-        this.scene = new SceneImpl();
-        this.world = new WorldImpl(window, this);
+        this.world = new WorldImpl(this);
+        this.world.changeLevel();
         this.running = true;
+        this.pause = false;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -53,7 +53,6 @@ public final class EngineImpl implements Engine {
     @Override
     public void stopGame() {
         this.pause = true;
-        this.window.changePanel(new PauseScreen(this));
     }
 
     /**
@@ -61,11 +60,6 @@ public final class EngineImpl implements Engine {
      */
     @Override
     public void resumeGame() {
-        this.window.changePanel(this.scene.getPanel());
-        /*
-         * input is set after the scene is made visible
-         */
-        //this.world.getScene().setInput(new InputListener(this, world.getInput()));
         this.pause = false;
     }
 
@@ -89,7 +83,7 @@ public final class EngineImpl implements Engine {
             this.waitForNextFrame(curr);
             prev = curr;
         }
-        this.window.changePanel(new ResultScreen(this, world.isWin()));
+        this.mainWindow.changePanel(new ResultScreen(this, world.isWin()));
     }
 
     private void waitForNextFrame(final long time) {
@@ -104,12 +98,12 @@ public final class EngineImpl implements Engine {
     }
 
     /**
-     * Gets the main window.
+     * Gets the main mainWindow.
      *
-     * @return the main window
+     * @return the main mainWindow
      */
     @Override
-    public MainWindow getWindow() {
-        return window;
+    public MainWindow getMainWindow() {
+        return mainWindow;
     }
 }

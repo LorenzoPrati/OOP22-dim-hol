@@ -43,6 +43,7 @@ public final class ResourceLoader {
                 .getResourceAsStream(("/asset/warrior/" + i + ".png")))), dimensions.get("player").get(0),
                  dimensions.get("player").get(1)));
             }
+          
             this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
                 .getResourceAsStream("/asset/enemies/ghost-Sheet.png"))), dimensions.get("enemy").get(0),
                 dimensions.get("enemy").get(1)));

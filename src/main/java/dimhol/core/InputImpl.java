@@ -2,6 +2,7 @@ package dimhol.core;
 
 import org.locationtech.jts.math.Vector2D;
 
+import javax.management.OperationsException;
 import java.util.Optional;
 
 /**
@@ -9,51 +10,79 @@ import java.util.Optional;
  */
 public class InputImpl implements Input {
 
-    private boolean up, down, left, right;
-    private boolean normalMeele;
+    private boolean up;
+    private boolean down;
+    private boolean left;
+    private boolean right;
+    private boolean normalMelee;
     private boolean shoot;
-    private boolean specialMeele;
+    private boolean specialMelee;
     private boolean chargeFireball;
     private boolean interact;
 
-    public InputImpl() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public InputImpl clone() {
+        try {
+            return (InputImpl) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new UnsupportedOperationException(e.getMessage());
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isInteracting() {
         return this.interact;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isMoving() {
         return this.up || this.down || this.left || this.right;
     }
 
-    @Override
-    public boolean isMeele() {
-        return this.normalMeele || this.specialMeele;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isShooting() {
         return this.shoot;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean isNormalMeele() {
-        return this.normalMeele;
+    public boolean isNormalMelee() {
+        return this.normalMelee;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean isSpecialMeele() {
-        return this.specialMeele;
+    public boolean isSpecialMelee() {
+        return this.specialMelee;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isChargingFireball() {
         return this.chargeFireball;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Vector2D> getDirection() {
         if (this.up) {
@@ -71,48 +100,76 @@ public class InputImpl implements Input {
         return Optional.empty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setUp(final boolean up) {
         this.up = up;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDown(final boolean down) {
         this.down = down;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLeft(final boolean left) {
         this.left = left;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setRight(final boolean right) {
         this.right = right;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setShoot(final boolean shoot) {
         this.shoot = shoot;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setNormalMeele(final boolean normalMeele) {
-        this.normalMeele = normalMeele;
+    public void setNormalMeele(final boolean normalMelee) {
+        this.normalMelee = normalMelee;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setSpecialMeele(final boolean specialMeele) {
-        this.specialMeele = specialMeele;
+    public void setSpecialMeele(final boolean specialMelee) {
+        this.specialMelee = specialMelee;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setInteract(final boolean interact) {
         this.interact = interact;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setChargeFireball(final boolean chargeFireball) {
         this.chargeFireball = chargeFireball;
     }
 }
+
