@@ -109,6 +109,7 @@ public class SceneImpl implements Scene {
         this.scenePanel.paintImmediately(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
     }
 
+
     @Override
     public HUD getHUD() {
         return this.hud;

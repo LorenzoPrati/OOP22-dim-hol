@@ -29,8 +29,6 @@ public abstract class AbstractAction implements Action {
     private final EnemyAttackFactory attackFactory = new EnemyAttackFactory();
     private AiComponent ai;
     private MovementComponent movComp;
-    private Vector2D enemyPos;
-    private Vector2D playerPos;
 
     /**
      * {@inheritDoc}
@@ -56,7 +54,6 @@ public abstract class AbstractAction implements Action {
         PositionComponent playerPosComp = (PositionComponent) player.getComponent(PositionComponent.class);
         BodyComponent playerBodyComp = (BodyComponent) player.getComponent(BodyComponent.class);
         playerCentralPos = getCentralPosition(playerPosComp.getPos(), playerBodyComp.getBodyShape());
-        playerPos = playerPosComp.getPos();
     }
 
     /**
@@ -70,7 +67,7 @@ public abstract class AbstractAction implements Action {
         this.enemy = new EntityImpl(enemy);
         PositionComponent enemyPosComp = (PositionComponent) enemy.getComponent(PositionComponent.class);
         BodyComponent enemyBodyComp = (BodyComponent) enemy.getComponent(BodyComponent.class);
-        enemyPos = enemyPosComp.getPos();
+        Vector2D enemyPos = enemyPosComp.getPos();
         enemyCentralPos = getCentralPosition(enemyPos, enemyBodyComp.getBodyShape());
         ai = (AiComponent) enemy.getComponent(AiComponent.class);
         movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
@@ -143,19 +140,19 @@ public abstract class AbstractAction implements Action {
         return enemy;
     }
 
+    /**
+     * Waiting time getter.
+     * @return waiting time
+     */
     public double getWaitingTime() {
         return waitingTime;
     }
 
+    /**
+     * Aggro ray getter.
+     * @return aggro ray
+     */
     public double getAggroRay() {
         return aggroRay;
-    }
-
-    public Vector2D getEnemyPos() {
-        return this.enemyPos;
-    }
-
-    public Vector2D getPlayerPos() {
-        return this.playerPos;
     }
 }

@@ -1,35 +1,41 @@
 package dimhol.view;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
-public class HUD {
+/**
+ * This class draw the player HUD, show player's health and coins.
+ */
+public final class HUD {
 
     /**
-     *
+     * Image heart code.
      */
-    public static final int HEART_IMAGE_CODE = 45;
+    private static final int HEART_IMAGE_CODE = 45;
     /**
-     *
+     * Image coin code.
      */
-    public static final int COIN_IMAGE_CODE = 44;
+    private static final int COIN_IMAGE_CODE = 44;
     /**
      * HUD Image width.
      */
-    private final static double HUD_IMAGE_WIDTH = 0.5;
+    private static final double HUD_IMAGE_WIDTH = 0.5;
     /**
      * HUD Image height.
      */
-    private final static double HUD_IMAGE_HEIGHT = 0.5;
+    private static final double HUD_IMAGE_HEIGHT = 0.5;
     /**
      * Font size divisor.
      */
-    private final static int FONT_SIZE_DIVISOR = 3;
+    private static final int FONT_SIZE_DIVISOR = 3;
     /**
      * Coin amount divisor.
      */
-    private final static int COIN_AMOUNT_DIVISOR = 10;
+    private static final  int COIN_AMOUNT_DIVISOR = 10;
     /**
      * Coin high-position multiplier.
      */
@@ -39,10 +45,22 @@ public class HUD {
     private int coins;
     private final ResourceLoader resourceLoader;
 
+    /**
+     * HUD constructor.
+     * @param loader is the image resource loader.
+     */
     public HUD(final ResourceLoader loader) {
         this.resourceLoader = loader;
     }
 
+    /**
+     * This method shows the HUD.
+     * @param g2d is the Graphics2D
+     * @param newTileWidth is the new tile width that changes when the frame changes resolution
+     * @param newTileHeight is the new tile height that changes when the frame changes resolution
+     * @param offsetX is the offset from the left side screen
+     * @param offsetY if the offset from the top side screen
+     */
     public void show(final Graphics2D g2d, final double newTileWidth,
                      final double newTileHeight, final int offsetX, final int offsetY) {
         try {
@@ -84,6 +102,12 @@ public class HUD {
         }
     }
 
+    /**
+     * Update the player HUD info.
+     * @param currentHealth is the current health
+     * @param maxHealth is the max health
+     * @param currentAmount is the player's coin amount
+     */
     public void updateHUD(final int currentHealth, final int maxHealth, final int currentAmount) {
         this.playerCurrentHealth = currentHealth;
         this.playerMaxHealth = maxHealth;
