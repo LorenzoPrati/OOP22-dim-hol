@@ -27,24 +27,18 @@ public class WorldImpl implements World {
     private boolean win;
 
     private final Scene scene;
-    private final Input input;
 
     /**
      * Constructs a world.
      */
-    public WorldImpl(MainWindow mainWindow, Engine engine) {
+    public WorldImpl(final Engine engine) {
         this.entities = new ArrayList<>();
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
         this.levelManager = new LevelManagerImpl();
-        this.scene = new SceneImpl();
-        mainWindow.changePanel(scene.getPanel());
-        this.input = new InputImpl();
-        this.scene.setInput(new InputListener(engine, input));
-        /*
-        generate first level
-         */
-        this.entities.addAll(levelManager.changeLevel(this.entities));
+        this.scene = new SceneImpl(engine);
+        this.scene.setupInput();
+
         this.scene.setMap(this.getLevelManager().getTileMap());
         /*
         Add systems
@@ -192,6 +186,6 @@ public class WorldImpl implements World {
      */
     @Override
     public Input getInput() {
-        return this.input;
+        return this.scene.getInput();
     }
 }

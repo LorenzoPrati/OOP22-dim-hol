@@ -16,7 +16,7 @@ public class AreaAttackState extends AbstractState {
 
     @Override
     public Optional<State> transition(Input input) {
-        return input.isSpecialMeele()
+        return input.isSpecialMelee()
                 ? Optional.empty()
                 : Optional.of(new IdleState());
     }

@@ -25,10 +25,10 @@ public class IdleState extends AbstractState {
         if (input.isShooting()) {
             return Optional.of(new ShootState());
         }
-        if (input.isSpecialMeele()) {
+        if (input.isSpecialMelee()) {
             return Optional.of(new AreaAttackState());
         }
-        if (input.isNormalMeele()) {
+        if (input.isNormalMelee()) {
             return Optional.of(new SwordState());
         }
         if (input.isMoving()) {
