@@ -1,66 +1,56 @@
 package dimhol.view;
 
+import dimhol.logic.collision.BodyShape;
+import org.locationtech.jts.math.Vector2D;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HUD {
 
-    /**
-     *
-     */
-    public static final int HEART_IMAGE_CODE = 45;
-    /**
-     *
-     */
-    public static final int COIN_IMAGE_CODE = 44;
-    /**
-     * HUD Image width.
-     */
     private final static double HUD_IMAGE_WIDTH = 0.5;
-    /**
-     * HUD Image height.
-     */
     private final static double HUD_IMAGE_HEIGHT = 0.5;
-    /**
-     * Font size divisor.
-     */
-    private final static int FONT_SIZE_DIVISOR = 3;
-    /**
-     * Coin amount divisor.
-     */
-    private final static int COIN_AMOUNT_DIVISOR = 10;
-    /**
-     * Coin high-position multiplier.
-     */
-    public static final int COIN_HIGH_MUL = 3;
     private int playerCurrentHealth;
     private int playerMaxHealth;
     private int coins;
     private final ResourceLoader resourceLoader;
+    private double newTileWidth;
+    private double newTileHeight;
+    private int offsetX;
+    private int offsetY;
+    private Graphics2D g2d;
+    private record EnemyData( int currentHealth, int maxHealth, Vector2D pos, BodyShape body){}
+    private final List<EnemyData> enemiesData = new ArrayList<>();
 
     public HUD(final ResourceLoader loader) {
         this.resourceLoader = loader;
     }
 
-    public void show(final Graphics2D g2d, final double newTileWidth,
-                     final double newTileHeight, final int offsetX, final int offsetY) {
+    public void show(final Graphics2D g2d, final double newTileWidth, final double newTileHeight, final int offsetX, final int offsetY) {
+        this.newTileWidth = newTileWidth;
+        this.newTileHeight = newTileHeight;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.g2d = g2d;
+
         try {
             File fontFile = new File("src/main/resources/asset/hud/font/Fipps-Regular.ttf");
-            double fontSize = newTileHeight / FONT_SIZE_DIVISOR;
+            double fontSize = newTileHeight / 3;
             var font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Math.round(fontSize));
             g2d.setFont(font);
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
 
-        showHealthInfo(g2d, offsetX, offsetY, newTileWidth, newTileHeight);
-        showCoinInfo(g2d, offsetX, offsetY, newTileWidth, newTileHeight);
+        showHealthInfo();
+        showCoinInfo();
     }
 
-    private void showHealthInfo(final Graphics2D g2d, final int offsetX, final int offsetY,
-                                final double newTileWidth, final double newTileHeight) {
-        var heartImg = resourceLoader.getImage(HEART_IMAGE_CODE);
+    private void showHealthInfo() {
+        var heartImg = resourceLoader.getImage(45);
         int heartW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
         int heartH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
 
@@ -71,23 +61,51 @@ public class HUD {
         }
     }
 
-    private void showCoinInfo(final Graphics2D g2d, final int offsetX, final int offsetY,
-                              final double newTileWidth, final double newTileHeight) {
-        var coinImg = resourceLoader.getImage(COIN_IMAGE_CODE);
+    private void showCoinInfo() {
+        var coinImg = resourceLoader.getImage(44);
         int coinW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
         int coinH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
 
         g2d.setColor(Color.YELLOW);
-        g2d.drawString("Coins : " + coins, coinW + offsetX, coinH * COIN_HIGH_MUL + offsetY);
-        for (int i = 1; i < coins / COIN_AMOUNT_DIVISOR + 1; i++) {
-            g2d.drawImage(coinImg, i * coinW + offsetX, coinH * COIN_HIGH_MUL + offsetY, coinW, coinH, null);
+        g2d.drawString("Coins : " + coins, coinW + offsetX, coinH * 3 + offsetY);
+        for (int i = 1; i < coins / 10 + 1; i++) {
+            g2d.drawImage(coinImg, (i * coinW + offsetX), coinH * 3 + offsetY, coinW, coinH, null);
         }
     }
 
-    public void updateHUD(final int currentHealth, final int maxHealth, final int currentAmount) {
+    public void updatePlayerHUD(int currentHealth, int maxHealth, int currentAmount) {
         this.playerCurrentHealth = currentHealth;
         this.playerMaxHealth = maxHealth;
         this.coins = currentAmount;
     }
 
+    // TODO: 24/05/23 remove this method
+    /*
+    public void updateEnemiesHUD(int currentHealth, int maxHealth, final Vector2D pos, final BodyShape bodyShape) {
+        this.enemiesData.add(new EnemyData(currentHealth, maxHealth, pos, bodyShape));
+    }
+
+     */
+
+    // TODO: 24/05/23 remove this method
+    /*
+    private void showEnemiesHealth() {
+        g2d.setColor(Color.RED);
+        var rectH = 0.1 * newTileHeight;
+        for (var e : enemiesData) {
+            g2d.drawRect(
+                    Math.toIntExact(Math.round(e.pos().getX() * newTileWidth + offsetX)),
+                    Math.toIntExact(Math.round(e.pos().getY() * newTileHeight + offsetY - rectH)),
+                    Math.toIntExact(Math.round(e.body().getBoundingWidth() * newTileWidth)),
+                    Math.toIntExact(Math.round(rectH)));
+            g2d.fillRect(
+                    Math.toIntExact(Math.round(e.pos().getX() * newTileWidth + offsetX)),
+                    Math.toIntExact(Math.round(e.pos().getY() * newTileHeight + offsetY - rectH)),
+                    Math.toIntExact(Math.round(e.body().getBoundingWidth() * newTileWidth / e.maxHealth() * e.currentHealth())),
+                    Math.toIntExact(Math.round(rectH)));
+        }
+        enemiesData.clear();
+    }
+
+     */
 }
