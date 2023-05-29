@@ -33,7 +33,7 @@ public class SceneImpl implements Scene {
         this.loader = new ResourceLoader();
         this.hud = new HUD(loader);
         this.inputListener = new InputListener(engine, this);
-        engine.getWindow().changePanel(this.scenePanel);
+        engine.getMainWindow().changePanel(this.scenePanel);
     }
 
     class GamePanel extends JPanel{
