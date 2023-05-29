@@ -85,8 +85,8 @@ public class NormalRoomStrategy implements RoomStrategy {
         //Place coins:
         generateCoins(freeTiles, entities);
 
-        //Place hearth:
-        generateHearths(freeTiles, entities);
+        //Place heart:
+        generateHearts(freeTiles, entities);
 
         //Place gate:
         generateGate(freeTiles, entities);
@@ -101,10 +101,10 @@ public class NormalRoomStrategy implements RoomStrategy {
                 coinsFreeTiles.getRight().doubleValue()));
     }
 
-    private void generateHearths(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
-        var hearthsFreeTile = getRandomTile(freeTiles);
-        entities.add(itemFactory.createHeart(hearthsFreeTile.getLeft().doubleValue(),
-                hearthsFreeTile.getRight().doubleValue()));
+    private void generateHearts(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        var heartsFreeTile = getRandomTile(freeTiles);
+        entities.add(itemFactory.createHeart(heartsFreeTile.getLeft().doubleValue(),
+                heartsFreeTile.getRight().doubleValue()));
     }
 
     private void generateGate(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
