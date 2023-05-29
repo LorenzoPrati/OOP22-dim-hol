@@ -16,19 +16,16 @@ public final class InputListener implements KeyListener, MouseListener {
 
     private final Engine engine;
     private final Input input;
-    private final MainWindow mainWindow;
     private final PauseScreen pauseScreen;
 
     /**
      * Constructs an InputListener.
      *
      * @param engine the engine
-     * @param mainWindow the class handling the main windows of the application
      * @param scene the class handling the game scene
      */
-    public InputListener(final Engine engine, final MainWindow mainWindow, final Scene scene) {
+    public InputListener(final Engine engine, final Scene scene) {
         this.engine = engine;
-        this.mainWindow = mainWindow;
         this.input = new InputImpl();
         this.pauseScreen = new PauseScreen(engine, scene);
     }
@@ -45,7 +42,7 @@ public final class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_E -> this.input.setInteract(true);
             case KeyEvent.VK_ESCAPE -> {
                 this.engine.stopGame();
-                this.mainWindow.changePanel(this.pauseScreen);
+                this.engine.getMainWindow().changePanel(this.pauseScreen);
             }
             default -> {
             }
