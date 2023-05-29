@@ -4,6 +4,9 @@ player:
 enemy:
   - 32
   - 32
+enemyMeleeAttack:
+  - 19
+  - 19
 coin: 
   - 32
   - 32

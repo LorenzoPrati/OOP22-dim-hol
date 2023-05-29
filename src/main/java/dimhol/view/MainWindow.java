@@ -8,6 +8,6 @@ public interface MainWindow {
 
     void changePanel(JPanel panel);
 
-    void setDimension(Dimension dimension);
+    void changeResolution(Dimension dimension);
     
 }

@@ -48,6 +48,9 @@ public final class ResourceLoader {
                 .getResourceAsStream("/asset/enemies/ghost-Sheet.png"))), dimensions.get("enemy").get(0),
                 dimensions.get("enemy").get(1)));
             this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
+            .getResourceAsStream("/asset/enemies/enemiesAttack/enemyAttack.png"))), dimensions.get("enemyMeleeAttack").get(0),
+            dimensions.get("enemyMeleeAttack").get(1)));
+            this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
             .getResourceAsStream("/asset/items/coin.png"))), dimensions.get("coin").get(0), dimensions.get("coin").get(1)));
             this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
             .getResourceAsStream("/asset/items/heart.png"))), dimensions.get("heart").get(0), dimensions.get("heart").get(1)));

@@ -24,7 +24,7 @@ public class HomeScreen extends AbstractScreen {
             System.exit(0);
         });
         optionsButton.addActionListener(e ->{
-            engine.getWindow().changePanel(new OptionScreen(engine));
+            engine.getMainWindow().changePanel(new OptionScreen(engine));
         });
         for(var button: buttons){
             button.setFont(this.font);
