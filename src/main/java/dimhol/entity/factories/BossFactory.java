@@ -1,6 +1,11 @@
 package dimhol.entity.factories;
 
-import dimhol.components.*;
+import dimhol.components.AiComponent;
+import dimhol.components.AnimationComponent;
+import dimhol.components.BodyComponent;
+import dimhol.components.HealthComponent;
+import dimhol.components.MovementComponent;
+import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.logic.enemyAI.RoutineFactory;
@@ -13,21 +18,37 @@ import org.locationtech.jts.math.Vector2D;
 public class BossFactory extends AbstractFactory {
 
     /**
-     * The width of the Boss.
+     * Boss's width.
      */
-    public static final double BOSS_WIDTH = 1;
+    public static final double BOSS_WIDTH = 4;
     /**
-     * The height of the Boss.
+     * Boss's height.
      */
-    public static final double BOSS_HEIGHT = 1;
+    public static final double BOSS_HEIGHT = 3;
     /**
-     * The speed of the Boss.
+     * Boss's speed.
      */
     public static final double BOSS_SPEED = 3;
     /**
-     * The health of the Boss.
+     * Boss's health.
      */
     public static final int BOSS_HEALTH = 10;
+    /**
+     * Minion's speed.
+     */
+    private static final double MINIONS_SPEED = 1;
+    /**
+     * Minion's width.
+     */
+    private static final double MINIONS_WIDTH = 0.5;
+    /**
+     * Minion's speed.
+     */
+    private static final double MINIONS_HEIGHT = 0.5;
+    /**
+     * Minion's health.
+     */
+    private static final int MINIONS_HEALTH = 1;
 
     /**
      * Create a Boss Entity.
@@ -37,14 +58,30 @@ public class BossFactory extends AbstractFactory {
      * @return The created Boss entity.
      */
     public Entity createBoss(final double x, final double y) {
-        // Add components to the entity builder
         return new EntityBuilder()
                 .add(new PositionComponent(new Vector2D(x, y), 0))
                 .add(new MovementComponent(new Vector2D(0, 1), BOSS_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(BOSS_WIDTH, BOSS_HEIGHT), true))
                 .add(new HealthComponent(BOSS_HEALTH))
                 .add(new AnimationComponent(map.get("boss"), "walk"))
-                .add(new AiComponent(new RoutineFactory().createZombieRoutine()))
+                .add(new AiComponent(new RoutineFactory().createBossRoutine()))
+                .build();
+    }
+
+    /**
+     * Create a minion Entity.
+     *
+     * @param x The x-coordinate of the Minions.
+     * @param y The y-coordinate of the Minions.
+     * @return The created Minion entity.
+     */
+    public Entity createMinion(final double x, final double y) {
+        return new EntityBuilder()
+                .add(new PositionComponent(new Vector2D(x,y), 0))
+                .add(new MovementComponent(new Vector2D(0,1), MINIONS_SPEED, false ))
+                .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), true))
+                .add(new AnimationComponent(map.get("enemy"), "idle"))
+//                .add(new AiComponent(new RoutineFactory().createMinionsRoutine()))
                 .build();
     }
 }

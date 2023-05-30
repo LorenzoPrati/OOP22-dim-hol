@@ -1,59 +1,19 @@
-package dimhol.entity.factories;
+package dimhol.gamelevels.bossactions.bossAI;
 
-
-import dimhol.components.AnimationComponent;
-import dimhol.components.AttackComponent;
-import dimhol.components.BodyComponent;
-import dimhol.components.BulletComponent;
-import dimhol.components.CollisionComponent;
-import dimhol.components.MeleeComponent;
-import dimhol.components.MovementComponent;
-import dimhol.components.PlayerComponent;
-import dimhol.components.PositionComponent;
+import dimhol.components.*;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
-import dimhol.gamelevels.bossactions.bossAI.AreaAttackComponent;
-import dimhol.gamelevels.bossactions.bossAI.ChargeAttackComponent;
-import dimhol.gamelevels.bossactions.bossAI.DefensiveShieldComponent;
-import dimhol.gamelevels.bossactions.bossAI.MinionComponent;
+import dimhol.entity.factories.AbstractAttackFactory;
 import dimhol.logic.collision.RectBodyShape;
 import dimhol.logic.util.DirectionUtil;
+import org.locationtech.jts.math.Vector2D;
 
 import java.util.function.Predicate;
 
 /**
- * This class creates attack.
+ * This class creates boss attacks.
  */
-public final class EnemyAttackFactory extends AbstractAttackFactory {
-
-    /**
-     * Bullet Width.
-     */
-    public static final double ENEMY_BULLET_WIDTH = 0.5;
-    /**
-     * Bullet Height.
-     */
-    public static final double ENEMY_BULLET_HEIGHT = 0.5;
-    /**
-     * Bullet speed.
-     */
-    private static final int ENEMY_BULLET_SPEED = 3;
-    /**
-     * Melee Width.
-     */
-    public static final double ENEMY_MELEE_WIDTH = 1;
-    /**
-     * Melee Height.
-     */
-    public static final double ENEMY_MELEE_HEIGHT = 1;
-    /**
-     * Enemy melee damage.
-     */
-    private static final int ENEMY_MELEE_DAMAGE = 1;
-    /**
-     * Enemy bullet damage.
-     */
-    private static final int ENEMY_BULLET_DAMAGE = 1;
+public final class BossAttackFactory extends AbstractAttackFactory {
 
     /**
      * Area Attack Width.
@@ -67,6 +27,10 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
      * Area Attack Damage.
      */
     private static final int BOSS_AREA_ATTACK_DAMAGE = 5;
+    /**
+     * Summoned Minion Count.
+     */
+    private static final int BOSS_MINION_COUNT = 3;
     /**
      * Charge Attack Width.
      */
@@ -88,6 +52,11 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
      */
     private static final int BOSS_DEFENSIVE_SHIELD_DURATION = 10;
     /**
+     * Teleport Distance.
+     */
+    private static final double BOSS_TELEPORT_DISTANCE = 5.0;
+
+    /**
      * Minions height.
      */
     public static final double MINIONS_WIDTH = 3.5;
@@ -96,42 +65,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
      */
     public static final double MINIONS_HEIGHT = 3.5;
 
-    private final Predicate<Entity> checkPlayer = entity -> entity.hasComponent(PlayerComponent.class);
-
-    /**
-     * Create a melee attack near the entity's body facing the direction
-     * the entity is turned against.
-     * @param entity is the assailant
-     * @return attack entity
-     */
-    public Entity createMeleeAttack(final Entity entity) {
-        return new EntityBuilder()
-                .add(new PositionComponent(getAttackPos(entity, ENEMY_MELEE_WIDTH, ENEMY_MELEE_HEIGHT), 0))
-                .add(new BodyComponent(new RectBodyShape(ENEMY_MELEE_WIDTH, ENEMY_MELEE_HEIGHT), false))
-                .add(new AttackComponent(ENEMY_MELEE_DAMAGE, checkPlayer))
-                .add(new MeleeComponent())
-                .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("enemyMeleeAttack"), "idle"))
-                .build();
-    }
-
-    /**
-     * Create a bullet near the entity's body facing the direction
-     * the entity is turned against, who will go in the aforementioned direction.
-     * @param entity is the assailant
-     * @return bullet entity
-     */
-    public Entity createDistanceAttack(final Entity entity) {
-        return new EntityBuilder()
-                .add(new PositionComponent(getAttackPos(entity, ENEMY_BULLET_WIDTH, ENEMY_BULLET_HEIGHT), 0))
-                .add(new MovementComponent(getDirection(entity), ENEMY_BULLET_SPEED, true))
-                .add(new BodyComponent(new RectBodyShape(ENEMY_BULLET_WIDTH, ENEMY_BULLET_HEIGHT), false))
-                .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
-                .add(new AttackComponent(ENEMY_BULLET_DAMAGE, checkPlayer))
-                .add(new BulletComponent())
-                .build();
-    }
+    private final Predicate<Entity> isPlayer = entity -> entity.hasComponent(PlayerComponent.class);
 
     /**
      * Create an area attack around the boss entity.
@@ -143,7 +77,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(bossEntity, BOSS_AREA_ATTACK_WIDTH, BOSS_AREA_ATTACK_HEIGHT), 0))
                 .add(new BodyComponent(new RectBodyShape(BOSS_AREA_ATTACK_WIDTH, BOSS_AREA_ATTACK_HEIGHT), false))
-                .add(new AttackComponent(BOSS_AREA_ATTACK_DAMAGE, checkPlayer))
+                .add(new AttackComponent(BOSS_AREA_ATTACK_DAMAGE, isPlayer))
                 .add(new AreaAttackComponent())
                 .add(new CollisionComponent())
                 .add(new AnimationComponent(map.get("boss"), "idle"))
@@ -157,14 +91,14 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
      */
     public Entity createSummoningMinions(final Entity bossEntity) {
         System.out.printf("Minions");
-        return new EntityBuilder()
-                .add(new PositionComponent(getAttackPos(bossEntity, 5, 5), 0))
-                .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), false))
-                .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, checkPlayer))
-                .add(new MinionComponent())
-                .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "idle")) //TODO: add their sprites.
-                .build();
+            return new EntityBuilder()
+                    .add(new PositionComponent(getAttackPos(bossEntity, 5, 5), 0))
+                    .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), false))
+                    .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, isPlayer))
+                    .add(new MinionComponent())
+                    .add(new CollisionComponent())
+                    .add(new AnimationComponent(map.get("boss"), "idle")) //TODO: add their sprites.
+                    .build();
     }
 
     /**
@@ -178,7 +112,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new PositionComponent(getAttackPos(bossEntity, BOSS_CHARGE_ATTACK_WIDTH, BOSS_CHARGE_ATTACK_HEIGHT), 0))
                 .add(new MovementComponent(getDirection(bossEntity), BOSS_CHARGE_ATTACK_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(BOSS_CHARGE_ATTACK_WIDTH, BOSS_CHARGE_ATTACK_WIDTH), false))
-                .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, checkPlayer))
+                .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, isPlayer))
                 .add(new ChargeAttackComponent())
                 .add(new CollisionComponent())
                 .add(new AnimationComponent(map.get("boss"), "idle"))
@@ -208,8 +142,20 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
      * @return the teleport destination position
      */
 //    public PositionComponent createTeleport(final Entity bossEntity) {
-//        double x = bossEntity.getPosition().getX()
-//        double y = bossEntity.getPosition().getY()
+//        double x = bossEntity.getPosition().getX() + getRandomDouble(-BOSS_TELEPORT_DISTANCE, BOSS_TELEPORT_DISTANCE);
+//        double y = bossEntity.getPosition().getY() + getRandomDouble(-BOSS_TELEPORT_DISTANCE, BOSS_TELEPORT_DISTANCE);
 //        return new PositionComponent(new Vector2D(x, y), 0);
+//    }
+
+    // Other methods can be added here based on your requirements
+
+    /**
+     * Get a random double value within the specified range.
+     * @param min the minimum value (inclusive)
+     * @param max the maximum value (inclusive)
+     * @return the random double value
+     */
+//    private double getRandomDouble(double min, double max) {
+//        return min + Math.random() * (max - min + 1);
 //    }
 }

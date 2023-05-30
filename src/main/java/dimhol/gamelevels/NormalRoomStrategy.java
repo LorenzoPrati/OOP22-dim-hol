@@ -83,19 +83,34 @@ public class NormalRoomStrategy implements RoomStrategy {
         System.out.println(freeTiles.size());
 
         //Place coins:
-        entities.add(itemFactory.createCoin(getRandomTile(freeTiles).getLeft().doubleValue(),
-                getRandomTile(freeTiles).getRight().doubleValue()));
+        generateCoins(freeTiles, entities);
 
-        //Place hearth:
-        entities.add(itemFactory.createHeart(getRandomTile(freeTiles).getLeft().doubleValue(),
-                getRandomTile(freeTiles).getRight().doubleValue()));
+        //Place heart:
+        generateHearts(freeTiles, entities);
 
         //Place gate:
-        entities.add(interactableObjectFactory.createGate(getRandomTile(freeTiles).getLeft().doubleValue(),
-                getRandomTile(freeTiles).getRight().doubleValue()));
+        generateGate(freeTiles, entities);
 
 
         return entities;
+    }
+
+    private void generateCoins(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        var coinsFreeTiles = getRandomTile(freeTiles);
+        entities.add(itemFactory.createCoin(coinsFreeTiles.getLeft().doubleValue(),
+                coinsFreeTiles.getRight().doubleValue()));
+    }
+
+    private void generateHearts(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        var heartsFreeTile = getRandomTile(freeTiles);
+        entities.add(itemFactory.createHeart(heartsFreeTile.getLeft().doubleValue(),
+                heartsFreeTile.getRight().doubleValue()));
+    }
+
+    private void generateGate(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        var gateFreeTile = getRandomTile(freeTiles);
+        entities.add(interactableObjectFactory.createGate(gateFreeTile.getLeft().doubleValue(),
+                gateFreeTile.getRight().doubleValue()));
     }
 
     /**
@@ -146,7 +161,8 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @param entities   The list of entities to add the generated enemies to.
      * @param freeTiles  The set of available tiles where enemies can be placed.
      */
-    private void generateEnemies(final int numEnemies, final List<Entity> entities, final Set<Pair<Integer, Integer>> freeTiles) {
+    private void generateEnemies(final int numEnemies, final List<Entity> entities,
+                                 final Set<Pair<Integer, Integer>> freeTiles) {
         IntStream.rangeClosed(0, numEnemies).forEach(i -> {
             Entity zombie = createZombie(freeTiles);
             Entity shooter = createShooter(freeTiles);
