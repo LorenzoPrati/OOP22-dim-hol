@@ -45,25 +45,41 @@ public class RoutineFactory {
      */
     public static final double BOSS_DISTANCE_ATTACK_RELOAD_TIME = 3;
     /**
+     * Boss Summon minions reload time.
+     */
+    private static final int SUMMONS_RELOAD_TIME = 15;
+    /**
      * Boss Summon minions number.
      */
-    public static final int BOSS_SUMMON_MINS_NUMBER = 3;
+    public static final int BOSS_SUMMON_MINIONS_NUMBER = 3;
     /**
      * Boss damage for area aggro.
      */
     public static final double BOSS_AREA_ATTACK_AGGRO = 3;
     /**
+     * Boss attack area reload time.
+     */
+    public static final double BOSS_AREA_ATTACK_RELOAD_TIME = 5;
+    /**
      * Boss attack area damage.
      */
     private static final double BOSS_AREA_ATTACK_DAMAGE = 0.5;
     /**
-     * Boss attack charge attack speed.
+     * Boss charge attack aggro ray.
+     */
+    private static final int CHARGE_ATTACK_AGGRO = 4;
+    /**
+     * Boss charge attack speed.
      */
     private static final double CHARGE_SPEED = 5;
     /**
      * Boss charge attack damage.
      */
     private static final int CHARGE_ATTACK_DAMAGE = 3;
+    /**
+     * Boss charge attack reload time.
+     */
+    private static final int CHARGE_ATTACK_RELOAD_TIME = 5;
 
     /**
      *
@@ -97,9 +113,9 @@ public class RoutineFactory {
         return new ArrayList<>(List.of(
                 new MeleeAttack(MELEE_ATTACK_AGGRO, BOSS_MELEE_RELOAD_TIME),
                 new DistanceAttack(DISTANCE_ATTACK_AGGRO, BOSS_DISTANCE_ATTACK_RELOAD_TIME),
-                new AreaAttack(BOSS_AREA_ATTACK_AGGRO, BOSS_AREA_ATTACK_DAMAGE),
-                new ChargeAttack(CHARGE_SPEED, CHARGE_ATTACK_DAMAGE),
-                new SummonMinions(BOSS_SUMMON_MINS_NUMBER)
+                new AreaAttack(BOSS_AREA_ATTACK_AGGRO, BOSS_AREA_ATTACK_DAMAGE, BOSS_AREA_ATTACK_RELOAD_TIME),
+                new ChargeAttack(CHARGE_SPEED, CHARGE_ATTACK_DAMAGE, CHARGE_ATTACK_AGGRO, CHARGE_ATTACK_RELOAD_TIME),
+                new SummonMinions(SUMMONS_RELOAD_TIME, BOSS_SUMMON_MINIONS_NUMBER)
 //                new DefensiveShield()
         )).stream().sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
     }
