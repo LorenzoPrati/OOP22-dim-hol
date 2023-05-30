@@ -12,22 +12,25 @@ import java.util.Optional;
  */
 public final class AreaAttack extends AbstractAction {
 
-    private final double areaAttackAggro;
-    private final double areaAttackDamage;
+    private final double bossAreaAttackDamage;
 
     /**
      * AreaAttack constructor.
      * @param areaAttackAggro the radius of the area in which the presence
      *                        of an enemy (the player) activates this strategy
-     * @param areaAttackDamage the damage inflicted by the area attack
+     * @param areaAttackReloadTime The time to reload the area attack
      */
-    public AreaAttack(final double areaAttackAggro, final double areaAttackDamage) {
-        this.areaAttackAggro = areaAttackAggro;
-        this.areaAttackDamage = areaAttackDamage;
+    public AreaAttack(final double areaAttackAggro, final double bossAreaAttackDamage, final double areaAttackReloadTime) {
+        setAggroRay(areaAttackAggro);
+        this.bossAreaAttackDamage = bossAreaAttackDamage;
+        setWaitingTime(areaAttackReloadTime);
     }
 
     @Override
     public Optional<List<WorldEvent>> execute() {
+        getMovComp().setEnabled(false);
+        var direction = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
+        getMovComp().setDir(direction);
         if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
             getAi().setPrevTime(getAi().getCurrentTime());
             return areaAttack();
