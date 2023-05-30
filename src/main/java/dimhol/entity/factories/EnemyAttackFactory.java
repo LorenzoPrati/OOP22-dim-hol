@@ -159,11 +159,11 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
         System.out.printf("Minions");
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(bossEntity, 5, 5), 0))
-                .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), false))
+                .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), true))
                 .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, checkPlayer))
                 .add(new MinionComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "idle")) //TODO: add their sprites.
+                .add(new AnimationComponent(map.get("boss"), "takeHit")) //TODO: add their sprites.
                 .build();
     }
 
@@ -181,7 +181,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, checkPlayer))
                 .add(new ChargeAttackComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "idle"))
+                .add(new AnimationComponent(map.get("boss"), "attack"))
                 //DirectionUtil.getStringFromVec(getDirection(bossEntity))))
                 .build();
     }
