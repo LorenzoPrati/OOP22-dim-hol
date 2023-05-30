@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.locationtech.jts.math.Vector2D;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -22,12 +23,17 @@ import java.util.stream.IntStream;
 public class NormalRoomStrategy implements RoomStrategy {
     private static final int ENEMY_DENSITY = 100;
     private static final int MAX_ENEMIES = 10;
+    private static final int NUM_GATE_ENTITIES = 1;
+    private static final int GATE_WIDTH = 3;
+    private static final int GATE_HEIGHT = 3;
     private final GenericFactory genericFactory;
     private final EnemyFactory enemyFactory;
     private final ItemFactory itemFactory;
     private final InteractableObjectFactory interactableObjectFactory;
 
     private final Random random;
+    private final int gateWidth;  // Width of the gate obj in tiles
+    private final int gateHeight; // Height of the gate obj in tiles
 
     /**
      * Constructs a NormalRoomStrategy.
@@ -45,6 +51,8 @@ public class NormalRoomStrategy implements RoomStrategy {
         this.itemFactory = itemFactory;
         this.interactableObjectFactory = interactableObjectFactory;
         this.random = new Random(random.nextInt());
+        this.gateWidth= 3;
+        this.gateHeight = 3;
     }
 
     static Pair<Integer, Integer> findRandomFreeTiles(final Set<Pair<Integer, Integer>> freeTiles, final Random random) {
@@ -72,13 +80,10 @@ public class NormalRoomStrategy implements RoomStrategy {
         List<Entity> entities = new ArrayList<>();
 
         //Place the player:
-        Entity player = createAndPlacePlayer(freeTiles);
-        entities.add(player);
+        generatePlayer(freeTiles, entities);
 
         //Place the enemies:
-        int numEnemies = calculateNumEnemies(freeTiles.size());
-        generateZombies(numEnemies, entities, freeTiles);
-        generateShooters(numEnemies, entities, freeTiles);
+        generateEnemies(freeTiles, entities);
 
         System.out.println(freeTiles.size());
 
@@ -95,6 +100,24 @@ public class NormalRoomStrategy implements RoomStrategy {
         return entities;
     }
 
+    private void generateGate(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        calculateNumEntities(freeTiles.size());
+        var gateFreeTiles = getRandomTileForGate(freeTiles);
+        Entity gate = interactableObjectFactory.createGate(gateFreeTiles.getLeft().doubleValue(), gateFreeTiles.getRight().doubleValue());
+        entities.add(gate);
+    }
+
+    private void generatePlayer(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        Entity player = createAndPlacePlayer(freeTiles);
+        entities.add(player);
+    }
+
+    private void generateEnemies(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        int numEnemies = calculateNumEnemies(freeTiles.size());
+        generateZombies(numEnemies, entities, freeTiles);
+        generateShooters(numEnemies, entities, freeTiles);
+    }
+
     private void generateCoins(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
         var coinsFreeTiles = getRandomTile(freeTiles);
         entities.add(itemFactory.createCoin(coinsFreeTiles.getLeft().doubleValue(),
@@ -105,12 +128,6 @@ public class NormalRoomStrategy implements RoomStrategy {
         var heartsFreeTile = getRandomTile(freeTiles);
         entities.add(itemFactory.createHeart(heartsFreeTile.getLeft().doubleValue(),
                 heartsFreeTile.getRight().doubleValue()));
-    }
-
-    private void generateGate(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
-        var gateFreeTile = getRandomTile(freeTiles);
-        entities.add(interactableObjectFactory.createGate(gateFreeTile.getLeft().doubleValue(),
-                gateFreeTile.getRight().doubleValue()));
     }
 
     /**
@@ -161,17 +178,17 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @param entities   The list of entities to add the generated enemies to.
      * @param freeTiles  The set of available tiles where enemies can be placed.
      */
-    private void generateEnemies(final int numEnemies, final List<Entity> entities,
-                                 final Set<Pair<Integer, Integer>> freeTiles) {
-        IntStream.rangeClosed(0, numEnemies).forEach(i -> {
-            Entity zombie = createZombie(freeTiles);
-            Entity shooter = createShooter(freeTiles);
-            placeEntity(zombie, freeTiles);
-            placeEntity(shooter, freeTiles);
-            entities.add(zombie);
-            entities.add(shooter);
-        });
-    }
+//    private void generateEnemies(final int numEnemies, final List<Entity> entities,
+//                                 final Set<Pair<Integer, Integer>> freeTiles) {
+//        IntStream.rangeClosed(0, numEnemies).forEach(i -> {
+//            Entity zombie = createZombie(freeTiles);
+//            Entity shooter = createShooter(freeTiles);
+//            placeEntity(zombie, freeTiles);
+//            placeEntity(shooter, freeTiles);
+//            entities.add(zombie);
+//            entities.add(shooter);
+//        });
+//    }
 
     /**
      * Creates a zombie enemy entity and assigns it a random position from the set of free tiles.
@@ -241,4 +258,177 @@ public class NormalRoomStrategy implements RoomStrategy {
     private Pair<Integer, Integer> getRandomTile(final Set<Pair<Integer, Integer>> freeTiles) {
         return findRandomFreeTiles(freeTiles, random);
     }
+
+    /**
+     * Places the entity at a random position with specified dimensions within the set of free tiles.
+     *
+     * @param entity       The entity to place.
+     * @param freeTiles    The set of available tiles where the entity can be placed.
+     * @param width        The width of the entity.
+     * @param height       The height of the entity.
+     */
+//    private void placeEntityWithDimension(Entity entity, Set<Pair<Integer, Integer>> freeTiles, int width, int height) {
+//        List<Pair<Integer, Integer>> validTiles = findValidTilesWithDimension(freeTiles, width, height);
+//        if (!validTiles.isEmpty()) {
+//            Pair<Integer, Integer> randomTile = validTiles.get(new Random().nextInt(validTiles.size()));
+//            PositionComponent positionComponent = (PositionComponent) entity.getComponent(PositionComponent.class);
+//            Vector2D position = new Vector2D(randomTile.getLeft(), randomTile.getRight());
+//            positionComponent.setPos(position);
+//        }
+//    }
+
+    /**
+     * Finds valid tiles with the specified dimensions within the set of free tiles.
+     *
+     * @param freeTiles The set of available tiles where the entity can be placed.
+     * @param width     The width of the entity.
+     * @param height    The height of the entity.
+     * @return A list of valid tiles with the specified dimensions.
+     */
+//    private List<Pair<Integer, Integer>> findValidTilesWithDimension(Set<Pair<Integer, Integer>> freeTiles, int width, int height) {
+//        List<Pair<Integer, Integer>> validTiles = new ArrayList<>();
+//        for (Pair<Integer, Integer> tile : freeTiles) {
+//            int tileX = tile.getLeft();
+//            int tileY = tile.getRight();
+//            boolean isValid = true;
+//            // Check if the dimensions of the entity fit within the current tile and its neighboring tiles
+//            for (int i = 0; i < width; i++) {
+//                for (int j = 0; j < height; j++) {
+//                    Pair<Integer, Integer> currentTile = Pair.of(tileX + i, tileY + j);
+//                    if (!freeTiles.contains(currentTile)) {
+//                        isValid = false;
+//                        break;
+//                    }
+//                }
+//                if (!isValid) {
+//                    break;
+//                }
+//            }
+//            if (isValid) {
+//                validTiles.add(tile);
+//            }
+//        }
+//        return validTiles;
+//    }
+
+
+    /**
+     * Calculates the number of entities to generate based on the number of free tiles and the entity dimensions.
+     *
+     * @param numFreeTiles The number of free tiles in the room.
+     * @return The number of entities to generate.
+     * @throws IllegalArgumentException if the number of free tiles is less than the entities spawned or the entity dimensions are invalid.
+     */
+    private int calculateNumEntities(final int numFreeTiles) {
+        if (numFreeTiles < calculateRequiredTiles(GATE_WIDTH, GATE_HEIGHT)) {
+            throw new IllegalArgumentException("Not enough free tiles to spawn the gate obj with the specified dimensions!");
+        }
+        int maxNumOfEntities = numFreeTiles / calculateRequiredTiles(GATE_WIDTH, GATE_HEIGHT);
+        int numEntities = Math.min(NUM_GATE_ENTITIES, maxNumOfEntities);
+        return numEntities > 0 ? numEntities : 1;
+    }
+
+
+    /**
+     * Calculates the number of tiles required to accommodate an entity with the specified dimensions.
+     *
+     * @param width  The width of the entity.
+     * @param height The height of the entity.
+     * @return The number of tiles required.
+     * @throws IllegalArgumentException if the entity dimensions are invalid.
+     */
+    private int calculateRequiredTiles(int width, int height) {
+        if (width <= 0 || height <= 0) {
+            throw new IllegalArgumentException("Invalid entity dimensions!");
+        }
+        return width * height;
+    }
+
+    /**
+     * Retrieves a random tile that can accommodate the gate object dimensions.
+     *
+     * @param freeTiles The set of free tiles in the room.
+     * @return A random tile that can accommodate the gate object.
+     * @throws IllegalStateException if no free tiles can accommodate the gate object.
+     */
+    private Pair<Integer, Integer> getRandomTileForGate(Set<Pair<Integer, Integer>> freeTiles) {
+        List<Pair<Integer, Integer>> shuffledTiles = new ArrayList<>(freeTiles);
+        Collections.shuffle(shuffledTiles);
+        return shuffledTiles.stream()
+                .filter(tile -> canAccommodateGate(tile, freeTiles))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No free tiles can accommodate the gate interactable obj."));
+    }
+
+    /**
+     * Checks if a given tile can accommodate the gate object dimensions.
+     *
+     * @param tile      The tile to check.
+     * @param freeTiles The set of free tiles in the room.
+     * @return True if the tile can accommodate the gate object, false otherwise.
+     */
+    private boolean canAccommodateGate(Pair<Integer, Integer> tile, Set<Pair<Integer, Integer>> freeTiles) {
+        int startX = tile.getLeft();
+        int startY = tile.getRight();
+
+        for (int x = startX; x < startX + gateWidth; x++) {
+            for (int y = startY; y < startY + gateHeight; y++) {
+                if (!freeTiles.contains(Pair.of(x, y))) {
+                    return false;
+                }
+            }
+        }
+        System.out.println("Gate: can be accommodated");
+        return true;
+    }
+
+    /**
+     * Retrieves the list of tiles occupied by the gate object, based on its starting position.
+     *
+     * @param startPos The starting position of the gate object.
+     * @return The list of tiles occupied by the gate object.
+     */
+//    private List<Pair<Integer, Integer>> getGateTiles(Pair<Integer, Integer> startPos) {
+//        List<Pair<Integer, Integer>> gateTiles = new ArrayList<>();
+//        int startX = startPos.getLeft();
+//        int startY = startPos.getRight();
+//
+//        for (int x = startX; x < startX + gateWidth; x++) {
+//            for (int y = startY; y < startY + gateHeight; y++) {
+//                gateTiles.add(Pair.of(x, y));
+//            }
+//        }
+//
+//        return gateTiles;
+//    }
+
+    /**
+     * Calculates the center position of a group of tiles.
+     *
+     * @param tiles The group of tiles.
+     * @return The center position as a Vector2D.
+     */
+//    private Vector2D getTileCenterPosition(List<Pair<Integer, Integer>> tiles) {
+//        double totalX = 0;
+//        double totalY = 0;
+//
+//        for (Pair<Integer, Integer> tile : tiles) {
+//            totalX += tile.getLeft();
+//            totalY += tile.getRight();
+//        }
+//
+//        double centerX = totalX / tiles.size() + 0.5;
+//        double centerY = totalY / tiles.size() + 0.5;
+//
+//        return new Vector2D(centerX, centerY);
+//    }
+
+    /**
+     * Calculates the total number of tiles occupied by the gate object.
+     *
+     * @return The total number of tiles occupied by the gate object.
+     */
+//    private int calculateTotalTilesForGate() {
+//        return gateWidth * gateHeight;
+//    }
 }
