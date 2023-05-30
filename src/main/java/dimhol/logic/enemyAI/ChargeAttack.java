@@ -20,11 +20,13 @@ public final class ChargeAttack extends AbstractAction {
     /**
      * ChargeAttack constructor.
      * @param chargeSpeed the speed of the charge attack
-     * @param chargeAttackDamage the damage inflicted by the charge attack
+     * @param chargeAttackRay the damage inflicted by the charge attack
      */
-    public ChargeAttack(final double chargeSpeed, final int chargeAttackDamage) {
+    public ChargeAttack(final double chargeSpeed, final int chargeAttackDamage,final int chargeAttackRay, final int chargeAttackWaitingTime) {
         this.chargeSpeed = chargeSpeed;
         this.chargeAttackDamage = chargeAttackDamage;
+        setAggroRay(chargeAttackRay);
+        setWaitingTime(chargeAttackWaitingTime);
     }
 
     @Override
