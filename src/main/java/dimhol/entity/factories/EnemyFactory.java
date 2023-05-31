@@ -2,7 +2,7 @@ package dimhol.entity.factories;
 
 import dimhol.components.PositionComponent;
 import dimhol.components.BodyComponent;
-import dimhol.components.AiComponent;
+import dimhol.components.AIComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.HealthComponent;
 import dimhol.components.AnimationComponent;
@@ -64,7 +64,7 @@ public class EnemyFactory extends AbstractFactory {
                 .add(new BodyComponent(new RectBodyShape(ZOMBIE_WIDTH, ZOMBIE_HEIGHT), true))
                 .add(new HealthComponent(ZOMBIE_HEALTH))
                 .add(new AnimationComponent(map.get("enemy"), "idle"))
-                .add(new AiComponent(new RoutineFactory().createZombieRoutine()))
+                .add(new AIComponent(new RoutineFactory().createZombieRoutine()))
                 .build();
     }
 
@@ -81,7 +81,7 @@ public class EnemyFactory extends AbstractFactory {
                 .add(new BodyComponent(new RectBodyShape(SHOOTER_WIDTH, SHOOTER_HEIGHT), true))
                 .add(new HealthComponent(SHOOTER_HEALTH))
                 .add(new AnimationComponent(map.get("enemy"), "idle"))
-                .add(new AiComponent(new RoutineFactory().createShooterRoutine()))
+                .add(new AIComponent(new RoutineFactory().createShooterRoutine()))
                 .build();
     }
 }

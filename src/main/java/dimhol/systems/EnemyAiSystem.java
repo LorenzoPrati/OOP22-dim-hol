@@ -1,6 +1,6 @@
 package dimhol.systems;
 
-import dimhol.components.AiComponent;
+import dimhol.components.AIComponent;
 import dimhol.components.PlayerComponent;
 import dimhol.core.World;
 import dimhol.entity.Entity;
@@ -12,12 +12,12 @@ import dimhol.events.WorldEvent;
 public final class EnemyAiSystem extends AbstractSystem {
 
     public EnemyAiSystem() {
-        super(AiComponent.class);
+        super(AIComponent.class);
     }
 
     @Override
     public void process(final Entity enemy, final double dt, final World world) {
-        var enemyAI = (AiComponent) enemy.getComponent(AiComponent.class);
+        var enemyAI = (AIComponent) enemy.getComponent(AIComponent.class);
         enemyAI.updateTime(dt);
         for (var action : enemyAI.getRoutine()) {
             action.setPlayer(world.getEntities().stream()

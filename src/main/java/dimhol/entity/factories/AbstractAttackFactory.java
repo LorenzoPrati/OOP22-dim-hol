@@ -6,7 +6,11 @@ import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.logic.collision.BodyShape;
 import dimhol.logic.util.DirectionUtil;
+import org.jooq.lambda.function.Function0;
 import org.locationtech.jts.math.Vector2D;
+
+import java.util.Map;
+import java.util.function.BiFunction;
 
 public class AbstractAttackFactory extends AbstractFactory {
 
@@ -18,45 +22,38 @@ public class AbstractAttackFactory extends AbstractFactory {
      * @return the attack position
      */
     public Vector2D getAttackPos(final Entity shooter, final double attackWidth, final double attackHeight) {
+
         double bulletX;
         double bulletY;
-        var movComp = (MovementComponent) shooter.getComponent(MovementComponent.class);
         var posComp = (PositionComponent) shooter.getComponent(PositionComponent.class);
         var bodyComp = (BodyComponent) shooter.getComponent(BodyComponent.class);
-        var shooterCentralPos = this.getCentralPosition(posComp.getPos(), bodyComp.getBodyShape());
+        var shooterX = posComp.getPos().getX();
+        var shooterY = posComp.getPos().getY();
+        var shooterWidth = bodyComp.getBodyShape().getBoundingWidth();
+        var shooterHeight = bodyComp.getBodyShape().getBoundingHeight();
+        var centralShooterY = shooterY + (shooterHeight / DIVISOR);
+        var centralShooterX = shooterX + (shooterWidth / DIVISOR);
 
-        switch (DirectionUtil.getStringFromVec(movComp.getDir())) {
+        switch (DirectionUtil.getStringFromVec(getDirection(shooter))) {
             case "right" -> {
-                bulletX = shooterCentralPos.getX() + (bodyComp.getBodyShape().getBoundingWidth() / 2);
-                bulletY = shooterCentralPos.getY() - (attackHeight / 2);
+                bulletX = shooterX + shooterWidth;
+                bulletY = centralShooterY - (attackHeight / DIVISOR);
             }
             case "left" -> {
-                bulletX = shooterCentralPos.getX() - (bodyComp.getBodyShape().getBoundingWidth() / 2) - attackHeight;
-                bulletY = shooterCentralPos.getY() - (attackWidth / 2);
+                bulletX = shooterX - attackWidth;
+                bulletY = centralShooterY - (attackHeight / DIVISOR);
             }
             case "down" -> {
-                bulletX = shooterCentralPos.getX() - (attackHeight / 2);
-                bulletY = shooterCentralPos.getY() + (bodyComp.getBodyShape().getBoundingHeight() / 2);
+                bulletX = centralShooterX - (attackWidth / DIVISOR);
+                bulletY = shooterY + shooterHeight;
             }
             default -> { // up
-                bulletX = shooterCentralPos.getX() - (attackHeight / 2);
-                bulletY = shooterCentralPos.getY() - (bodyComp.getBodyShape().getBoundingHeight() / 2) - attackWidth;
+                bulletX = centralShooterX - (attackWidth / DIVISOR);
+                bulletY = shooterY - attackHeight;
             }
 
         }
-
         return new Vector2D(bulletX, bulletY);
-    }
-
-    /**
-     * This method returns an entity's central position.
-     * @param entityPos entity position (top-left point)
-     * @param entityBody entity body
-     * @return central position
-     */
-    private Vector2D getCentralPosition(final Vector2D entityPos, final BodyShape entityBody) {
-        return new Vector2D(entityPos.getX() + (entityBody.getBoundingWidth() / DIVISOR),
-                entityPos.getY() + (entityBody.getBoundingHeight() / DIVISOR));
     }
 
     public Vector2D getDirection(final Entity entity) {

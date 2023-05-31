@@ -1,6 +1,6 @@
 package dimhol.logic.enemyAI;
 
-import dimhol.components.AiComponent;
+import dimhol.components.AIComponent;
 import dimhol.components.BodyComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
@@ -27,7 +27,7 @@ public abstract class AbstractAction implements Action {
     private Vector2D enemyCentralPos;
     private Entity enemy;
     private final EnemyAttackFactory attackFactory = new EnemyAttackFactory();
-    private AiComponent ai;
+    private AIComponent ai;
     private MovementComponent movComp;
 
     /**
@@ -69,7 +69,7 @@ public abstract class AbstractAction implements Action {
         BodyComponent enemyBodyComp = (BodyComponent) enemy.getComponent(BodyComponent.class);
         Vector2D enemyPos = enemyPosComp.getPos();
         enemyCentralPos = getCentralPosition(enemyPos, enemyBodyComp.getBodyShape());
-        ai = (AiComponent) enemy.getComponent(AiComponent.class);
+        ai = (AIComponent) enemy.getComponent(AIComponent.class);
         movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
     }
 
@@ -122,7 +122,7 @@ public abstract class AbstractAction implements Action {
     /**
      * Enemy's AI getter.
      */
-    protected final AiComponent getAi() {
+    protected final AIComponent getAi() {
         return ai;
     }
 

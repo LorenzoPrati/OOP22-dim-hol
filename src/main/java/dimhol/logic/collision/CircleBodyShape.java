@@ -6,20 +6,20 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class CircleBodyShape implements BodyShape {
 
-    private double radius;
+    private final double diameter;
 
     public CircleBodyShape(final double radius) {
-        this.radius = radius;
+        this.diameter = radius;
     }
 
     @Override
     public double getBoundingWidth() {
-        return 2*radius;
+        return diameter;
     }
 
     @Override
     public double getBoundingHeight() {
-        return 2*radius;
+        return diameter;
     }
 
 
@@ -27,8 +27,8 @@ public class CircleBodyShape implements BodyShape {
     public Polygon getShape(double x, double y) {
         final GeometricShapeFactory gsf = new GeometricShapeFactory();
         gsf.setNumPoints(4);
-        gsf.setSize(2*radius);
-        gsf.setCentre(new Coordinate(x+radius, y+radius));
+        gsf.setSize(diameter);
+        gsf.setCentre(new Coordinate(x+(diameter / 2), y+(diameter / 2)));
         return gsf.createCircle();
     }
 }

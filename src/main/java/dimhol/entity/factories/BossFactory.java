@@ -1,6 +1,6 @@
 package dimhol.entity.factories;
 
-import dimhol.components.AiComponent;
+import dimhol.components.AIComponent;
 import dimhol.components.AnimationComponent;
 import dimhol.components.BodyComponent;
 import dimhol.components.HealthComponent;
@@ -64,7 +64,7 @@ public class BossFactory extends AbstractFactory {
                 .add(new BodyComponent(new RectBodyShape(BOSS_WIDTH, BOSS_HEIGHT), true))
                 .add(new HealthComponent(BOSS_HEALTH))
                 .add(new AnimationComponent(map.get("boss"), "walk"))
-                .add(new AiComponent(new RoutineFactory().createBossRoutine()))
+                .add(new AIComponent(new RoutineFactory().createBossRoutine()))
                 .build();
     }
 
