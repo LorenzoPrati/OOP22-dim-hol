@@ -1,4 +1,4 @@
-package dimhol.logic.enemyAI;
+package dimhol.logic.AI;
 
 import dimhol.entity.Entity;
 import dimhol.events.WorldEvent;

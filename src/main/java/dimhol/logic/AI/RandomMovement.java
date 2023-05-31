@@ -1,4 +1,4 @@
-package dimhol.logic.enemyAI;
+package dimhol.logic.AI;
 
 import dimhol.events.WorldEvent;
 import org.locationtech.jts.math.Vector2D;
