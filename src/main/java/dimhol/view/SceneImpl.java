@@ -30,7 +30,7 @@ public class SceneImpl implements Scene {
     public SceneImpl(Engine engine){
         this.scenePanel =  new GamePanel(screenSize.getWidth(), screenSize.getHeight());;
         this.loader = new ResourceLoader();
-        this.hud = new HUD(loader);
+        this.hud = new HUDImpl(loader);
         this.inputListener = new InputListener(engine, this);
         engine.getMainWindow().changePanel(this.scenePanel);
     }
@@ -107,6 +107,7 @@ public class SceneImpl implements Scene {
     public void render() {
         this.scenePanel.paintImmediately(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
     }
+
 
     @Override
     public HUD getHUD() {

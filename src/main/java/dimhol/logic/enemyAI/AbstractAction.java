@@ -1,6 +1,6 @@
 package dimhol.logic.enemyAI;
 
-import dimhol.components.AiComponent;
+import dimhol.components.AIComponent;
 import dimhol.components.BodyComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
@@ -27,10 +27,8 @@ public abstract class AbstractAction implements Action {
     private Vector2D enemyCentralPos;
     private Entity enemy;
     private final EnemyAttackFactory attackFactory = new EnemyAttackFactory();
-    private AiComponent ai;
+    private AIComponent ai;
     private MovementComponent movComp;
-    private Vector2D enemyPos;
-    private Vector2D playerPos;
 
     /**
      * {@inheritDoc}
@@ -56,7 +54,6 @@ public abstract class AbstractAction implements Action {
         PositionComponent playerPosComp = (PositionComponent) player.getComponent(PositionComponent.class);
         BodyComponent playerBodyComp = (BodyComponent) player.getComponent(BodyComponent.class);
         playerCentralPos = getCentralPosition(playerPosComp.getPos(), playerBodyComp.getBodyShape());
-        playerPos = playerPosComp.getPos();
     }
 
     /**
@@ -70,9 +67,9 @@ public abstract class AbstractAction implements Action {
         this.enemy = new EntityImpl(enemy);
         PositionComponent enemyPosComp = (PositionComponent) enemy.getComponent(PositionComponent.class);
         BodyComponent enemyBodyComp = (BodyComponent) enemy.getComponent(BodyComponent.class);
-        enemyPos = enemyPosComp.getPos();
+        Vector2D enemyPos = enemyPosComp.getPos();
         enemyCentralPos = getCentralPosition(enemyPos, enemyBodyComp.getBodyShape());
-        ai = (AiComponent) enemy.getComponent(AiComponent.class);
+        ai = (AIComponent) enemy.getComponent(AIComponent.class);
         movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
     }
 
@@ -125,7 +122,7 @@ public abstract class AbstractAction implements Action {
     /**
      * Enemy's AI getter.
      */
-    protected final AiComponent getAi() {
+    protected final AIComponent getAi() {
         return ai;
     }
 
@@ -143,19 +140,19 @@ public abstract class AbstractAction implements Action {
         return enemy;
     }
 
+    /**
+     * Waiting time getter.
+     * @return waiting time
+     */
     public double getWaitingTime() {
         return waitingTime;
     }
 
+    /**
+     * Aggro ray getter.
+     * @return aggro ray
+     */
     public double getAggroRay() {
         return aggroRay;
-    }
-
-    public Vector2D getEnemyPos() {
-        return this.enemyPos;
-    }
-
-    public Vector2D getPlayerPos() {
-        return this.playerPos;
     }
 }

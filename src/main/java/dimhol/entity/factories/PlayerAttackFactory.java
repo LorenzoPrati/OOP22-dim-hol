@@ -55,8 +55,16 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
      * Player big bullet damage.
      */
     private static final int PLAYER_BIG_BULLET_DAMAGE = 2;
+    /**
+     * Fireball ray.
+     */
+    private static final double PLAYER_BIG_BULLET_RAY = 0.6;
+    /**
+     * Little bullet ray.
+     */
+    private static final double PLAYER_LITTLE_BULLET_RAY = 0.2;
 
-    private final Predicate<Entity> checkEnemy = entity -> entity.hasComponent(AiComponent.class);
+    private final Predicate<Entity> checkEnemy = entity -> entity.hasComponent(AIComponent.class);
 
     public Entity createMeleeAttack(final Entity entity) {
         return new EntityBuilder()
@@ -69,9 +77,10 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
 
     public Entity createLittleBulletAttack(final Entity entity) {
         return new EntityBuilder()
-                .add(new PositionComponent(getAttackPos(entity, PLAYER_LITTLE_BULLET_WIDTH, PLAYER_LITTLE_BULLET_HEIGHT), 0))
+                .add(new PositionComponent(getAttackPos(entity,
+                        PLAYER_LITTLE_BULLET_RAY*2, PLAYER_LITTLE_BULLET_RAY*2), 0))
                 .add(new MovementComponent(getDirection(entity), PLAYER_LITTLE_BULLET_SPEED, true))
-                .add(new BodyComponent(new RectBodyShape(PLAYER_LITTLE_BULLET_WIDTH, PLAYER_LITTLE_BULLET_HEIGHT), false))
+                .add(new BodyComponent(new CircleBodyShape(PLAYER_LITTLE_BULLET_RAY), false))
                 .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
                 .add(new AttackComponent(PLAYER_LITTLE_BULLET_DAMAGE, checkEnemy))
                 .add(new BulletComponent())
@@ -80,9 +89,10 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
 
     public Entity createBigBulletAttack(final Entity entity) {
         return new EntityBuilder()
-                .add(new PositionComponent(getAttackPos(entity, PLAYER_BIG_BULLET_WIDTH, PLAYER_BIG_BULLET_HEIGHT), 0))
+                .add(new PositionComponent(getAttackPos(entity,
+                        PLAYER_BIG_BULLET_RAY*2, PLAYER_BIG_BULLET_RAY*2), 0))
                 .add(new MovementComponent(getDirection(entity), PLAYER_BIG_BULLET_SPEED, true))
-                .add(new BodyComponent(new RectBodyShape(PLAYER_BIG_BULLET_WIDTH, PLAYER_BIG_BULLET_HEIGHT), false))
+                .add(new BodyComponent(new CircleBodyShape(PLAYER_BIG_BULLET_RAY), false))
                 .add(new AnimationComponent(map.get("fireball"), "idle"))
                 .add(new AttackComponent(PLAYER_BIG_BULLET_DAMAGE, checkEnemy))
                 .add(new BulletComponent())

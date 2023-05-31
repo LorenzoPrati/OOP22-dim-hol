@@ -30,7 +30,7 @@ public class InteractableObjectFactory extends AbstractFactory {
 
     Predicate<World> checkAllEnemyAreDead = (w) -> w.getEntities()
         .stream()
-        .noneMatch(e -> e.hasComponent(AiComponent.class));
+        .noneMatch(e -> e.hasComponent(AIComponent.class));
         
     
 

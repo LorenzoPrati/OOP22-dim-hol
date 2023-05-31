@@ -14,12 +14,12 @@ public class CircleBodyShape implements BodyShape {
 
     @Override
     public double getBoundingWidth() {
-        return 2*radius;
+        return radius*2;
     }
 
     @Override
     public double getBoundingHeight() {
-        return 2*radius;
+        return radius*2;
     }
 
 

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Enemy's AI.
  */
-public final class AiComponent implements Component {
+public final class AIComponent implements Component {
 
     private final List<Action> actions;
     private double currentTime;
@@ -18,7 +18,7 @@ public final class AiComponent implements Component {
      *
      * @param newRoutines are the enemy's behavior routines.
      */
-    public AiComponent(final List<Action> newRoutines) {
+    public AIComponent(final List<Action> newRoutines) {
         this.actions = new ArrayList<>(newRoutines);
     }
 
