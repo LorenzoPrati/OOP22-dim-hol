@@ -1,23 +1,19 @@
 package dimhol.systems;
 
 import dimhol.core.World;
-import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.events.AddEntityEvent;
-import dimhol.logic.util.DirectionUtil;
-import dimhol.components.AnimationComponent;
-import dimhol.components.MovementComponent;
 import dimhol.components.PlayerComponent;
 
 /**
  * A system to handle player logic.
  */
-public class PlayerSystem extends AbstractSystem {
+public class PlayerInputSystem extends AbstractSystem {
 
     /**
-     * Constructs a PlayerSystem. Iterates through entities that has {@link PlayerComponent}.
+     * Constructs a PlayerInputSystem. Iterates through entities that has {@link PlayerComponent}.
      */
-    public PlayerSystem() {
+    public PlayerInputSystem() {
         super(PlayerComponent.class);
     }
 
@@ -41,7 +37,7 @@ public class PlayerSystem extends AbstractSystem {
                 player.setState(s);
                 s.entry(entity);
             });
-            player.getState().execute(input).forEach(en -> world.notifyEvent(new AddEntityEvent(en)));
+            player.getState().execute(input).forEach(e -> world.notifyEvent(new AddEntityEvent(e)));
         }
         player.getState().updateAnimation();
     }

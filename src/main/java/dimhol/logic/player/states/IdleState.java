@@ -1,21 +1,31 @@
-package dimhol.logic.player;
+package dimhol.logic.player.states;
 
-import dimhol.core.Input;
+import dimhol.input.Input;
 import dimhol.entity.Entity;
+import dimhol.logic.player.AbstractState;
+import dimhol.logic.player.PlayerState;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
+/**
+ * Models a state where the player stands still on the ground.
+ */
 public class IdleState extends AbstractState {
 
+    /**
+     * Disable movement on entry.
+     */
     @Override
-    public void setup() {
-        this.mov.setEnabled(false);
+    public void entry(final Entity entity) {
+        super.entry(entity);
+        this.getMov().setEnabled(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Optional<State> transition(Input input) {
+    public Optional<PlayerState> transition(final Input input) {
         if (input.isInteracting()) {
             return Optional.of(new InteractState());
         }
@@ -25,10 +35,7 @@ public class IdleState extends AbstractState {
         if (input.isShooting()) {
             return Optional.of(new ShootState());
         }
-        if (input.isSpecialMelee()) {
-            return Optional.of(new AreaAttackState());
-        }
-        if (input.isNormalMelee()) {
+        if (input.isAttacking()) {
             return Optional.of(new SwordState());
         }
         if (input.isMoving()) {
@@ -37,19 +44,11 @@ public class IdleState extends AbstractState {
         return Optional.empty();
     }
 
-    @Override
-    public List<Entity> execute(Input input) {
-        return Collections.emptyList();
-    }
-
-
-    @Override
-    public void exit() {
-
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateAnimation() {
-        this.setAnimationState("idle");
+        super.setAnimationState("idle");
     }
 }

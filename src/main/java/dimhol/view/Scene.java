@@ -1,10 +1,9 @@
 package dimhol.view;
 
-import java.util.List;
-import javax.swing.JPanel;
-
-import dimhol.core.Input;
 import dimhol.gamelevels.map.TileMap;
+import dimhol.input.Input;
+
+import javax.swing.*;
 
 /**
  * Models the scene where all the entities will be drawn. 
