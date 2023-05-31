@@ -1,9 +1,4 @@
-package dimhol.core;
-
-import org.locationtech.jts.math.Vector2D;
-
-import javax.management.OperationsException;
-import java.util.Optional;
+package dimhol.input;
 
 /**
  * Stores user input.
@@ -16,7 +11,6 @@ public class InputImpl implements Input {
     private boolean right;
     private boolean normalMelee;
     private boolean shoot;
-    private boolean specialMelee;
     private boolean chargeFireball;
     private boolean interact;
 
@@ -30,6 +24,38 @@ public class InputImpl implements Input {
         } catch (CloneNotSupportedException e) {
             throw new UnsupportedOperationException(e.getMessage());
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isUp() {
+        return this.up;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isDown() {
+        return this.down;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isLeft() {
+        return this.left;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isRight() {
+        return this.right;
     }
 
     /**
@@ -60,16 +86,8 @@ public class InputImpl implements Input {
      * {@inheritDoc}
      */
     @Override
-    public boolean isNormalMelee() {
+    public boolean isAttacking() {
         return this.normalMelee;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isSpecialMelee() {
-        return this.specialMelee;
     }
 
     /**
@@ -78,26 +96,6 @@ public class InputImpl implements Input {
     @Override
     public boolean isChargingFireball() {
         return this.chargeFireball;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Optional<Vector2D> getDirection() {
-        if (this.up) {
-            return Optional.of(new Vector2D(0, -1));
-        }
-        if (this.down) {
-            return Optional.of(new Vector2D(0, 1));
-        }
-        if (this.left) {
-            return Optional.of(new Vector2D(-1, 0));
-        }
-        if (this.right) {
-            return Optional.of(new Vector2D(1, 0));
-        }
-        return Optional.empty();
     }
 
     /**
@@ -144,16 +142,8 @@ public class InputImpl implements Input {
      * {@inheritDoc}
      */
     @Override
-    public void setNormalMeele(final boolean normalMelee) {
+    public void setAttacking(final boolean normalMelee) {
         this.normalMelee = normalMelee;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setSpecialMeele(final boolean specialMelee) {
-        this.specialMelee = specialMelee;
     }
 
     /**

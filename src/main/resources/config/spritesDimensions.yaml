@@ -34,3 +34,6 @@ hudHeart:
 boss:
   - 192
   - 128
+fireball:
+  - 512
+  - 512

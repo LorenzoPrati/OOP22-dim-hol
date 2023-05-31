@@ -1,8 +1,7 @@
 package dimhol.view;
 
 import dimhol.core.Engine;
-import dimhol.core.Input;
-import dimhol.core.World;
+import dimhol.input.Input;
 import dimhol.gamelevels.LevelManager;
 import dimhol.gamelevels.map.TileMap;
 
