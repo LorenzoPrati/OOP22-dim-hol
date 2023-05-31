@@ -3,7 +3,7 @@ package dimhol.core;
 import dimhol.entity.Entity;
 import dimhol.events.WorldEvent;
 import dimhol.gamelevels.LevelManager;
-import dimhol.view.Scene;
+import dimhol.input.Input;
 
 import java.util.List;
 

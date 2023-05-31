@@ -63,7 +63,7 @@ public final class ResourceLoader {
             this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
             .getResourceAsStream("/asset/bullet/right.png"))), dimensions.get("bullet").get(0), dimensions.get("bullet").get(1)));
             this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()   
-            .getResourceAsStream("/asset/gate.png"))), dimensions.get("gate").get(0), dimensions.get("gate").get(1)));
+            .getResourceAsStream("/asset/GateRing.png"))), dimensions.get("gate").get(0), dimensions.get("gate").get(1)));
             this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
             .getResourceAsStream("/asset/items/heart.png"))), dimensions.get("shopHeart").get(0), 
             dimensions.get("shopHeart").get(1)));
@@ -87,6 +87,8 @@ public final class ResourceLoader {
             .getResourceAsStream("/asset/boss/death.png"))), dimensions.get("boss").get(0), dimensions.get("boss").get(1)));
             this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
             .getResourceAsStream("/asset/boss/idle.png"))), dimensions.get("boss").get(0), dimensions.get("boss").get(1)));
+            this.imagesMap.put(i, new ImmutableTriple<>((ImageIO.read(this.getClass()
+                    .getResourceAsStream("/asset/bullet/fireball.png"))), dimensions.get("fireball").get(0), dimensions.get("fireball").get(1)));
         }
         catch (IOException e) {
             System.out.println("Error loading images. ");

@@ -1,8 +1,4 @@
-package dimhol.core;
-
-import org.locationtech.jts.math.Vector2D;
-
-import java.util.Optional;
+package dimhol.input;
 
 /**
  * An interface to model input.
@@ -15,6 +11,34 @@ public interface Input extends Cloneable {
      * @return a copy of the input
      */
     Input clone();
+
+    /**
+     * Checks if moving up.
+     *
+     * @return true if moving up
+     */
+    boolean isUp();
+
+    /**
+     * Checks if moving down.
+     *
+     * @return true if moving down
+     */
+    boolean isDown();
+
+    /**
+     * Checks if moving left.
+     *
+     * @return true if moving left
+     */
+    boolean isLeft();
+
+    /**
+     * Checks if moving right.
+     *
+     * @return true if moving right
+     */
+    boolean isRight();
 
     /**
      * Checks if interacting.
@@ -42,14 +66,7 @@ public interface Input extends Cloneable {
      *
      * @return true if normal melee
      */
-    boolean isNormalMelee();
-
-    /**
-     * Checks if special melee.
-     *
-     * @return true if special melee
-     */
-    boolean isSpecialMelee();
+    boolean isAttacking();
 
     /**
      * Checks if charging fireball.
@@ -57,13 +74,6 @@ public interface Input extends Cloneable {
      * @return true if charging fireball
      */
     boolean isChargingFireball();
-
-    /**
-     * Gets the current direction based on the input.
-     *
-     * @return the current direction
-     */
-    Optional<Vector2D> getDirection();
 
     /**
      * Sets the up movement.
@@ -105,14 +115,7 @@ public interface Input extends Cloneable {
      *
      * @param normalMeele
      */
-    void setNormalMeele(boolean normalMeele);
-
-    /**
-     * Sets the special melee attack.
-     *
-     * @param specialMeele
-     */
-    void setSpecialMeele(boolean specialMeele);
+    void setAttacking(boolean normalMeele);
 
     /**
      * Sets the interaction.

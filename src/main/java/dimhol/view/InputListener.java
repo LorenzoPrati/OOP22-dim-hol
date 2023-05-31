@@ -1,8 +1,8 @@
 package dimhol.view;
 
 import dimhol.core.Engine;
-import dimhol.core.Input;
-import dimhol.core.InputImpl;
+import dimhol.input.Input;
+import dimhol.input.InputImpl;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -37,7 +37,6 @@ public final class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_S -> this.input.setDown(true);
             case KeyEvent.VK_A -> this.input.setLeft(true);
             case KeyEvent.VK_D -> this.input.setRight(true);
-            case KeyEvent.VK_Q -> this.input.setSpecialMeele(true);
             case KeyEvent.VK_Z -> this.input.setChargeFireball(true);
             case KeyEvent.VK_E -> this.input.setInteract(true);
             case KeyEvent.VK_ESCAPE -> {
@@ -56,7 +55,6 @@ public final class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_S -> this.input.setDown(false);
             case KeyEvent.VK_A -> this.input.setLeft(false);
             case KeyEvent.VK_D -> this.input.setRight(false);
-            case KeyEvent.VK_Q -> this.input.setSpecialMeele(false);
             case KeyEvent.VK_Z -> this.input.setChargeFireball(false);
             case KeyEvent.VK_E -> this.input.setInteract(false);
             default -> {
@@ -67,7 +65,7 @@ public final class InputListener implements KeyListener, MouseListener {
     @Override
     public void mousePressed(final MouseEvent e) {
         switch (e.getButton()) {
-            case MouseEvent.BUTTON1 -> this.input.setNormalMeele(true);
+            case MouseEvent.BUTTON1 -> this.input.setAttacking(true);
             case MouseEvent.BUTTON3 -> this.input.setShoot(true);
             default -> {
             }
@@ -77,7 +75,7 @@ public final class InputListener implements KeyListener, MouseListener {
     @Override
     public void mouseReleased(final MouseEvent e) {
         switch (e.getButton()) {
-            case MouseEvent.BUTTON1 -> this.input.setNormalMeele(false);
+            case MouseEvent.BUTTON1 -> this.input.setAttacking(false);
             case MouseEvent.BUTTON3 -> this.input.setShoot(false);
             default -> {
             }

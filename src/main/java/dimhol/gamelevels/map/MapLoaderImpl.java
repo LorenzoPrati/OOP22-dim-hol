@@ -9,11 +9,12 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * The class is responsible for parsing an XML file and loading a map from it.
@@ -24,73 +25,56 @@ public final class MapLoaderImpl implements MapLoader {
     private int tileWidth;
     private int tileHeight;
     private List<Tile[][]> mapTileLayers;
-    private NodeList layerNodeList;
-    private Element layerElement;
 
     /**
-     * Constructor for LoadMapImpl that loads a map from an XML file.
+     * Loads a map from an XML file.
      *
-     * @param fileName The name of the XML file to load the map from.
+     * @param inputStream The input stream of the XML file.
+     * @throws MapLoadingException If an error occurs while loading the map.
      */
-    private void loadMap(final String fileName) {
-
-        Element rootElement = null;
-        Document doc = null;
+    public void loadMap(InputStream inputStream) throws MapLoadingException {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            doc = dBuilder.parse(new File(fileName));
-            /*
-             * Normalize the document by removing empty spaces and combining adjacent text nodes.
-             */
+            Document doc = dBuilder.parse(inputStream);
             doc.getDocumentElement().normalize();
-            rootElement = doc.getDocumentElement();
+
+            Element rootElement = doc.getDocumentElement();
+            tileWidth = Integer.parseInt(rootElement.getAttribute("tilewidth"));
+            tileHeight = Integer.parseInt(rootElement.getAttribute("tileheight"));
+
+            NodeList layerNodeList = doc.getElementsByTagName("layer");
+            width = Integer.parseInt(layerNodeList.item(0).getAttributes().getNamedItem("width").getNodeValue());
+            height = Integer.parseInt(layerNodeList.item(0).getAttributes().getNamedItem("height").getNodeValue());
+
+            mapTileLayers = new ArrayList<>();
+            IntStream.range(0, layerNodeList.getLength()).forEach(i -> mapTileLayers.add(createTileMatrix(layerNodeList.item(i))));
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-        }
-
-        /*
-         * Get the root element of the document.
-         */
-        assert rootElement != null;
-        tileWidth = Integer.parseInt(rootElement.getAttribute("tilewidth"));
-        tileHeight = Integer.parseInt(rootElement.getAttribute("tileheight"));
-
-        /*
-         * Get the list of all the layer elements into the document.
-         */
-        layerNodeList = doc.getElementsByTagName("layer");
-        layerElement = (Element) layerNodeList.item(0);
-        width = Integer.parseInt(layerElement.getAttribute("width"));
-        height = Integer.parseInt(layerElement.getAttribute("height"));
-        /*
-         * Get the first layer element by using "item(0)" and store it in a "node" variable "layerNode".
-         */
-        mapTileLayers = new ArrayList<>();
-        for (int i = 0; i < layerNodeList.getLength(); i++) {
-            mapTileLayers.add(getTileMatrix(layerNodeList.item(i)));
+            throw new MapLoadingException("Error loading the map.", e);
         }
     }
 
-    private Tile[][] getTileMatrix(final Node item) {
-        Element layerElement = (Element) item.getChildNodes();
+
+    private Tile[][] createTileMatrix(Node layerNode) {
+        Element layerElement = (Element) layerNode;
         NodeList propertyNodes = layerElement.getElementsByTagName("property");
         Element dataElement = (Element) layerElement.getElementsByTagName("data").item(0);
 
-        String[] line = dataElement.getFirstChild().getTextContent().split("[\n|,]");
-        List<String> nline = Arrays.stream(line).filter(e -> !e.equals("")).toList();
-        TileImpl[][] matrix = new TileImpl[width][height];
+        String[] lines = dataElement.getFirstChild().getTextContent().split("[\n|,]");
+        List<String> nonEmptyLines = Arrays.stream(lines).filter(line -> !line.isEmpty()).toList();
+        Tile[][] matrix = new Tile[width][height];
 
         int k = 0;
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 for (int l = 0; l < propertyNodes.getLength(); l++) {
                     Element property = (Element) propertyNodes.item(l);
-                    if (Integer.parseInt((nline.get(k))) == Integer.parseInt(property.getAttribute("tileMapIdInt"))) {
-
+                    if (Integer.parseInt(nonEmptyLines.get(k)) == Integer.parseInt(property.getAttribute("tileMapIdInt"))) {
                         if (property.hasAttribute("walkableBool") && property.hasAttribute("tileSetIdInt")) {
-                            matrix[i][j] = new TileImpl(Integer.parseInt(property.getAttribute("tileSetIdInt")),
-                                    Boolean.parseBoolean(property.getAttribute("walkableBool")));
+                            matrix[i][j] = new TileImpl(
+                                    Integer.parseInt(property.getAttribute("tileSetIdInt")),
+                                    Boolean.parseBoolean(property.getAttribute("walkableBool"))
+                            );
                         }
                     }
                 }
@@ -107,30 +91,42 @@ public final class MapLoaderImpl implements MapLoader {
 
     @Override
     public TileMap loadNormalRoom() {
-        loadMap("src/main/resources/config/map/nice-map.xml");
-        return getMap();
-    }
-
-    private TileMap getMap() {
-        return new TileMapImpl(this.getMapTileLayers(), width, height, tileWidth, tileHeight);
+        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
+            loadMap(inputStream);
+            return getMap();
+        } catch (IOException e) {
+            throw new MapLoadingException("Error loading the normal room map.", e);
+        }
     }
 
     @Override
     public TileMap loadShopRoom() {
-        loadMap("src/main/resources/config/map/nice-map.xml");
-        return getMap();
+        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
+            loadMap(inputStream);
+            return getMap();
+        } catch (IOException e) {
+            throw new MapLoadingException("Error loading the shop room map.", e);
+        }
     }
 
     @Override
     public TileMap loadBossRoom() {
-        loadMap("src/main/resources/config/map/nice-map.xml");
-        return getMap();
+        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
+            loadMap(inputStream);
+            return getMap();
+        } catch (IOException e) {
+            throw new MapLoadingException("Error loading the boss room map.", e);
+        }
     }
 
     @Override
-    public TileMap loadCustomMap() {
-        loadMap("");
+    public TileMap loadCustomMap(InputStream inputStream) throws MapLoadingException {
+        loadMap(inputStream);
         return getMap();
+    }
+
+    private TileMap getMap() {
+        return new TileMapImpl(mapTileLayers, width, height, tileWidth, tileHeight);
     }
 
     @Override

@@ -5,6 +5,7 @@ import dimhol.entity.Entity;
 import dimhol.events.WorldEvent;
 import dimhol.gamelevels.LevelManager;
 import dimhol.gamelevels.LevelManagerImpl;
+import dimhol.input.Input;
 import dimhol.systems.*;
 import dimhol.view.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -43,7 +44,7 @@ public class WorldImpl implements World {
         /*
         Add systems
          */
-        this.systems.add(new PlayerSystem());
+        this.systems.add(new PlayerInputSystem());
         this.systems.add(new EnemyAiSystem());
         this.systems.add(new MovementSystem());
         this.systems.add(new MapCollisionSystem());

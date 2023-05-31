@@ -20,7 +20,6 @@ public class PauseScreen extends AbstractScreen {
             engine.getMainWindow().changePanel(scene.getPanel());
             scene.setupInput();
             engine.resumeGame();
-
         });
         homeButton.addActionListener(e -> {
             engine.getMainWindow().changePanel(new HomeScreen(engine));

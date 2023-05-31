@@ -3,6 +3,8 @@ package dimhol.gamelevels;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.factories.GenericFactory;
+import dimhol.entity.factories.InteractableObjectFactory;
+import dimhol.entity.factories.ItemFactory;
 import org.apache.commons.lang3.tuple.Pair;
 import org.locationtech.jts.math.Vector2D;
 
@@ -16,7 +18,10 @@ import java.util.Set;
  * It implements the RoomStrategy interface.
  */
 public class ShopRoomStrategy implements RoomStrategy {
+    private static final int NUM_ITEMS = 10;
     private final GenericFactory genericFactory;
+    private final ItemFactory itemFactory;
+    private final InteractableObjectFactory interactableObjectFactory;
     private final RandomWrapper random;
 
     /**
@@ -25,8 +30,12 @@ public class ShopRoomStrategy implements RoomStrategy {
      * @param genericFactory The generic factory used for creating entities.
      * @param random         The random number generator used for generating random positions.
      */
-    public ShopRoomStrategy(final GenericFactory genericFactory, final RandomWrapper random) {
+    public ShopRoomStrategy(final GenericFactory genericFactory,final ItemFactory itemFactory,
+                            final InteractableObjectFactory interactableObjectFactory,
+                            final RandomWrapper random) {
         this.genericFactory = genericFactory;
+        this.itemFactory = itemFactory;
+        this.interactableObjectFactory = interactableObjectFactory;
         this.random = random;
     }
 
@@ -66,9 +75,40 @@ public class ShopRoomStrategy implements RoomStrategy {
         entities.add(shopKeeper);
 
         //Place coins:
+        generateCoins(freeTiles, entities);
 
+        //Place heart:
+        generateHearts(freeTiles, entities);
+
+        //Place gate:
+        generateGate(freeTiles, entities);
 
         return entities;
+    }
+
+    private void generateCoins(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        int coins = new RandomWrapper().nextInt(NUM_ITEMS);
+        for (int i = 0; i < coins; i++) {
+            var coinsFreeTiles = getRandomTile(freeTiles);
+            entities.add(itemFactory.createCoin(coinsFreeTiles.getLeft().doubleValue(),
+                    coinsFreeTiles.getRight().doubleValue()));
+        }
+    }
+
+    private void generateHearts(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        int hearts = new RandomWrapper().nextInt(NUM_ITEMS);
+        for (int i = 0; i < hearts; i++) {
+            var hearthsFreeTile = getRandomTile(freeTiles);
+            entities.add(itemFactory.createHeart(hearthsFreeTile.getLeft().doubleValue(),
+                    hearthsFreeTile.getRight().doubleValue()));
+
+        }
+    }
+
+    private void generateGate(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+            var gateFreeTile = getRandomTile(freeTiles);
+            entities.add(interactableObjectFactory.createGate(gateFreeTile.getLeft().doubleValue(),
+                    gateFreeTile.getRight().doubleValue()));
     }
 
     /**
@@ -125,7 +165,8 @@ public class ShopRoomStrategy implements RoomStrategy {
      * @return The created shopkeeper entity.
      */
     private Entity createShopKeeper(final Set<Pair<Integer, Integer>> freeTiles) {
-        return genericFactory.createShopkeeper(getRandomTile(freeTiles).getLeft().doubleValue(),
-                getRandomTile(freeTiles).getRight().doubleValue());
+        var shopKeeperFreeTiles = getRandomTile(freeTiles);
+        return genericFactory.createShopkeeper(shopKeeperFreeTiles.getLeft().doubleValue(),
+                shopKeeperFreeTiles.getRight().doubleValue());
     }
 }

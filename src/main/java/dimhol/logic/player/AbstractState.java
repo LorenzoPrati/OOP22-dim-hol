@@ -1,52 +1,136 @@
 package dimhol.logic.player;
 
-import dimhol.components.*;
+import dimhol.components.AnimationComponent;
+import dimhol.components.InteractorComponent;
+import dimhol.components.MovementComponent;
+import dimhol.input.Input;
 import dimhol.entity.Entity;
 import dimhol.logic.util.DirectionUtil;
 
+import java.util.Collections;
+import java.util.List;
 
-public abstract class AbstractState implements State {
+/**
+ * Abstract implementation of a player state.
+ */
+public abstract class AbstractState implements PlayerState {
 
-    protected double time;
-    protected Entity playerEntity;
-    protected PlayerComponent playerComp;
-    protected MovementComponent mov;
-    protected AnimationComponent anim;
-    protected InteractorComponent interact;
-    protected PositionComponent pos;
-    protected BodyComponent bodyComponent;
+    /**
+     * The time elapsed since entering the state.
+     */
+    private double time;
+    /**
+     * The player movement component.
+     */
+    private MovementComponent mov;
+    /**
+     * The player interactor component.
+     */
+    private InteractorComponent interactor;
+    /**
+     * The player animation component.
+     */
+    private AnimationComponent anim;
+    /**
+     * The entity representing the player.
+     */
+    private Entity playerEntity;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void entry(Entity e) {
-        this.updateComps(e);
-        this.setup();
-    }
-
-    protected abstract void setup();
-
-    @Override
-    public void update(double dt, Entity entity) {
-        this.time += dt;
+    public void entry(final Entity entity) {
         this.updateComps(entity);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(final double deltaTime, final Entity entity) {
+        this.time += deltaTime;
+        this.updateComps(entity);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean canTransition() {
-        return !this.anim.isBlocking()
-                || this.anim.isCompleted();
+        return !this.anim.isBlocking() || this.anim.isCompleted();
     }
 
-    protected void setAnimationState(String s) {
-        this.anim.setState(s + " " + DirectionUtil.getStringFromVec(this.mov.getDir()));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Entity> execute(final Input input) {
+        return Collections.emptyList();
     }
 
-    private void updateComps(Entity entity) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void exit() {
+
+    }
+
+    /**
+     * Sets the animation.
+     *
+     * @param state the string representing the animation to assign
+     */
+    public void setAnimationState(final String state) {
+        this.anim.setState(state + " " + DirectionUtil.getStringFromVec(this.mov.getDir()));
+    }
+
+    /**
+     * Gets the elapsed time since entering the state.
+     *
+     * @return the time
+     */
+    public double getTime() {
+        return this.time;
+    }
+
+    /**
+     * Gets the movement component of the entity representing the player.
+     *
+     * @return the movement component
+     */
+    protected MovementComponent getMov() {
+        return this.mov;
+    }
+
+    /**
+     * Gets the interactor component of the entity representing the player.
+     *
+     * @return the interactor component
+     */
+    protected InteractorComponent getInteractor() {
+        return this.interactor;
+    }
+
+    /**
+     * Gets the entity representing the player.
+     *
+     * @return the entity representing player
+     */
+    protected Entity getPlayerEntity() {
+        return this.playerEntity;
+    }
+
+    /**
+     * Update components that will be used by the state.
+     *
+     * @param entity the entity representing the player
+     */
+    private void updateComps(final Entity entity) {
         this.playerEntity = entity;
-        this.playerComp = (PlayerComponent) entity.getComponent(PlayerComponent.class);
         this.mov = (MovementComponent) entity.getComponent(MovementComponent.class);
         this.anim = (AnimationComponent) entity.getComponent(AnimationComponent.class);
-        this.interact = (InteractorComponent) entity.getComponent(InteractorComponent.class);
-        this.pos = (PositionComponent) entity.getComponent(PositionComponent.class);
-        this.bodyComponent = (BodyComponent) entity.getComponent(BodyComponent.class);
+        this.interactor = (InteractorComponent) entity.getComponent(InteractorComponent.class);
     }
 }
