@@ -28,22 +28,24 @@ public class AbstractAttackFactory extends AbstractFactory {
         var shooterHeight = bodyComp.getBodyShape().getBoundingHeight();
         var centralShooterY = shooterY + (shooterHeight / DIVISOR);
         var centralShooterX = shooterX + (shooterWidth / DIVISOR);
+        var halfAttackHeight = attackHeight / DIVISOR;
+        var halfAttackWidth = attackWidth / DIVISOR;
 
         switch (DirectionUtil.getStringFromVec(getDirection(shooter))) {
             case "right" -> {
                 bulletX = shooterX + shooterWidth;
-                bulletY = centralShooterY - (attackHeight / DIVISOR);
+                bulletY = centralShooterY - halfAttackHeight;
             }
             case "left" -> {
                 bulletX = shooterX - attackWidth;
-                bulletY = centralShooterY - (attackHeight / DIVISOR);
+                bulletY = centralShooterY - halfAttackHeight;
             }
             case "down" -> {
-                bulletX = centralShooterX - (attackWidth / DIVISOR);
+                bulletX = centralShooterX - halfAttackWidth;
                 bulletY = shooterY + shooterHeight;
             }
             default -> { // up
-                bulletX = centralShooterX - (attackWidth / DIVISOR);
+                bulletX = centralShooterX - halfAttackWidth;
                 bulletY = shooterY - attackHeight;
             }
 
