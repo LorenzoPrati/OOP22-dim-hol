@@ -4,13 +4,8 @@ import dimhol.components.BodyComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
-import dimhol.logic.collision.BodyShape;
 import dimhol.logic.util.DirectionUtil;
-import org.jooq.lambda.function.Function0;
 import org.locationtech.jts.math.Vector2D;
-
-import java.util.Map;
-import java.util.function.BiFunction;
 
 public class AbstractAttackFactory extends AbstractFactory {
 
