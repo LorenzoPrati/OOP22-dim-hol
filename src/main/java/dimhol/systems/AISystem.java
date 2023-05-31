@@ -20,10 +20,11 @@ public final class AISystem extends AbstractSystem {
         var enemyAI = (AIComponent) enemy.getComponent(AIComponent.class);
         enemyAI.updateTime(dt);
         for (var action : enemyAI.getRoutine()) {
-            //noinspection OptionalGetWithoutIsPresent
-            action.setPlayer(world.getEntities().stream()
+            world.getEntities()
+                    .stream()
                     .filter(e -> e.hasComponent(PlayerComponent.class))
-                    .findFirst().get());
+                    .findFirst()
+                    .ifPresent(action::setPlayer);
             action.setEnemy(enemy);
             if (action.canExecute()) {
                 var routineExecute = action.execute();
