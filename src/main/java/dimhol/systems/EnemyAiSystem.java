@@ -20,7 +20,9 @@ public final class EnemyAiSystem extends AbstractSystem {
         var enemyAI = (AiComponent) enemy.getComponent(AiComponent.class);
         enemyAI.updateTime(dt);
         for (var action : enemyAI.getRoutine()) {
-            action.setPlayer(getPlayer((world)));
+            action.setPlayer(world.getEntities().stream()
+                    .filter(e -> e.hasComponent(PlayerComponent.class))
+                    .findFirst().get());
             action.setEnemy(enemy);
             if (action.canExecute()) {
                 var routineExecute = action.execute();
@@ -32,16 +34,6 @@ public final class EnemyAiSystem extends AbstractSystem {
                 break;
             }
         }
-    }
-
-    private Entity getPlayer(final World world) {
-        Entity player = null;
-        for (var entity : world.getEntities()) {
-            if (entity.hasComponent(PlayerComponent.class)) {
-                player = entity;
-            }
-        }
-        return player;
     }
 
 }
