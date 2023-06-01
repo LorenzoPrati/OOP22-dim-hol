@@ -19,6 +19,7 @@ import java.util.Set;
  */
 public class ShopRoomStrategy implements RoomStrategy {
     private static final int NUM_ITEMS = 10;
+    private static final int NUM_POWER_UP = 2;
     private final GenericFactory genericFactory;
     private final ItemFactory itemFactory;
     private final InteractableObjectFactory interactableObjectFactory;
@@ -27,10 +28,10 @@ public class ShopRoomStrategy implements RoomStrategy {
     /**
      * Constructs a ShopRoomStrategy object with the specified generic factory and random number generator.
      *
-     * @param genericFactory The generic factory used for creating entities.
-     * @param itemFactory The item factory used to create items in the room.
+     * @param genericFactory            The generic factory used for creating entities.
+     * @param itemFactory               The item factory used to create items in the room.
      * @param interactableObjectFactory The interactable object factory used to create interactable objects in the room.
-     * @param random         The random number generator used for generating random positions.
+     * @param random                    The random number generator used for generating random positions.
      */
     public ShopRoomStrategy(final GenericFactory genericFactory, final ItemFactory itemFactory,
                             final InteractableObjectFactory interactableObjectFactory,
@@ -82,10 +83,35 @@ public class ShopRoomStrategy implements RoomStrategy {
         //Place heart:
         generateHearts(freeTiles, entities);
 
+        //Place heartPowerUp:
+        generateHeartPowerUp(freeTiles, entities);
+
+        //Place velocityPowerUp:
+        generateVelocityPowerUp(freeTiles, entities);
+
         //Place gate:
         generateGate(freeTiles, entities);
 
+
         return entities;
+    }
+
+    private void generateHeartPowerUp(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
+        int heartPowerUp = new RandomWrapper().nextInt(NUM_POWER_UP);
+        for (int i = 0; i < heartPowerUp; i++) {
+            var heartPowerUpFreeTiles = getRandomTile(freeTiles);
+            entities.add(interactableObjectFactory.createShopHeart(heartPowerUpFreeTiles.getLeft().doubleValue(),
+                    heartPowerUpFreeTiles.getRight().doubleValue()));
+        }
+    }
+
+    private void generateVelocityPowerUp(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
+        int velocityPowerUp = new RandomWrapper().nextInt(NUM_POWER_UP);
+        for (int i = 0; i < velocityPowerUp; i++) {
+            var velocityPowerUpFreeTiles = getRandomTile(freeTiles);
+            entities.add(interactableObjectFactory.createShopVelocity(velocityPowerUpFreeTiles.getLeft().doubleValue(),
+                    velocityPowerUpFreeTiles.getRight().doubleValue()));
+        }
     }
 
     private void generateCoins(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
@@ -108,9 +134,9 @@ public class ShopRoomStrategy implements RoomStrategy {
     }
 
     private void generateGate(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
-            var gateFreeTile = getRandomTile(freeTiles);
-            entities.add(interactableObjectFactory.createGate(gateFreeTile.getLeft().doubleValue(),
-                    gateFreeTile.getRight().doubleValue()));
+        var gateFreeTile = getRandomTile(freeTiles);
+        entities.add(interactableObjectFactory.createGate(gateFreeTile.getLeft().doubleValue(),
+                gateFreeTile.getRight().doubleValue()));
     }
 
     /**
