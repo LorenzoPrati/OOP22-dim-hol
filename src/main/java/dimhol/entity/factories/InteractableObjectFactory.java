@@ -12,8 +12,10 @@ import org.locationtech.jts.math.Vector2D;
 import dimhol.logic.collision.RectBodyShape;
 
 public class InteractableObjectFactory extends AbstractFactory {
-    private static final double W = 3;
-    private static final double H = 3;
+    private static final double W_POWERUP = 1;
+    private static final double H_POWERUP = 1;
+    private static final double W_GATE = 2;
+    private static final double H_GATE = 2;
     private static final int MAX_HEALTH_INCREASE = 10;
     private static final double VELOCITY_INCREASE = 0.5;
     private static final int MAX_HEALTH_PRICE = 10;
@@ -62,7 +64,7 @@ public class InteractableObjectFactory extends AbstractFactory {
     public Entity createShopHeart(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 0))
-        .add(new BodyComponent(new RectBodyShape(W,H), false))
+        .add(new BodyComponent(new RectBodyShape(W_POWERUP, H_POWERUP), false))
         .add(new InteractableComponent(powerUpMaxHealth))
         .add(new AnimationComponent(this.map.get("shopHeart"), "idle"))
         .build();
@@ -71,7 +73,7 @@ public class InteractableObjectFactory extends AbstractFactory {
     public Entity createShopVelocity(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 0))
-        .add(new BodyComponent(new RectBodyShape(W,H), false))
+        .add(new BodyComponent(new RectBodyShape(W_POWERUP, H_POWERUP), false))
         .add(new InteractableComponent(powerUpSpeed))
         .add(new AnimationComponent(this.map.get("shopSpeed"), "idle"))
         .build();
@@ -80,7 +82,7 @@ public class InteractableObjectFactory extends AbstractFactory {
     public Entity createGate(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 0))
-        .add(new BodyComponent(new RectBodyShape(W,H), false))
+        .add(new BodyComponent(new RectBodyShape(W_GATE, H_GATE), false))
         .add(new InteractableComponent(useGate))
         .add(new AnimationComponent(this.map.get("gate"), "idle")) //TO DO add gate sprites
         .build();
