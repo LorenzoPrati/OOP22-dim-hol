@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The TileMap is a two-dimensional grid of tiles.
+ * Represents a two-dimensional grid of tiles in a game map.
  */
 public final class TileMapImpl implements TileMap {
     private final Tile[][] tilemap;
@@ -16,22 +16,22 @@ public final class TileMapImpl implements TileMap {
     private final List<Tile[][]> layers;
 
     /**
-     * Creates a new TileMap with the given tiles.
+     * Creates a new TileMap with the given layers, width, height, tileWidth, and tileHeight.
      *
-     * @param tilemap    A 2D array of Tiles representing the map.
+     * @param layers     A list of 2D arrays representing the map layers.
      * @param width      The width of the map in tiles.
      * @param height     The height of the map in tiles.
      * @param tileWidth  The width of each tile in pixels.
      * @param tileHeight The height of each tile in pixels.
      */
-    public TileMapImpl(final List<Tile[][]> tilemap, final int width, final int height,
+    public TileMapImpl(final List<Tile[][]> layers, final int width, final int height,
                        final int tileWidth, final int tileHeight) {
-        this.tilemap = tilemap.get(0);
+        this.layers = new ArrayList<>(layers);
         this.width = width;
         this.height = height;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
-        this.layers = new ArrayList<>(tilemap);
+        this.tilemap = layers.get(0);
     }
 
     /**
@@ -43,6 +43,16 @@ public final class TileMapImpl implements TileMap {
      */
     public Tile getTile(final int x, final int y) {
         return tilemap[x][y];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setTile(int x, int y, Tile tile) {
+        if (!isValidCoordinate(x, y)) {
+            throw new IllegalArgumentException("Invalid coordinates: (" + x + ", " + y + ")");
+        }
+        tilemap[x][y] = tile;
     }
 
     /**
@@ -86,6 +96,14 @@ public final class TileMapImpl implements TileMap {
 
     @Override
     public List<Tile[][]> getLayers() {
-        return Collections.unmodifiableList(this.layers);
+        return Collections.unmodifiableList(layers);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isValidCoordinate(int x, int y) {
+        return x >= 0 && x < width && y >= 0 && y < height;
     }
 }
