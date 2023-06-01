@@ -26,7 +26,7 @@ public class ResultScreen extends AbstractScreen {
         todo label
          */
         var homeButton = super.createButton(e -> engine.getMainWindow().changePanel(new HomeScreen(engine)),
-                "RETURN HOME", result? Color.YELLOW : Color.RED);
+                "RETURN HOME", result? Color.GREEN : Color.RED);
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
