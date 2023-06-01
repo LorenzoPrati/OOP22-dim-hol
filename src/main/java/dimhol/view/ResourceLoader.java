@@ -65,7 +65,7 @@ public final class ResourceLoader {
             this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()   
             .getResourceAsStream("/asset/GateRing.png"))), dimensions.get("gate").get(0), dimensions.get("gate").get(1)));
             this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
-            .getResourceAsStream("/asset/items/heart.png"))), dimensions.get("shopHeart").get(0), 
+            .getResourceAsStream("/asset/shop/healthPotion.png"))), dimensions.get("shopHeart").get(0), 
             dimensions.get("shopHeart").get(1)));
             this.imagesMap.put(i++, new ImmutableTriple<>((ImageIO.read(this.getClass()
             .getResourceAsStream("/asset/shop/thunder.png"))), dimensions.get("shopSpeed").get(0), 
