@@ -23,19 +23,23 @@ public class InteractableObjectFactory extends AbstractFactory {
         super();
     }
 
-    BiPredicate<Entity,Integer> checkCoins = (e,i) -> {
-        var currentCoins = (CoinPocketComponent)e.getComponent(CoinPocketComponent.class);
+    BiPredicate<Entity,Integer> checkCoins = (e, i) -> {
+        var currentCoins = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
         return currentCoins.getCurrentAmount() >= i;
+    };
+    
+    BiConsumer<Entity,Integer> payPrice = (e, p) -> {
+        var coinPocket = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
+        coinPocket.setAmount(coinPocket.getCurrentAmount() - p);
     };
 
     Predicate<World> checkAllEnemyAreDead = (w) -> w.getEntities()
         .stream()
         .noneMatch(e -> e.hasComponent(AIComponent.class));
-        
-    
 
     BiConsumer<Entity, World> powerUpMaxHealth = (e,w)-> {
         if(checkCoins.test(e, MAX_HEALTH_PRICE )) {
+            payPrice.accept(e, MAX_HEALTH_PRICE);
             var healthComp = (HealthComponent)e.getComponent(HealthComponent.class);
             healthComp.setMaxHealth(healthComp.getMaxHealth() + MAX_HEALTH_INCREASE);
         }
@@ -43,6 +47,7 @@ public class InteractableObjectFactory extends AbstractFactory {
 
     BiConsumer<Entity, World> powerUpSpeed = (e,w)-> {
         if(checkCoins.test(e, VELOCITY_PRICE)) {
+            payPrice.accept(e, VELOCITY_PRICE);
             var moveComp = (MovementComponent)e.getComponent(MovementComponent.class);
             moveComp.setSpeed(moveComp.getSpeed() + VELOCITY_INCREASE);
         } 
@@ -57,7 +62,7 @@ public class InteractableObjectFactory extends AbstractFactory {
     public Entity createShopHeart(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 0))
-        .add(new BodyComponent(new RectBodyShape(W,H), true))
+        .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new InteractableComponent(powerUpMaxHealth))
         .add(new AnimationComponent(this.map.get("shopHeart"), "idle"))
         .build();
@@ -66,7 +71,7 @@ public class InteractableObjectFactory extends AbstractFactory {
     public Entity createShopVelocity(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 0))
-        .add(new BodyComponent(new RectBodyShape(W,H), true))
+        .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new InteractableComponent(powerUpSpeed))
         .add(new AnimationComponent(this.map.get("shopSpeed"), "idle"))
         .build();
