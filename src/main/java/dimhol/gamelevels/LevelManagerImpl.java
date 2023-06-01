@@ -32,6 +32,8 @@ public class LevelManagerImpl implements LevelManager {
     private final ShopRoomStrategy shopRoomStrategy;
     private final BossRoomStrategy bossRoomStrategy;
     private final TileMap tileMap;
+    private static final int ENTITY_WIDTH = 4;
+    private static final int ENTITY_HEIGHT = 3;
     private int currentLevel;
 
     /**
@@ -47,9 +49,7 @@ public class LevelManagerImpl implements LevelManager {
         this.tileMap = mapLoader.loadShopRoom();
         normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, itemFactory, interactableObjectFactory, random);
         shopRoomStrategy = new ShopRoomStrategy(genericFactory, itemFactory, interactableObjectFactory, new RandomWrapper());
-        int bossWidth = 4;
-        int bossHeight = 3;
-        bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory(), bossWidth, bossHeight);
+        bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory(), ENTITY_WIDTH, ENTITY_HEIGHT);
         this.currentLevel = 0;
     }
 
