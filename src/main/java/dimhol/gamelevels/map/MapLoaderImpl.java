@@ -55,6 +55,12 @@ public final class MapLoaderImpl implements MapLoader {
         }
     }
 
+    /**
+     * Creates a tile matrix from the given layer node.
+     *
+     * @param layerNode The XML node representing a map layer.
+     * @return The created tile matrix.
+     */
     private Tile[][] createTileMatrix(Node layerNode) {
         Element layerElement = (Element) layerNode;
         NodeList propertyNodes = layerElement.getElementsByTagName("property");
@@ -84,53 +90,64 @@ public final class MapLoaderImpl implements MapLoader {
         return matrix;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Tile[][]> getMapTileLayers() {
         return new ArrayList<>(mapTileLayers);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TileMap loadNormalRoom() {
         try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
-            loadMap(inputStream);
-            return getMap();
+            return loadRoomMap(inputStream);
         } catch (IOException e) {
             throw new MapLoadingException("Error loading the normal room map.", e);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TileMap loadShopRoom() {
         try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
-            loadMap(inputStream);
-            return getMap();
+            return loadRoomMap(inputStream);
         } catch (IOException e) {
             throw new MapLoadingException("Error loading the shop room map.", e);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TileMap loadBossRoom() {
         try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
-            loadMap(inputStream);
-            return getMap();
+            return loadRoomMap(inputStream);
         } catch (IOException e) {
             throw new MapLoadingException("Error loading the boss room map.", e);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public TileMap loadCustomMap(final InputStream inputStream) throws MapLoadingException {
+    public TileMap loadRoomMap(InputStream inputStream) throws MapLoadingException {
         loadMap(inputStream);
-        return getMap();
+        return getTileMap();
     }
 
-    private TileMap getMap() {
-        return new TileMapImpl(mapTileLayers, width, height, tileWidth, tileHeight);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TileMap getTileMap() {
-        return null;
+        return new TileMapImpl(mapTileLayers, width, height, tileWidth, tileHeight);
     }
 }
