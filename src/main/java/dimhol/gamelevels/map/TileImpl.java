@@ -26,7 +26,7 @@ public class TileImpl implements Tile {
      *
      * @return true if this Tile si collidable, false otherwise.
      */
-    public boolean isWalkable() {
+    public boolean isWalkableTile() {
         return walkable;
     }
 

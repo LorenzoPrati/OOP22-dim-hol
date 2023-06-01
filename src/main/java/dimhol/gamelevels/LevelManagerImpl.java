@@ -114,7 +114,7 @@ public class LevelManagerImpl implements LevelManager {
         Set<Pair<Integer, Integer>> freeTiles = new HashSet<>();
         for (int i = 0; i < tileMap.getHeight(); i++) {
             for (int j = 0; j < tileMap.getWidth(); j++) {
-                if (tileMap.getTile(j, i).isWalkable()) {
+                if (tileMap.getTile(j, i).isWalkableTile()) {
                     freeTiles.add(new ImmutablePair<>(i, j));
                 }
             }
