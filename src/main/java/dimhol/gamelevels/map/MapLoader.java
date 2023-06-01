@@ -37,15 +37,6 @@ public interface MapLoader {
     TileMap loadBossRoom();
 
     /**
-     * Loads a custom map tile map.
-     *
-     * @param inputStream The input stream xml file.
-     * @return the loaded custom map tile map
-     */
-    TileMap loadCustomMap(InputStream inputStream);
-
-
-    /**
      * Returns the tile map data as a {@link TileMapImpl} object.
      *
      * @return the tile map data
