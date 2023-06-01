@@ -119,10 +119,10 @@ public final class BossRoomStrategy implements RoomStrategy {
     /**
      * Places the entity at a random position with specified dimensions within the set of free tiles.
      *
-     * @param entity       The entity to place.
-     * @param freeTiles    The set of available tiles where the entity can be placed.
-     * @param width        The width of the entity.
-     * @param height       The height of the entity.
+     * @param entity    The entity to place.
+     * @param freeTiles The set of available tiles where the entity can be placed.
+     * @param width     The width of the entity.
+     * @param height    The height of the entity.
      */
     private void placeEntityWithDimension(Entity entity, Set<Pair<Integer, Integer>> freeTiles, int width, int height) {
         List<Pair<Integer, Integer>> validTiles = findValidTilesWithDimension(freeTiles, width, height);
@@ -488,6 +488,7 @@ public final class BossRoomStrategy implements RoomStrategy {
         int numEnemies = Math.min(NUM_ENEMIES_PER_WAVE, maxNumOfEnemies);
         return numEnemies > 0 ? numEnemies : 1;
     }
+
     /**
      * Calculates the total number of tiles occupied by the boss entity.
      *

@@ -28,14 +28,6 @@ public final class BossAttackFactory extends AbstractAttackFactory {
      */
     public static final double BOSS_AREA_ATTACK_HEIGHT = 3.5;
     /**
-     * Area Attack Damage.
-     */
-    private static final int BOSS_AREA_ATTACK_DAMAGE = 5;
-    /**
-     * Summoned Minion Count.
-     */
-    private static final int BOSS_MINION_COUNT = 3;
-    /**
      * Charge Attack Width.
      */
     public static final double BOSS_CHARGE_ATTACK_WIDTH = 2;
@@ -43,6 +35,22 @@ public final class BossAttackFactory extends AbstractAttackFactory {
      * Charge Attack Height.
      */
     public static final double BOSS_CHARGE_ATTACK_HEIGHT = 1.5;
+    /**
+     * Minions height.
+     */
+    public static final double MINIONS_WIDTH = 3.5;
+    /**
+     * Minions width.
+     */
+    public static final double MINIONS_HEIGHT = 3.5;
+    /**
+     * Area Attack Damage.
+     */
+    private static final int BOSS_AREA_ATTACK_DAMAGE = 5;
+    /**
+     * Summoned Minion Count.
+     */
+    private static final int BOSS_MINION_COUNT = 3;
     /**
      * Charge Attack Speed.
      */
@@ -59,15 +67,6 @@ public final class BossAttackFactory extends AbstractAttackFactory {
      * Teleport Distance.
      */
     private static final double BOSS_TELEPORT_DISTANCE = 5.0;
-
-    /**
-     * Minions height.
-     */
-    public static final double MINIONS_WIDTH = 3.5;
-    /**
-     * Minions width.
-     */
-    public static final double MINIONS_HEIGHT = 3.5;
     private static final double SUMMON_ATTACK_WIDTH = 5;
     private static final double SUMMON_ATTACK_HEIGHT = 5;
     private static final double BOSS_DEFENSIVE_SHIELD_WIDTH = 6;
@@ -77,6 +76,7 @@ public final class BossAttackFactory extends AbstractAttackFactory {
 
     /**
      * Create an area attack around the boss entity.
+     *
      * @param bossEntity the boss entity
      * @return the area attack entity
      */
@@ -94,23 +94,25 @@ public final class BossAttackFactory extends AbstractAttackFactory {
 
     /**
      * Create a summoning minions action by the boss entity.
+     *
      * @param bossEntity the boss entity
      * @return the summoned minions entities
      */
     public Entity createSummoningMinions(final Entity bossEntity) {
         System.out.printf("Minions");
-            return new EntityBuilder()
-                    .add(new PositionComponent(getAttackPos(bossEntity, SUMMON_ATTACK_WIDTH, SUMMON_ATTACK_HEIGHT), 0))
-                    .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), false))
-                    .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, isPlayer))
-                    .add(new MinionComponent())
-                    .add(new CollisionComponent())
-                    .add(new AnimationComponent(map.get("boss"), "idle")) //TODO: add their sprites.
-                    .build();
+        return new EntityBuilder()
+                .add(new PositionComponent(getAttackPos(bossEntity, SUMMON_ATTACK_WIDTH, SUMMON_ATTACK_HEIGHT), 0))
+                .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), false))
+                .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, isPlayer))
+                .add(new MinionComponent())
+                .add(new CollisionComponent())
+                .add(new AnimationComponent(map.get("boss"), "idle")) //TODO: add their sprites.
+                .build();
     }
 
     /**
      * Create a charge attack by the boss entity.
+     *
      * @param bossEntity the boss entity
      * @return the charge attack entity
      */
@@ -130,6 +132,7 @@ public final class BossAttackFactory extends AbstractAttackFactory {
 
     /**
      * Create a defensive shield by the boss entity.
+     *
      * @param bossEntity the boss entity
      * @return the defensive shield entity
      */
@@ -137,7 +140,7 @@ public final class BossAttackFactory extends AbstractAttackFactory {
         System.out.printf("shield");
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(bossEntity, BOSS_DEFENSIVE_SHIELD_WIDTH,
-                                                                    BOSS_DEFENSIVE_SHIELD_HEIGHT), 0))
+                        BOSS_DEFENSIVE_SHIELD_HEIGHT), 0))
                 .add(new BodyComponent(new RectBodyShape(BOSS_DEFENSIVE_SHIELD_WIDTH, BOSS_DEFENSIVE_SHIELD_HEIGHT), false))
                 .add(new CollisionComponent())
                 .add(new AnimationComponent(map.get("boss"), "idle"))

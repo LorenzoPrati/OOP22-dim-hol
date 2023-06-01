@@ -28,10 +28,10 @@ public class ShopRoomStrategy implements RoomStrategy {
     /**
      * Constructs a ShopRoomStrategy object with the specified generic factory and random number generator.
      *
-     * @param genericFactory The generic factory used for creating entities.
-     * @param itemFactory The item factory used to create items in the room.
+     * @param genericFactory            The generic factory used for creating entities.
+     * @param itemFactory               The item factory used to create items in the room.
      * @param interactableObjectFactory The interactable object factory used to create interactable objects in the room.
-     * @param random         The random number generator used for generating random positions.
+     * @param random                    The random number generator used for generating random positions.
      */
     public ShopRoomStrategy(final GenericFactory genericFactory, final ItemFactory itemFactory,
                             final InteractableObjectFactory interactableObjectFactory,
@@ -134,9 +134,9 @@ public class ShopRoomStrategy implements RoomStrategy {
     }
 
     private void generateGate(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
-            var gateFreeTile = getRandomTile(freeTiles);
-            entities.add(interactableObjectFactory.createGate(gateFreeTile.getLeft().doubleValue(),
-                    gateFreeTile.getRight().doubleValue()));
+        var gateFreeTile = getRandomTile(freeTiles);
+        entities.add(interactableObjectFactory.createGate(gateFreeTile.getLeft().doubleValue(),
+                gateFreeTile.getRight().doubleValue()));
     }
 
     /**

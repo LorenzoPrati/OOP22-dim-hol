@@ -7,7 +7,6 @@ import dimhol.components.Component;
  */
 public class DefensiveShieldComponent implements Component {
     /**
-     *
      * @param bossDefensiveShieldDuration
      */
     public DefensiveShieldComponent(final int bossDefensiveShieldDuration) {
