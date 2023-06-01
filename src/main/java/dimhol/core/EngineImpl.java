@@ -3,16 +3,30 @@ package dimhol.core;
 import dimhol.view.*;
 
 /**
- * EngineImpl class.
+ * Implementation of the Engine interface.
  */
 public final class EngineImpl implements Engine {
-    /*
-    Game loop settings
+
+    /**
+     * Frame per seconds.
      */
     private static final int FPS = 60;
+    /**
+     * Milliseconds per frame.
+     */
     private static final int MS_PER_FRAME = 1_000 / FPS;
+    /**
+     * Milliseconds to seconds.
+     */
+    private static final double MS_TO_SECOND = 0.001;
 
+    /**
+     * The main window of the game.
+     */
     private final MainWindow mainWindow;
+    /**
+     * The world of the current match.
+     */
     private World world;
     /**
      * True if the game needs to be paused.
@@ -31,7 +45,7 @@ public final class EngineImpl implements Engine {
     }
 
     /**
-     * Starts a new game.
+     * {@inheritDoc}
      */
     @Override
     public void newGame() {
@@ -48,15 +62,15 @@ public final class EngineImpl implements Engine {
     }
 
     /**
-     * Pause the game.
+     * {@inheritDoc}
      */
     @Override
-    public void stopGame() {
-        this.pause = true;
+    public void pauseGame() {
+        this.pause =false;
     }
 
     /**
-     * Resume the game.
+     * {@inheritDoc}
      */
     @Override
     public void resumeGame() {
@@ -64,26 +78,33 @@ public final class EngineImpl implements Engine {
     }
 
     /**
-     * Terminates the game loop.
+     * {@inheritDoc}
      */
     @Override
     public void endGame() {
         this.running = false;
     }
 
+    /**
+     *
+     */
     private void gameLoop() {
         long prev = System.currentTimeMillis(); //time since previous loop
         double dt;
-        while (this.running && !world.isGameOver()) {
-            long curr = System.currentTimeMillis();
-            dt = curr - prev;
-            if (!this.pause) {
-                this.world.update(dt/1000);
+        while (this.running) {
+            if (!this.world.isGameOver()) {
+                long curr = System.currentTimeMillis();
+                dt = curr - prev;
+                if (!this.pause) {
+                    this.world.update(dt * MS_TO_SECOND);
+                }
+                this.waitForNextFrame(curr);
+                prev = curr;
+            } else {
+                this.handleEndGame();
+                break;
             }
-            this.waitForNextFrame(curr);
-            prev = curr;
         }
-        this.mainWindow.changePanel(new ResultScreen(this, world.isWin()));
     }
 
     private void waitForNextFrame(final long time) {
@@ -98,12 +119,17 @@ public final class EngineImpl implements Engine {
     }
 
     /**
-     * Gets the main mainWindow.
-     *
-     * @return the main mainWindow
+     * {@inheritDoc}
      */
     @Override
     public MainWindow getMainWindow() {
         return mainWindow;
+    }
+
+    /**
+     * Handles the end game screen transition.
+     */
+    private void handleEndGame() {
+        this.mainWindow.changePanel(new ResultScreen(this, world.isWin()));
     }
 }
