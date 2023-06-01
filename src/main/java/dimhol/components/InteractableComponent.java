@@ -1,17 +1,17 @@
 package dimhol.components;
 
-import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import dimhol.core.World;
 import dimhol.entity.Entity;
 
 public class InteractableComponent implements Component {
-    private BiConsumer<Entity,World> effect;
+    private BiFunction<Entity, World, Boolean> effect;
 
-    public InteractableComponent(BiConsumer<Entity,World> effect) {
+    public InteractableComponent(BiFunction<Entity, World, Boolean> effect) {
         this.effect = effect;
     }
 
-    public void applyEffect(Entity entity, World world){
-        this.effect.accept(entity, world);
+    public boolean applyEffect(Entity entity, World world){
+        return this.effect.apply(entity, world);
     } 
 }
