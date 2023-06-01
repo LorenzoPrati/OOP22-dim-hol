@@ -30,8 +30,8 @@ public final class BossRoomStrategy implements RoomStrategy {
     private static final int NUM_ENEMY_WAVES = 3;
     private static final int MAX_ENEMIES_PER_TILE = 100;
     private static final int NUM_BOSS_ENTITIES = 1;
-    private static final int BOSS_WIDTH = 4;
-    private static final int BOSS_HEIGHT = 3;
+    private static final int BOSS_ENTITY_WIDTH = 4;
+    private static final int BOSS_ENTITY_HEIGHT = 3;
     private final GenericFactory genericFactory;
     private final EnemyFactory enemyFactory;
     private final BossFactory bossFactory;
@@ -109,7 +109,7 @@ public final class BossRoomStrategy implements RoomStrategy {
         generateEntitiesWithExceptionHandling(() -> calculateNumEntities(freeTiles.size()), // Supplier to calculate the number of entities
                 numBosses -> IntStream.range(0, numBosses).forEach(i -> {
                     Entity boss = createBoss(freeTiles); // Create the boss entity
-                    placeEntityWithDimension(boss, freeTiles, 4, 3); // Place the boss entity with dimensions
+                    placeEntityWithDimension(boss, freeTiles, BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGHT); // Place the boss entity with dimensions
                     entities.add(boss); // Add the boss entity to the list of entities
                 }),
                 this::handleEntityGenerationError // Error handling consumer
@@ -176,12 +176,12 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @throws IllegalArgumentException if the number of free tiles is less than the entities spawned or the entity dimensions are invalid.
      */
     private int calculateNumEntities(final int numFreeTiles) {
-        if (numFreeTiles < calculateRequiredTiles(BOSS_WIDTH, BOSS_HEIGHT)) {
+        if (numFreeTiles < calculateRequiredTiles(BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGHT)) {
             throw new IllegalArgumentException("Not enough free tiles to spawn the boss entity with the specified dimensions!");
         }
-        int maxNumOfEntities = numFreeTiles / calculateRequiredTiles(BOSS_WIDTH, BOSS_HEIGHT);
-        int numEntities = Math.min(NUM_BOSS_ENTITIES, maxNumOfEntities);
-        return numEntities > 0 ? numEntities : 1;
+        int maxNumOfEntities = numFreeTiles / calculateRequiredTiles(BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGHT);
+        int totalEntityCount = Math.min(NUM_BOSS_ENTITIES, maxNumOfEntities);
+        return totalEntityCount > 0 ? totalEntityCount : 1;
     }
 
     /**
@@ -198,18 +198,6 @@ public final class BossRoomStrategy implements RoomStrategy {
         }
         return width * height;
     }
-
-    /**
-     * Places the boss entity at a random position, considering its tile dimensions.
-     *
-     * @param boss      The boss entity.
-     * @param freeTiles The set of available tiles where the boss can be placed.
-     */
-//    private void placeBossAtRandomPosition(Entity boss, Set<Pair<Integer, Integer>> freeTiles) {
-//        Pair<Integer, Integer> randomTileForBoss = getRandomTileForBoss(freeTiles);
-//        List<Pair<Integer, Integer>> bossTiles = getBossTiles(randomTileForBoss);
-//        assignTilesToBoss(boss, bossTiles);
-//    }
 
     /**
      * Retrieves a random tile that can accommodate the boss entity's dimensions.
@@ -270,19 +258,6 @@ public final class BossRoomStrategy implements RoomStrategy {
     }
 
     /**
-     * Assigns the tiles occupied by the boss entity to the boss entity itself.
-     *
-     * @param boss      The boss entity.
-     * @param bossTiles The list of tiles occupied by the boss entity.
-     */
-//    private void assignTilesToBoss(Entity boss, List<Pair<Integer, Integer>> bossTiles) {
-//        PositionComponent positionComponent = (PositionComponent) boss.getComponent(PositionComponent.class);
-//        positionComponent.setPos(getTileCenterPosition(bossTiles));
-//        positionComponent.setTiles(bossTiles);
-//        System.out.println("setTiles funzia");
-//    }
-
-    /**
      * Calculates the center position of a group of tiles.
      *
      * @param tiles The group of tiles.
@@ -334,10 +309,6 @@ public final class BossRoomStrategy implements RoomStrategy {
                 this::handleEntityGenerationError
         );
     }
-
-//    private void generateAndPlaceMins(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
-//
-//    }
 
     /**
      * Generates entities with exception handling.
@@ -461,17 +432,6 @@ public final class BossRoomStrategy implements RoomStrategy {
         Collections.shuffle(shuffledTiles);
         return shuffledTiles.get(0);
     }
-
-//    /**
-//     * Creates a boss entity and assigns it a random position from the set of free tiles.
-//     *
-//     * @param freeTiles The set of available tiles where the boss can be placed.
-//     * @return The created boss entity.
-//     */
-//    private Entity createBoss(final Set<Pair<Integer, Integer>> freeTiles) {
-//        return bossFactory.createBoss(getRandomTile(freeTiles).getLeft().doubleValue(),
-//                getRandomTile(freeTiles).getRight().doubleValue());
-//    }
 
     /**
      * Calculates the number of enemies to generate based on the number of free tiles.
