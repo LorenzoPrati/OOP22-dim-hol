@@ -55,7 +55,7 @@ public final class MapLoaderImpl implements MapLoader {
         }
     }
 
-    private Tile[][] createTileMatrix(final Node layerNode) {
+    private Tile[][] createTileMatrix(Node layerNode) {
         Element layerElement = (Element) layerNode;
         NodeList propertyNodes = layerElement.getElementsByTagName("property");
         Element dataElement = (Element) layerElement.getElementsByTagName("data").item(0);
@@ -64,21 +64,21 @@ public final class MapLoaderImpl implements MapLoader {
         List<String> nonEmptyLines = Arrays.stream(lines).filter(line -> !line.isEmpty()).toList();
         Tile[][] matrix = new Tile[width][height];
 
-        int k = 0;
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                for (int l = 0; l < propertyNodes.getLength(); l++) {
-                    Element property = (Element) propertyNodes.item(l);
-                    if (Integer.parseInt(nonEmptyLines.get(k)) == Integer.parseInt(property.getAttribute("tileMapIdInt"))) {
+        int tileMapIdIndex = 0;
+        for (int row = 0; row < width; row++) {
+            for (int col = 0; col < height; col++) {
+                for (int propertyIndex = 0; propertyIndex < propertyNodes.getLength(); propertyIndex++) {
+                    Element property = (Element) propertyNodes.item(propertyIndex);
+                    int tileMapId = Integer.parseInt(nonEmptyLines.get(tileMapIdIndex));
+                    if (tileMapId == Integer.parseInt(property.getAttribute("tileMapIdInt"))) {
                         if (property.hasAttribute("walkableBool") && property.hasAttribute("tileSetIdInt")) {
-                            matrix[i][j] = new TileImpl(
-                                    Integer.parseInt(property.getAttribute("tileSetIdInt")),
-                                    Boolean.parseBoolean(property.getAttribute("walkableBool"))
-                            );
+                            boolean walkable = Boolean.parseBoolean(property.getAttribute("walkableBool"));
+                            int tileSetId = Integer.parseInt(property.getAttribute("tileSetIdInt"));
+                            matrix[row][col] = new TileImpl(tileSetId, walkable);
                         }
                     }
                 }
-                k++;
+                tileMapIdIndex++;
             }
         }
         return matrix;
