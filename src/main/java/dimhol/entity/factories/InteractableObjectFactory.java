@@ -62,7 +62,7 @@ public class InteractableObjectFactory extends AbstractFactory {
     public Entity createShopHeart(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 0))
-        .add(new BodyComponent(new RectBodyShape(W,H), true))
+        .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new InteractableComponent(powerUpMaxHealth))
         .add(new AnimationComponent(this.map.get("shopHeart"), "idle"))
         .build();
@@ -71,7 +71,7 @@ public class InteractableObjectFactory extends AbstractFactory {
     public Entity createShopVelocity(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 0))
-        .add(new BodyComponent(new RectBodyShape(W,H), true))
+        .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new InteractableComponent(powerUpSpeed))
         .add(new AnimationComponent(this.map.get("shopSpeed"), "idle"))
         .build();
