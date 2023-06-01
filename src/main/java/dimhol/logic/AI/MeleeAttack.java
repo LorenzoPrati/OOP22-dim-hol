@@ -1,8 +1,7 @@
-package dimhol.logic.enemyAI;
+package dimhol.logic.AI;
 
 import dimhol.events.AddEntityEvent;
 import dimhol.events.WorldEvent;
-import org.locationtech.jts.math.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;

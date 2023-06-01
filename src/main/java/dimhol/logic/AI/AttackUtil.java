@@ -1,4 +1,4 @@
-package dimhol.logic.enemyAI;
+package dimhol.logic.AI;
 
 import org.locationtech.jts.math.Vector2D;
 
@@ -44,19 +44,4 @@ public class AttackUtil {
         }
     }
 
-    /**
-     * This method returns the perfect radius that defines the area in which, if the player enters,
-     * the enemy decides to perform a melee attack.
-     * @param entityPos entity's position
-     * @param enemyCentralPos entity's central position
-     * @param playerPos player's position
-     * @param playerCentralPos player's central position
-     * @return the ray's value
-     */
-    /*public static double getMeleeRay(final Vector2D entityPos, final Vector2D enemyCentralPos,
-                                  final Vector2D playerPos, final Vector2D playerCentralPos) {
-        return entityPos.distance(enemyCentralPos) + playerPos.distance(playerCentralPos);
-    }
-
-     */
 }

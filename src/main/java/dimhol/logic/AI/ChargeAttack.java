@@ -1,6 +1,6 @@
 /* ChargeAttack.java */
 
-package dimhol.logic.enemyAI;
+package dimhol.logic.AI;
 
 import dimhol.events.AddEntityEvent;
 import dimhol.events.WorldEvent;
