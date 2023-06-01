@@ -1,6 +1,6 @@
 package dimhol.components;
 
-import dimhol.logic.enemyAI.Action;
+import dimhol.logic.AI.Action;
 
 import java.util.ArrayList;
 import java.util.List;
