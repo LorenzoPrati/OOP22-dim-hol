@@ -9,9 +9,9 @@ import dimhol.events.WorldEvent;
 /**
  * A system to manage enemies.
  */
-public final class EnemyAiSystem extends AbstractSystem {
+public final class AISystem extends AbstractSystem {
 
-    public EnemyAiSystem() {
+    public AISystem() {
         super(AIComponent.class);
     }
 
@@ -20,9 +20,11 @@ public final class EnemyAiSystem extends AbstractSystem {
         var enemyAI = (AIComponent) enemy.getComponent(AIComponent.class);
         enemyAI.updateTime(dt);
         for (var action : enemyAI.getRoutine()) {
-            action.setPlayer(world.getEntities().stream()
+            world.getEntities()
+                    .stream()
                     .filter(e -> e.hasComponent(PlayerComponent.class))
-                    .findFirst().get());
+                    .findFirst()
+                    .ifPresent(action::setPlayer);
             action.setEnemy(enemy);
             if (action.canExecute()) {
                 var routineExecute = action.execute();

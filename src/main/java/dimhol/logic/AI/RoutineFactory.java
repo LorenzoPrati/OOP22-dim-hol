@@ -1,4 +1,4 @@
-package dimhol.logic.enemyAI;
+package dimhol.logic.AI;
 
 import java.util.ArrayList;
 import java.util.Comparator;
