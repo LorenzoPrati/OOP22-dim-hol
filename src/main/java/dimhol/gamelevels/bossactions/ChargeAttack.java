@@ -26,7 +26,8 @@
 //        // Example: calculate the direction towards the player
 //        Vector2D targetPosition = calculateTargetPosition();
 //        // Move the Boss towards the target position with the charge speed
-//        getMovementComponent().setMovementDirection(targetPosition.subtract(getPositionComponent().getPosition()).normalize().multiply(chargeSpeed));
+//        getMovementComponent().setMovementDirection(targetPosition.subtract(getPositionComponent()
+//        .getPosition()).normalize().multiply(chargeSpeed));
 //        return Optional.empty(); // No events generated during the charge attack
 //    }
 //}
