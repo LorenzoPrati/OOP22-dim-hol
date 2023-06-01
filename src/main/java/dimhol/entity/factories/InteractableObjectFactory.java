@@ -6,6 +6,7 @@ import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.events.ChangeLevelEvent;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import org.locationtech.jts.math.Vector2D;
@@ -39,26 +40,32 @@ public class InteractableObjectFactory extends AbstractFactory {
         .stream()
         .noneMatch(e -> e.hasComponent(AIComponent.class));
 
-    BiConsumer<Entity, World> powerUpMaxHealth = (e,w)-> {
-        if(checkCoins.test(e, MAX_HEALTH_PRICE )) {
+    BiFunction<Entity, World, Boolean> powerUpMaxHealth = (e, w)-> {
+        if (checkCoins.test(e, MAX_HEALTH_PRICE )) {
             payPrice.accept(e, MAX_HEALTH_PRICE);
             var healthComp = (HealthComponent)e.getComponent(HealthComponent.class);
             healthComp.setMaxHealth(healthComp.getMaxHealth() + MAX_HEALTH_INCREASE);
+            return true;
         }
+        return false;
     };
 
-    BiConsumer<Entity, World> powerUpSpeed = (e,w)-> {
-        if(checkCoins.test(e, VELOCITY_PRICE)) {
+    BiFunction<Entity, World, Boolean> powerUpSpeed = (e, w)-> {
+        if (checkCoins.test(e, VELOCITY_PRICE)) {
             payPrice.accept(e, VELOCITY_PRICE);
             var moveComp = (MovementComponent)e.getComponent(MovementComponent.class);
             moveComp.setSpeed(moveComp.getSpeed() + VELOCITY_INCREASE);
+            return true;
         } 
+        return false;
     };
 
-    BiConsumer<Entity, World> useGate = (e,w)-> {
+    BiFunction<Entity, World, Boolean> useGate = (e,w)-> {
         if(checkAllEnemyAreDead.test(w)) {
             w.notifyEvent(new ChangeLevelEvent());
+            return true;
         }
+        return false;
     };
     
     public Entity createShopHeart(final double x, final double y) {
@@ -84,7 +91,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         .add(new PositionComponent(new Vector2D(x,y), 0))
         .add(new BodyComponent(new RectBodyShape(W_GATE, H_GATE), false))
         .add(new InteractableComponent(useGate))
-        .add(new AnimationComponent(this.map.get("gate"), "idle")) //TO DO add gate sprites
+        .add(new AnimationComponent(this.map.get("gate"), "idle")) 
         .build();
     }
 }

@@ -24,11 +24,13 @@ public final class InteractableSystem extends AbstractSystem {
         var collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
         var interactableComp = (InteractableComponent) entity.getComponent(InteractableComponent.class);
         for (var c: collisionComp.getCollided()) {
-            if (c.hasComponent(InteractorComponent.class)) { //TO DO modify with player component
+            if (c.hasComponent(InteractorComponent.class)) { 
                 var interactComp = (InteractorComponent) c.getComponent(InteractorComponent.class);
                 if (interactComp.isInteracting()) {
-                    interactableComp.applyEffect(c, world);
-                    world.notifyEvent(new RemoveEntityEvent(entity));
+                    var effectApplied = interactableComp.applyEffect(c, world);
+                    if (effectApplied) {
+                        world.notifyEvent(new RemoveEntityEvent(entity));
+                    }
                 }
             }
         }

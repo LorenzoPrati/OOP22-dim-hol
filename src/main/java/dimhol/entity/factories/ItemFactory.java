@@ -11,8 +11,8 @@ import dimhol.logic.collision.RectBodyShape;
 import dimhol.components.ItemComponent;
 
 public class ItemFactory extends AbstractFactory {
-    private static final double W = 1;
-    private static final double H = 1;
+    private static final double W = 0.5;
+    private static final double H = 0.5;
     public static final int INCREASE_CURRENT_HEALTH = 1;
     private static final int INCREASE_CURRENT_COINS = 1;
 
