@@ -13,8 +13,8 @@ public class TileImpl implements Tile {
     /**
      * Constructs a new Tile with the specified collidability.
      *
-     * @param tileSetId
-     * @param walkable  whether this Tile should be collidable.
+     * @param tileSetId The ID of the tile set.
+     * @param walkable  Whether this Tile should be collidable.
      */
     public TileImpl(final int tileSetId, final boolean walkable) {
         this.tileSetId = tileSetId;

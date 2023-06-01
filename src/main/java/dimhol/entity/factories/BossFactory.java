@@ -3,6 +3,7 @@ package dimhol.entity.factories;
 import dimhol.components.AIComponent;
 import dimhol.components.AnimationComponent;
 import dimhol.components.BodyComponent;
+import dimhol.components.BossComponent;
 import dimhol.components.HealthComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
@@ -59,6 +60,7 @@ public class BossFactory extends AbstractFactory {
      */
     public Entity createBoss(final double x, final double y) {
         return new EntityBuilder()
+                .add(new BossComponent())
                 .add(new PositionComponent(new Vector2D(x, y), 0))
                 .add(new MovementComponent(new Vector2D(0, 1), BOSS_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(BOSS_WIDTH, BOSS_HEIGHT), true))
