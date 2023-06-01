@@ -1,12 +1,16 @@
 package dimhol.gamelevels.bossactions.bossAI;
 
-import dimhol.components.*;
+import dimhol.components.AnimationComponent;
+import dimhol.components.AttackComponent;
+import dimhol.components.BodyComponent;
+import dimhol.components.CollisionComponent;
+import dimhol.components.MovementComponent;
+import dimhol.components.PlayerComponent;
+import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.entity.factories.AbstractAttackFactory;
 import dimhol.logic.collision.RectBodyShape;
-import dimhol.logic.util.DirectionUtil;
-import org.locationtech.jts.math.Vector2D;
 
 import java.util.function.Predicate;
 
@@ -64,6 +68,10 @@ public final class BossAttackFactory extends AbstractAttackFactory {
      * Minions width.
      */
     public static final double MINIONS_HEIGHT = 3.5;
+    private static final double SUMMON_ATTACK_WIDTH = 5;
+    private static final double SUMMON_ATTACK_HEIGHT = 5;
+    private static final double BOSS_DEFENSIVE_SHIELD_WIDTH = 6;
+    private static final double BOSS_DEFENSIVE_SHIELD_HEIGHT = 6;
 
     private final Predicate<Entity> isPlayer = entity -> entity.hasComponent(PlayerComponent.class);
 
@@ -92,7 +100,7 @@ public final class BossAttackFactory extends AbstractAttackFactory {
     public Entity createSummoningMinions(final Entity bossEntity) {
         System.out.printf("Minions");
             return new EntityBuilder()
-                    .add(new PositionComponent(getAttackPos(bossEntity, 5, 5), 0))
+                    .add(new PositionComponent(getAttackPos(bossEntity, SUMMON_ATTACK_WIDTH, SUMMON_ATTACK_HEIGHT), 0))
                     .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), false))
                     .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, isPlayer))
                     .add(new MinionComponent())
@@ -128,8 +136,9 @@ public final class BossAttackFactory extends AbstractAttackFactory {
     public Entity createDefensiveShield(final Entity bossEntity) {
         System.out.printf("shield");
         return new EntityBuilder()
-                .add(new PositionComponent(getAttackPos(bossEntity, 0, 0), 0))
-                .add(new BodyComponent(new RectBodyShape(2.5, 2.5), false))
+                .add(new PositionComponent(getAttackPos(bossEntity, BOSS_DEFENSIVE_SHIELD_WIDTH,
+                                                                    BOSS_DEFENSIVE_SHIELD_HEIGHT), 0))
+                .add(new BodyComponent(new RectBodyShape(BOSS_DEFENSIVE_SHIELD_WIDTH, BOSS_DEFENSIVE_SHIELD_HEIGHT), false))
                 .add(new CollisionComponent())
                 .add(new AnimationComponent(map.get("boss"), "idle"))
                 .add(new DefensiveShieldComponent(BOSS_DEFENSIVE_SHIELD_DURATION))
