@@ -11,7 +11,6 @@ import org.locationtech.jts.math.Vector2D;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -108,7 +107,7 @@ public final class BossRoomStrategy implements RoomStrategy {
      */
     private void generateAndPlaceBoss(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         generateEntitiesWithExceptionHandling(() -> calculateNumEntities(freeTiles.size()), // Supplier to calculate the number of entities
-                numBosses -> IntStream.range(0, (Integer) numBosses).forEach(i -> {
+                numBosses -> IntStream.range(0, numBosses).forEach(i -> {
                     Entity boss = createBoss(freeTiles); // Create the boss entity
                     placeEntityWithDimension(boss, freeTiles, 4, 3); // Place the boss entity with dimensions
                     entities.add(boss); // Add the boss entity to the list of entities
@@ -145,8 +144,7 @@ public final class BossRoomStrategy implements RoomStrategy {
      */
     private List<Pair<Integer, Integer>> findValidTilesWithDimension(Set<Pair<Integer, Integer>> freeTiles, int width, int height) {
         List<Pair<Integer, Integer>> validTiles = new ArrayList<>();
-        for (Iterator<Pair<Integer, Integer>> iterator = freeTiles.iterator(); iterator.hasNext(); ) {
-            Pair<Integer, Integer> tile = iterator.next();
+        for (Pair<Integer, Integer> tile : freeTiles) {
             int tileX = tile.getLeft();
             int tileY = tile.getRight();
             boolean isValid = true;
