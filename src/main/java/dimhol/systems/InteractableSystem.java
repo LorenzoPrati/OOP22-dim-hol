@@ -5,6 +5,7 @@ import dimhol.components.InteractableComponent;
 import dimhol.components.InteractorComponent;
 import dimhol.core.World;
 import dimhol.entity.Entity;
+import dimhol.events.RemoveEntityEvent;
 
 /**
  * A system wich applies the interactable objects's effects to the entities that collided with them, when it's possible.
@@ -27,6 +28,7 @@ public final class InteractableSystem extends AbstractSystem {
                 var interactComp = (InteractorComponent) c.getComponent(InteractorComponent.class);
                 if (interactComp.isInteracting()) {
                     interactableComp.applyEffect(c, world);
+                    world.notifyEvent(new RemoveEntityEvent(entity));
                 }
             }
         }
