@@ -25,7 +25,7 @@ public class GenericFactory extends AbstractFactory {
                 .add(new PositionComponent(new Vector2D(x,y), 1))
                 .add(new MovementComponent(new Vector2D(0,1), PLAYER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(PLAYER_WIDTH, PLAYER_HEIGHT), true))
-                .add(new CoinPocketComponent(0))
+                .add(new CoinPocketComponent(20))
                 .add(new HealthComponent(PLAYER_HEALTH))
                 .add(new InteractorComponent())
                 .add(new AnimationComponent(map.get("player"),"idle down"))
