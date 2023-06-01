@@ -31,9 +31,11 @@ public final class MapCollisionSystem extends AbstractSystem {
      * @param pos The position component of the entity.
      * @param body The body component of the entity.
      * @param movement The movement component of the entity.
+     * @param tileMap The tile map representing the game map.
      * @return true if the entity collides with the game map, false otherwise.
      */
-    private boolean checkMapCollision(final PositionComponent pos, final BodyComponent body, final MovementComponent movement, final TileMap tileMap) {
+    private boolean checkMapCollision(final PositionComponent pos, final BodyComponent body,
+                                      final MovementComponent movement, final TileMap tileMap) {
         var x1 = pos.getPos().getX();
         var x2 = x1 + body.getBodyShape().getBoundingWidth();
         var y1 = pos.getPos().getY();
@@ -58,6 +60,7 @@ public final class MapCollisionSystem extends AbstractSystem {
     /**
      * Checks if the tile at the specified coordinates is walkable.
      *
+     * @param tileMap The tile map representing the game map.
      * @param rows The rows index of the tile.
      * @param cols The cols index of the tile.
      * @return true if the tile is walkable, false otherwise.
@@ -74,8 +77,9 @@ public final class MapCollisionSystem extends AbstractSystem {
         if (checkMapCollision(position, body, movement, world.getLevelManager().getTileMap())) {
             if (entity.hasComponent(BulletComponent.class)) {
                 world.notifyEvent(new RemoveEntityEvent(entity));
-            } else
+            } else {
                 position.resetToLastPos();
+            }
         }
     }
 }
