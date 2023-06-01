@@ -10,6 +10,9 @@ import java.awt.*;
  */
 public class ResultScreen extends AbstractScreen {
 
+    private final static String WIN_BACKGROUND_PATH = "src/main/resources/asset/bg/winScreen.png";
+    private final static String LOSE_BACKGROUND_PATH = "src/main/resources/asset/bg/loseScreen.png";
+
     /**
      * Constructs a ResultScreen.
      *
@@ -18,10 +21,12 @@ public class ResultScreen extends AbstractScreen {
      */
     public ResultScreen(final Engine engine, final boolean result) {
         super(engine);
-        var homeButton = new JButton("RETURN HOME");
-        homeButton.addActionListener(e -> this.engine.getMainWindow().changePanel(new HomeScreen(engine)));
-        homeButton.setFont(font);
-        homeButton.setForeground(new Color(102,0,153));
+        this.background = new ImageIcon(result ? WIN_BACKGROUND_PATH : LOSE_BACKGROUND_PATH);
+        /*
+        todo label
+         */
+        var homeButton = super.createButton(e -> engine.getMainWindow().changePanel(new HomeScreen(engine)),
+                "RETURN HOME", result? Color.YELLOW : Color.RED);
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -29,7 +34,5 @@ public class ResultScreen extends AbstractScreen {
         centerPanel.add(homeButton, gbc);
         gbc.weighty = 1;
         this.add(centerPanel);
-        this.background = new ImageIcon(result ? "src/main/resources/asset/bg/win_bg.png"
-                : "src/main/resources/asset/bg/lose_bg.png");
     }
 }
