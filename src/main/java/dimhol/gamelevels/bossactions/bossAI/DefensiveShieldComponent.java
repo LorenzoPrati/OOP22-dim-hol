@@ -2,7 +2,14 @@ package dimhol.gamelevels.bossactions.bossAI;
 
 import dimhol.components.Component;
 
+/**
+ * The DefensiveShieldComponent class represents a component that provides a defensive shield ability to an entity.
+ */
 public class DefensiveShieldComponent implements Component {
-    public DefensiveShieldComponent(int bossDefensiveShieldDuration) {
+    /**
+     *
+     * @param bossDefensiveShieldDuration
+     */
+    public DefensiveShieldComponent(final int bossDefensiveShieldDuration) {
     }
 }

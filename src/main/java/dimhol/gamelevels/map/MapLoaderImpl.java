@@ -32,7 +32,7 @@ public final class MapLoaderImpl implements MapLoader {
      * @param inputStream The input stream of the XML file.
      * @throws MapLoadingException If an error occurs while loading the map.
      */
-    public void loadMap(InputStream inputStream) throws MapLoadingException {
+    public void loadMap(final InputStream inputStream) throws MapLoadingException {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -48,14 +48,14 @@ public final class MapLoaderImpl implements MapLoader {
             height = Integer.parseInt(layerNodeList.item(0).getAttributes().getNamedItem("height").getNodeValue());
 
             mapTileLayers = new ArrayList<>();
-            IntStream.range(0, layerNodeList.getLength()).forEach(i -> mapTileLayers.add(createTileMatrix(layerNodeList.item(i))));
+            IntStream.range(0, layerNodeList.getLength()).forEach(i ->
+                    mapTileLayers.add(createTileMatrix(layerNodeList.item(i))));
         } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new MapLoadingException("Error loading the map.", e);
         }
     }
 
-
-    private Tile[][] createTileMatrix(Node layerNode) {
+    private Tile[][] createTileMatrix(final Node layerNode) {
         Element layerElement = (Element) layerNode;
         NodeList propertyNodes = layerElement.getElementsByTagName("property");
         Element dataElement = (Element) layerElement.getElementsByTagName("data").item(0);
@@ -120,7 +120,7 @@ public final class MapLoaderImpl implements MapLoader {
     }
 
     @Override
-    public TileMap loadCustomMap(InputStream inputStream) throws MapLoadingException {
+    public TileMap loadCustomMap(final InputStream inputStream) throws MapLoadingException {
         loadMap(inputStream);
         return getMap();
     }

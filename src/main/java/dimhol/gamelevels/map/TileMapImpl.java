@@ -88,14 +88,4 @@ public final class TileMapImpl implements TileMap {
     public List<Tile[][]> getLayers() {
         return Collections.unmodifiableList(this.layers);
     }
-
-    /**
-     * Sets the new tile map for the TileMap instance.
-     * This method allows replacing the entire map with a new one.
-     *
-     * @param newMap the new TileMap to set.
-     */
-    public void setTileMap(final TileMapImpl newMap) {
-        // TODO: Implementation of setTileMap method will be added here
-    }
 }
