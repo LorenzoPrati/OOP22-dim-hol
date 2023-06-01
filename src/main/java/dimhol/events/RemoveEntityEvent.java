@@ -39,11 +39,9 @@ public class RemoveEntityEvent implements WorldEvent {
             if (entity.hasComponent(PlayerComponent.class)) {
                 world.setWin(false);
             }
-            /*
             if (entity.hasComponent(BossComponent.class)) {
                 world.setWin(true);
             }
-            */
             world.removeEntity(entity);
         });
     }
