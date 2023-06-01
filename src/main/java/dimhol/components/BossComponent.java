@@ -3,6 +3,6 @@ package dimhol.components;
 /**
  *
  */
-public class BossComponent {
+public class BossComponent implements Component {
 
 }
