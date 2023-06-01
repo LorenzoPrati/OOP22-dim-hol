@@ -4,14 +4,14 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * The LoadMap interface represents a contract for classes that can load and provide information about a tile map.
+ * Represents a contract for classes that can load and provide information about a tile map.
  */
 public interface MapLoader {
 
     /**
-     * Returns the tile layers of the map.
+     * Retrieves the tile layers of the map.
      *
-     * @return the map tile layers
+     * @return the map tile layers as a list of 2D arrays of Tile objects.
      */
     List<Tile[][]> getMapTileLayers();
 
@@ -48,7 +48,7 @@ public interface MapLoader {
     /**
      * Returns the tile map data as a {@link TileMapImpl} object.
      *
-     * @return the tile map data
+     * @return the tile map data.
      */
     TileMap getTileMap();
 }
