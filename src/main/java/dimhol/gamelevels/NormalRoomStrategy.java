@@ -51,7 +51,7 @@ public class NormalRoomStrategy implements RoomStrategy {
         this.itemFactory = itemFactory;
         this.interactableObjectFactory = interactableObjectFactory;
         this.random = new Random(random.nextInt());
-        this.gateWidth= 3;
+        this.gateWidth = 3;
         this.gateHeight = 3;
     }
 
