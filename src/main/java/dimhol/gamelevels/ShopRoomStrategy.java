@@ -28,9 +28,11 @@ public class ShopRoomStrategy implements RoomStrategy {
      * Constructs a ShopRoomStrategy object with the specified generic factory and random number generator.
      *
      * @param genericFactory The generic factory used for creating entities.
+     * @param itemFactory The item factory used to create items in the room.
+     * @param interactableObjectFactory The interactable object factory used to create interactable objects in the room.
      * @param random         The random number generator used for generating random positions.
      */
-    public ShopRoomStrategy(final GenericFactory genericFactory,final ItemFactory itemFactory,
+    public ShopRoomStrategy(final GenericFactory genericFactory, final ItemFactory itemFactory,
                             final InteractableObjectFactory interactableObjectFactory,
                             final RandomWrapper random) {
         this.genericFactory = genericFactory;
@@ -86,7 +88,7 @@ public class ShopRoomStrategy implements RoomStrategy {
         return entities;
     }
 
-    private void generateCoins(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    private void generateCoins(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         int coins = new RandomWrapper().nextInt(NUM_ITEMS);
         for (int i = 0; i < coins; i++) {
             var coinsFreeTiles = getRandomTile(freeTiles);
@@ -95,7 +97,7 @@ public class ShopRoomStrategy implements RoomStrategy {
         }
     }
 
-    private void generateHearts(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    private void generateHearts(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         int hearts = new RandomWrapper().nextInt(NUM_ITEMS);
         for (int i = 0; i < hearts; i++) {
             var hearthsFreeTile = getRandomTile(freeTiles);
@@ -105,7 +107,7 @@ public class ShopRoomStrategy implements RoomStrategy {
         }
     }
 
-    private void generateGate(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    private void generateGate(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
             var gateFreeTile = getRandomTile(freeTiles);
             entities.add(interactableObjectFactory.createGate(gateFreeTile.getLeft().doubleValue(),
                     gateFreeTile.getRight().doubleValue()));

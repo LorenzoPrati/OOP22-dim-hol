@@ -1,10 +1,9 @@
 package dimhol.systems;
 
-import dimhol.core.World;
-import dimhol.core.WorldImpl;
-import dimhol.entity.Entity;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
+import dimhol.core.World;
+import dimhol.entity.Entity;
 
 /**
  * A system to handle movement of entities.
