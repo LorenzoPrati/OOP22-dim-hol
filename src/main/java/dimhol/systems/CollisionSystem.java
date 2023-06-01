@@ -1,7 +1,6 @@
 package dimhol.systems;
 
 import dimhol.core.World;
-import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.components.BodyComponent;
 import dimhol.components.CollisionComponent;
@@ -55,7 +54,7 @@ public class CollisionSystem extends AbstractSystem {
 
     private boolean collisionHappens(final PositionComponent p1, final PositionComponent p2,
                                      final BodyComponent b1, final BodyComponent b2) {
-                return b1.getBodyShape().getShape(p1.getPos().getX(),p1.getPos().getY())
-                        .intersects(b2.getBodyShape().getShape(p2.getPos().getX(),p2.getPos().getY()));
+                return b1.getBodyShape().computeShape(p1.getPos())
+                        .intersects(b2.getBodyShape().computeShape(p2.getPos()));
     }
 }

@@ -40,7 +40,7 @@ public final class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_Z -> this.input.setChargeFireball(true);
             case KeyEvent.VK_E -> this.input.setInteract(true);
             case KeyEvent.VK_ESCAPE -> {
-                this.engine.stopGame();
+                this.engine.pauseGame();
                 this.engine.getMainWindow().changePanel(this.pauseScreen);
             }
             default -> {
