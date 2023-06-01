@@ -19,6 +19,7 @@ import java.util.Set;
  */
 public class ShopRoomStrategy implements RoomStrategy {
     private static final int NUM_ITEMS = 10;
+    private static final int NUM_POWER_UP = 2;
     private final GenericFactory genericFactory;
     private final ItemFactory itemFactory;
     private final InteractableObjectFactory interactableObjectFactory;
@@ -82,10 +83,35 @@ public class ShopRoomStrategy implements RoomStrategy {
         //Place heart:
         generateHearts(freeTiles, entities);
 
+        //Place heartPowerUp:
+        generateHeartPowerUp(freeTiles, entities);
+
+        //Place velocityPowerUp:
+        generateVelocityPowerUp(freeTiles, entities);
+
         //Place gate:
         generateGate(freeTiles, entities);
 
+
         return entities;
+    }
+
+    private void generateHeartPowerUp(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
+        int heartPowerUp = new RandomWrapper().nextInt(NUM_POWER_UP);
+        for (int i = 0; i < heartPowerUp; i++) {
+            var heartPowerUpFreeTiles = getRandomTile(freeTiles);
+            entities.add(interactableObjectFactory.createShopHeart(heartPowerUpFreeTiles.getLeft().doubleValue(),
+                    heartPowerUpFreeTiles.getRight().doubleValue()));
+        }
+    }
+
+    private void generateVelocityPowerUp(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
+        int velocityPowerUp = new RandomWrapper().nextInt(NUM_POWER_UP);
+        for (int i = 0; i < velocityPowerUp; i++) {
+            var velocityPowerUpFreeTiles = getRandomTile(freeTiles);
+            entities.add(interactableObjectFactory.createShopVelocity(velocityPowerUpFreeTiles.getLeft().doubleValue(),
+                    velocityPowerUpFreeTiles.getRight().doubleValue()));
+        }
     }
 
     private void generateCoins(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
