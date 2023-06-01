@@ -37,6 +37,15 @@ public interface MapLoader {
     TileMap loadBossRoom();
 
     /**
+     * Loads a room map from the given input stream.
+     *
+     * @param inputStream The input stream of the XML file representing the room map.
+     * @return The loaded room map.
+     * @throws MapLoadingException If an error occurs while loading the room map.
+     */
+    TileMap loadRoomMap(InputStream inputStream) throws MapLoadingException;
+
+    /**
      * Returns the tile map data as a {@link TileMapImpl} object.
      *
      * @return the tile map data
