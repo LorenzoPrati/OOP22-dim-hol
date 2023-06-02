@@ -42,6 +42,10 @@ public interface Scene {
      */
     void setMap(TileMap tileMap);
 
+    /**
+     * 
+     * @return
+     */
     Input getInput();
     
 }
