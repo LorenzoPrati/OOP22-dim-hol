@@ -31,9 +31,7 @@ public class LevelManagerImpl implements LevelManager {
     private final NormalRoomStrategy normalRoomStrategy;
     private final ShopRoomStrategy shopRoomStrategy;
     private final BossRoomStrategy bossRoomStrategy;
-    private final TileMap tileMap;
-    private static final int ENTITY_WIDTH = 4;
-    private static final int ENTITY_HEIGHT = 3;
+    private TileMap tileMap;
     private int currentLevel;
 
     /**
@@ -49,7 +47,7 @@ public class LevelManagerImpl implements LevelManager {
         this.tileMap = mapLoader.loadShopRoom();
         normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, itemFactory, interactableObjectFactory, random);
         shopRoomStrategy = new ShopRoomStrategy(genericFactory, itemFactory, interactableObjectFactory, new RandomWrapper());
-        bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory(), ENTITY_WIDTH, ENTITY_HEIGHT);
+        bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory());
         this.currentLevel = 0;
     }
 
@@ -76,20 +74,20 @@ public class LevelManagerImpl implements LevelManager {
         int roomIndex = currentLevel % DEFAULT_CYCLE_LENGTH;
         if (roomIndex == BOSS_ROOM_INDEX) {  // Check the room index to determine the room type
             //Generate a boss room
-            mapLoader.loadBossRoom();
+            tileMap = mapLoader.loadBossRoom();
             System.out.println("Boss");
             System.out.println("current room " + roomIndex);
             return bossRoomStrategy;
         }
         if (roomIndex % DEFAULT_SHOPS_PER_CYCLE == 0) {
             //Generate a shop
-            mapLoader.loadShopRoom();
+            tileMap = mapLoader.loadShopRoom();
             System.out.println("Shop");
             System.out.println("current room " + roomIndex);
             return shopRoomStrategy;
         }
         //Generate a normal room
-        mapLoader.loadNormalRoom();
+        tileMap = mapLoader.loadNormalRoom();
         System.out.println("Normal");
         System.out.println("current room " + roomIndex);
         return normalRoomStrategy;
