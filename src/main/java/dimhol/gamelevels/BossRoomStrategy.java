@@ -398,7 +398,6 @@ public final class BossRoomStrategy implements RoomStrategy {
             Pair<Integer, Integer> position = availablePositions.get(randomIndex);
             int x = position.getLeft(); //Get the x-coordinate
             int y = position.getRight(); //Get the y-coordinate
-//            entity.setPos(x,y);
             var pos = (PositionComponent) entity.getComponent(PositionComponent.class);
             pos.setPos(new Vector2D(x,y));
 
