@@ -3,6 +3,7 @@ package dimhol.view;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * This class draw the player HUD, show player's health and coins.
@@ -54,7 +55,7 @@ public final class HUDImpl implements HUD {
     public void show(final Graphics2D g2d, final double newTileWidth,
                      final double newTileHeight, final int offsetX, final int offsetY) {
         try {
-            File fontFile = new File("src/main/resources/asset/hud/font/Fipps-Regular.ttf");
+            InputStream fontFile = getClass().getResourceAsStream("/asset/hud/font/Fipps-Regular.ttf");
             double fontSize = newTileHeight / FONT_SIZE_DIVISOR;
             var font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Math.round(fontSize));
             g2d.setFont(font);

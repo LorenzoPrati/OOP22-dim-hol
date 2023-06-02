@@ -16,9 +16,12 @@ public class HomeScreen extends AbstractScreen {
         } catch(Exception e){
             System.out.print("Error loading menu images");
         }
-        
         Color color = new Color(102,0,153);
-        this.add(createLabel(new ImageIcon("src/main/resources/asset/bg/dimension holiday.png")),gbc);
+        try{
+            this.add(createLabel((new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("/asset/bg/dimension holiday.png"))))), gbc);
+        } catch(Exception e){
+            System.out.print("Error loading menu images");
+        }
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         centerPanel.setLayout(new GridBagLayout());
