@@ -34,6 +34,15 @@ public final class TileMapImpl implements TileMap {
         this.tilemap = layers.get(0);
     }
 
+    public TileMapImpl(TileMap tileMap) {
+        this.width = tileMap.getWidth();
+        this.height = tileMap.getHeight();
+        this.tileWidth = tileMap.getTileWidth();
+        this.tileHeight = tileMap.getTileHeight();
+        this.layers = getLayers();
+        this.tilemap = layers.get(0);
+    }
+
     /**
      * Gets the Tile at the given coordinates.
      *
