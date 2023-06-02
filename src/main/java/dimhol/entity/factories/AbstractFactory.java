@@ -23,11 +23,11 @@ public abstract class AbstractFactory {
      */
     public AbstractFactory() {
         try {
-            InputStream input = new FileInputStream(new File("src/main/resources/config/animations.yaml"));
+            InputStream input = getClass().getResourceAsStream("/config/animations.yaml");
             Yaml yaml = new Yaml();
             Map<String, Map<String, ArrayList<Integer>>> mapLoaded = yaml.load(input);
             map.putAll(mapLoaded);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             System.out.println("File not found. ");
         }
     }
