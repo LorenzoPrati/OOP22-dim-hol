@@ -24,11 +24,11 @@ public final class ResourceLoader {
 
     public ResourceLoader() {
         try {
-            InputStream input = new FileInputStream(new File("src/main/resources/config/spritesDimensions.yaml"));
+            InputStream input = getClass().getResourceAsStream("/config/spritesDimensions.yaml");
             Yaml yaml = new Yaml();
             Map<String, ArrayList<Integer>> mapLoaded = yaml.load(input);
             dimensions.putAll(mapLoaded);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             System.out.println("File not found. ");
         }
         load();

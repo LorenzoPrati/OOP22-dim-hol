@@ -1,5 +1,6 @@
 package dimhol.view;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -27,7 +28,11 @@ public class OptionScreen extends AbstractScreen {
     };
     public OptionScreen(Engine engine) {
         super(engine);
-        this.background = new ImageIcon("src/main/resources/asset/bg/optionMenu.png");
+        try{
+            this.background = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("/asset/bg/optionMenu.png")));
+        } catch(Exception e){
+            System.out.print("Error loading menu images");
+        }
         JLabel labelResolution = new JLabel("CHOOSE RESOLUTION: ");
         Font font2 = new Font("Helvetica", Font.BOLD, 17);
         JPanel optionListPanel = new JPanel();
@@ -40,7 +45,12 @@ public class OptionScreen extends AbstractScreen {
         comboBox.setForeground(Color.BLACK);
         labelResolution.setFont(font);
         labelResolution.setForeground(Color.BLACK);
-        this.add(createLabel(new ImageIcon("src/main/resources/asset/bg/options.png")), gbc);
+        try{
+            this.add(createLabel((new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("/asset/bg/options.png"))))), gbc);
+        } catch(Exception e){
+            System.out.print("Error loading menu images");
+        }
+        
         optionListPanel.add(labelResolution, gbc);
         optionListPanel.add(comboBox, gbc);
         optionListPanel.add(createButton(l -> {
