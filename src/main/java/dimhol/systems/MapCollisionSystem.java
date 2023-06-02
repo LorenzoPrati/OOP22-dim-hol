@@ -70,7 +70,7 @@ public final class MapCollisionSystem extends AbstractSystem {
     }
 
     @Override
-    public void process(final Entity entity, final double deltaTime, final World world) {
+    protected void process(final Entity entity, final double deltaTime, final World world) {
         var position = (PositionComponent) entity.getComponent(PositionComponent.class);
         var body = (BodyComponent) entity.getComponent(BodyComponent.class);
         var movement = (MovementComponent) entity.getComponent(MovementComponent.class);

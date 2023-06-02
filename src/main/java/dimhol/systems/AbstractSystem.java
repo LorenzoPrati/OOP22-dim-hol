@@ -42,5 +42,5 @@ public abstract class AbstractSystem implements GameSystem {
      * @param entity  the entity to process
      * @param dt the delta time
      */
-    public abstract void process(final Entity entity, final double dt, final World world);
+    protected abstract void process(final Entity entity, final double dt, final World world);
 }
