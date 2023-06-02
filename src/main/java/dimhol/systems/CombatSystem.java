@@ -12,7 +12,7 @@ public class CombatSystem extends AbstractSystem {
     }
 
     @Override
-    public void process(final Entity entity, final double dt, final World world) {
+    protected void process(final Entity entity, final double dt, final World world) {
         AttackComponent attackComp = (AttackComponent) entity.getComponent(AttackComponent.class);
         CollisionComponent collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
 

@@ -24,7 +24,7 @@ public class PlayerInputSystem extends AbstractSystem {
      * @param dt
      */
     @Override
-    public void process(final Entity entity, final double dt, final World world) {
+    protected void process(final Entity entity, final double dt, final World world) {
         var input = world.getInput();
         var player = (PlayerComponent) entity.getComponent(PlayerComponent.class);
 

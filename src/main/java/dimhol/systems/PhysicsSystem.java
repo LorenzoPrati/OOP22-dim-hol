@@ -1,7 +1,6 @@
 package dimhol.systems;
 
 import dimhol.core.World;
-import dimhol.core.WorldImpl;
 import dimhol.entity.Entity;
 import dimhol.components.BodyComponent;
 import dimhol.components.CollisionComponent;
@@ -24,7 +23,7 @@ public class PhysicsSystem extends AbstractSystem{
      * @param dt
      */
     @Override
-    public void process(final Entity e, final double dt, final World world) {
+    protected void process(final Entity e, final double dt, final World world) {
         var cc = (CollisionComponent) e.getComponent(CollisionComponent.class);
         var b1 = (BodyComponent) e.getComponent(BodyComponent.class);
         var p1 = (PositionComponent) e.getComponent(PositionComponent.class);

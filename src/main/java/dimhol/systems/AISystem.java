@@ -16,7 +16,7 @@ public final class AISystem extends AbstractSystem {
     }
 
     @Override
-    public void process(final Entity enemy, final double dt, final World world) {
+    protected void process(final Entity enemy, final double dt, final World world) {
         var enemyAI = (AIComponent) enemy.getComponent(AIComponent.class);
         enemyAI.updateTime(dt);
         for (var action : enemyAI.getRoutine()) {
