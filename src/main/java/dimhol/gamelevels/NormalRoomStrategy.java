@@ -32,8 +32,6 @@ public class NormalRoomStrategy implements RoomStrategy {
     private final InteractableObjectFactory interactableObjectFactory;
 
     private final Random random;
-    private final int gateWidth;  // Width of the gate obj in tiles
-    private final int gateHeight; // Height of the gate obj in tiles
 
     /**
      * Constructs a NormalRoomStrategy.
@@ -51,8 +49,6 @@ public class NormalRoomStrategy implements RoomStrategy {
         this.itemFactory = itemFactory;
         this.interactableObjectFactory = interactableObjectFactory;
         this.random = new Random(random.nextInt());
-        this.gateWidth = 3;
-        this.gateHeight = 3;
     }
 
     static Pair<Integer, Integer> findRandomFreeTiles(final Set<Pair<Integer, Integer>> freeTiles, final Random random) {
@@ -304,6 +300,6 @@ public class NormalRoomStrategy implements RoomStrategy {
     }
 
     private boolean canAccommodateGate(Pair<Integer, Integer> tile, Set<Pair<Integer, Integer>> freeTiles) {
-        return canAccommodate(tile, freeTiles, gateWidth, gateHeight, "Gate");
+        return canAccommodate(tile, freeTiles, GATE_WIDTH, GATE_HEIGHT, "Gate");
     }
 }
