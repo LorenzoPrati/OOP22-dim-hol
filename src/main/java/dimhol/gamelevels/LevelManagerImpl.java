@@ -14,11 +14,12 @@ import dimhol.gamelevels.map.TileMapImpl;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * The LevelGenerator class generates a new level for the game, including the placement of the player and enemies.
@@ -62,7 +63,7 @@ public class LevelManagerImpl implements LevelManager {
     public List<Entity> changeLevel(final List<Entity> entities) {
         currentLevel++;
         var player = savePlayer(entities);
-        return generateLevel(player);
+        return generateLevel(player, entities);
     }
 
     /**
@@ -101,8 +102,15 @@ public class LevelManagerImpl implements LevelManager {
      */
     @Override
     public TileMap getTileMap() {
-        return new TileMapImpl(this.tileMap);
+        // Create a defensive copy of the tileMap
+        return new TileMapImpl(
+                tileMap.getLayers(),
+                tileMap.getWidth(),
+                tileMap.getHeight(),
+                tileMap.getTileWidth(),
+                tileMap.getTileHeight());
     }
+
 
     /**
      * Retrieves the set of free tiles in the map.
@@ -110,16 +118,16 @@ public class LevelManagerImpl implements LevelManager {
      * @return The set of free tiles as pairs of (x,y) coordinates.
      */
     private Set<Pair<Integer, Integer>> getFreeTiles() {
-        Set<Pair<Integer, Integer>> freeTiles = new HashSet<>();
-        for (int i = 0; i < tileMap.getHeight(); i++) {
-            for (int j = 0; j < tileMap.getWidth(); j++) {
-                if (tileMap.getTile(j, i).isWalkableTile()) {
-                    freeTiles.add(new ImmutablePair<>(i, j));
-                }
-            }
-        }
-        return freeTiles;
+        return IntStream.range(0, tileMap.getHeight())
+                .boxed()
+                .flatMap(row ->
+                        IntStream.range(0, tileMap.getWidth())
+                                .filter(column -> tileMap.getTile(column, row).isWalkableTile())
+                                .mapToObj(column -> new ImmutablePair<>(row, column))
+                )
+                .collect(Collectors.toSet());
     }
+
 
     /**
      * Retrieves the player entity from the game world.
@@ -139,7 +147,7 @@ public class LevelManagerImpl implements LevelManager {
      * @param player The player entity.
      * @return The list of entities for the new level.
      */
-    private List<Entity> generateLevel(final Optional<Entity> player) {
-        return this.determineRoomType().generate(player, getFreeTiles());
+    private List<Entity> generateLevel(final Optional<Entity> player, final List<Entity> entities) {
+        return this.determineRoomType().generate(player, getFreeTiles(), entities);
     }
 }
