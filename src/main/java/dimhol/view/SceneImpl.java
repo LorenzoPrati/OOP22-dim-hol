@@ -2,15 +2,16 @@ package dimhol.view;
 
 import dimhol.core.Engine;
 import dimhol.input.Input;
-import dimhol.gamelevels.LevelManager;
 import dimhol.gamelevels.map.TileMap;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * .
+ */
 public class SceneImpl implements Scene {
     private List<GraphicInfo> renderList = new ArrayList<>();
     private int tileMapWidth;
@@ -26,7 +27,11 @@ public class SceneImpl implements Scene {
     private TileMap tileMap;
     private InputListener inputListener;
 
-    public SceneImpl(Engine engine){
+    /**
+     * .
+     * @param engine
+     */
+    public SceneImpl(Engine engine) {
         this.scenePanel =  new GamePanel(screenSize.getWidth(), screenSize.getHeight());;
         this.loader = new ResourceLoader();
         this.hud = new HUDImpl(loader);
@@ -34,22 +39,21 @@ public class SceneImpl implements Scene {
         engine.getMainWindow().changePanel(this.scenePanel);
     }
 
-    class GamePanel extends JPanel{
+    class GamePanel extends JPanel {
         public GamePanel(final double width, final double height){
-            this.setPreferredSize(new Dimension((int)width,(int)height));
+            this.setPreferredSize(new Dimension((int) width, (int) height));
             this.setDoubleBuffered(true);
             this.setBackground(Color.BLACK);
             this.setCursor(this.getToolkit().createCustomCursor(
-                new BufferedImage( 1, 1, BufferedImage.TYPE_INT_ARGB ),
-                new Point(),
-                null));
+                new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB), new Point(), null));
         }
+
         @Override
         public void paintComponent(Graphics g) {
             var tileMapLayers = tileMap.getLayers();
             super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D)g;
-            for(var layer : tileMapLayers){
+            Graphics2D g2 = (Graphics2D) g;
+            for (var layer: tileMapLayers) {
                 for (int i = 0; i < tileMapWidth; i++) {
                     for (int j = 0; j < tileMapHeight; j++) {
                         var id = layer[i][j].getTileSetId();
@@ -72,7 +76,7 @@ public class SceneImpl implements Scene {
                 var imageToCut = loader.getImage(renderList.get(i).getNumImage());
                 var img = createCompatibleImage(imageToCut.getSubimage(
                     renderList.get(i).getIndex() * loader.getWidth(renderList.get(i).getNumImage()),
-                    0,loader.getWidth(renderList.get(i).getNumImage()),
+                    0, loader.getWidth(renderList.get(i).getNumImage()), 
                     loader.getHeigth(renderList.get(i).getNumImage())));
                 double newWidth = newTileWidth * renderList.get(i).getW();
                 double newHeight = newTileHeight * renderList.get(i).getH();
@@ -103,7 +107,7 @@ public class SceneImpl implements Scene {
 
     @Override
     public void render() {
-        this.scenePanel.paintImmediately(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
+        this.scenePanel.paintImmediately(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
     }
 
 
