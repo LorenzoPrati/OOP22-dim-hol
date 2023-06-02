@@ -62,7 +62,7 @@ public class LevelManagerImpl implements LevelManager {
     public List<Entity> changeLevel(final List<Entity> entities) {
         currentLevel++;
         var player = savePlayer(entities);
-        return generateLevel(player);
+        return generateLevel(player, entities);
     }
 
     /**
@@ -101,8 +101,17 @@ public class LevelManagerImpl implements LevelManager {
      */
     @Override
     public TileMap getTileMap() {
-        return new TileMapImpl(this.tileMap);
+        // Create a defensive copy of the tileMap
+        TileMap tileMapCopy = new TileMapImpl(tileMap.getLayers() ,tileMap.getWidth(), tileMap.getHeight(),
+                tileMap.getTileWidth(), tileMap.getTileHeight());
+        for (int i = 0; i < tileMap.getWidth(); i++) {
+            for (int j = 0; j < tileMap.getHeight(); j++) {
+                tileMapCopy.setTile(i, j, tileMap.getTile(i, j));
+            }
+        }
+        return tileMapCopy;
     }
+
 
     /**
      * Retrieves the set of free tiles in the map.
@@ -139,7 +148,7 @@ public class LevelManagerImpl implements LevelManager {
      * @param player The player entity.
      * @return The list of entities for the new level.
      */
-    private List<Entity> generateLevel(final Optional<Entity> player) {
-        return this.determineRoomType().generate(player, getFreeTiles());
+    private List<Entity> generateLevel(final Optional<Entity> player, List<Entity> entities) {
+        return this.determineRoomType().generate(player, getFreeTiles(), entities);
     }
 }

@@ -22,5 +22,5 @@ public interface RoomStrategy {
      * @param freeTiles The set of available tiles within the room, where entities can be placed.
      * @return A List of entities generated for the game room.
      */
-    List<Entity> generate(Optional<Entity> entity, Set<Pair<Integer, Integer>> freeTiles);
+    List<Entity> generate(Optional<Entity> entity, Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities);
 }
