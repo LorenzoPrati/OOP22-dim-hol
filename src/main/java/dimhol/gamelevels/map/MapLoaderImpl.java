@@ -103,7 +103,7 @@ public final class MapLoaderImpl implements MapLoader {
      */
     @Override
     public TileMap loadNormalRoom() {
-        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Classic-room.xml")) {
             return loadRoomMap(inputStream);
         } catch (IOException e) {
             throw new MapLoadingException("Error loading the normal room map.", e);
@@ -115,7 +115,7 @@ public final class MapLoaderImpl implements MapLoader {
      */
     @Override
     public TileMap loadShopRoom() {
-        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Shop-room.xml")) {
             return loadRoomMap(inputStream);
         } catch (IOException e) {
             throw new MapLoadingException("Error loading the shop room map.", e);
@@ -127,7 +127,7 @@ public final class MapLoaderImpl implements MapLoader {
      */
     @Override
     public TileMap loadBossRoom() {
-        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Boss-room.xml")) {
             return loadRoomMap(inputStream);
         } catch (IOException e) {
             throw new MapLoadingException("Error loading the boss room map.", e);
