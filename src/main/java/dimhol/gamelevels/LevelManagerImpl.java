@@ -10,6 +10,7 @@ import dimhol.entity.factories.ItemFactory;
 import dimhol.gamelevels.map.MapLoader;
 import dimhol.gamelevels.map.MapLoaderImpl;
 import dimhol.gamelevels.map.TileMap;
+import dimhol.gamelevels.map.TileMapImpl;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -44,7 +45,7 @@ public class LevelManagerImpl implements LevelManager {
         ItemFactory itemFactory = new ItemFactory();
         InteractableObjectFactory interactableObjectFactory = new InteractableObjectFactory();
         Random random = new Random();
-        this.tileMap = mapLoader.loadShopRoom();
+        this.tileMap = mapLoader.loadNormalRoom();
         normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, itemFactory, interactableObjectFactory, random);
         shopRoomStrategy = new ShopRoomStrategy(genericFactory, itemFactory, interactableObjectFactory, new RandomWrapper());
         bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory());
@@ -100,7 +101,7 @@ public class LevelManagerImpl implements LevelManager {
      */
     @Override
     public TileMap getTileMap() {
-        return this.tileMap;
+        return new TileMapImpl(this.tileMap);
     }
 
     /**
