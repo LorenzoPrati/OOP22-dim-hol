@@ -1,6 +1,5 @@
 package dimhol.systems;
 
-import dimhol.components.AttackComponent;
 import dimhol.components.MeleeComponent;
 import dimhol.core.World;
 import dimhol.entity.Entity;
@@ -16,7 +15,7 @@ public class ClearAttackSystem extends AbstractSystem {
     }
 
     @Override
-    public void process(final Entity entity, final double dt, final World world) {
+    protected void process(final Entity entity, final double dt, final World world) {
         world.notifyEvent(new RemoveEntityEvent(entity));
     }
 }

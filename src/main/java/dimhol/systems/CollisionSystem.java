@@ -26,7 +26,7 @@ public class CollisionSystem extends AbstractSystem {
      * @param dt
      */
     @Override
-    public void process(final Entity entity, final double dt, final World world) {
+    protected void process(final Entity entity, final double dt, final World world) {
         for (var other : world.getEntities()) {
             if (!other.equals(entity) && other.hasComponent(BodyComponent.class)) {
                 this.checkCollision(entity, other);

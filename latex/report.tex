@@ -1,4 +1,5 @@
 \documentclass[a4paper,12pt]{report}
+\setcounter{tocdepth}{3}
 
 \usepackage{alltt, fancyvrb, url}
 \usepackage{graphicx}
@@ -97,6 +98,7 @@ Di seguito spieghiamo le varie parti della nostra architettura:
 	\item View: e' gestita in modo indipendente dal resto dell'architettura e si occupa solamente di disegnare lo stato del modello di gioco. Inoltre, gestisce diverse schermate, si occupa di disegnare l'interfaccia grafica e di registrare gli input da mouse e tastiera.
 \end{itemize}
 
+\pagebreak
 
 \section{Design dettagliato}
 \subsection{Lorenzo Prati}
@@ -143,6 +145,46 @@ Di seguito spieghiamo le varie parti della nostra architettura:
 \end{itemize}
 
 
+
+\subsection{Lorenzo Prati}
+
+\subsubsection{Engine}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{uml/uml_engine.png}
+	\caption{Diagramma UML dell'Engine}
+	\label{img:badarch}
+\end{figure}
+
+\paragraph*{Problema}
+Realizzare una classe che permetta lo svolgimento effettivo del main loop del gioco, attraverso il quale scandire gli update del modello logico e della rappresentazione grafica, e che contenga tutti gli elementi per mantenere attiva l'applicazione. All'occorrenza, deve anche essere possibile mettere in pausa il gioco e riprenderlo. Deve essere inoltre gestita la fine del gioco.
+
+\paragraph*{Soluzione} La soluzione e' ricaduta sulla creazione di un'interfaccia \texttt{Engine} con relativa implementazione \texttt{EngineImpl}. Questa classe fa uso del \textit{pattern game loop}, realizzato in un metodo privato e vengono esposti dall'interfaccia i metodi necessari alle altre classi (ad esempio le schermate della View) per controllare il loop. E' quindi possibile metterlo in pausa, riprenderlo e arrestarlo. Essendo questa classe la prima che viene creata al lancio dell'applicazione, essa si occupa anche internamente di creare il modello logico e la view.
+
+\subsubsection{World}
+
+\paragraph*{Problema}
+Occorre contenere e mantenere il modello logico proprio del gioco, e comandare la logica che opera su di essi. Allo stesso tempo, e' necessario passare alla View le informazioni necessarie affinche' possa disegnare lo stato del dominio.
+
+\paragraph*{Soluzione}
+Ho scelto di unire in un'unica classe la funzione di contenere il dominio o modello logico, costituito di fatti dai dati contenuti nei \texttt{Component}, e la sua rappresentazione grafica (\texttt{Scene}), quindi ho realizzato l'interfaccia \texttt{World} con la relativa implementazone \texttt{WorldImpl}. Ho optato per questa scelta di nome nonostante la funzione della classe sia piu' comparabile a quella di un classico \textit{Controller} del pattern MVC poiche' e' utilizzato spesso nel contesto dell'ECS.
+
+L'interfaccia \texttt{World} espone i metodi necessari al controllo del gioco vero e proprio, come ad esempio il metodo \textit{update}, che viene chiamato ad ogni ciclo \textit{game loop} in esecuzione sull'\texttt{Engine}. Questo e' il metodo principale della classe, perche' si occupa di:
+
+\begin{itemize}
+	\item eseguire tutti i \texttt{System}
+	\item eseguire tutti gli eventi in coda nel \texttt{World}
+	\item comandare alla scena di disegnare lo stato del gioco solo dopo aver passato le relative informazioni
+\end{itemize}
+
+Ho scelto di memorizzare e gestire i \texttt{System} direttamente in una lista dentro il \texttt{World} per semplicita' quando di fatti l'ordine con cui essi vengono memorizzati nella lista e quindi eseguiti ad ogni ciclo di \textit{update} potrebbe essere gestito da uno \textit{strategy pattern}; tuttavia ho scelto di semplificare l'approccio perche' in ogni caso non viene gestita in nessun modo l'abilitazione/disabilitazione di sistemi a run-time (come e' comune nel pattern ECS) e in generale in un gioco semplice come il nostro i pochi sistemi presenti devono eseguire strettamente uno dopo l'altro in un certo ordine preciso che di fatti lascia spazio a poche variazioni. Per quest'ultimo motivo, la gestione dei sistemi e' fissa e non modificabile, e per questo l'inizializzazione dei \texttt{System} e' gestita internamente al \texttt{World} e non e' visibile o modificabile dall'esterno.
+
+Poi il \texttt{World} espone i metodi per la gestione delle \texttt{Entity}, cioe' che permettono di aggiungere e rimuovere \texttt{Entity}. 
+
+Gli eventi sono gestiti tramite l'interfaccia \texttt{WorldEvent} e sono gestiti in modo asincrono. Durante la loro esecuzione, i vari \texttt{System} possono notificare il \texttt{World} di uno specifico evento, che verra' messo in una coda ed eseguito solo dopo che tutti i \texttt{System} hanno finito la loro esecuzione. In questo modo si evita il verificarsi di comportamenti anomali dovuti all'immissione di \texttt{Entity} nel \texttt{World} nel mezzo dei \texttt{System}. D'altra parte e' risultato comodo, durante l'esecuzione dei \texttt{System}, sia immettere che rimuovere le \texttt{Entity} tramite eventi dedicati, in modo da reagire all'aggiunta/eliminazione di una specifica entita' (ad esempio per il \textit{game over}). 
+
+Inoltre, sono presenti vari metodi per settare e interrogare il risultato della partita, utili soprattutto all'\texttt{Engine} per stoppare il \textit{game loop}.
 
 
 \chapter{Sviluppo}
