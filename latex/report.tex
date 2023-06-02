@@ -242,6 +242,13 @@ In questo caso, il giocatore e' un entita' come le altre, definita dall'insieme 
 
 Il \texttt{PlayerInputSystem}, che e' il primo \textit{system} a eseguire nel gioco ad ogni loop, processa le entita' che hanno un \texttt{PlayerComponent} (lasciando quindi aperta la possibilita' di gestire piu' giocatori). Per semplicita' di spiegazione, assumiamo che l'entita' che rappresenta il giocatore sia una sola. In questo caso, tale entita' viene processata normalmente dal sistema, che ne gestisce il \textit{cambio di stato} in base all'input dell'utente agendo come parte di una \textit{state machine}. 
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{uml/player_states.png}
+	\caption{Diagramma degli stati del player (finite state machine). LC ed RC indicano rispettivamente il tasto sinistro e destro del mouse}
+	\label{img:badarch}
+\end{figure}
+
 Il \texttt{PlayerComponent} contiene lo \textit{stato} corrente in ogni momento, quindi viene estratto tale \texttt{PlayerState} e interrogato sulla possibilita' di poter effettuare un cambio di stato in base all'\texttt{Input}; se possibile, quindi, il \texttt{PlayerState} corrente restituisce il prossimo stato calcolato sempre sulla base dell'input e il system procede con la transizione di stato, sostituendo lo stato corrente nel \texttt{PlayerComponent} con il nuovo stato calcolato. Se lo stato corrente puo' transitare (cioe' non e' bloccato da un'animazione che non e' finita), allora viene anche chiamato il metodo \texttt{execute}, che potrebbe generare nuove entita', ad esempio proiettili o attacchi, e queste vengono poi aggiunte al \texttt{World} tramite evento. Il cambio di stato piu' nel dettaglio e' gestito dai metodi \texttt{entry} ed \texttt{exit}. Infine, il system aggiorna l'animazione (vedi spiegazione animazioni). 
 
 L'interfaccia \texttt{Input} e'ottenibile tramite getter dal \texttt{World} e interrogabile sui tasti premuti dall'utente.
