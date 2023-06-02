@@ -1,4 +1,5 @@
 \documentclass[a4paper,12pt]{report}
+\setcounter{tocdepth}{3}
 
 \usepackage{alltt, fancyvrb, url}
 \usepackage{graphicx}
@@ -97,8 +98,27 @@ Di seguito spieghiamo le varie parti della nostra architettura:
 	\item View: e' gestita in modo indipendente dal resto dell'architettura e si occupa solamente di disegnare lo stato del modello di gioco. Inoltre, gestisce diverse schermate, si occupa di disegnare l'interfaccia grafica e di registrare gli input da mouse e tastiera.
 \end{itemize}
 
+\pagebreak
 
 \section{Design dettagliato}
+
+\subsection{Lorenzo Prati}
+
+\subsubsection{Engine}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{uml/uml_engine.png}
+	\caption{Diagramma UML dell'Engine}
+	\label{img:badarch}
+\end{figure}
+
+\paragraph*{Problema}
+Realizzare una classe che permetta lo svolgimento effettivo del main loop del gioco, attraverso il quale scandire gli update del modello logico e della rappresentazione grafica, e che contenga tutti gli elementi per mantenere attiva l'applicazione. All'occorrenza, deve anche essere possibile mettere in pausa il gioco e riprenderlo. Deve essere inoltre gestita la fine del gioco.
+
+\paragraph*{Soluzione} La soluzione e' ricaduta sulla creazione di un'interfaccia \texttt{Engine} con relativa implementazione \texttt{EngineImpl}. Questa classe fa uso del \textit{pattern game loop}, realizzato in un metodo privato e vengono esposti dall'interfaccia i metodi necessari alle altre classi (ad esempio le schermate della View) per controllare il loop. E' quindi possibile metterlo in pausa, riprenderlo e arrestarlo. Essendo questa classe la prima che viene creata al lancio dell'applicazione, essa si occupa anche internamente di creare il modello logico e la view.
+
+\subsubsection*{World}
 
 
 \chapter{Sviluppo}
