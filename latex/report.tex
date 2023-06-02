@@ -91,7 +91,7 @@ Questo pattern si basa come da definizione su tre parti fondamentali, che interc
 
 Di seguito spieghiamo le varie parti della nostra architettura:
 \begin{itemize}
-	\item Components: sono oggetti utili a mantenere dei dati che descrivono un certo aspetto del modello di gioco (ad esempio la posizione sul piano, il movimento ecc.). 
+	\item Components: sono oggetti utili a mantenere dei dati che descrivono un certo aspetto del modello di gioco (ad esempio la posizione sul piano, il movimento, il corpo ecc.). 
 	\item Entity: sono dei raccoglitori di Component. Ogni entita' e' descritta dai suoi componenti che permettono alla stessa di distinguerla dalle altre entita'. Ad esempio, diverse entita' presenti in gioco nello stesso momento potrebbero contenere un PositionComponent, un MovementComponent, un BodyComponent, un HealthComponent e altri, che ne descrivono le proprieta' comuni. Tramite l'aggiunta di AIComponent o di un PlayerComponent, solo per citarne alcuni, e' possibile distinguere i nemici dal giocatore. 
 	\item Systems: sono la parte dell'architettura che si occupa di operare sulle entita', modificandone i componenti e quindi svolgendo la maggior parte della logica del gioco. L'esecuzione sequenziale di vari sistemi, ciascuno che scorre le entita' e opera su un determinato set di componenti, permette il funzionamento del gioco. Ad esempio, il MovementSystem opera esclusivamente sulle entita' che contengono il MovementComponent e si occupa di muovere tutte le entita'; mentre il CheckHealthSystem si occupa di prendere tutte le entita' che hanno un HealthComponent e di rimuovere quelle che hanno esaurito le vite. E' quindi sufficiente, per inserire nel gioco una nuova meccanica, costruire nuovi componenti che definiscano nuove proprieta' e un nuovo sistema che operi su di essi senza il bisogno di andare a modificare i sistemi o i componenti precedentemente creati.
 	\item Engine e World: queste sono le classi che controllano effettivamente lo svolgersi del gioco. Engine si occupa di gestire il game loop, mentre il World contiene al suo interno le entita' di gioco, schedula i system e passa alla View le informazioni necessarie.
@@ -120,11 +120,14 @@ Modellare il concetto di \textit{entity'} nel contesto del \textit{pattern ecs}.
 
 \paragraph*{Soluzione}
 Differentemente dall'approccio classico utilizzato per il \textit{pattern ecs}, che consiste nel rappresentare il concetto di entita' come \textit{id} numerici (interi di fatto) attraverso i quali identificare i vari component, ho scelto di usare un approccio piu' semplice e piu' \textit{object-oriented}, oggetto del corso, realizzando le entita' come classi di tipo \texttt{Entity} contenenti un insieme di \texttt{Component}. Ciascuna entita' possiede comunque un \textit{id} ma questo e' usato in minima parte e solo per esigenze di gestione che esulano da questo paragrafo e che spieghero' in seguito. 
+Il vantaggio di questo approccio \textit{oop} e' sicuramente nella semplicita' di gestione; infatti liste di entita', ciascuna con relativo insieme di componenti, sono facilmente memorizzabili e iterabili all'occorrenza. Di contro, un approccio piu' a basso livello che favorisca l'uso massiccio di \textit{id} e array di componenti avrebbe permesso un notevole incremento delle performance che pero' e' fuori dallo scopo del progetto.
 
 Quindi, l'interfaccia \texttt{Component} non ha metodi, e serve a essere implementata da tutti i componenti del gioco.
 L'interfaccia \texttt{Entity}, invece, contiene tutti i metodi fondamentali per manipolare i componenti contenuti in quell'entita', come ad esempio l'aggiunta e la rimozione, e l'ottenimento di uno specifico componente. 
 
 Su queste semplici interfacce si basa l'intera struttura del \textit{pattern entity-component-system}, o meglio della parte \textit{entity-component} che rappresenta in questo caso il modello logico del gioco (lo \textit{stato} e i \textit{dati}), mentre la logica e' affidata ai \textit{system}.
+
+Infine, ho realizzato una classe \texttt{EntityBuilder} che, tramite l'uso del \textit{builder pattern}, consente la creazione di entita' in modo dichiarativo semplicemente tramite l'aggiunta sequenziale di \texttt{Component} su cui si basano tutte le factory presenti nel progetto. Per creare nuove entita' e' quindi sufficiente aggiungere componenti tramite l'\texttt{EntityBuilder} e modificando i parametri di creazione di questi componenti oppure creandone di nuovi, e' di fatti possibile creare molto velocemente nemici, oggetti e attacchi nuovi e dalle caratteristiche diverse. (vedi factories)
 
 \subsubsection{System}
 
@@ -139,6 +142,8 @@ Le entita' e i componenti non definiscono logica di comportamento propria, quind
 
 \paragraph[]{Soluzione}
 Ho realizzato un'interfaccia \texttt{GameSystem} che modella un generico \textit{system}. Il metodo esposto e' \texttt{update} e si occupa di far eseguire la logica del sistema. Visto che ogni \textit{system} deve essere in grado di operare solo su certe entita', per garantire il \textit{riuso} ho scelto di realizzare una classe astratta \texttt{AbstractSystem} che all'interno utilizza il \textit{pattern template method} dove il metodo template e' appunto \texttt{update}, che fa i dovuti controlli sulle entita' e poi richiama il metodo astratto e protetto \texttt{process} solo sulle entita' che hanno i componenti richiesti. In questo modo, ogni classe che estende \texttt{AbstractSystem} deve solamente occuparsi di definire tramite costruttore l'insieme di \texttt{Component} su cui vuole operare e poi implementare il metodo \texttt{process} che andra' ad operare solo su \texttt{Entity} che hanno i componenti precedentemente richiesti.
+
+I \textit{system} sono in grado, avendo nel loro metodo \texttt{process} un riferimento al \texttt{World} di notificare, come spieghero' meglio in seguito, degli eventi; ma e' anche possibile un metodo di \textit{signaling} tra \textit{system} diversi. Questo e' possibile attaccando, in seguito al verificarsi di una determinata situazione, un componente \textit{informativo} all'entita' che si sta processando in modo tale da permettere a successivi \textit{system} di cercare entita' con quel componente \textit{informativo} e gestire la cosa adeguatamente.
 
 \subsubsection{Engine}
 
@@ -156,6 +161,14 @@ Realizzare una classe che permetta lo svolgimento effettivo del main loop del gi
 
 \subsubsection{World}
 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{uml/uml_world.png}
+	\caption{Diagramma UML dell'Engine}
+	\label{img:badarch}
+\end{figure}
+
 \paragraph*{Problema}
 Occorre contenere e mantenere il modello logico proprio del gioco, e comandare la logica che opera su di essi. Allo stesso tempo, e' necessario passare alla View le informazioni necessarie affinche' possa disegnare lo stato del dominio.
 
@@ -167,7 +180,7 @@ L'interfaccia \texttt{World} espone i metodi necessari al controllo del gioco ve
 \begin{itemize}
 	\item eseguire tutti i \texttt{System}
 	\item eseguire tutti gli eventi in coda nel \texttt{World}
-	\item comandare alla scena di disegnare lo stato del gioco solo dopo aver passato le relative informazioni
+	\item comandare alla scena di disegnare lo stato del gioco solo dopo aver passato le relative informazioni usando il pattern
 \end{itemize}
 
 Ho scelto di memorizzare e gestire i \texttt{System} direttamente in una lista dentro il \texttt{World} per semplicita' quando di fatti l'ordine con cui essi vengono memorizzati nella lista e quindi eseguiti ad ogni ciclo di \textit{update} potrebbe essere gestito da uno \textit{strategy pattern}; tuttavia ho scelto di semplificare l'approccio perche' in ogni caso non viene gestita in nessun modo l'abilitazione/disabilitazione di sistemi a run-time (come e' comune nel pattern ECS) e in generale in un gioco semplice come il nostro i pochi sistemi presenti devono eseguire strettamente uno dopo l'altro in un certo ordine preciso che di fatti lascia spazio a poche variazioni. Per quest'ultimo motivo, la gestione dei sistemi e' fissa e non modificabile, e per questo l'inizializzazione dei \texttt{System} e' gestita internamente al \texttt{World} e non e' visibile o modificabile dall'esterno.
@@ -191,6 +204,52 @@ Ho realizzato una classe \texttt{PositionComponent} che ovviamente implementa l'
 Analogamente, per rappresentare il movimento ho creato un componente \texttt{MovementComponent}, che memorizza la direzione in cui il movimento deve essere compiuto, tramite un vettore 2d. Inoltre, viene qui memorizzata anche la velocita' con la quale l'entita' dovra' compiere il movimento. Il movimento puo' anche essere abilitato/disabilitato. La scelta di gestire il movimento tramite vettori, nonostante le entita' di gioco si muovano quasi tutte soltanto nelle 4 direzioni, permette in futuro anche la facile implementazione del movimento nelle 8 direzioni, o comunque una sua gestione libera.
 
 Una volta definiti questi componenti di base, e' possibile gestire il movimento di tutte le entita' tramite un \textit{system}. Il \texttt{MovementSystem} si occupa infatti di filtrare le entita' che hanno un componente \texttt{MovementComponent}, che significa che \textit{posseggono la capacita' di muoversi e hanno i dati necessari affinche' possano essere mosse}, e si occupa di verificare per ciascuna di queste entita' se il movimento e' abilitato (vedi sopra) e nel caso aggiornare il \texttt{PositionComponent} con la nuova posizione risultante dal calcolo del movimento espresso nel \texttt{MovementComponent} applicato alla vecchia posizione. L'esecuzione di questo \textit{system} ad ogni ciclo del \textit{game loop}, permette di muovere tutte le entita' che \textit{possono farlo} previo precedente settaggio della direzione in cui l'entita' intende muoversi.
+
+\subsubsection{Collisioni e fisica}
+
+\paragraph{Problema}
+Alcune entita' hanno corpi \textit{solidi} e devono comportarsi come tali nelle loro azioni di movimento. Inoltre e' necessario registrare quando entita' di qualunque tipo collidono con altre entita', al fine di poterne gestire le conseguenze.
+
+\paragraph{Soluzione}
+Ho realizzato una classe \texttt{BodyComponent} che modella il \textit{corpo} di un'entita', definendone proprieta' come la \texttt{BodyShape}, ovvero la forma geometrica che il suo corpo occupa nello spazio, e la solidita'.
+(espressa da un booleano). 
+
+Il \texttt{CollisionSystem} si occupa di processare le entita' che hanno un \texttt{BodyComponent}. Per ciascuna di queste entita', viene controllata la collisione con \textit{tutte} le altre entita' presenti nel gioco. Se viene rilevata una collisione, calcolata estrendo dai rispettivi \texttt{BodyComponent} le body shape e controllandone l'intersezioni in date coordinate, allora viene \textit{registrata} la collisione attaccando all'entita' che il system sta processando in quel momento un \texttt{CollisionComponent}, un semplice componente che mantiene i dati sulle collisioni avvenute. In particolare, viene aggiunto un \texttt{CollisionComponent} solo nel caso non ce ne sia gia' uno, poiche' altrimenti vengono aggiornate le informazioni di quello gia' presente aggiungendo i dati sulla nuova collisione. Questo e' un esempio, l'unico in realta' realmente presente in questo progetto, di \textit{signaling tra system}. Infatti, i successivi \textit{system} potranno filtrare le entita' che hanno tra i loro componenti anche un \texttt{CollisionComponent} e gestire la collisione in modo appropriato. Su questo meccanismo si basano i sistemi che gestiscono le collisioni fisiche, gli item, il combattimento ecc. poiche' la loro gestione si basa sulla precedente aggiunta di un \texttt{CollisionComponent} da parte del \texttt{CollisionComponent}.
+
+Un \texttt{PhysicsSystem}, che esegue subito dopo il \texttt{CollisionSystem}, processa le entita' che hanno \texttt{BodyCompoenent} e \texttt{CollisionComponent} occupandosi invece della gestione vera e propria della collisione fisica, che pero' nel dominio del gioco si traduce in un semplice reset della posizione. Dato che vengono tenute nel \texttt{PositionComponent} sia la posizione corrente che quella immediatamente passata, solo in caso di collisione tra corpi \textit{solidi} viene ripristinata la posizione precedente.
+
+Menziono qui anche la presenza di un \texttt{ClearCollisionSystem}, un semplice sistema che esegue dopo che hanno eseguito tutti i sistemi che dovevano in qualche modo gestire la reazione a una collisione (filtrando anche per \texttt{CollisionComponent}), rimuovendo tutti i \texttt{CollisionComponent} dalle entita' che ne hanno uno. In questo modo, al successivo loop di update dei system, non vengono lasciate collisioni non gestite.
+
+\subsubsection{Logica del giocatore e Input}
+
+\paragraph{Problema}
+L'utente controlla un personaggio in grado di:
+
+\begin{itemize}
+	\item muoversi in 4 direzioni (su, giu', destra, sinistra)
+	\item attaccare con la spada
+	\item sparare un proiettile
+	\item caricare una palla di fuoco e spararla rilasciando il tasto
+	\item interagire con oggetti
+\end{itemize}
+
+Ognuna di queste azioni e' rappresentata a schermo da un'animazione differente, e comporta conseguenze sul mondo di gioco. Alcune di queste azioni hanno condizioni per essere eseguite, oppure possono essere eseguite solo dopo aver compiuto altre azioni.
+
+\paragraph{Soluzione}
+Ho risolto il problema utilizzando lo \textit{state pattern} in combinazione con un \texttt{PlayerInputSystem}. Infatti, se abbiamo cercato di rispettare il pattern \textit{ecs} il piu' possibile, specialmente cercando di gestire la logica di comportamento delle entita' interamente nei \textit{system} quando possibile, si e' convenuto che non abbia senso forzarlo su ogni aspetto, percio' in questo e in altri casi parte della logica e' stata spostata fuori dai system cercando di semplificare l'aspetto del \textit{behaviour} presente in alcune implementazioni dell'\textit{ecs}.
+
+In questo caso, il giocatore e' un entita' come le altre, definita dall'insieme dei suoi componenti. Il componente che lo distingue maggiormente pero' e' il \texttt{PlayerComponent}, che non contiene lui stesso la logica del comportamento del player, ma contiene delle classi che hanno questa logica, cioe' gli \textit{stati} del player (\texttt{PlayerState}). 
+
+Il \texttt{PlayerInputSystem}, che e' il primo \textit{system} a eseguire nel gioco ad ogni loop, processa le entita' che hanno un \texttt{PlayerComponent} (lasciando quindi aperta la possibilita' di gestire piu' giocatori). Per semplicita' di spiegazione, assumiamo che l'entita' che rappresenta il giocatore sia una sola. In questo caso, tale entita' viene processata normalmente dal sistema, che ne gestisce il \textit{cambio di stato} in base all'input dell'utente agendo come parte di una \textit{state machine}. 
+
+Il \texttt{PlayerComponent} contiene lo \textit{stato} corrente in ogni momento, quindi viene estratto tale \texttt{PlayerState} e interrogato sulla possibilita' di poter effettuare un cambio di stato in base all'\texttt{Input}; se possibile, quindi, il \texttt{PlayerState} corrente restituisce il prossimo stato calcolato sempre sulla base dell'input e il system procede con la transizione di stato, sostituendo lo stato corrente nel \texttt{PlayerComponent} con il nuovo stato calcolato. Se lo stato corrente puo' transitare (cioe' non e' bloccato da un'animazione che non e' finita), allora viene anche chiamato il metodo \texttt{execute}, che potrebbe generare nuove entita', ad esempio proiettili o attacchi, e queste vengono poi aggiunte al \texttt{World} tramite evento. Il cambio di stato piu' nel dettaglio e' gestito dai metodi \texttt{entry} ed \texttt{exit}. Infine, il system aggiorna l'animazione (vedi spiegazione animazioni). 
+
+L'interfaccia \texttt{Input} e'ottenibile tramite getter dal \texttt{World} e interrogabile sui tasti premuti dall'utente.
+
+Ho realizzato una classe \texttt{InputListener} che, tramite i metodi di Swing, registra l'input da mouse e tastiera e chiama dei setter su un'istanza di \texttt{Input}. Questa istanza viene poi passata al \texttt{World} tramite una copia, garantendo in questo modo al modello di gioco di operare con una classe completamente separata dalla View.
+
+\subsubsection{Schermata vittoria/sconfitta}
+Ho realizzato anche una schermata di View, cioe' la schermata di vittoria e sconfitta. Qui, tramite il passaggio di un parametro booleano che indica la vittoria/sconfitta, viene semplicemente visualizzata un'immagine di sfondo e un messagio finale differente.
 
 
 \subsection{Elvis Perlika}
