@@ -20,7 +20,7 @@ public final class InteractableSystem extends AbstractSystem {
     }
 
     @Override
-    public void process(final Entity entity, final double dt, final World world) {
+    protected void process(final Entity entity, final double dt, final World world) {
         var collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
         var interactableComp = (InteractableComponent) entity.getComponent(InteractableComponent.class);
         for (var c: collisionComp.getCollided()) {

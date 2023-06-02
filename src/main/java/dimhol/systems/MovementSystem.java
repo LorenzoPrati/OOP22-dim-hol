@@ -24,7 +24,7 @@ public class MovementSystem extends AbstractSystem {
      * @param dt
      */
     @Override
-    public void process(final Entity entity, final double dt, final World world) {
+    protected void process(final Entity entity, final double dt, final World world) {
         var pos = (PositionComponent) entity.getComponent(PositionComponent.class);
         var mov = (MovementComponent) entity.getComponent(MovementComponent.class);
         pos.updateLastPos();
