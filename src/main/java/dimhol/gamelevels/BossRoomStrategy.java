@@ -1,5 +1,6 @@
 package dimhol.gamelevels;
 
+import dimhol.components.PlayerComponent;
 import dimhol.components.PositionComponent;
 import dimhol.components.PowerComponent;
 import dimhol.entity.Entity;
@@ -65,22 +66,23 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @return A list of generated entities.
      */
     @Override
-    public List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles) {
-        List<Entity> entities = new ArrayList<>();
+    public List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+
+        List<Entity> newListOfEntities = new ArrayList<>();
 
         // Place the player:
-        generateAndPlacePlayer(freeTiles, entities, PLAYER_ENTITY_WIDTH, PLAYER_ENTITY_HEIGHT);
+        generatePlayer(freeTiles, entities, newListOfEntities, PLAYER_ENTITY_WIDTH, PLAYER_ENTITY_HEIGHT);
 
         // Place the boss:
-        generateAndPlaceBoss(freeTiles, entities, BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGHT);
+        generateAndPlaceBoss(freeTiles, newListOfEntities, BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGHT);
 
         // Generate enemy waves:
-        generateAndPlaceEnemyWaves(freeTiles, entities, ENEMY_ENTITY_WIDTH, ENEMY_ENTITY_HEIGHT);
+        generateAndPlaceEnemyWaves(freeTiles, newListOfEntities, ENEMY_ENTITY_WIDTH, ENEMY_ENTITY_HEIGHT);
 
         //generate Minions:
-        generateAndPlaceMinions(freeTiles, entities, MINIONS_ENTITY_WIDTH, MINIONS_ENTITY_HEIGHT);
+        generateAndPlaceMinions(freeTiles, newListOfEntities, MINIONS_ENTITY_WIDTH, MINIONS_ENTITY_HEIGHT);
 
-        return entities;
+        return newListOfEntities;
     }
 
     /**
@@ -118,19 +120,23 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param playerEntityWidth The
      * @param playerEntityHeight The
      */
-    private Entity generateAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities,
-                                        final int playerEntityWidth, final int playerEntityHeight) {
-        Optional<Entity> existingPlayer = entities.stream()
-                .filter(entity -> entity.hasComponent(PositionComponent.class))
+    private void generatePlayer(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities, List<Entity> newListOfEntities,
+                                final int playerEntityWidth, final int playerEntityHeight) {
+        Optional<Entity> existingEntity = entities.stream()
+                .filter(entity -> entity.hasComponent(PlayerComponent.class))
                 .findFirst();
 
-        if (existingPlayer.isPresent()) {
-            return existingPlayer.get();
+        if (existingEntity.isPresent()) {
+            var oldPlayer = existingEntity.get();
+            var position = (PositionComponent) oldPlayer.getComponent(PositionComponent.class);
+            oldPlayer.removeComponent(position);
+            var playerTiles = getRandomTile(freeTiles);
+            oldPlayer.addComponent(new PositionComponent(new Vector2D(playerTiles.getLeft().doubleValue(),
+                    playerTiles.getRight().doubleValue()), 1));
+            newListOfEntities.add(oldPlayer);
         } else {
-            Entity player = createPlayer(freeTiles);
-            placeEntityAtRandomPosition(player, freeTiles, playerEntityWidth, playerEntityHeight);
-            entities.add(player);
-            return player;
+            Entity player = createAndPlacePlayer(freeTiles, playerEntityWidth, playerEntityHeight);
+            newListOfEntities.add(player);
         }
     }
 
@@ -475,11 +481,24 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param freeTiles The set of available tiles where the player can be placed.
      * @return The created player entity.
      */
-    private Entity createPlayer(final Set<Pair<Integer, Integer>> freeTiles) {
-        var playerFreeTile = getRandomTile(freeTiles);
-        return genericFactory.createPlayer(playerFreeTile.getLeft().doubleValue(),
-                playerFreeTile.getRight().doubleValue());
+    private Entity createAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles,
+                                        final int playerWidth, final int playerHeight) {
+        Entity player = createPlayer(freeTiles);
+        placeEntity(player, freeTiles, playerWidth, playerHeight);
+        return player;
     }
+
+    /**
+     * Creates a player entity with a random position from the set of free tiles.
+     *
+     * @param freeTiles The set of available tiles where the player can be placed.
+     * @return The created player entity.
+     */
+    private Entity createPlayer(final Set<Pair<Integer, Integer>> freeTiles) {
+        return genericFactory.createPlayer(getRandomTile(freeTiles).getLeft().doubleValue(),
+                getRandomTile(freeTiles).getRight().doubleValue());
+    }
+
 
     /**
      * Assigns a random position from the set of free tiles to the specified entity.

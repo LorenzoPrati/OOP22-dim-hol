@@ -1,5 +1,6 @@
 package dimhol.gamelevels;
 
+import dimhol.components.PlayerComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.factories.GenericFactory;
@@ -66,33 +67,33 @@ public class ShopRoomStrategy implements RoomStrategy {
      * {@inheritDoc}
      */
     @Override
-    public List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles) {
-        List<Entity> entities = new ArrayList<>();
+    public List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+
+        List<Entity> newListOfEntities = new ArrayList<>();
 
         //Place the player:
-        generatePlayer(freeTiles, entities);
+        generatePlayer(freeTiles, entities, newListOfEntities);
 
         //Place the shop-keeper:
-        Entity shopKeeper = createShopKeeper(freeTiles);
-        entities.add(shopKeeper);
+        createShopKeeper(freeTiles, newListOfEntities);
 
         //Place coins:
-        generateCoins(freeTiles, entities);
+        generateCoins(freeTiles, newListOfEntities);
 
         //Place heart:
-        generateHearts(freeTiles, entities);
+        generateHearts(freeTiles, newListOfEntities);
 
         //Place heartPowerUp:
-        generateHeartPowerUp(freeTiles, entities);
+        generateHeartPowerUp(freeTiles, newListOfEntities);
 
         //Place velocityPowerUp:
-        generateVelocityPowerUp(freeTiles, entities);
+        generateVelocityPowerUp(freeTiles, newListOfEntities);
 
         //Place gate:
-        generateGate(freeTiles, entities);
+        generateGate(freeTiles, newListOfEntities);
 
 
-        return entities;
+        return newListOfEntities;
     }
 
     private void generateHeartPowerUp(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
@@ -144,19 +145,36 @@ public class ShopRoomStrategy implements RoomStrategy {
      * @param freeTiles The set of available tiles where the player can be placed.
      * @return The created player entity.
      */
-    private Entity generatePlayer(final Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
-        Optional<Entity> existingPlayer = entities.stream()
-                .filter(entity -> entity.hasComponent(PositionComponent.class))
+    private void generatePlayer(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities, List<Entity> newListOfEntities) {
+        Optional<Entity> existingEntity = entities.stream()
+                .filter(entity -> entity.hasComponent(PlayerComponent.class))
                 .findFirst();
 
-        if (existingPlayer.isPresent()) {
-            return existingPlayer.get();
+        if (existingEntity.isPresent()) {
+            var oldPlayer = existingEntity.get();
+            var position = (PositionComponent) oldPlayer.getComponent(PositionComponent.class);
+            oldPlayer.removeComponent(position);
+            var playerTiles = getRandomTile(freeTiles);
+            oldPlayer.addComponent(new PositionComponent(new Vector2D(playerTiles.getLeft().doubleValue(),
+                    playerTiles.getRight().doubleValue()), 1));
+            newListOfEntities.add(oldPlayer);
         } else {
-            Entity player = createPlayer(freeTiles);
-            placeEntity(player, freeTiles);
-            entities.add(player);
-            return player;
+            Entity player = createAndPlacePlayer(freeTiles);
+            newListOfEntities.add(player);
         }
+    }
+
+
+    /**
+     * Creates a player entity with a random position from the set of free tiles.
+     *
+     * @param freeTiles The set of available tiles where the player can be placed.
+     * @return The created player entity.
+     */
+    private Entity createAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles) {
+        Entity player = createPlayer(freeTiles);
+        placeEntity(player, freeTiles);
+        return player;
     }
 
     /**
@@ -169,7 +187,6 @@ public class ShopRoomStrategy implements RoomStrategy {
         return genericFactory.createPlayer(getRandomTile(freeTiles).getLeft().doubleValue(),
                 getRandomTile(freeTiles).getRight().doubleValue());
     }
-
     /**
      * Assigns a random position from the set of free tiles to the specified entity.
      *
@@ -200,9 +217,9 @@ public class ShopRoomStrategy implements RoomStrategy {
      * @param freeTiles The set of available tiles where the shopkeeper can be placed.
      * @return The created shopkeeper entity.
      */
-    private Entity createShopKeeper(final Set<Pair<Integer, Integer>> freeTiles) {
+    private void createShopKeeper(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         var shopKeeperFreeTiles = getRandomTile(freeTiles);
-        return genericFactory.createShopkeeper(shopKeeperFreeTiles.getLeft().doubleValue(),
-                shopKeeperFreeTiles.getRight().doubleValue());
+        entities.add(genericFactory.createShopkeeper(shopKeeperFreeTiles.getLeft().doubleValue(),
+                shopKeeperFreeTiles.getRight().doubleValue()));
     }
 }

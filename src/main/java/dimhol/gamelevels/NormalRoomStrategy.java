@@ -72,29 +72,30 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @return A list of generated entities.
      */
     @Override
-    public final List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles) {
+    public final List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
 
-        List<Entity> entities = new ArrayList<>();
+
+        List<Entity> newListOfEntities = new ArrayList<>();
 
         //Place the player:
-        generatePlayer(freeTiles, entities);
+        generatePlayer(freeTiles, entities, newListOfEntities);
 
         //Place the enemies:
-        generateEnemies(freeTiles, entities);
+        generateEnemies(freeTiles, newListOfEntities);
 
         System.out.println(freeTiles.size());
 
         //Place coins:
-        generateCoins(freeTiles, entities);
+        generateCoins(freeTiles, newListOfEntities);
 
         //Place heart:
-        generateHearts(freeTiles, entities);
+        generateHearts(freeTiles, newListOfEntities);
 
         //Place gate:
-        generateGate(freeTiles, entities);
+        generateGate(freeTiles, newListOfEntities);
 
 
-        return entities;
+        return newListOfEntities;
     }
 
     private void generateGate(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
@@ -104,17 +105,22 @@ public class NormalRoomStrategy implements RoomStrategy {
         entities.add(gate);
     }
 
-    private Entity generatePlayer(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    private void generatePlayer(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities, List<Entity> newListOfEntities) {
         Optional<Entity> existingEntity = entities.stream()
                 .filter(entity -> entity.hasComponent(PlayerComponent.class))
                 .findFirst();
 
         if (existingEntity.isPresent()) {
-            return existingEntity.get();
+            var oldPlayer = existingEntity.get();
+            var position = (PositionComponent) oldPlayer.getComponent(PositionComponent.class);
+            oldPlayer.removeComponent(position);
+            var playerTiles = getRandomTile(freeTiles);
+            oldPlayer.addComponent(new PositionComponent(new Vector2D(playerTiles.getLeft().doubleValue(),
+                                                            playerTiles.getRight().doubleValue()), 1));
+            newListOfEntities.add(oldPlayer);
         } else {
             Entity player = createAndPlacePlayer(freeTiles);
-            entities.add(player);
-            return player;
+            newListOfEntities.add(player);
         }
     }
 

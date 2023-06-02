@@ -10,7 +10,6 @@ import dimhol.entity.factories.ItemFactory;
 import dimhol.gamelevels.map.MapLoader;
 import dimhol.gamelevels.map.MapLoaderImpl;
 import dimhol.gamelevels.map.TileMap;
-import dimhol.gamelevels.map.TileMapImpl;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -62,7 +61,7 @@ public class LevelManagerImpl implements LevelManager {
     public List<Entity> changeLevel(final List<Entity> entities) {
         currentLevel++;
         var player = savePlayer(entities);
-        return generateLevel(player);
+        return generateLevel(player, entities);
     }
 
     /**
@@ -101,7 +100,7 @@ public class LevelManagerImpl implements LevelManager {
      */
     @Override
     public TileMap getTileMap() {
-        return new TileMapImpl(this.tileMap);
+        return this.tileMap;
     }
 
     /**
@@ -139,7 +138,7 @@ public class LevelManagerImpl implements LevelManager {
      * @param player The player entity.
      * @return The list of entities for the new level.
      */
-    private List<Entity> generateLevel(final Optional<Entity> player) {
-        return this.determineRoomType().generate(player, getFreeTiles());
+    private List<Entity> generateLevel(final Optional<Entity> player, List<Entity> entities) {
+        return this.determineRoomType().generate(player, getFreeTiles(), entities);
     }
 }
