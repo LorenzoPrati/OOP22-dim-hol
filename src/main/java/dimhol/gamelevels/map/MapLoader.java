@@ -4,14 +4,14 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * The LoadMap interface represents a contract for classes that can load and provide information about a tile map.
+ * Represents a contract for classes that can load and provide information about a tile map.
  */
 public interface MapLoader {
 
     /**
-     * Returns the tile layers of the map.
+     * Retrieves the tile layers of the map.
      *
-     * @return the map tile layers
+     * @return the map tile layers as a list of 2D arrays of Tile objects.
      */
     List<Tile[][]> getMapTileLayers();
 
@@ -37,18 +37,18 @@ public interface MapLoader {
     TileMap loadBossRoom();
 
     /**
-     * Loads a custom map tile map.
+     * Loads a room map from the given input stream.
      *
-     * @param inputStream The input stream xml file.
-     * @return the loaded custom map tile map
+     * @param inputStream The input stream of the XML file representing the room map.
+     * @return The loaded room map.
+     * @throws MapLoadingException If an error occurs while loading the room map.
      */
-    TileMap loadCustomMap(InputStream inputStream);
-
+    TileMap loadRoomMap(InputStream inputStream) throws MapLoadingException;
 
     /**
      * Returns the tile map data as a {@link TileMapImpl} object.
      *
-     * @return the tile map data
+     * @return the tile map data.
      */
     TileMap getTileMap();
 }

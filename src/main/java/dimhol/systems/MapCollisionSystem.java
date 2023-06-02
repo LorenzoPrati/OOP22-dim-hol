@@ -66,7 +66,7 @@ public final class MapCollisionSystem extends AbstractSystem {
      * @return true if the tile is walkable, false otherwise.
      */
     private boolean isTileWalkable(final TileMap tileMap, final int rows, final int cols) {
-        return !tileMap.getTile(rows, cols).isWalkable();
+        return !tileMap.getTile(rows, cols).isWalkableTile();
     }
 
     @Override
