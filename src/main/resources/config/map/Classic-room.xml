@@ -38,14 +38,9 @@
   <property tileMapIdInt="4" tileSetIdInt="3" walkableBool="true"/>
   <property tileMapIdInt="5" tileSetIdInt="4" walkableBool="true"/>
   <property tileMapIdInt="10" tileSetIdInt="9" walkableBool="true"/>
-  <property tileMapIdInt="11" tileSetIdInt="10" walkableBool="true"/>
   <property tileMapIdInt="12" tileSetIdInt="11" walkableBool="true"/>
   <property tileMapIdInt="13" tileSetIdInt="12" walkableBool="true"/>
   <property tileMapIdInt="14" tileSetIdInt="13" walkableBool="true"/>
-  <property tileMapIdInt="15" tileSetIdInt="14" walkableBool="true"/>
-  <property tileMapIdInt="16" tileSetIdInt="15" walkableBool="true"/>
-  <property tileMapIdInt="17" tileSetIdInt="16" walkableBool="true"/>
-  <property tileMapIdInt="18" tileSetIdInt="17" walkableBool="true"/>
   <property tileMapIdInt="19" tileSetIdInt="18" walkableBool="true"/>
   <property tileMapIdInt="20" tileSetIdInt="19" walkableBool="true"/>
   <property tileMapIdInt="21" tileSetIdInt="20" walkableBool="true"/>
