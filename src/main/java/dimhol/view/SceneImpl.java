@@ -45,15 +45,15 @@ public class SceneImpl implements Scene {
                 new Point(),
                 null));
         }
-
         @Override
         public void paintComponent(Graphics g) {
             var tileMapLayers = tileMap.getLayers();
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D)g;
-            for(var layer: tileMapLayers){
+            for(var layer : tileMapLayers){
                 for (int i = 0; i < tileMapWidth; i++) {
                     for (int j = 0; j < tileMapHeight; j++) {
+                        System.out.println(i + " - " + j);
                         var id = layer[i][j].getTileSetId();
                         if (this.getWidth() / tileMapHeight < this.getHeight() / tileMapWidth) {
                             newTileWidth = this.getWidth() / tileMapHeight;

@@ -48,8 +48,9 @@ public final class MapLoaderImpl implements MapLoader {
             height = Integer.parseInt(layerNodeList.item(0).getAttributes().getNamedItem("height").getNodeValue());
 
             mapTileLayers = new ArrayList<>();
-            IntStream.range(0, layerNodeList.getLength()).forEach(i ->
-                    mapTileLayers.add(createTileMatrix(layerNodeList.item(i))));
+            for (int i = 0; i < layerNodeList.getLength(); i++) {
+                mapTileLayers.add(createTileMatrix(layerNodeList.item(i)));
+            }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new MapLoadingException("Error loading the map.", e);
         }
@@ -91,7 +92,7 @@ public final class MapLoaderImpl implements MapLoader {
 
     @Override
     public TileMap loadNormalRoom() {
-        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Classic-room.xml")) {
             loadMap(inputStream);
             return getMap();
         } catch (IOException e) {
@@ -101,7 +102,7 @@ public final class MapLoaderImpl implements MapLoader {
 
     @Override
     public TileMap loadShopRoom() {
-        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Classic-room.xml")) {
             loadMap(inputStream);
             return getMap();
         } catch (IOException e) {
@@ -111,7 +112,7 @@ public final class MapLoaderImpl implements MapLoader {
 
     @Override
     public TileMap loadBossRoom() {
-        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/normal-room.xml")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Classic-room.xml")) {
             loadMap(inputStream);
             return getMap();
         } catch (IOException e) {
