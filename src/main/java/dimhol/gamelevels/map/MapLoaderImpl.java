@@ -48,15 +48,20 @@ public final class MapLoaderImpl implements MapLoader {
             height = Integer.parseInt(layerNodeList.item(0).getAttributes().getNamedItem("height").getNodeValue());
 
             mapTileLayers = new ArrayList<>();
-            for (int i = 0; i < layerNodeList.getLength(); i++) {
-                mapTileLayers.add(createTileMatrix(layerNodeList.item(i)));
-            }
+            IntStream.range(0, layerNodeList.getLength()).forEach(i ->
+                    mapTileLayers.add(createTileMatrix(layerNodeList.item(i))));
         } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new MapLoadingException("Error loading the map.", e);
         }
     }
 
-    private Tile[][] createTileMatrix(final Node layerNode) {
+    /**
+     * Creates a tile matrix from the given layer node.
+     *
+     * @param layerNode The XML node representing a map layer.
+     * @return The created tile matrix.
+     */
+    private Tile[][] createTileMatrix(Node layerNode) {
         Element layerElement = (Element) layerNode;
         NodeList propertyNodes = layerElement.getElementsByTagName("property");
         Element dataElement = (Element) layerElement.getElementsByTagName("data").item(0);
@@ -65,73 +70,84 @@ public final class MapLoaderImpl implements MapLoader {
         List<String> nonEmptyLines = Arrays.stream(lines).filter(line -> !line.isEmpty()).toList();
         Tile[][] matrix = new Tile[width][height];
 
-        int k = 0;
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                for (int l = 0; l < propertyNodes.getLength(); l++) {
-                    Element property = (Element) propertyNodes.item(l);
-                    if (Integer.parseInt(nonEmptyLines.get(k)) == Integer.parseInt(property.getAttribute("tileMapIdInt"))) {
+        int tileMapIdIndex = 0;
+        for (int row = 0; row < width; row++) {
+            for (int col = 0; col < height; col++) {
+                for (int propertyIndex = 0; propertyIndex < propertyNodes.getLength(); propertyIndex++) {
+                    Element property = (Element) propertyNodes.item(propertyIndex);
+                    int tileMapId = Integer.parseInt(nonEmptyLines.get(tileMapIdIndex));
+                    if (tileMapId == Integer.parseInt(property.getAttribute("tileMapIdInt"))) {
                         if (property.hasAttribute("walkableBool") && property.hasAttribute("tileSetIdInt")) {
-                            matrix[i][j] = new TileImpl(
-                                    Integer.parseInt(property.getAttribute("tileSetIdInt")),
-                                    Boolean.parseBoolean(property.getAttribute("walkableBool"))
-                            );
+                            boolean walkable = Boolean.parseBoolean(property.getAttribute("walkableBool"));
+                            int tileSetId = Integer.parseInt(property.getAttribute("tileSetIdInt"));
+                            matrix[row][col] = new TileImpl(tileSetId, walkable);
                         }
                     }
                 }
-                k++;
+                tileMapIdIndex++;
             }
         }
         return matrix;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Tile[][]> getMapTileLayers() {
         return new ArrayList<>(mapTileLayers);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TileMap loadNormalRoom() {
         try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Classic-room.xml")) {
-            loadMap(inputStream);
-            return getMap();
+            return loadRoomMap(inputStream);
         } catch (IOException e) {
             throw new MapLoadingException("Error loading the normal room map.", e);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TileMap loadShopRoom() {
         try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Shop-room.xml")) {
-            loadMap(inputStream);
-            return getMap();
+            return loadRoomMap(inputStream);
         } catch (IOException e) {
             throw new MapLoadingException("Error loading the shop room map.", e);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TileMap loadBossRoom() {
         try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Boss-room.xml")) {
-            loadMap(inputStream);
-            return getMap();
+            return loadRoomMap(inputStream);
         } catch (IOException e) {
             throw new MapLoadingException("Error loading the boss room map.", e);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public TileMap loadCustomMap(final InputStream inputStream) throws MapLoadingException {
+    public TileMap loadRoomMap(InputStream inputStream) throws MapLoadingException {
         loadMap(inputStream);
-        return getMap();
+        return getTileMap();
     }
 
-    private TileMap getMap() {
-        return new TileMapImpl(mapTileLayers, width, height, tileWidth, tileHeight);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TileMap getTileMap() {
-        return null;
+        return new TileMapImpl(mapTileLayers, width, height, tileWidth, tileHeight);
     }
 }

@@ -10,6 +10,7 @@ import dimhol.entity.factories.ItemFactory;
 import dimhol.gamelevels.map.MapLoader;
 import dimhol.gamelevels.map.MapLoaderImpl;
 import dimhol.gamelevels.map.TileMap;
+import dimhol.gamelevels.map.TileMapImpl;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -44,12 +45,10 @@ public class LevelManagerImpl implements LevelManager {
         ItemFactory itemFactory = new ItemFactory();
         InteractableObjectFactory interactableObjectFactory = new InteractableObjectFactory();
         Random random = new Random();
+        this.tileMap = mapLoader.loadNormalRoom();
         normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, itemFactory, interactableObjectFactory, random);
         shopRoomStrategy = new ShopRoomStrategy(genericFactory, itemFactory, interactableObjectFactory, new RandomWrapper());
-        tileMap = mapLoader.loadNormalRoom();
-        int bossWidth = 4;
-        int bossHeight = 3;
-        bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory(), bossWidth, bossHeight);
+        bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory());
         this.currentLevel = 0;
     }
 
@@ -102,7 +101,7 @@ public class LevelManagerImpl implements LevelManager {
      */
     @Override
     public TileMap getTileMap() {
-        return this.tileMap;
+        return new TileMapImpl(this.tileMap);
     }
 
     /**
@@ -114,7 +113,7 @@ public class LevelManagerImpl implements LevelManager {
         Set<Pair<Integer, Integer>> freeTiles = new HashSet<>();
         for (int i = 0; i < tileMap.getHeight(); i++) {
             for (int j = 0; j < tileMap.getWidth(); j++) {
-                if (tileMap.getTile(j, i).isWalkable()) {
+                if (tileMap.getTile(j, i).isWalkableTile()) {
                     freeTiles.add(new ImmutablePair<>(i, j));
                 }
             }

@@ -106,7 +106,7 @@ public final class BossAttackFactory extends AbstractAttackFactory {
                 .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, isPlayer))
                 .add(new MinionComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "idle")) //TODO: add their sprites.
+                .add(new AnimationComponent(map.get("boss"), "idle"))
                 .build();
     }
 
