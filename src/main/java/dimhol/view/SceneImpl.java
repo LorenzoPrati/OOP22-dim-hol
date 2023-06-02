@@ -22,7 +22,6 @@ public class SceneImpl implements Scene {
     private int newTileHeight;
     private int offsetX;
     private int offsetY;
-    private LevelManager levelManager;
     public final GamePanel scenePanel;
     private TileMap tileMap;
     private InputListener inputListener;
@@ -53,7 +52,6 @@ public class SceneImpl implements Scene {
             for(var layer : tileMapLayers){
                 for (int i = 0; i < tileMapWidth; i++) {
                     for (int j = 0; j < tileMapHeight; j++) {
-                        System.out.println(i + " - " + j);
                         var id = layer[i][j].getTileSetId();
                         if (this.getWidth() / tileMapHeight < this.getHeight() / tileMapWidth) {
                             newTileWidth = this.getWidth() / tileMapHeight;

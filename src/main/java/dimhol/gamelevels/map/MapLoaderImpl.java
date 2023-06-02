@@ -102,7 +102,7 @@ public final class MapLoaderImpl implements MapLoader {
 
     @Override
     public TileMap loadShopRoom() {
-        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Classic-room.xml")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Shop-room.xml")) {
             loadMap(inputStream);
             return getMap();
         } catch (IOException e) {
@@ -112,7 +112,7 @@ public final class MapLoaderImpl implements MapLoader {
 
     @Override
     public TileMap loadBossRoom() {
-        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Classic-room.xml")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/config/map/Boss-room.xml")) {
             loadMap(inputStream);
             return getMap();
         } catch (IOException e) {
