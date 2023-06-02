@@ -6,6 +6,7 @@ import dimhol.entity.Entity;
 import dimhol.entity.factories.BossFactory;
 import dimhol.entity.factories.EnemyFactory;
 import dimhol.entity.factories.GenericFactory;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.locationtech.jts.math.Vector2D;
 
@@ -32,26 +33,28 @@ public final class BossRoomStrategy implements RoomStrategy {
     private static final int NUM_BOSS_ENTITIES = 1;
     private static final int BOSS_ENTITY_WIDTH = 4;
     private static final int BOSS_ENTITY_HEIGHT = 3;
+    private static final int PLAYER_ENTITY_WIDTH = 1;
+    private static final int PLAYER_ENTITY_HEIGHT = 1;
+    private static final int ENEMY_ENTITY_WIDTH = 1;
+    private static final int ENEMY_ENTITY_HEIGHT = 1;
+    private static final int MINIONS_ENTITY_WIDTH = 1;
+    private static final int MINIONS_ENTITY_HEIGHT = 1;
     private final GenericFactory genericFactory;
     private final EnemyFactory enemyFactory;
     private final BossFactory bossFactory;
-    private final int bossWidth;  // Width of the boss entity in tiles
-    private final int bossHeight; // Height of the boss entity in tiles
 
     /**
      * Constructs a BossRoomStrategy.
      *
      * @param genericFactory The factory for creating generic entities.
-     * @param enemyFactory   The factory for creating enemy entities.
-     * @param bossFactory    The factory for creating boss entities.
+     * @param enemyFactory The factory for creating enemy entities.
+     * @param bossFactory The factory for creating boss entities.
      */
     public BossRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory,
-                            final BossFactory bossFactory, final int bossWidth, final int bossHeight) {
+                            final BossFactory bossFactory) {
         this.genericFactory = genericFactory;
         this.enemyFactory = enemyFactory;
         this.bossFactory = bossFactory;
-        this.bossWidth = bossWidth;
-        this.bossHeight = bossHeight;
     }
 
     /**
@@ -66,37 +69,60 @@ public final class BossRoomStrategy implements RoomStrategy {
         List<Entity> entities = new ArrayList<>();
 
         // Place the player:
-        Entity player = generateAndPlacePlayer(freeTiles);
-        entities.add(player);
+        generateAndPlacePlayer(freeTiles, entities, PLAYER_ENTITY_WIDTH, PLAYER_ENTITY_HEIGHT);
 
         // Place the boss:
-        generateAndPlaceBoss(freeTiles, entities);
+        generateAndPlaceBoss(freeTiles, entities, BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGHT);
 
         // Generate enemy waves:
-        generateAndPlaceEnemyWaves(freeTiles, entities);
+        generateAndPlaceEnemyWaves(freeTiles, entities, ENEMY_ENTITY_WIDTH, ENEMY_ENTITY_HEIGHT);
 
-        //generate Mins:
-        generateMinions(freeTiles);
+        //generate Minions:
+        generateAndPlaceMinions(freeTiles, entities, MINIONS_ENTITY_WIDTH, MINIONS_ENTITY_HEIGHT);
 
         return entities;
     }
 
-    private void generateMinions(Set<Pair<Integer, Integer>> freeTiles) {
+    /**
+     * Generates and places minions entities in the room.
+     *
+     * @param freeTiles           The set of available tiles where the minions can be placed.
+     * @param entities           The
+     * @param minionsEntityWidth The minions
+     * @param minionsEntityHeight The minions
+     */
+    private void generateAndPlaceMinions(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities,
+                                         final int minionsEntityWidth, final int minionsEntityHeight) {
+        Entity minions = createMinions(freeTiles);
+        placeEntityAtRandomPosition(minions, freeTiles, minionsEntityWidth, minionsEntityHeight);
+        entities.add(minions);
+    }
+
+    /**
+     * Creates a minion entity.
+     *
+     * @param freeTiles The set of available tiles where the minion can be placed.
+     * @return The created minion entity.
+     */
+    private Entity createMinions(final Set<Pair<Integer, Integer>> freeTiles) {
         var minionsFreeTiles = getRandomTile(freeTiles);
-        bossFactory.createMinion(minionsFreeTiles.getLeft().doubleValue(), minionsFreeTiles.getRight().doubleValue());
-        System.out.println("MINIONS CREATED");
+        return bossFactory.createMinion(minionsFreeTiles.getLeft().doubleValue(),
+                minionsFreeTiles.getRight().doubleValue());
     }
 
     /**
      * Generates and places the player entity in a random position.
      *
      * @param freeTiles The set of available tiles where the player can be placed.
-     * @return The generated player entity.
+     * @param entities The
+     * @param playerEntityWidth The
+     * @param playerEntityHeight The
      */
-    private Entity generateAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles) {
+    private void generateAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities,
+                                        final int playerEntityWidth, final int playerEntityHeight) {
         Entity player = createPlayer(freeTiles);
-        placeEntityAtRandomPosition(player, freeTiles);
-        return player;
+        placeEntityAtRandomPosition(player, freeTiles, playerEntityWidth, playerEntityHeight);
+        entities.add(player);
     }
 
     /**
@@ -104,12 +130,15 @@ public final class BossRoomStrategy implements RoomStrategy {
      *
      * @param freeTiles The set of available tiles where the boss can be placed.
      * @param entities  The list of entities where the boss will be added.
+     * @param bossEntityWidth The
+     * @param bossEntityHeight The
      */
-    private void generateAndPlaceBoss(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
+    private void generateAndPlaceBoss(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities,
+                                      final int bossEntityWidth, final int bossEntityHeight) {
         generateEntitiesWithExceptionHandling(() -> calculateNumEntities(freeTiles.size()), // Supplier to calculate the number of entities
                 numBosses -> IntStream.range(0, numBosses).forEach(i -> {
                     Entity boss = createBoss(freeTiles); // Create the boss entity
-                    placeEntityWithDimension(boss, freeTiles, BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGHT); // Place the boss entity with dimensions
+                    placeEntityWithDimension(boss, freeTiles, bossEntityWidth, bossEntityHeight);
                     entities.add(boss); // Add the boss entity to the list of entities
                 }),
                 this::handleEntityGenerationError // Error handling consumer
@@ -121,11 +150,11 @@ public final class BossRoomStrategy implements RoomStrategy {
      *
      * @param entity    The entity to place.
      * @param freeTiles The set of available tiles where the entity can be placed.
-     * @param width     The width of the entity.
-     * @param height    The height of the entity.
+     * @param entityWidth     The width of the entity.
+     * @param entityHeight    The height of the entity.
      */
-    private void placeEntityWithDimension(Entity entity, Set<Pair<Integer, Integer>> freeTiles, int width, int height) {
-        List<Pair<Integer, Integer>> validTiles = findValidTilesWithDimension(freeTiles, width, height);
+    private void placeEntityWithDimension(final Entity entity, final Set<Pair<Integer, Integer>> freeTiles, final int entityWidth, final int entityHeight) {
+        List<Pair<Integer, Integer>> validTiles = findValidTilesWithDimension(freeTiles, entityWidth, entityHeight);
         if (!validTiles.isEmpty()) {
             Pair<Integer, Integer> randomTile = validTiles.get(new Random().nextInt(validTiles.size()));
             PositionComponent positionComponent = (PositionComponent) entity.getComponent(PositionComponent.class);
@@ -142,7 +171,7 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param height    The height of the entity.
      * @return A list of valid tiles with the specified dimensions.
      */
-    private List<Pair<Integer, Integer>> findValidTilesWithDimension(Set<Pair<Integer, Integer>> freeTiles, int width, int height) {
+    private List<Pair<Integer, Integer>> findValidTilesWithDimension(final Set<Pair<Integer, Integer>> freeTiles, final int width, final int height) {
         List<Pair<Integer, Integer>> validTiles = new ArrayList<>();
         for (Pair<Integer, Integer> tile : freeTiles) {
             int tileX = tile.getLeft();
@@ -187,16 +216,16 @@ public final class BossRoomStrategy implements RoomStrategy {
     /**
      * Calculates the number of tiles required to accommodate an entity with the specified dimensions.
      *
-     * @param width  The width of the entity.
-     * @param height The height of the entity.
+     * @param entityWidth  The width of the entity.
+     * @param entityHight The height of the entity.
      * @return The number of tiles required.
      * @throws IllegalArgumentException if the entity dimensions are invalid.
      */
-    private int calculateRequiredTiles(int width, int height) {
-        if (width <= 0 || height <= 0) {
+    private int calculateRequiredTiles(final int entityWidth, final int entityHight) {
+        if (entityWidth <= 0 || entityHight <= 0) {
             throw new IllegalArgumentException("Invalid entity dimensions!");
         }
-        return width * height;
+        return entityWidth * entityHight;
     }
 
     /**
@@ -206,7 +235,7 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @return A random tile that can accommodate the boss entity.
      * @throws IllegalStateException if no free tiles can accommodate the boss entity.
      */
-    private Pair<Integer, Integer> getRandomTileForBoss(Set<Pair<Integer, Integer>> freeTiles) {
+    private Pair<Integer, Integer> getRandomTileForBoss(final Set<Pair<Integer, Integer>> freeTiles) {
         List<Pair<Integer, Integer>> shuffledTiles = new ArrayList<>(freeTiles);
         Collections.shuffle(shuffledTiles);
         return shuffledTiles.stream()
@@ -222,20 +251,15 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param freeTiles The set of free tiles in the room.
      * @return True if the tile can accommodate the boss entity, false otherwise.
      */
-    private boolean canAccommodateBoss(Pair<Integer, Integer> tile, Set<Pair<Integer, Integer>> freeTiles) {
-        int startX = tile.getLeft();
-        int startY = tile.getRight();
-
-        for (int x = startX; x < startX + bossWidth; x++) {
-            for (int y = startY; y < startY + bossHeight; y++) {
-                if (!freeTiles.contains(Pair.of(x, y))) {
-                    return false;
-                }
-            }
-        }
-        System.out.println("Boss: can be accommodated");
-        return true;
+    private boolean canAccommodate(final Pair<Integer, Integer> tile, final Set<Pair<Integer, Integer>> freeTiles,
+                                   final int entityWidth, final int entityHeight, final String entityName) {
+        return NormalRoomStrategy.canAccommodate(tile, freeTiles, entityWidth, entityHeight, entityName);
     }
+
+    private boolean canAccommodateBoss(Pair<Integer, Integer> tile, Set<Pair<Integer, Integer>> freeTiles) {
+        return canAccommodate(tile, freeTiles, BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGHT, "Boss");
+    }
+
 
     /**
      * Retrieves the list of tiles occupied by the boss entity, based on its starting position.
@@ -243,13 +267,13 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param startPos The starting position of the boss entity.
      * @return The list of tiles occupied by the boss entity.
      */
-    private List<Pair<Integer, Integer>> getBossTiles(Pair<Integer, Integer> startPos) {
+    private List<Pair<Integer, Integer>> getBossTiles(final Pair<Integer, Integer> startPos) {
         List<Pair<Integer, Integer>> bossTiles = new ArrayList<>();
         int startX = startPos.getLeft();
         int startY = startPos.getRight();
 
-        for (int x = startX; x < startX + bossWidth; x++) {
-            for (int y = startY; y < startY + bossHeight; y++) {
+        for (int x = startX; x < startX + BOSS_ENTITY_WIDTH; x++) {
+            for (int y = startY; y < startY + BOSS_ENTITY_HEIGHT; y++) {
                 bossTiles.add(Pair.of(x, y));
             }
         }
@@ -263,7 +287,7 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param tiles The group of tiles.
      * @return The center position as a Vector2D.
      */
-    private Vector2D getTileCenterPosition(List<Pair<Integer, Integer>> tiles) {
+    private Vector2D getTileCenterPosition(final List<Pair<Integer, Integer>> tiles) {
         double totalX = 0;
         double totalY = 0;
 
@@ -289,9 +313,8 @@ public final class BossRoomStrategy implements RoomStrategy {
         List<Pair<Integer, Integer>> bossTiles = getBossTiles(randomTile);
         Vector2D bossPosition = getTileCenterPosition(bossTiles);
 
-        return bossFactory.createBoss(bossPosition.getX(), bossPosition.getY()); //Missing the width and the height too.
+        return bossFactory.createBoss(bossPosition.getX(), bossPosition.getY());
     }
-
 
     /**
      * Generates and places the enemy waves in random positions.
@@ -299,11 +322,11 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param freeTiles The set of available tiles where the enemies can be placed.
      * @param entities  The list of entities where the enemies will be added.
      */
-    private void generateAndPlaceEnemyWaves(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
+    private void generateAndPlaceEnemyWaves(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities, final int width, final int height) {
         generateEntitiesWithExceptionHandling(() -> calculateNumEnemies(freeTiles.size()),
                 numEnemies -> IntStream.range(0, NUM_ENEMY_WAVES).forEach(wave -> IntStream.range(0, numEnemies)
-                        .mapToObj(i -> createEnemy(freeTiles, wave)).forEach(enemy -> {
-                            placeEntityAtRandomPosition(enemy, freeTiles);
+                        .mapToObj(i -> createEnemy(freeTiles, wave, width, height)).forEach(enemy -> {
+                            placeEntityAtRandomPosition(enemy, freeTiles, width, height);
                             entities.add(enemy);
                         })),
                 this::handleEntityGenerationError
@@ -350,15 +373,14 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param wave      The wave number of the enemy being created.
      * @return The created enemy entity.
      */
-    private Entity createEnemy(final Set<Pair<Integer, Integer>> freeTiles, final int wave) {
-        // Customize enemy creation based on wave number
+    private Entity createEnemy(final Set<Pair<Integer, Integer>> freeTiles, final int wave, final int width, final int heigth) {
         Entity enemy = wave % 2 == 0
                 ?
                 enemyFactory.createZombie(0, 0)
                 :
                 enemyFactory.createShooter(0, 0);
         setEnemyPower(enemy, wave);
-        placeEntity(enemy, freeTiles);
+        placeEntity(enemy, freeTiles, width, heigth);
         return enemy;
     }
 
@@ -368,14 +390,54 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param entity    The entity to place.
      * @param freeTiles The set of available tiles where the entity can be placed.
      */
-    private void placeEntityAtRandomPosition(final Entity entity, final Set<Pair<Integer, Integer>> freeTiles) {
-        List<Pair<Integer, Integer>> shuffledTiles = new ArrayList<>(freeTiles);
-        Collections.shuffle(shuffledTiles);
-        Pair<Integer, Integer> randomTile = shuffledTiles.get(0);
-        PositionComponent positionComponent = (PositionComponent) entity.getComponent(PositionComponent.class);
-        Vector2D position = new Vector2D(randomTile.getLeft(), randomTile.getRight());
-        positionComponent.setPos(position);
+    private void placeEntityAtRandomPosition(final Entity entity, final Set<Pair<Integer, Integer>> freeTiles, final int width,
+                                             final int height) {
+        List<ImmutablePair<Integer, Integer>> availablePositions = findAvailablePositions(freeTiles, width, height);
+        if (!availablePositions.isEmpty()) {
+            int randomIndex = new Random().nextInt(availablePositions.size());
+            Pair<Integer, Integer> position = availablePositions.get(randomIndex);
+            int x = position.getLeft(); //Get the x-coordinate
+            int y = position.getRight(); //Get the y-coordinate
+//            entity.setPos(x,y);
+            var pos = (PositionComponent) entity.getComponent(PositionComponent.class);
+            pos.setPos(new Vector2D(x,y));
+
+            freeTiles.remove(position);
+        }
     }
+
+        /**
+
+         Finds all available positions in the set of free tiles where an entity of given width and height can be placed.
+         @param freeTiles The set of available tiles where the entity can be placed.
+         @param width The width of the entity in tiles.
+         @param height The height of the entity in tiles.
+         @return A list of available positions where the entity can be placed.
+         */
+        private List<ImmutablePair<Integer, Integer>> findAvailablePositions(Set<Pair<Integer, Integer>> freeTiles,
+                                                                             int width, int height) {
+            List<ImmutablePair<Integer, Integer>> availablePositions = new ArrayList<>();
+            for (Pair<Integer, Integer> tile : freeTiles) {
+                int startX = tile.getLeft();
+                int startY = tile.getRight();
+                boolean positionOccupied = false;
+                for (int i = startX; i < startX + width; i++) {
+                    for (int j = startY; j < startY + height; j++) {
+                        if (!freeTiles.contains(ImmutablePair.of(i, j))) {
+                            positionOccupied = true;
+                            break;
+                        }
+                    }
+                    if (positionOccupied) {
+                        break;
+                    }
+                }
+                if (!positionOccupied) {
+                    availablePositions.add(ImmutablePair.of(tile.getLeft(), tile.getRight()));
+                }
+            }
+            return availablePositions;
+        }
 
     /**
      * Sets the power level of an enemy based on the wave number.
@@ -406,8 +468,9 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @return The created player entity.
      */
     private Entity createPlayer(final Set<Pair<Integer, Integer>> freeTiles) {
-        return genericFactory.createPlayer(getRandomTile(freeTiles).getLeft().doubleValue(),
-                getRandomTile(freeTiles).getRight().doubleValue());
+        var playerFreeTile = getRandomTile(freeTiles);
+        return genericFactory.createPlayer(playerFreeTile.getLeft().doubleValue(),
+                playerFreeTile.getRight().doubleValue());
     }
 
     /**
@@ -416,8 +479,9 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param entity    The entity to place.
      * @param freeTiles The set of available tiles where the entity can be placed.
      */
-    private void placeEntity(final Entity entity, final Set<Pair<Integer, Integer>> freeTiles) {
-        placeEntityAtRandomPosition(entity, freeTiles);
+    private void placeEntity(final Entity entity, final Set<Pair<Integer, Integer>> freeTiles, final int width,
+                             final int height) {
+        placeEntityAtRandomPosition(entity, freeTiles, width, height);
     }
 
     /**
@@ -455,6 +519,6 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @return The total number of tiles occupied by the boss entity.
      */
     private int calculateTotalTilesForBoss() {
-        return bossWidth * bossHeight;
+        return BOSS_ENTITY_WIDTH * BOSS_ENTITY_HEIGHT;
     }
 }
