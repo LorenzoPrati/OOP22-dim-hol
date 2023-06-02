@@ -3,8 +3,10 @@ package dimhol.entity.factories;
 import dimhol.components.*;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
-
 import dimhol.logic.collision.CircleBodyShape;
 import org.locationtech.jts.math.Vector2D;
 import dimhol.logic.collision.RectBodyShape;
@@ -20,8 +22,9 @@ public class ItemFactory extends AbstractFactory {
         super();
     }
 
-    BiFunction<Entity, Class<? extends Component>, Boolean>increaseCurrentHealth = (e, c) -> {
-        if(e.hasComponent(c)) {
+    BiFunction<Entity, List<Class<? extends Component>>, Boolean>increaseCurrentHealth = (e, c) -> {
+        var hasComponentNeeded = c.stream().anyMatch( comp -> e.hasComponent(comp));
+        if(hasComponentNeeded) {
             var healthComp = (HealthComponent)e.getComponent(HealthComponent.class);
             if(healthComp.getCurrentHealth() < healthComp.getMaxHealth()) {
                 healthComp.setCurrentHealth(healthComp.getCurrentHealth() + INCREASE_CURRENT_HEALTH);
@@ -32,8 +35,9 @@ public class ItemFactory extends AbstractFactory {
         return false;
     };
 
-    BiFunction<Entity, Class<? extends Component>, Boolean>increaseCurrentCoinsAmount = (e, c) -> {
-        if(e.hasComponent(c)) {
+    BiFunction<Entity, List<Class<? extends Component>>, Boolean>increaseCurrentCoinsAmount = (e, c) -> {
+        var hasComponentNeeded = c.stream().anyMatch( comp -> e.hasComponent(comp));
+        if(hasComponentNeeded) {
             var coinPocketComp = (CoinPocketComponent)e.getComponent(CoinPocketComponent.class);
             coinPocketComp.setAmount(coinPocketComp.getCurrentAmount() + INCREASE_CURRENT_COINS);
             return true;
