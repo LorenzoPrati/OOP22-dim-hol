@@ -10,6 +10,7 @@ import dimhol.entity.factories.ItemFactory;
 import dimhol.gamelevels.map.MapLoader;
 import dimhol.gamelevels.map.MapLoaderImpl;
 import dimhol.gamelevels.map.TileMap;
+import dimhol.gamelevels.map.TileMapImpl;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -100,8 +101,17 @@ public class LevelManagerImpl implements LevelManager {
      */
     @Override
     public TileMap getTileMap() {
-        return this.tileMap;
+        // Create a defensive copy of the tileMap
+        TileMap tileMapCopy = new TileMapImpl(tileMap.getLayers() ,tileMap.getWidth(), tileMap.getHeight(),
+                tileMap.getTileWidth(), tileMap.getTileHeight());
+        for (int i = 0; i < tileMap.getWidth(); i++) {
+            for (int j = 0; j < tileMap.getHeight(); j++) {
+                tileMapCopy.setTile(i, j, tileMap.getTile(i, j));
+            }
+        }
+        return tileMapCopy;
     }
+
 
     /**
      * Retrieves the set of free tiles in the map.
