@@ -247,12 +247,13 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @param numFreeTiles The number of free tiles in the room.
      * @throws IllegalArgumentException if the number of free tiles is less than the entities spawned or the entity dimensions are invalid.
      */
-    private void calculateNumEntities(final int numFreeTiles) {
+    private int calculateNumEntities(final int numFreeTiles) {
         if (numFreeTiles < calculateRequiredTiles(GATE_WIDTH, GATE_HEIGHT)) {
             throw new IllegalArgumentException("Not enough free tiles to spawn the gate obj with the specified dimensions!");
         }
         int maxNumOfEntities = numFreeTiles / calculateRequiredTiles(GATE_WIDTH, GATE_HEIGHT);
-        int numEntities = Math.min(NUM_GATE_ENTITIES, maxNumOfEntities);
+        int totalEntityCount = Math.min(NUM_GATE_ENTITIES, maxNumOfEntities);
+        return totalEntityCount > 0 ? totalEntityCount : 1;
     }
 
 
@@ -287,25 +288,22 @@ public class NormalRoomStrategy implements RoomStrategy {
                 .orElseThrow(() -> new IllegalStateException("No free tiles can accommodate the gate interactable obj."));
     }
 
-    /**
-     * Checks if a given tile can accommodate the gate object dimensions.
-     *
-     * @param tile      The tile to check.
-     * @param freeTiles The set of free tiles in the room.
-     * @return True if the tile can accommodate the gate object, false otherwise.
-     */
-    private boolean canAccommodateGate(Pair<Integer, Integer> tile, Set<Pair<Integer, Integer>> freeTiles) {
+    static boolean canAccommodate(Pair<Integer, Integer> tile, Set<Pair<Integer, Integer>> freeTiles, int width, int height, String entityName) {
         int startX = tile.getLeft();
         int startY = tile.getRight();
 
-        for (int x = startX; x < startX + gateWidth; x++) {
-            for (int y = startY; y < startY + gateHeight; y++) {
+        for (int x = startX; x < startX + width; x++) {
+            for (int y = startY; y < startY + height; y++) {
                 if (!freeTiles.contains(Pair.of(x, y))) {
                     return false;
                 }
             }
         }
-        System.out.println("Gate: can be accommodated");
+        System.out.println(entityName + ": can be accommodated");
         return true;
+    }
+
+    private boolean canAccommodateGate(Pair<Integer, Integer> tile, Set<Pair<Integer, Integer>> freeTiles) {
+        return canAccommodate(tile, freeTiles, gateWidth, gateHeight, "Gate");
     }
 }
