@@ -70,8 +70,7 @@ public class ShopRoomStrategy implements RoomStrategy {
         List<Entity> entities = new ArrayList<>();
 
         //Place the player:
-        Entity player = createAndPlacePlayer(freeTiles);
-        entities.add(player);
+        generatePlayer(freeTiles, entities);
 
         //Place the shop-keeper:
         Entity shopKeeper = createShopKeeper(freeTiles);
@@ -145,10 +144,19 @@ public class ShopRoomStrategy implements RoomStrategy {
      * @param freeTiles The set of available tiles where the player can be placed.
      * @return The created player entity.
      */
-    private Entity createAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles) {
-        Entity player = createPlayer(freeTiles);
-        placeEntity(player, freeTiles);
-        return player;
+    private Entity generatePlayer(final Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        Optional<Entity> existingPlayer = entities.stream()
+                .filter(entity -> entity.hasComponent(PositionComponent.class))
+                .findFirst();
+
+        if (existingPlayer.isPresent()) {
+            return existingPlayer.get();
+        } else {
+            Entity player = createPlayer(freeTiles);
+            placeEntity(player, freeTiles);
+            entities.add(player);
+            return player;
+        }
     }
 
     /**

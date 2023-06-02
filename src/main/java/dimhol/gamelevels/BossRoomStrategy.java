@@ -118,11 +118,20 @@ public final class BossRoomStrategy implements RoomStrategy {
      * @param playerEntityWidth The
      * @param playerEntityHeight The
      */
-    private void generateAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities,
+    private Entity generateAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities,
                                         final int playerEntityWidth, final int playerEntityHeight) {
-        Entity player = createPlayer(freeTiles);
-        placeEntityAtRandomPosition(player, freeTiles, playerEntityWidth, playerEntityHeight);
-        entities.add(player);
+        Optional<Entity> existingPlayer = entities.stream()
+                .filter(entity -> entity.hasComponent(PositionComponent.class))
+                .findFirst();
+
+        if (existingPlayer.isPresent()) {
+            return existingPlayer.get();
+        } else {
+            Entity player = createPlayer(freeTiles);
+            placeEntityAtRandomPosition(player, freeTiles, playerEntityWidth, playerEntityHeight);
+            entities.add(player);
+            return player;
+        }
     }
 
     /**

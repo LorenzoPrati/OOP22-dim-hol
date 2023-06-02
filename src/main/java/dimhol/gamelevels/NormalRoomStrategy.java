@@ -1,5 +1,6 @@
 package dimhol.gamelevels;
 
+import dimhol.components.PlayerComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.factories.EnemyFactory;
@@ -103,9 +104,18 @@ public class NormalRoomStrategy implements RoomStrategy {
         entities.add(gate);
     }
 
-    private void generatePlayer(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
-        Entity player = createAndPlacePlayer(freeTiles);
-        entities.add(player);
+    private Entity generatePlayer(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+        Optional<Entity> existingEntity = entities.stream()
+                .filter(entity -> entity.hasComponent(PlayerComponent.class))
+                .findFirst();
+
+        if (existingEntity.isPresent()) {
+            return existingEntity.get();
+        } else {
+            Entity player = createAndPlacePlayer(freeTiles);
+            entities.add(player);
+            return player;
+        }
     }
 
     private void generateEnemies(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
