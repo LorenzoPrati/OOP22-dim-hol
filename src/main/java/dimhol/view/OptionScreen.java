@@ -32,7 +32,7 @@ public class OptionScreen extends AbstractScreen {
         Font font2 = new Font("Helvetica", Font.BOLD, 17);
         JPanel optionListPanel = new JPanel();
         JComboBox<String> comboBox = new JComboBox<>();
-        for(var resolution: mapResolutions.keySet()){
+        for (var resolution: mapResolutions.keySet()){
             comboBox.addItem(resolution);
         }
         optionListPanel.setLayout(new GridBagLayout());
@@ -46,8 +46,7 @@ public class OptionScreen extends AbstractScreen {
         optionListPanel.add(createButton(l -> {
             var selecteResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
             var res = mapResolutions.get(selecteResolution);
-            engine.getMainWindow().changeResolution(new Dimension(res));
-        }, "DONE", Color.BLACK), gbc);
+            engine.getMainWindow().changeResolution(new Dimension(res));}, "DONE", Color.BLACK), gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);

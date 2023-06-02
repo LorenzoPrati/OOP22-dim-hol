@@ -97,7 +97,7 @@ public final class ResourceLoader {
 
     private void loadTileSetImages(final int tileWidth, final int tileHeight) {
         try {
-            this.tileSet = ImageIO.read(new File("src/main/resources/asset/map/ArtTileSet.png"));
+            this.tileSet = ImageIO.read(this.getClass().getResourceAsStream("/asset/map/ArtTileSet.png"));
         }
         catch (IOException e) {
             System.out.println("Error loading TileSet image. ");

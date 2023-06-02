@@ -101,6 +101,50 @@ Di seguito spieghiamo le varie parti della nostra architettura:
 \pagebreak
 
 \section{Design dettagliato}
+\subsection{Lorenzo Prati}
+
+\subsection{Elvis Perlika}
+
+\subsection{Emanuele Dajko}
+
+\subsection{Alessandra Versari}
+\begin{itemize}
+	\item Items: Con item si intende un oggetto di gioco che verrà raccolto a seguito del passaggio del player sopra ad esso. Gli item presenti nel nostro gioco sono cuori e monete.
+	Ciascun item una volta entrato in contatto con un'entità deve prima verificare che si tratti del player ed effettuare i controlli necessari prima di applicare il proprio “effetto” (cioè la conseguenza/reazione che l'item avrà sull'entità che ha colliso con esso).
+	Di seguito le principali caratteristiche degli items presenti nel nostro gioco:
+	\begin{itemize}
+		\item Gli items “cuore” permetteranno di aumentare la vita corrente del player, ma ciò verrà fatto solo a seguito del controllo sulla vita corrente: l'item verrà raccolto se e solo se la vita corrente è minore della vita massima che il player può avere. Questo tipo di item è disponibile in ogni stanza, escludendo lo Shop.
+		\item Gli items “moneta”, anch'essi presenti in ciascun livello (shop escluso), permetteranno di aumentare l'ammontare delle monete raccolte dal player. Questo tipo di item, oltre a verificare che l'entità che ha colliso con esso sia il player, non farà ulteriori controlli. Lo scopo degli items “moneta” è quello di consentire al player, l'acquisto di power up (che tratterò in seguito) all'interno della stanza Shop.
+	\end{itemize}
+	Per realizzare quanto descritto ho deciso di creare due componenti principali: HealthComponent e CoinPocketComponent, appartenenti alla lista di componenti del player, che permettono di consultare e modificare vita corrente, vita massima e monete raccolte. Tramite i getter e i setter, in questo modo, posso creare gli “effetti” degli item, all'interno dell'ItemFactory. 
+	Ogni item è dotato di un componente detto ItemComponent che oltre a rendere riconoscibili gli item, memorizza una Bifunction che corrisponde a quello che fin'ora ho definito “effetto”. La Bifunction in questo caso prende come argomento l'entità che ha colliso con l'item e una lista di component. Nel nostro gioco, al momento, solo il player ha la possibilità di raccogliere items, ma nel caso in cui volessimo rendere questi items raccoglibili anche ai nemici, sarebbe possibile farlo, passando come argomento alla Bifuntion una lista contenente i componenti identificativi di player e nemici (ossia PlayerComponent e AIComponent).
+	Inizialmente avevo scelto di creare gli effetti utilizzando il Factory Method perché pensavo potesse rendere più riutilizzabili gli effetti e velocizzarne la creazione, ma il risultato era un insieme di classi Factory, molto simili tra loro e la cui unica differenza era operare su componenti diversi (una factory per gli effetti che modificavano la vita, un'altra per quelli che modificavano l'ammontare delle monete e così via).
+	Inoltre siccome gli effetti alla fine sono praticamente solo incrementi e decrementi, mi è sembrato più sensato utilizzare interfacce funzionali e lamba per crearli all'interno della factory. 
+	Per quanto riguarda le interfacce funzionali, ho deciso di utilizzare le Bifuction così da poter restituire un boolean che permette di capire se l'effetto è stato applicato o meno e se quindi è necessario rimuovere l'item.
+
+	Nella classe ItemFactory è stato utilizzato il Factory Method.
+	\item InteractableObjects: Con interactable objects si intende tutti gli oggetti di gioco che per essere utilizzati necessitano dell'interazione del giocatore. A differenza degli items infatti, la collisione con l'oggetto in questo caso non è sufficiente, è necessario premere in tasto E una volta posizionato il player sull'oggetto.
+	Gli oggetti interactable presenti nel nostro gioco sono i power-up e il gate. 
+	I power-up sono potenziamenti che il player può acquistare nella stanza shop pagando il loro prezzo. Essi si suddividono in:
+	\begin{itemize} 
+		\item Power-up vita: permette di aumentare la vita massima del giocare.
+		\item Power-up velocità: permette di aumentare la velocità del giocatore.
+	\end{itemize}
+	Il gate invece è semplicemente il portale che permette di accedere al livello successivo. 
+	Con gli items, anche gli interactable hanno degli “effetti” sul player e sul gioco stesso. 
+	Il power-up vita infatti controlla che il player abbia monete sufficienti per eseguire l'acquisto, in caso affermativo viene modificato l'intero che indica la vita massima all'interno dell'HealthComponent.
+	Il power-up velocità richiede anch'esso un controllo sulle monete raccolte dal giocatore e nel caso fossero sufficienti va ad aumentare il campo “speed” del MovementComponent.
+	Il gate invece per poter essere attivato/utilizzato richiede che tutti i nemici siano stati eliminati e solo dopo aver fatto questo controllo lancerà l'evento ChangeRoomEvent() che permetterà di cambiare stanza.
+	Una volta utilizzati, gli interactable objects vengono rimossi. 
+	Per implementare tutto ciò ho utilizzato il Factory Method (vedi InteractableObjectFactory) per creare i vari oggetti interactable e ho implementato gli “effetti” di tali oggetti sempre all'interno della classe Interactablefactory (per gli stessi motivi degli items visti precedentemente). Per la creazione degli effetti ho utilizzato anche in questo caso interfacce funzionali (Bifunction, BiPredicate, Predicate e BiConsumer). 
+	Oltre a necessitare l'interazione, questi oggetti si distinguono dagli items perché hanno la possibilità di lanciare eventi sul world all'interno del loro effetto.
+	
+	È stato utilizzato il Factory Method nella classe InteractableObjectFactory.
+	\item Animazioni:
+	\item Menù di gioco:
+\end{itemize}
+
+
 
 \subsection{Lorenzo Prati}
 
