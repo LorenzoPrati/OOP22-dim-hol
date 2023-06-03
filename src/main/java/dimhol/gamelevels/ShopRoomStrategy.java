@@ -67,7 +67,8 @@ public class ShopRoomStrategy implements RoomStrategy {
      * {@inheritDoc}
      */
     @Override
-    public List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    public List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles,
+                                 final List<Entity> entities) {
 
         List<Entity> newListOfEntities = new ArrayList<>();
 
@@ -143,9 +144,11 @@ public class ShopRoomStrategy implements RoomStrategy {
      * Creates a player entity and assigns it a random position from the set of free tiles.
      *
      * @param freeTiles The set of available tiles where the player can be placed.
-     * @return The created player entity.
+     * @param entities The
+     * @param newListOfEntities The
      */
-    private void generatePlayer(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities, List<Entity> newListOfEntities) {
+    private void generatePlayer(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities,
+                                final List<Entity> newListOfEntities) {
         Optional<Entity> existingEntity = entities.stream()
                 .filter(entity -> entity.hasComponent(PlayerComponent.class))
                 .findFirst();
@@ -215,7 +218,7 @@ public class ShopRoomStrategy implements RoomStrategy {
      * Creates a shopkeeper entity with a random position from the set of free tiles.
      *
      * @param freeTiles The set of available tiles where the shopkeeper can be placed.
-     * @return The created shopkeeper entity.
+     * @param entities The
      */
     private void createShopKeeper(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         var shopKeeperFreeTiles = getRandomTile(freeTiles);

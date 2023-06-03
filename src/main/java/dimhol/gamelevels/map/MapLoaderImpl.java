@@ -61,7 +61,7 @@ public final class MapLoaderImpl implements MapLoader {
      * @param layerNode The XML node representing a map layer.
      * @return The created tile matrix.
      */
-    private Tile[][] createTileMatrix(Node layerNode) {
+    private Tile[][] createTileMatrix(final Node layerNode) {
         Element layerElement = (Element) layerNode;
         NodeList propertyNodes = layerElement.getElementsByTagName("property");
         Element dataElement = (Element) layerElement.getElementsByTagName("data").item(0);
@@ -138,7 +138,7 @@ public final class MapLoaderImpl implements MapLoader {
      * {@inheritDoc}
      */
     @Override
-    public TileMap loadRoomMap(InputStream inputStream) throws MapLoadingException {
+    public TileMap loadRoomMap(final InputStream inputStream) throws MapLoadingException {
         loadMap(inputStream);
         return getTileMap();
     }

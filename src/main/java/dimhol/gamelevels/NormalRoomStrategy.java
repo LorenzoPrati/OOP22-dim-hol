@@ -39,6 +39,8 @@ public class NormalRoomStrategy implements RoomStrategy {
      *
      * @param genericFactory The generic entity factory.
      * @param enemyFactory   The enemy entity factory.
+     * @param itemFactory The
+     * @param interactableObjectFactory The
      * @param random         The random number generator.
      */
     public NormalRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory,
@@ -72,9 +74,8 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @return A list of generated entities.
      */
     @Override
-    public final List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
-
-
+    public final List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles,
+                                       final List<Entity> entities) {
         List<Entity> newListOfEntities = new ArrayList<>();
 
         //Place the player:
@@ -98,14 +99,17 @@ public class NormalRoomStrategy implements RoomStrategy {
         return newListOfEntities;
     }
 
-    private void generateGate(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    private void generateGate(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         calculateNumEntities(freeTiles.size());
         var gateFreeTiles = getRandomTileForGate(freeTiles);
-        Entity gate = interactableObjectFactory.createGate(gateFreeTiles.getLeft().doubleValue(), gateFreeTiles.getRight().doubleValue());
+        Entity gate = interactableObjectFactory.
+                createGate(gateFreeTiles.getLeft().doubleValue(),
+                gateFreeTiles.getRight().doubleValue());
         entities.add(gate);
     }
 
-    private void generatePlayer(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities, List<Entity> newListOfEntities) {
+    private void generatePlayer(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities,
+                                final List<Entity> newListOfEntities) {
         Optional<Entity> existingEntity = entities.stream()
                 .filter(entity -> entity.hasComponent(PlayerComponent.class))
                 .findFirst();
@@ -124,19 +128,19 @@ public class NormalRoomStrategy implements RoomStrategy {
         }
     }
 
-    private void generateEnemies(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    private void generateEnemies(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         int numEnemies = calculateNumEnemies(freeTiles.size());
         generateZombies(numEnemies, entities, freeTiles);
         generateShooters(numEnemies, entities, freeTiles);
     }
 
-    private void generateCoins(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    private void generateCoins(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         var coinsFreeTiles = getRandomTile(freeTiles);
         entities.add(itemFactory.createCoin(coinsFreeTiles.getLeft().doubleValue(),
                 coinsFreeTiles.getRight().doubleValue()));
     }
 
-    private void generateHearts(Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities) {
+    private void generateHearts(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         var heartsFreeTile = getRandomTile(freeTiles);
         entities.add(itemFactory.createHeart(heartsFreeTile.getLeft().doubleValue(),
                 heartsFreeTile.getRight().doubleValue()));
@@ -257,7 +261,9 @@ public class NormalRoomStrategy implements RoomStrategy {
      * Calculates the number of entities to generate based on the number of free tiles and the entity dimensions.
      *
      * @param numFreeTiles The number of free tiles in the room.
-     * @throws IllegalArgumentException if the number of free tiles is less than the entities spawned or the entity dimensions are invalid.
+     * @return The
+     * @throws IllegalArgumentException if the number of free tiles is less than the entities spawned
+     * or the entity dimensions are invalid.
      */
     private int calculateNumEntities(final int numFreeTiles) {
         if (numFreeTiles < calculateRequiredTiles(GATE_WIDTH, GATE_HEIGHT)) {
@@ -277,7 +283,7 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @return The number of tiles required.
      * @throws IllegalArgumentException if the entity dimensions are invalid.
      */
-    private int calculateRequiredTiles(int width, int height) {
+    private int calculateRequiredTiles(final int width, final int height) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException("Invalid entity dimensions!");
         }
@@ -291,7 +297,7 @@ public class NormalRoomStrategy implements RoomStrategy {
      * @return A random tile that can accommodate the gate object.
      * @throws IllegalStateException if no free tiles can accommodate the gate object.
      */
-    private Pair<Integer, Integer> getRandomTileForGate(Set<Pair<Integer, Integer>> freeTiles) {
+    private Pair<Integer, Integer> getRandomTileForGate(final Set<Pair<Integer, Integer>> freeTiles) {
         List<Pair<Integer, Integer>> shuffledTiles = new ArrayList<>(freeTiles);
         Collections.shuffle(shuffledTiles);
         return shuffledTiles.stream()
@@ -300,7 +306,8 @@ public class NormalRoomStrategy implements RoomStrategy {
                 .orElseThrow(() -> new IllegalStateException("No free tiles can accommodate the gate interactable obj."));
     }
 
-    static boolean canAccommodate(Pair<Integer, Integer> tile, Set<Pair<Integer, Integer>> freeTiles, int width, int height, String entityName) {
+    static boolean canAccommodate(final Pair<Integer, Integer> tile, final Set<Pair<Integer, Integer>> freeTiles,
+                                  final int width, final int height, final String entityName) {
         int startX = tile.getLeft();
         int startY = tile.getRight();
 
@@ -315,7 +322,7 @@ public class NormalRoomStrategy implements RoomStrategy {
         return true;
     }
 
-    private boolean canAccommodateGate(Pair<Integer, Integer> tile, Set<Pair<Integer, Integer>> freeTiles) {
+    private boolean canAccommodateGate(final Pair<Integer, Integer> tile, final Set<Pair<Integer, Integer>> freeTiles) {
         return canAccommodate(tile, freeTiles, GATE_WIDTH, GATE_HEIGHT, "Gate");
     }
 }

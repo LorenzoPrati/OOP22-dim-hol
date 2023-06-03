@@ -7,7 +7,11 @@ public class PowerComponent implements Component {
 
     private final double powerLevel;
 
-    public PowerComponent(double powerLevel) {
+    /**
+     *
+     * @param powerLevel The
+     */
+    public PowerComponent(final double powerLevel) {
         this.powerLevel = powerLevel;
     }
 
