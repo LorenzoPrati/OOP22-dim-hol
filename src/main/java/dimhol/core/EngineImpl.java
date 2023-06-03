@@ -36,6 +36,10 @@ public final class EngineImpl implements Engine {
      * True if the game loop needs to run.
      */
     private boolean running;
+    /**
+     * True if tutorial done.
+     */
+    private boolean tutorialDone;
 
     /**
      * Constructs an EngineImpl.
@@ -49,6 +53,15 @@ public final class EngineImpl implements Engine {
      */
     @Override
     public void newGame() {
+        if (!this.tutorialDone) {
+            this.tutorialDone = true;
+            this.mainWindow.changePanel(new TutorialScreen(this));
+        } else {
+            this.runGame();
+        }
+    }
+
+    private void runGame() {
         this.world = new WorldImpl(this);
         this.world.changeLevel();
         this.running = true;
