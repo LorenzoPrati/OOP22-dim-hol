@@ -37,11 +37,11 @@ public class NormalRoomStrategy implements RoomStrategy {
     /**
      * Constructs a NormalRoomStrategy.
      *
-     * @param genericFactory The generic entity factory.
-     * @param enemyFactory   The enemy entity factory.
-     * @param itemFactory The
+     * @param genericFactory            The generic entity factory.
+     * @param enemyFactory              The enemy entity factory.
+     * @param itemFactory               The
      * @param interactableObjectFactory The
-     * @param random         The random number generator.
+     * @param random                    The random number generator.
      */
     public NormalRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory,
                               final ItemFactory itemFactory,
@@ -64,6 +64,22 @@ public class NormalRoomStrategy implements RoomStrategy {
             currentIndex++;
         }
         throw new IllegalStateException("No free tiles available");
+    }
+
+    static boolean canAccommodate(final Pair<Integer, Integer> tile, final Set<Pair<Integer, Integer>> freeTiles,
+                                  final int width, final int height, final String entityName) {
+        int startX = tile.getLeft();
+        int startY = tile.getRight();
+
+        for (int x = startX; x < startX + width; x++) {
+            for (int y = startY; y < startY + height; y++) {
+                if (!freeTiles.contains(Pair.of(x, y))) {
+                    return false;
+                }
+            }
+        }
+        System.out.println(entityName + ": can be accommodated");
+        return true;
     }
 
     /**
@@ -104,7 +120,7 @@ public class NormalRoomStrategy implements RoomStrategy {
         var gateFreeTiles = getRandomTileForGate(freeTiles);
         Entity gate = interactableObjectFactory.
                 createGate(gateFreeTiles.getLeft().doubleValue(),
-                gateFreeTiles.getRight().doubleValue());
+                        gateFreeTiles.getRight().doubleValue());
         entities.add(gate);
     }
 
@@ -120,7 +136,7 @@ public class NormalRoomStrategy implements RoomStrategy {
             oldPlayer.removeComponent(position);
             var playerTiles = getRandomTile(freeTiles);
             oldPlayer.addComponent(new PositionComponent(new Vector2D(playerTiles.getLeft().doubleValue(),
-                                                            playerTiles.getRight().doubleValue()), 1));
+                    playerTiles.getRight().doubleValue()), 1));
             newListOfEntities.add(oldPlayer);
         } else {
             Entity player = createAndPlacePlayer(freeTiles);
@@ -256,14 +272,13 @@ public class NormalRoomStrategy implements RoomStrategy {
         return findRandomFreeTiles(freeTiles, random);
     }
 
-
     /**
      * Calculates the number of entities to generate based on the number of free tiles and the entity dimensions.
      *
      * @param numFreeTiles The number of free tiles in the room.
      * @return The
      * @throws IllegalArgumentException if the number of free tiles is less than the entities spawned
-     * or the entity dimensions are invalid.
+     *                                  or the entity dimensions are invalid.
      */
     private int calculateNumEntities(final int numFreeTiles) {
         if (numFreeTiles < calculateRequiredTiles(GATE_WIDTH, GATE_HEIGHT)) {
@@ -273,7 +288,6 @@ public class NormalRoomStrategy implements RoomStrategy {
         int totalEntityCount = Math.min(NUM_GATE_ENTITIES, maxNumOfEntities);
         return totalEntityCount > 0 ? totalEntityCount : 1;
     }
-
 
     /**
      * Calculates the number of tiles required to accommodate an entity with the specified dimensions.
@@ -304,22 +318,6 @@ public class NormalRoomStrategy implements RoomStrategy {
                 .filter(tile -> canAccommodateGate(tile, freeTiles))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("No free tiles can accommodate the gate interactable obj."));
-    }
-
-    static boolean canAccommodate(final Pair<Integer, Integer> tile, final Set<Pair<Integer, Integer>> freeTiles,
-                                  final int width, final int height, final String entityName) {
-        int startX = tile.getLeft();
-        int startY = tile.getRight();
-
-        for (int x = startX; x < startX + width; x++) {
-            for (int y = startY; y < startY + height; y++) {
-                if (!freeTiles.contains(Pair.of(x, y))) {
-                    return false;
-                }
-            }
-        }
-        System.out.println(entityName + ": can be accommodated");
-        return true;
     }
 
     private boolean canAccommodateGate(final Pair<Integer, Integer> tile, final Set<Pair<Integer, Integer>> freeTiles) {
