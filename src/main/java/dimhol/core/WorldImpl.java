@@ -27,7 +27,7 @@ public class WorldImpl implements World {
     private final Scene scene;
     private boolean gameOver;
     private boolean win;
-    
+
     /**
      * Constructs a world.
      */
