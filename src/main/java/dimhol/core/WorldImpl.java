@@ -24,11 +24,10 @@ public class WorldImpl implements World {
     private final List<GameSystem> systems;
     private final List<WorldEvent> events;
     private final LevelManager levelManager;
+    private final Scene scene;
     private boolean gameOver;
     private boolean win;
-
-    private final Scene scene;
-
+    
     /**
      * Constructs a world.
      */
@@ -39,8 +38,6 @@ public class WorldImpl implements World {
         this.levelManager = new LevelManagerImpl();
         this.scene = new SceneImpl(engine);
         this.scene.setupInput();
-
-        this.scene.setMap(this.getLevelManager().getTileMap());
         /*
         Add systems
          */
