@@ -34,15 +34,6 @@ public final class TileMapImpl implements TileMap {
         this.tilemap = layers.get(0);
     }
 
-    public TileMapImpl(TileMap tileMap) {
-        this.width = tileMap.getWidth();
-        this.height = tileMap.getHeight();
-        this.tileWidth = tileMap.getTileWidth();
-        this.tileHeight = tileMap.getTileHeight();
-        this.layers = getLayers();
-        this.tilemap = layers.get(0);
-    }
-
     /**
      * Gets the Tile at the given coordinates.
      *
@@ -57,7 +48,7 @@ public final class TileMapImpl implements TileMap {
     /**
      * {@inheritDoc}
      */
-    public void setTile(int x, int y, Tile tile) {
+    public void setTile(final int x, final int y, final Tile tile) {
         if (!isValidCoordinate(x, y)) {
             throw new IllegalArgumentException("Invalid coordinates: (" + x + ", " + y + ")");
         }
@@ -112,7 +103,7 @@ public final class TileMapImpl implements TileMap {
      * {@inheritDoc}
      */
     @Override
-    public boolean isValidCoordinate(int x, int y) {
+    public boolean isValidCoordinate(final int x, final int y) {
         return x >= 0 && x < width && y >= 0 && y < height;
     }
 }

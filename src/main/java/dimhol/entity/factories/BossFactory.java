@@ -79,8 +79,8 @@ public class BossFactory extends AbstractFactory {
      */
     public Entity createMinion(final double x, final double y) {
         return new EntityBuilder()
-                .add(new PositionComponent(new Vector2D(x,y), 0))
-                .add(new MovementComponent(new Vector2D(0,1), MINIONS_SPEED, false ))
+                .add(new PositionComponent(new Vector2D(x, y), 0))
+                .add(new MovementComponent(new Vector2D(0, 1), MINIONS_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), true))
                 .add(new AnimationComponent(map.get("enemy"), "idle"))
 //                .add(new AiComponent(new RoutineFactory().createMinionsRoutine()))
