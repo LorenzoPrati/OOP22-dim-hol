@@ -9,6 +9,7 @@ import dimhol.logic.util.DirectionUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Abstract implementation of a player state.
@@ -60,6 +61,11 @@ public abstract class AbstractState implements PlayerState {
     public boolean canTransition() {
         return !this.anim.isBlocking() || this.anim.isCompleted();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public abstract Optional<PlayerState> transition(final Input input);
 
     /**
      * {@inheritDoc}
