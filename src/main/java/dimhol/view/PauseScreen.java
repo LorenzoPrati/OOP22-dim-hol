@@ -4,14 +4,12 @@ import dimhol.core.Engine;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import javax.imageio.ImageIO;
-import javax.swing.*;
 
 public class PauseScreen extends AbstractScreen {
 
     public PauseScreen(Engine engine, final Scene scene) {
         super(engine);
-        this.background = super.setBackground("/asset/bg/pauseScreen.jpg");
+        super.setBackground("/asset/bg/pauseScreen.jpg");
         Color color = new Color(102,0,153);
         this.add(super.createLabel("/asset/bg/pauseTitle.png"),gbc);
         gbc.anchor = GridBagConstraints.CENTER;

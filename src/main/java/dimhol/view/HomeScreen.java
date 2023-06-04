@@ -9,7 +9,7 @@ public class HomeScreen extends AbstractScreen {
 
     public HomeScreen(Engine engine) {
         super(engine);
-        this.background = super.setBackground("/asset/bg/mainMenu.png");
+        super.setBackground("/asset/bg/mainMenu.png");
         Color color = new Color(102,0,153);
         this.add(super.createLabel("/asset/bg/HomeScreenTitle.png"),gbc);
         gbc.anchor = GridBagConstraints.CENTER;
