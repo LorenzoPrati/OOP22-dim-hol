@@ -22,10 +22,7 @@ public class ResultScreen extends AbstractScreen {
      */
     public ResultScreen(final Engine engine, final boolean result) {
         super(engine);
-        this.background = setBackground(result ? WIN_BACKGROUND_PATH : LOSE_BACKGROUND_PATH);
-        /*
-        todo label
-         */
+        super.setBackground(result ? WIN_BACKGROUND_PATH : LOSE_BACKGROUND_PATH);
         this.add(super.createLabel(result ? WIN_MESSAGE : LOSE_MESSAGE), gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
