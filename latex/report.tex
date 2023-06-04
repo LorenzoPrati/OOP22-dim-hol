@@ -355,9 +355,96 @@ Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzar
 
 \section{Metodologia di lavoro}
 
+\subsubsection*{Lorenzo Prati}
 
+\begin{itemize}
+	\item Base del \textit{pattern ecs}
+		\begin{itemize}
+			\item package entity
+				\begin{itemize}
+					\item interfaccia \texttt{Entity}
+					\item classe \texttt{EntityImpl}
+					\item classe \texttt{EntityBuilder}
+					\item classe \texttt{GenericFactory} solo per quanto riguarda il metodo di creazione del player
+				\end{itemize}
+			\item package component
+				\begin{itemize}
+					\item interfaccia \texttt{Component}
+					\item classe \texttt{PositionComponent}
+					\item classe \texttt{MovementComponent}
+					\item classe \texttt{PlayerComponent}
+					\item classe \texttt{CollisionComponent}
+					\item classe \texttt{InteractorComponent}
+				\end{itemize}
+			\item package systems
+				\begin{itemize}
+					\item interfaccia \texttt{GameSystem}
+					\item classe \texttt{AbstractSystem}
+					\item classe \texttt{PlayerInputSystem}
+					\item classe \texttt{MovementSystem}
+					\item classe \texttt{CollisionSystem}
+					\item classe \texttt{PhysicsSystem}
+					\item classe \texttt{ClearCollisionSystem}
+				\end{itemize}
+			\item package core
+				\begin{itemize}
+					\item interfaccia \texttt{Engine}
+					\item classe \texttt{EngineImpl}
+					\item interfaccia \texttt{World}
+					\item classe \texttt{WorldImpl}
+				\end{itemize}
+			\item package input
+				\begin{itemize}
+					\item interfaccia \texttt{Input}
+					\item classe \texttt{InputImpl}
+				\end{itemize}
+			\item package events
+				\begin{itemize}
+					\item interfaccia \texttt{WorldEvent}
+					\item classe \texttt{AddEntityEvent}
+					\item classe \texttt{RemoveEntityEvent}
+					\item classe \texttt{ChangeLevelEvent}
+				\end{itemize}
+			\item package logic
+				\begin{itemize}
+					\item logic.player
+						\begin{itemize}
+							\item interfaccia \texttt{PlayerState}
+							\item classe \texttt{PlayerState}
+							\item intero package player.states
+						\end{itemize}
+					\item logic.collision
+						\begin{itemize}
+							\item interfaccia \texttt{BodyShape}
+							\item classe \texttt{RectBodyShape}
+							\item classe \texttt{CircleBodyShape}
+						\end{itemize}
+					\item logic.util
+						\begin{itemize}
+							\item classe \texttt{DirectionUtil}
+						\end{itemize}
+				\end{itemize}
+			\item package view
+				\begin{itemize}
+					\item classe \texttt{InputListener}
+					\item classe \texttt{ResultScreen}
+				\end{itemize}
+		\end{itemize}
+	\item 
+\end{itemize}
 
 \section{Note di sviluppo}
+
+\subsubsection{Lorenzo Prati}
+
+\begin{itemize}
+	\item uso della libreria jts (\href[]{https://github.com/locationtech/jts}{link alla pagina github}) sia per la classe \texttt{Vector2D} che e' usata in tutto il progetto, sia per utilizzare le api della libreria per creare facilmente forme geometriche di interfaccia \texttt{Polygon} che tra l'altro forniscono anche metodi gia' implementati per controllare le intersezioni tra poligoni
+	\item reflection e stream nella classe \texttt{EntityImpl} \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/5d2b44fc5bf5fa50b6f0215695d2a5bac89cab85/src/main/java/dimhol/entity/EntityImpl.java#L61-L89}
+	\item stream utilizzati anche in \texttt{RemoveEntityEvent} e in \texttt{WorldImpl} e nel metodo template di \texttt{AbstractSystem} [links], e in minima parte in altri punti del codice
+	\item sebbene faccia parte di java.util, menziono l'utilizzo della classe UUID per generare id per le entita'
+	\item Optional utilizzati sia in \texttt{PositionComponent} che nei vari stati del player
+\end{itemize}
+
 
 
 
