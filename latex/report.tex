@@ -173,7 +173,7 @@ Ho scelto di unire in un'unica classe la funzione di contenere le entita' e i si
 L'interfaccia \texttt{World} espone i metodi necessari al controllo del gioco vero e proprio, come ad esempio il metodo \texttt{update}, che viene chiamato ad ogni ciclo del \textit{game loop} in esecuzione sull'\texttt{Engine}. Questo e' il metodo principale della classe, perche' si occupa di:
 
 \begin{itemize}
-	\item eseguire tutti i \texttt{GameSystem} 
+	\item eseguire tutti i \texttt{GameSystem}, che equivale ad \textit{aggiornare} il modello
 	\item eseguire tutti gli eventi in coda nel \texttt{World}
 	\item comandare alla scena di disegnare
 \end{itemize}
@@ -186,7 +186,7 @@ Gli eventi sono rappresentati tramite l'interfaccia \texttt{WorldEvent} e sono g
 \begin{itemize}
 	\item \texttt{AddEntityEvent} aggiunge l'entita' passata come parametro al \texttt{World}
 	\item \texttt{RemoveEntityEvent} rimuove dal \texttt{World} l'entita' passata come parametro, in questo caso identificata tramite \textit{id}. Nel caso si trattasse dell'entita' che rappresenta il giocatore o il boss, viene notificato il \texttt{World} rispettivamente della sconfitta e della vittoria tramite il metodo \texttt{setWin(boolean win)}
-	\item ChangeLevelEvent chiama il metodo \texttt{changeLevel()} del \texttt{World}, che procede a gestire il cambio di livello aggiornando le entita' con quelle generate dal \texttt{LevelManager} per il nuovo livello e passando alla \texttt{Scene} anche la nuova mappa.
+	\item \texttt{ChangeLevelEvent} chiama il metodo \texttt{changeLevel()} del \texttt{World}, che procede a gestire il cambio di livello aggiornando le entita' con quelle generate dal \texttt{LevelManager} per il nuovo livello e passando alla \texttt{Scene} anche la nuova mappa.
 \end{itemize}
 
 Il \texttt{World} espone anche un metodo per ottenere la classe con la quale i \texttt{System} possono sfruttare l'input dell'utente, che spieghero' piu' nel dettaglio descrivendo il funzionamento del giocatore.
@@ -271,13 +271,17 @@ Il \texttt{PlayerInputSystem}, che e' il primo \textit{system} a eseguire nel gi
 
 Il \texttt{PlayerComponent} contiene lo \textit{stato} corrente in ogni momento, quindi viene estratto tale \texttt{PlayerState} e interrogato sulla possibilita' di poter effettuare un cambio di stato in base all'\texttt{Input}; se possibile, quindi, il \texttt{PlayerState} corrente restituisce il prossimo stato calcolato sempre sulla base dell'input e il system procede con la transizione di stato, sostituendo lo stato corrente nel \texttt{PlayerComponent} con il nuovo stato calcolato. Se lo stato corrente puo' transitare, allora viene anche chiamato il metodo \texttt{execute}, che potrebbe generare nuove entita', ad esempio proiettili o attacchi, e queste vengono poi aggiunte al \texttt{World} tramite evento. Il cambio di stato piu' nel dettaglio e' gestito dai metodi \texttt{entry} ed \texttt{exit} che gestiscono rispettivamente le operazioni da effettuare nei due momenti per quello stato. Infine, il system aggiorna l'animazione (vedi spiegazione animazioni). 
 
-Ora analizzo piu' nel dettaglio i vari stati. Ciascuno di essi estende una classe \texttt{AbstractState} che fattorizza alcuni metodi dell'interfaccia \texttt{PlayerState} come \texttt{canTransition()} (che si occupa di controllare che lo stato non sia bloccato in un animazione non cancellabile), \texttt{update(double, Entity)} e altri che sono utili alle sottoclassi come \texttt{setAnimationState(String)}. Inoltre, vengono fortnite delle implementazioni di default dei metodi d'interfaccia \texttt{entry(Entity), \texttt{exit()}} e \texttt{execute(Input)}, overridabili a piacimento dalle sottoclassi per definire comportamenti piu' complessi. Invece, il metodo \texttt{transition(Input)} e' lasciato astratto da implementare per ogni singolo stato poiche' ognuno definisce logiche proprie di transizione verso altri stati, che non descrivo nei dettagli poiche' credo gia' sufficiente esplicate nel diagramma sopra. Infine, ogni stato implementa il metodo \texttt{updateAnimation()} settando una specifica animazione (riferimento alla speigazione delle animazioni).
+Ora analizzo piu' nel dettaglio i vari stati. Ciascuno di essi estende una classe \texttt{AbstractState} che fattorizza alcuni metodi dell'interfaccia \texttt{PlayerState} come \texttt{canTransition()} (che si occupa di controllare che lo stato non sia bloccato in un animazione non cancellabile), \texttt{update(double, Entity)} (che si occupa soprattutto di aggiornare il tempo passato nello stato) e altri che sono utili alle sottoclassi come \texttt{setAnimationState(String)}. Inoltre, vengono fornite delle implementazioni di default dei metodi d'interfaccia \texttt{entry(Entity), \texttt{exit()}} e \texttt{execute(Input)}, overridabili a piacimento dalle sottoclassi per definire comportamenti piu' complessi. Invece, il metodo \texttt{transition(Input)} e' lasciato astratto da implementare per ogni singolo stato poiche' ognuno definisce logiche proprie di transizione verso altri stati, che non descrivo nei dettagli poiche' credo gia' sufficiente esplicate nel diagramma sopra. Infine, ogni stato implementa il metodo \texttt{updateAnimation()} settando una specifica animazione (riferimento alla speigazione delle animazioni).
 
 Di seguito gli stati:
 \begin{itemize}
 	\item \texttt{IdleState} rappresenta lo stato di \textit{idle}, cioe' in cui il giocatore e' fermo, e si occupa solo di disabilitare il movimento in entrata.
 	\item \texttt{WalkState} rappresenta lo stato di camminata, e si occupa di abilitare/disabilitare il movimento in entrata/uscita e di settare la direzione del \texttt{MovementComponent} coerentemente con l'input dell'utente.
-	\item \texttt{SwordState} rappresenta lo stato di attacco ravvicinato, 
+	\item \texttt{SwordState} rappresenta lo stato di attacco ravvicinato, che si occupa di restituire l'entita' che rappresenta l'attacco ravvicinato, tramite relativa factory
+	\item \texttt{ShootState} rappresenta lo stato di attacco dalla distanza, che si occupa di restituire l'entita' che rappresenta il proiettile, tramite relativa factory
+	\item \texttt{ChargeFireballState} rappresenta lo stato di carica della fireball, che si occupa di gestire il fatto che si rimanga nello stato fino a quando il giocatore tiene premuto il tasto, ma, se e' passato un certo tempo e solo se il giocatore ha anche rilasciato il tasto, si passa allo stato \texttt{FireballState}
+	\item \texttt{FireballState} rappresenta lo stato di attacco dalla distanza con una fireball, che si occupa di restituire l'entita' che rappresenta la fireball, tramite relativa factory
+	\item \texttt{InteractorState} rappresenta lo stato in cui il player puo' interagire con oggetti che hanno un \texttt{InteractableComponent} (power up dello shop, gate ecc.); lo stato si occupa solamente di abilitare/disabilitare l' \texttt{InteractorComponent} in entrata/uscita
 \end{itemize}
 
 L'interfaccia \texttt{Input} e'ottenibile tramite getter dal \texttt{World} e interrogabile sui tasti premuti dall'utente tramite dei semplici getter; in questo modo i vari stati sono in grado di sapere quali azioni sta attualmente cercando di realizzare l'utente.
@@ -338,6 +342,16 @@ Ho realizzato anche una schermata di View, cioe' la schermata di vittoria e scon
 \chapter{Sviluppo}
 
 \section{Testing automatizzato}
+
+Tutti i test sono stati realizzati con JUnit. Non sono stati testati i system.
+
+\subsubsection*{Lorenzo Prati}
+
+\paragraph*{Test delle entita' e dei componenti}
+Ho realizzato una classe \texttt{EntityTest}, che contiene un metodo di test che si occupa di creare un'entita' di prova usando l'\texttt{EntityBuilder} e successivamente controlla il corretto funzionamento dei metodi dell'interfaccia \texttt{Entity}, soprattutto quelli che servono a manipolare i \texttt{Component}
+
+\paragraph*{Test del player, input e stati}
+Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzare l'entita' che rappresenta il giocatore, tramite relativa factory, poi sono presenti due metodi di test: il primo controlla la corretta inizializzazione del player, il secondo testa il funzionamento degli stati e dell'input. 
 
 \section{Metodologia di lavoro}
 
