@@ -2,6 +2,7 @@ package dimhol.view;
 
 import dimhol.core.Engine;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,6 +14,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public abstract class AbstractScreen extends JPanel{
     protected final Engine engine;
@@ -38,6 +40,16 @@ public abstract class AbstractScreen extends JPanel{
         g.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
+    public ImageIcon setBackground(String path){
+        ImageIcon background = new ImageIcon();
+        try{
+            background = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(path)));
+        } catch(IOException e){
+            System.out.print("Error loading background menu images");
+        }
+        return background;
+    }
+
     public JButton createButton(ActionListener actionListener, String title, Color color) {
         var button = new JButton(title);
         button.addActionListener(actionListener);
@@ -46,7 +58,13 @@ public abstract class AbstractScreen extends JPanel{
         return button;
     }
 
-    public JLabel createLabel (ImageIcon icon){
-        return new JLabel(icon);
+    public JLabel createLabel (String path){
+        JLabel label = new JLabel();
+        try{
+            label = new JLabel(((new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(path))))));
+        } catch(IOException e){
+            System.out.print("Error title menu images");
+        }
+        return label;
     }
 }
