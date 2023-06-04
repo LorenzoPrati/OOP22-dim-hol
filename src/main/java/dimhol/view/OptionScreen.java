@@ -1,7 +1,5 @@
 package dimhol.view;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,19 +18,14 @@ public class OptionScreen extends AbstractScreen {
     private final Map<String, Dimension> mapResolutions =  new HashMap<>() {
         {
             put("800x600", new Dimension(800, 600));
+            put("720x1280", new Dimension(720, 1280));
             put("1280x720", new Dimension(1280, 720));
-            put("1280x1024", new Dimension(1280, 1024));
-            put("1600x900", new Dimension(1600, 900));
             put("1920x1080 (recommended)", new Dimension(1920, 1080));
         }
     };
     public OptionScreen(Engine engine) {
         super(engine);
-        try{
-            this.background = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("/asset/bg/optionMenu.png")));
-        } catch(Exception e){
-            System.out.print("Error loading menu images");
-        }
+        this.background = super.setBackground("/asset/bg/optionMenu.png");
         JLabel labelResolution = new JLabel("CHOOSE RESOLUTION: ");
         Font font2 = new Font("Helvetica", Font.BOLD, 17);
         JPanel optionListPanel = new JPanel();
@@ -45,15 +38,10 @@ public class OptionScreen extends AbstractScreen {
         comboBox.setForeground(Color.BLACK);
         labelResolution.setFont(font);
         labelResolution.setForeground(Color.BLACK);
-        try{
-            this.add(createLabel((new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("/asset/bg/options.png"))))), gbc);
-        } catch(Exception e){
-            System.out.print("Error loading menu images");
-        }
-        
+        this.add(super.createLabel("/asset/bg/options.png"),gbc);
         optionListPanel.add(labelResolution, gbc);
         optionListPanel.add(comboBox, gbc);
-        optionListPanel.add(createButton(l -> {
+        optionListPanel.add(super.createButton(l -> {
             var selecteResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
             var res = mapResolutions.get(selecteResolution);
             engine.getMainWindow().changeResolution(new Dimension(res));}, "DONE", Color.BLACK), gbc);
@@ -62,7 +50,7 @@ public class OptionScreen extends AbstractScreen {
         gbc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
         centerPanel.setLayout(new GridBagLayout());
         centerPanel.add(optionListPanel, gbc);
-        centerPanel.add(createButton(l -> engine.getMainWindow().changePanel(new HomeScreen(engine)),
+        centerPanel.add(super.createButton(l -> engine.getMainWindow().changePanel(new HomeScreen(engine)),
             "HOME", Color.BLACK), gbc);
         gbc.weighty = 1;
         this.add(centerPanel); 
