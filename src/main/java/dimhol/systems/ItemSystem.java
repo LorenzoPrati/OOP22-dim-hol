@@ -4,6 +4,7 @@ import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;
 import dimhol.components.ItemComponent;
+import java.util.List;
 import dimhol.components.CollisionComponent;
 import dimhol.components.PlayerComponent;
 
@@ -24,7 +25,7 @@ public final class ItemSystem extends AbstractSystem {
         var collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
         var itemComp = (ItemComponent) entity.getComponent(ItemComponent.class);
         for (var c: collisionComp.getCollided()) {
-            var picked = itemComp.applyEffect(c, PlayerComponent.class);
+            var picked = itemComp.applyEffect(c, List.of(PlayerComponent.class));
             if (picked) {
                 world.notifyEvent(new RemoveEntityEvent(entity));
             }
