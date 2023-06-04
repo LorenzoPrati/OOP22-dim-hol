@@ -5,13 +5,13 @@ import dimhol.entity.Entity;
 import dimhol.entity.factories.GenericFactory;
 import dimhol.input.InputImpl;
 import dimhol.logic.player.states.IdleState;
+import dimhol.logic.player.states.SwordState;
 import dimhol.logic.player.states.WalkState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.math.Vector2D;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests the player.
@@ -26,7 +26,6 @@ class PlayerTest {
     private CoinPocketComponent coins;
     private MovementComponent mov;
     private BodyComponent body;
-    private AnimationComponent animation;
     private PlayerComponent player;
     private PositionComponent position;
 
@@ -38,7 +37,6 @@ class PlayerTest {
         this.coins = (CoinPocketComponent) playerEntity.getComponent(CoinPocketComponent.class);
         this.mov = (MovementComponent) playerEntity.getComponent(MovementComponent.class);
         this.body = (BodyComponent) playerEntity.getComponent(BodyComponent.class);
-        this.animation = (AnimationComponent) playerEntity.getComponent(AnimationComponent.class);
         this.player = (PlayerComponent) playerEntity.getComponent(PlayerComponent.class);
         this.position = (PositionComponent) playerEntity.getComponent(PositionComponent.class);
     }
@@ -57,8 +55,24 @@ class PlayerTest {
     @Test
     void testState() {
         var input = new InputImpl();
+        /*
+        Input test
+         */
         input.setUp(true);
-        assertTrue(this.player.getState().transition(input).get().getClass().isInstance(new WalkState()));
+        assertTrue(input.isUp());
+        assertTrue(input.isMoving());
+        /*
+        State transition test
+         */
+        this.player.setState(this.player.getState().transition(input).get());
+        assertTrue(player.getState().getClass().isInstance(new WalkState()));
+
+        input.setUp(false);
+        assertFalse(input.isMoving());
+        input.setAttacking(true);
+        assertTrue(input.isAttacking());
+        this.player.setState(this.player.getState().transition(input).get());
+        assertTrue(player.getState().getClass().isInstance(new SwordState()));
     }
 
 }
