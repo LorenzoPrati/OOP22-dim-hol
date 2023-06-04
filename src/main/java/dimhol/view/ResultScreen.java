@@ -2,7 +2,6 @@ package dimhol.view;
 
 import dimhol.core.Engine;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -10,10 +9,10 @@ import java.awt.*;
  */
 public class ResultScreen extends AbstractScreen {
 
-    private final static String WIN_BACKGROUND_PATH = "src/main/resources/asset/bg/winScreen.png";
-    private final static String LOSE_BACKGROUND_PATH = "src/main/resources/asset/bg/loseScreen.png";
-    private final static String WIN_MESSAGE = "src/main/resources/asset/bg/You-won.png";
-    private final static String LOSE_MESSAGE = "src/main/resources/asset/bg/You-lost.png";
+    private final static String WIN_BACKGROUND_PATH = "/asset/bg/winScreen.png";
+    private final static String LOSE_BACKGROUND_PATH = "/asset/bg/loseScreen.png";
+    private final static String WIN_MESSAGE = "/asset/bg/You-won.png";
+    private final static String LOSE_MESSAGE = "/asset/bg/You-lost.png";
 
     /**
      * Constructs a ResultScreen.
@@ -23,11 +22,11 @@ public class ResultScreen extends AbstractScreen {
      */
     public ResultScreen(final Engine engine, final boolean result) {
         super(engine);
-        this.background = new ImageIcon(result ? WIN_BACKGROUND_PATH : LOSE_BACKGROUND_PATH);
+        this.background = setBackground(result ? WIN_BACKGROUND_PATH : LOSE_BACKGROUND_PATH);
         /*
         todo label
          */
-        //this.add(super.createLabel(new ImageIcon(result ? WIN_MESSAGE : LOSE_MESSAGE)), gbc);
+        this.add(super.createLabel(result ? WIN_MESSAGE : LOSE_MESSAGE), gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         centerPanel.setLayout(new GridBagLayout());
