@@ -40,14 +40,12 @@ public abstract class AbstractScreen extends JPanel{
         g.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
-    public ImageIcon setBackground(String path){
-        ImageIcon background = new ImageIcon();
+    public void setBackground(String path){
         try{
-            background = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(path)));
+            this.background = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(path)));
         } catch(IOException e){
             System.out.print("Error loading background menu images");
         }
-        return background;
     }
 
     public JButton createButton(ActionListener actionListener, String title, Color color) {
