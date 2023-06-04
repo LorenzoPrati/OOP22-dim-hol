@@ -11,7 +11,7 @@ public class HomeScreen extends AbstractScreen {
         super(engine);
         this.background = super.setBackground("/asset/bg/mainMenu.png");
         Color color = new Color(102,0,153);
-        this.add(super.createLabel("/asset/bg/dimension holiday.png"),gbc);
+        this.add(super.createLabel("/asset/bg/HomeScreenTitle.png"),gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         centerPanel.setLayout(new GridBagLayout());

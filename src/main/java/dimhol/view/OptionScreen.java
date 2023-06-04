@@ -15,10 +15,12 @@ import dimhol.core.Engine;
 
 public class OptionScreen extends AbstractScreen {
     public static final int INSETS = 10;
+    public static final int LABEL_ORIGINAL_W = 10;
+    public static final int LABEL_ORIGINAL_H = 10;
     private final Map<String, Dimension> mapResolutions =  new HashMap<>() {
         {
             put("800x600", new Dimension(800, 600));
-            put("720x1280", new Dimension(720, 1280));
+            put("800x1280", new Dimension(800, 1280));
             put("1280x720", new Dimension(1280, 720));
             put("1920x1080 (recommended)", new Dimension(1920, 1080));
         }
@@ -55,4 +57,5 @@ public class OptionScreen extends AbstractScreen {
         gbc.weighty = 1;
         this.add(centerPanel); 
     } 
+
 }
