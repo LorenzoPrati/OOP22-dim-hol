@@ -79,7 +79,7 @@ public final class EngineImpl implements Engine {
      */
     @Override
     public void pauseGame() {
-        this.pause =false;
+        this.pause = true;
     }
 
     /**
