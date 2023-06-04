@@ -11,6 +11,9 @@ import dimhol.events.WorldEvent;
  */
 public final class AISystem extends AbstractSystem {
 
+    /**
+     * Constructs an AISystem.
+     */
     public AISystem() {
         super(AIComponent.class);
     }

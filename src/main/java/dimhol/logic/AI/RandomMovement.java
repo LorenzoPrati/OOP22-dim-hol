@@ -24,8 +24,7 @@ public final class RandomMovement extends AbstractAction {
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(true);
         Vector2D[] directions = {new Vector2D(0, 1), new Vector2D(0, -1), new Vector2D(1, 0), new Vector2D(-1, 0)};
-        if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
-            getAi().setPrevTime(getAi().getCurrentTime());
+        if (reloadTimePassed()) {
             getMovComp().setDir(directions[ThreadLocalRandom.current().nextInt(directions.length)]);
         }
         return Optional.empty();

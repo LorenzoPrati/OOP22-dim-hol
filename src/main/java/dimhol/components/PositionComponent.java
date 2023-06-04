@@ -10,7 +10,7 @@ import java.util.Optional;
 public class PositionComponent implements Component {
 
     private Vector2D pos;
-    private Optional<Vector2D> lastPos;
+    private Optional<Vector2D> lastPos = Optional.empty();
     private int z;
 
     /**
@@ -19,10 +19,9 @@ public class PositionComponent implements Component {
      * @param pos the position
      * @param z
      */
-    public PositionComponent(final Vector2D pos, final int z) {
+    public PositionComponent(final Vector2D pos, int z) {
         this.pos = pos;
         this.z = z;
-        this.lastPos = Optional.empty();
     }
 
     /**
@@ -57,22 +56,24 @@ public class PositionComponent implements Component {
      *
      * @param lastPos the position to set
      */
-    public void setLastPos(final Vector2D lastPos) {
-        this.lastPos = Optional.of(lastPos);
+    public void setLastPos(final Optional<Vector2D> lastPos) {
+        this.lastPos = lastPos;
     }
 
     /**
      * Updates the last position by setting its value equals to current position.
      */
     public void updateLastPos() {
-        this.setLastPos(this.getPos());
+        this.lastPos = Optional.of(this.pos);
     }
 
     /**
      * Revert the current position to last position, if present.
      */
     public void resetToLastPos() {
-        this.getLastPos().ifPresent(this::setPos);
+        if (this.lastPos.isPresent()) {
+            this.pos = this.lastPos.get();
+        }
     }
 
     /**
@@ -82,5 +83,14 @@ public class PositionComponent implements Component {
      */
     public int getZ() {
         return this.z;
+    }
+
+    /**
+     * Sets the z.
+     *
+     * @param z the z to set
+     */
+    public void setZ(final int z) {
+        this.z = z;
     }
 }

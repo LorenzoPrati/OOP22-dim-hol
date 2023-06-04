@@ -155,4 +155,16 @@ public abstract class AbstractAction implements Action {
     public double getAggroRay() {
         return aggroRay;
     }
+
+    /**
+     * Check if waiting time passed.
+     * @return
+     */
+    protected boolean reloadTimePassed() {
+        if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
+            getAi().setPrevTime(getAi().getCurrentTime());
+            return true;
+        }
+        return false;
+    }
 }
