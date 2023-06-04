@@ -2,6 +2,9 @@ package dimhol.view;
 
 import java.awt.Graphics2D;
 
+/**
+ * This interface exposes methods to update and show the HUD.
+ */
 public interface HUD {
 
     /**

@@ -27,7 +27,7 @@ public class ResultScreen extends AbstractScreen {
         /*
         todo label
          */
-        this.add(super.createLabel(new ImageIcon(result ? WIN_MESSAGE : LOSE_MESSAGE)), gbc);
+        //this.add(super.createLabel(new ImageIcon(result ? WIN_MESSAGE : LOSE_MESSAGE)), gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         centerPanel.setLayout(new GridBagLayout());

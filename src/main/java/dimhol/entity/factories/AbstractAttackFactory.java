@@ -7,6 +7,9 @@ import dimhol.entity.Entity;
 import dimhol.logic.util.DirectionUtil;
 import org.locationtech.jts.math.Vector2D;
 
+/**
+ * This class has util to set the attack position.
+ */
 public class AbstractAttackFactory extends AbstractFactory {
 
     private static final double DIVISOR = 2;
@@ -14,6 +17,9 @@ public class AbstractAttackFactory extends AbstractFactory {
     /**
      * This method positions the attack; whatever it is, next to the body of the entity exactly
      * centered with respect to its height or width (depending on the direction).
+     * @param shooter
+     * @param attackWidth
+     * @param attackHeight
      * @return the attack position
      */
     public Vector2D getAttackPos(final Entity shooter, final double attackWidth, final double attackHeight) {
@@ -53,7 +59,12 @@ public class AbstractAttackFactory extends AbstractFactory {
         return new Vector2D(bulletX, bulletY);
     }
 
-    public Vector2D getDirection(final Entity entity) {
+    /**
+     * Entity direction getter.
+     * @param entity
+     * @return the direction
+     */
+    public final Vector2D getDirection(final Entity entity) {
         var movComp = (MovementComponent) entity.getComponent(MovementComponent.class);
         return movComp.getDir();
     }

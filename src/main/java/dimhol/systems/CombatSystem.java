@@ -5,8 +5,16 @@ import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;
 
-public class CombatSystem extends AbstractSystem {
+/**
+ *
+ * This class checks if an entity with AttackComponent has collided with
+ * an entity with HealthComponent and applies the damage.
+ */
+public final class CombatSystem extends AbstractSystem {
 
+    /**
+     * Construct a CombatSystem.
+     */
     public CombatSystem() {
         super(AttackComponent.class, CollisionComponent.class);
     }
