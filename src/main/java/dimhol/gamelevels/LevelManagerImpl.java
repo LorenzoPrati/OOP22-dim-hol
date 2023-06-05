@@ -25,8 +25,8 @@ import java.util.stream.IntStream;
  * The LevelGenerator class generates a new level for the game, including the placement of the player and enemies.
  */
 public class LevelManagerImpl implements LevelManager {
-    private static final int BOSS_ROOM_INDEX = 4;
-    private static final int DEFAULT_CYCLE_LENGTH = 5;
+    private static final int DEFAULT_LENGTH_TO_BOSS_ROOM = 15;
+    private static final int DEBUG_LENGTH_TO_BOSS_ROOM = 5;
     // This will give us a cyclic pattern of 0, 1, 2, 3, 4, - 0, 1, 2, 3, 4 and so on.
     private static final int DEFAULT_SHOPS_PER_CYCLE = 3;
     private final MapLoader mapLoader;
@@ -35,11 +35,12 @@ public class LevelManagerImpl implements LevelManager {
     private final BossRoomStrategy bossRoomStrategy;
     private TileMap tileMap;
     private int currentLevel;
+    private final int max_room_number;
 
     /**
      * Constructs a LevelManagerImpl object.
      */
-    public LevelManagerImpl() {
+    public LevelManagerImpl(boolean debug) {
         this.mapLoader = new MapLoaderImpl();
         GenericFactory genericFactory = new GenericFactory();
         EnemyFactory enemyFactory = new EnemyFactory();
@@ -51,6 +52,7 @@ public class LevelManagerImpl implements LevelManager {
         shopRoomStrategy = new ShopRoomStrategy(genericFactory, itemFactory, interactableObjectFactory);
         bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory());
         this.currentLevel = 0;
+        this.max_room_number = debug ? DEBUG_LENGTH_TO_BOSS_ROOM : DEFAULT_LENGTH_TO_BOSS_ROOM;
     }
 
     /**
@@ -73,25 +75,24 @@ public class LevelManagerImpl implements LevelManager {
      */
     private RoomStrategy determineRoomType() {
         // Calculate the room index within the current cycle
-        int roomIndex = currentLevel % DEFAULT_CYCLE_LENGTH;
-        if (roomIndex == BOSS_ROOM_INDEX) {  // Check the room index to determine the room type
+        if (currentLevel == max_room_number) {  // Check the room index to determine the room type
             //Generate a boss room
             tileMap = mapLoader.loadBossRoom();
             System.out.println("Boss");
-            System.out.println("current room " + roomIndex);
+            System.out.println("current room " + currentLevel);
             return bossRoomStrategy;
         }
-        if (roomIndex % DEFAULT_SHOPS_PER_CYCLE == 0) {
+        if (currentLevel % DEFAULT_SHOPS_PER_CYCLE == 0) {
             //Generate a shop
             tileMap = mapLoader.loadShopRoom();
             System.out.println("Shop");
-            System.out.println("current room " + roomIndex);
+            System.out.println("current room " + currentLevel);
             return shopRoomStrategy;
         }
         //Generate a normal room
         tileMap = mapLoader.loadNormalRoom();
         System.out.println("Normal");
-        System.out.println("current room " + roomIndex);
+        System.out.println("current room " + currentLevel);
         return normalRoomStrategy;
     }
 
