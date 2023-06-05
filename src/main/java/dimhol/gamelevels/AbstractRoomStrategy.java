@@ -103,7 +103,9 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
      * @param newListOfEntities The list of entities to add the player to.
      */
     protected void generatePlayer(final Set<Pair<Integer, Integer>> availableTiles, final List<Entity> entities,
-                                  final List<Entity> newListOfEntities) {
+                                  final List<Entity> newListOfEntities,
+                                  final int playerEntityWidth,
+                                  final int playerEntityHeight) {
         Optional<Entity> existingPlayer = findPlayerEntity(entities);
 
         existingPlayer.ifPresent(player -> {
