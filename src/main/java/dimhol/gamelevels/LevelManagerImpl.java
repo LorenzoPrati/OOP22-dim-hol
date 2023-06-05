@@ -26,7 +26,7 @@ import java.util.stream.IntStream;
  */
 public class LevelManagerImpl implements LevelManager {
     private static final int DEFAULT_LENGTH_TO_BOSS_ROOM = 15;
-    private static final int DEBUG_LENGTH_TO_BOSS_ROOM = 5;
+    private static final int DEBUG_LENGTH_TO_BOSS_ROOM = 4;
     // This will give us a cyclic pattern of 0, 1, 2, 3, 4, - 0, 1, 2, 3, 4 and so on.
     private static final int DEFAULT_SHOPS_PER_CYCLE = 3;
     private final MapLoader mapLoader;
@@ -41,6 +41,7 @@ public class LevelManagerImpl implements LevelManager {
      * Constructs a LevelManagerImpl object.
      */
     public LevelManagerImpl(boolean debug) {
+        this.max_room_number = debug ? DEBUG_LENGTH_TO_BOSS_ROOM : DEFAULT_LENGTH_TO_BOSS_ROOM;
         this.mapLoader = new MapLoaderImpl();
         GenericFactory genericFactory = new GenericFactory();
         EnemyFactory enemyFactory = new EnemyFactory();
@@ -52,7 +53,6 @@ public class LevelManagerImpl implements LevelManager {
         shopRoomStrategy = new ShopRoomStrategy(genericFactory, itemFactory, interactableObjectFactory);
         bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory());
         this.currentLevel = 0;
-        this.max_room_number = debug ? DEBUG_LENGTH_TO_BOSS_ROOM : DEFAULT_LENGTH_TO_BOSS_ROOM;
     }
 
     /**
