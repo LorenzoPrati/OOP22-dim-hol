@@ -29,3 +29,6 @@ bin/
 *.dvi
 *.fdb_latexmk
 *.fls
+
+# temporary
+*.pdf
