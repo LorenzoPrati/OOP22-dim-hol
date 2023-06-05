@@ -57,7 +57,7 @@ public class WorldImpl implements World {
         this.entities = new ArrayList<>();
         this.systems = new ArrayList<>();
         this.events = new ArrayList<>();
-        this.levelManager = new LevelManagerImpl();
+        this.levelManager = new LevelManagerImpl(engine.isDebug());
         this.scene = new SceneImpl(engine);
         this.scene.setupInput();
         /*

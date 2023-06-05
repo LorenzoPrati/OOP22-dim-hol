@@ -2,8 +2,10 @@ package dimhol.view;
 
 import dimhol.core.Engine;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 public class TutorialScreen extends AbstractScreen {
 
