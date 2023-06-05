@@ -39,7 +39,7 @@ public class LevelManagerImpl implements LevelManager {
     /**
      * Constructs a LevelManagerImpl object.
      */
-    public LevelManagerImpl() {
+    public LevelManagerImpl(boolean debug) {
         this.mapLoader = new MapLoaderImpl();
         GenericFactory genericFactory = new GenericFactory();
         EnemyFactory enemyFactory = new EnemyFactory();
