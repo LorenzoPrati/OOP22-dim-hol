@@ -9,7 +9,7 @@ public class NoAvailableTilesException extends RuntimeException {
      *
      * @param message the detail message
      */
-    public NoAvailableTilesException(String message) {
+    public NoAvailableTilesException(final String message) {
         super(message);
     }
 }
