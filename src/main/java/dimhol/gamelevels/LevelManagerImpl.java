@@ -48,7 +48,7 @@ public class LevelManagerImpl implements LevelManager {
         Random random = new Random();
         this.tileMap = mapLoader.loadNormalRoom();
         normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, itemFactory, interactableObjectFactory, random);
-        shopRoomStrategy = new ShopRoomStrategy(genericFactory, itemFactory, interactableObjectFactory, new RandomWrapper());
+        shopRoomStrategy = new ShopRoomStrategy(genericFactory, itemFactory, interactableObjectFactory);
         bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory());
         this.currentLevel = 0;
     }
@@ -144,7 +144,7 @@ public class LevelManagerImpl implements LevelManager {
     /**
      * Generates the level by adding entities (player, enemies) to the world.
      *
-     * @param player The player entity.
+     * @param player   The player entity.
      * @param entities The
      * @return The list of entities for the new level.
      */
