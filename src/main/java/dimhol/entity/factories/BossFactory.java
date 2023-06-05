@@ -65,7 +65,7 @@ public class BossFactory extends AbstractFactory {
                 .add(new MovementComponent(new Vector2D(0, 1), BOSS_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(BOSS_WIDTH, BOSS_HEIGHT), true))
                 .add(new HealthComponent(BOSS_HEALTH))
-                .add(new AnimationComponent(map.get("boss"), "walk"))
+                .add(new AnimationComponent(getAnimationsMap().get("boss"), "walk"))
                 .add(new AIComponent(new RoutineFactory().createBossRoutine()))
                 .build();
     }
@@ -82,7 +82,7 @@ public class BossFactory extends AbstractFactory {
                 .add(new PositionComponent(new Vector2D(x, y), 0))
                 .add(new MovementComponent(new Vector2D(0, 1), MINIONS_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), true))
-                .add(new AnimationComponent(map.get("enemy"), "idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("enemy"), "idle"))
 //                .add(new AiComponent(new RoutineFactory().createMinionsRoutine()))
                 .build();
     }

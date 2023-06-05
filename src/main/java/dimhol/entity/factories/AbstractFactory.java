@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public abstract class AbstractFactory {
 
-    protected final Map<String, Map<String, ArrayList<Integer>>> map = new HashMap<>();
+    private final Map<String, Map<String, ArrayList<Integer>>> map = new HashMap<>();
 
     /**
      * Abstract Factory contains a map of game entity graphics.
@@ -23,8 +23,17 @@ public abstract class AbstractFactory {
             final Yaml yaml = new Yaml();
             final Map<String, Map<String, ArrayList<Integer>>> mapLoaded = yaml.load(input);
             map.putAll(mapLoaded);
-        } catch (NullPointerException e) {
-            System.out.println("File not found. ");
+            input.close();
+        } catch (Exception e) {
+            e.getStackTrace();
         }
+    }
+
+    /**
+     * Animation map getter.
+     * @return the animation's map
+     */
+    public Map<String, Map<String, ArrayList<Integer>>> getAnimationsMap() {
+        return map;
     }
 }

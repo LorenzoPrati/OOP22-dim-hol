@@ -16,6 +16,13 @@ public final class BehviourUtil {
      * Flat corner.
      */
     public static final int FLAT_CORNER = 180;
+
+    /**
+     * Private constructors since it's util class.
+     */
+    private BehviourUtil() {
+    }
+
     /**
      * This method is used to know in which direction the player is located.
      * @param playerCentralPos is the central player position

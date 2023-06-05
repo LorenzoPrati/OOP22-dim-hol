@@ -7,8 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class creates an attack near the entity.
+ */
 public final class MeleeAttack extends AbstractAction {
 
+    /**
+     * Construct a MeleeAttack.
+     * @param meleeAttackAggro
+     * @param meleeReloadTime
+     */
     public MeleeAttack(final double meleeAttackAggro, final double meleeReloadTime) {
         setAggroRay(meleeAttackAggro);
         setWaitingTime(meleeReloadTime);
@@ -17,7 +25,7 @@ public final class MeleeAttack extends AbstractAction {
     @Override
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(false);
-        var direction = BehviourUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
+        final var direction = BehviourUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         getMovComp().setDir(direction);
         if (reloadTimePassed()) {
             return meleeAttack();
@@ -26,7 +34,7 @@ public final class MeleeAttack extends AbstractAction {
     }
 
     private Optional<List<WorldEvent>> meleeAttack() {
-        List<WorldEvent> attacks = new ArrayList<>();
+        final List<WorldEvent> attacks = new ArrayList<>();
         attacks.add(new AddEntityEvent(getAttackFactory().createMeleeAttack(getEnemy())));
         return Optional.of(attacks);
     }

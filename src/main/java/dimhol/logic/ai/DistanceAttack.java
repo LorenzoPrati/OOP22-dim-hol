@@ -26,7 +26,7 @@ public final class DistanceAttack extends AbstractAction {
     @Override
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(false);
-        var direction = BehviourUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
+        final var direction = BehviourUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         getMovComp().setDir(direction);
         if (reloadTimePassed()) {
             return distanceAttack();
@@ -35,7 +35,7 @@ public final class DistanceAttack extends AbstractAction {
     }
 
     private Optional<List<WorldEvent>> distanceAttack() {
-        List<WorldEvent> attacks = new ArrayList<>();
+        final List<WorldEvent> attacks = new ArrayList<>();
         attacks.add(new AddEntityEvent(getAttackFactory().createDistanceAttack(getEnemy())));
         return Optional.of(attacks);
     }

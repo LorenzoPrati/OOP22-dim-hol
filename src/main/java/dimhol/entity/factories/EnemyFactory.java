@@ -62,7 +62,7 @@ public class EnemyFactory extends AbstractFactory {
                 .add(new MovementComponent(new Vector2D(0, 1), ZOMBIE_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(ZOMBIE_WIDTH, ZOMBIE_HEIGHT), true))
                 .add(new HealthComponent(ZOMBIE_HEALTH))
-                .add(new AnimationComponent(map.get("enemy"), "idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("enemy"), "idle"))
                 .add(new AIComponent(new RoutineFactory().createZombieRoutine()))
                 .build();
     }
@@ -79,7 +79,7 @@ public class EnemyFactory extends AbstractFactory {
                 .add(new MovementComponent(new Vector2D(0, 1), SHOOTER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(SHOOTER_WIDTH, SHOOTER_HEIGHT), true))
                 .add(new HealthComponent(SHOOTER_HEALTH))
-                .add(new AnimationComponent(map.get("enemy"), "idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("enemy"), "idle"))
                 .add(new AIComponent(new RoutineFactory().createShooterRoutine()))
                 .build();
     }

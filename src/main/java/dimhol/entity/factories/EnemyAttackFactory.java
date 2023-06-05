@@ -111,7 +111,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new AttackComponent(ENEMY_MELEE_DAMAGE, checkPlayer))
                 .add(new MeleeComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("enemyMeleeAttack"), "idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("enemyMeleeAttack"), "idle"))
                 .build();
     }
 
@@ -127,7 +127,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new MovementComponent(getDirection(entity), ENEMY_BULLET_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(ENEMY_BULLET_WIDTH, ENEMY_BULLET_HEIGHT), false))
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
+                .add(new AnimationComponent(getAnimationsMap().get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
                 .add(new AttackComponent(ENEMY_BULLET_DAMAGE, checkPlayer))
                 .add(new BulletComponent())
                 .build();
@@ -145,7 +145,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new AttackComponent(BOSS_AREA_ATTACK_DAMAGE, checkPlayer))
                 .add(new AreaAttackComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("boss"), "idle"))
                 .build();
     }
 
@@ -161,7 +161,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, checkPlayer))
                 .add(new MinionComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "takeHit")) //TODO: add their sprites.
+                .add(new AnimationComponent(getAnimationsMap().get("boss"), "takeHit")) //TODO: add their sprites.
                 .build();
     }
 
@@ -178,7 +178,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, checkPlayer))
                 .add(new ChargeAttackComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "attack"))
+                .add(new AnimationComponent(getAnimationsMap().get("boss"), "attack"))
                 //DirectionUtil.getStringFromVec(getDirection(bossEntity))))
                 .build();
     }
@@ -193,7 +193,7 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new PositionComponent(getAttackPos(bossEntity, 0, 0), 0))
                 .add(new BodyComponent(new RectBodyShape(2.5, 2.5), false))
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("boss"), "idle"))
                 .add(new DefensiveShieldComponent(BOSS_DEFENSIVE_SHIELD_DURATION))
                 .build();
     }

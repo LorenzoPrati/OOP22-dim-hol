@@ -56,15 +56,17 @@ public final class HUDImpl implements HUD {
     @Override
     public void show(final Graphics2D g2d, final double newTileWidth,
                      final double newTileHeight, final int offsetX, final int offsetY) {
+
+        final InputStream fontFile = getClass().getResourceAsStream("/asset/hud/font/Fipps-Regular.ttf");
+        final double fontSize = newTileHeight / FONT_SIZE_DIVISOR;
+        final Font font;
         try {
-            InputStream fontFile = getClass().getResourceAsStream("/asset/hud/font/Fipps-Regular.ttf");
-            double fontSize = newTileHeight / FONT_SIZE_DIVISOR;
-            assert fontFile != null;
-            var font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Math.round(fontSize));
-            g2d.setFont(font);
+            font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Math.round(fontSize));
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
+        g2d.setFont(font);
+
 
         showHealthInfo(g2d, offsetX, offsetY, newTileWidth, newTileHeight);
         showCoinInfo(g2d, offsetX, offsetY, newTileWidth, newTileHeight);
@@ -72,22 +74,22 @@ public final class HUDImpl implements HUD {
 
     private void showHealthInfo(final Graphics2D g2d, final int offsetX, final int offsetY,
                                 final double newTileWidth, final double newTileHeight) {
-        var heartImg = resourceLoader.getImage(HEART_IMAGE_CODE);
-        int heartW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
-        int heartH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
+        final var heartImg = resourceLoader.getImage(HEART_IMAGE_CODE);
+        final int heartW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
+        final int heartH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
 
         g2d.setColor(Color.RED);
         g2d.drawString("Hearts : " + playerCurrentHealth + " / " + playerMaxHealth, heartW + offsetX, heartH + offsetY);
         for (int i = 1; i < playerCurrentHealth + 1; i++) {
-            g2d.drawImage(heartImg, (i * heartW + offsetX), heartH + offsetY, heartW, heartH, null);
+            g2d.drawImage(heartImg, i * heartW + offsetX, heartH + offsetY, heartW, heartH, null);
         }
     }
 
     private void showCoinInfo(final Graphics2D g2d, final int offsetX, final int offsetY,
                               final double newTileWidth, final double newTileHeight) {
-        var coinImg = resourceLoader.getImage(COIN_IMAGE_CODE);
-        int coinW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
-        int coinH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
+        final var coinImg = resourceLoader.getImage(COIN_IMAGE_CODE);
+        final int coinW = Math.toIntExact(Math.round(newTileWidth * HUD_IMAGE_WIDTH));
+        final int coinH = Math.toIntExact(Math.round(newTileHeight * HUD_IMAGE_HEIGHT));
 
         g2d.setColor(Color.YELLOW);
         g2d.drawString("Coins : " + coins, coinW + offsetX, coinH * COIN_HIGH_MUL + offsetY);
