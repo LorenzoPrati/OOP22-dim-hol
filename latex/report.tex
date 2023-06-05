@@ -94,10 +94,17 @@ Di seguito spieghiamo le varie parti della nostra architettura:
 \begin{itemize}
 	\item \texttt{Component}: sono oggetti utili a mantenere i dati che descrivono un certo aspetto del modello di gioco (ad esempio la posizione sul piano, la direzione del movimento, le caratteristiche del corpo ecc.) e in teoria non hanno una loro logica di comportamento.
 	\item \texttt{Entity}: sono dei raccoglitori di \texttt{Component}. Ogni entita' e' descritta dai suoi componenti che permettono alla stessa di distinguerla dalle altre entita'. Ad esempio, diverse entita' presenti in gioco nello stesso momento potrebbero contenere un PositionComponent, un MovementComponent, un BodyComponent, un HealthComponent e altri, che ne descrivono le proprieta'.
-	\item \texttt{System}: sono la parte dell'architettura che si occupa di operare sulle entita', modificandone i componenti e quindi svolgendo la maggior parte della logica del gioco. L'esecuzione sequenziale di vari sistemi, ciascuno che scorre le entita' e opera su un determinato set di componenti, permette il funzionamento del gioco. Ad esempio, il MovementSystem opera esclusivamente sulle entita' che contengono il MovementComponent e si occupa di muovere tutte le entita'; mentre il CheckHealthSystem si occupa di prendere tutte le entita' che hanno un HealthComponent e di rimuovere quelle che hanno esaurito le vite. 
+	\item \texttt{GameSystem}: sono la parte dell'architettura che si occupa di operare sulle entita', modificandone i componenti e quindi svolgendo la maggior parte della logica del gioco. L'esecuzione sequenziale di vari sistemi, ciascuno che scorre le entita' e opera su un determinato set di componenti, permette il funzionamento del gioco. Ad esempio, il MovementSystem opera esclusivamente sulle entita' che contengono il MovementComponent e si occupa di muovere tutte le entita'; mentre il CheckHealthSystem si occupa di prendere tutte le entita' che hanno un HealthComponent e di rimuovere quelle che hanno esaurito le vite. 
 	\item \texttt{Engine} e \texttt{World}: queste sono le classi che controllano effettivamente lo svolgersi del gioco. \texttt{Engine} si occupa di gestire il \textit{game loop}, mentre il \texttt{World} contiene al suo interno le entita', esegue i \textit{system} e passa alla View le informazioni necessarie per disegnare su schermo.
+	\item \texttt{LevelManager}: manager dei livelli contenuto nel \texttt{World}, che si occupa della generazione e del caricamento degli stessi.
 	\item \texttt{View}: e' gestita in modo indipendente dal \textit{pattern ecs}. \texttt{Scene} si occupa solamente di disegnare lo stato del modello di gioco, mentre \texttt{MainWindow} gestisce diverse schermate di menu (home, opzioni, pausa ecc.). Inoltre sono presenti classi che si occupano di disegnare l'interfaccia grafica e di registrare gli input da mouse e tastiera.
 \end{itemize}
+
+\begin{figure}[]
+	\centering
+	\includegraphics[width=\textwidth]{uml/uml_architettura.png}
+	\caption{Diagramma UML dell'architettura. Le freccie indicano le operazioni ad alto livello che le varie parti svolgono. L'\texttt{Engine} fa partire il \textit{game loop} e aggiorna il \texttt{World}, che a sua volta aggiorna uno dopo l'altro tutti i \texttt{GameSystem}. I sistemi processano le entita' che competono alla loro gestione e possono notificare dei \texttt{WorldEvent} al \texttt{World}. Il \texttt{World}, dopo aver eseuguito tutti gli eventi generati dai sistemi, comanda a \texttt{Scene} di disegnare il mondo di gioco}.
+\end{figure}
 
 \pagebreak
 
