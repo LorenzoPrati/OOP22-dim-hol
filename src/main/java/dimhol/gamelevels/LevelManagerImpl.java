@@ -27,7 +27,6 @@ import java.util.stream.IntStream;
 public class LevelManagerImpl implements LevelManager {
     private static final int DEFAULT_LENGTH_TO_BOSS_ROOM = 15;
     private static final int DEBUG_LENGTH_TO_BOSS_ROOM = 4;
-    // This will give us a cyclic pattern of 0, 1, 2, 3, 4, - 0, 1, 2, 3, 4 and so on.
     private static final int DEFAULT_SHOPS_PER_CYCLE = 3;
     private final MapLoader mapLoader;
     private final NormalRoomStrategy normalRoomStrategy;
