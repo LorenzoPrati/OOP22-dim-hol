@@ -28,19 +28,16 @@
 
 \section{Requisiti}
 
-Il gruppo si pone l'obbiettivo di realizzare un videogioco roguelike \textit{Dimension Holiday} vagamente ispirato a giochi famosi come \textit{Hades} oppure \textit{The Binding of Isaac}. Il giocatore controllera' un personaggio che è stato trasportato in un altro mondo dove dovrà
-esplorare un dungeon e affrontare un boss per tornare alla propria
-dimensione.
+Il gruppo si pone l'obbiettivo di realizzare un videogioco roguelike \textit{Dimension Holiday} vagamente ispirato a giochi famosi come \textit{Hades} oppure \textit{The Binding of Isaac}. Il giocatore controllera' un personaggio 
+esplorare un dungeon composto di diverse stanze e affrontare un boss per vincere il gioco.
 
 \subsection*{Elementi funzionali}
 
 \begin{itemize}
 	\item Per attraversare tutto il dungeon il giocatore dovrà passare da stanza in stanza,
-	eliminando tutti i nemici presenti. Per farlo potrà usare la spada o lanciare
-	proiettili energetici. Giocatore e nemici hanno delle vite (espresse in cuori) e se il giocatore perde tutti i cuori e' \textit{Game over} e si deve ricominciare da capo
-	\item Una volta che avrà ucciso tutti i nemici della stanza corrente
-	compariranno dei reward casuali (cuori, monete ecc.) e il portale che
-	ti trasporterà nella prossima stanza. 
+	eliminando tutti i nemici presenti. Per farlo potrà usare la spada, lanciare
+	proiettili o utilizzare una magia di fuoco. Giocatore e nemici hanno delle vite (espresse in cuori) e se il giocatore perde tutti i cuori e' \textit{Game over} e si deve ricominciare da capo
+	\item Una volta che il giocatore avrà ucciso tutti i nemici della stanza corrente un portale (\textit{Gate}) che e' presente nella stanza potra' essere attraversato per passare alla stanza successiva
 	\item Dopo un certo numero di stanze, comparirà una stanza shop
 	dove sarà possibile effettuare acquisti usando le monete creando una piccola progressione
 	\item Il gioco si conclude quando il giocatore sconfigge un nemico speciale chiamato \textit{Boss}
@@ -55,25 +52,28 @@ dimensione.
 
 
 \section{Analisi e modello del dominio}
-Il giocatore potra' muoversi nelle 4 direzioni su, sinsitra, giu', destra tramite i tasti, rispettivamente, W, A, S, D ed effettuare due tipi di attacchi:
+Il giocatore potra' muoversi nelle 4 direzioni su, sinsitra, giu', destra tramite i tasti, rispettivamente, W, A, S, D ed effettuare due tipi di attacchi piu' un'abilita' speciale:
 \begin{itemize}
-	\item \textit{meele}, ovvero ravvicinato, usando una spada e tramite il tasto sinistro del mouse
-	\item dalla distanza, usando un proiettile energetico e tramite il tasto destro del mouse
+	\item un attacco ravvicinato, usando la sua spada e tramite il tasto sinistro del mouse
+	\item un attacco dalla distanza, usando un proiettile energetico e tramite il tasto destro del mouse
+	\item un attacco caricato, tenendo premuto il tasto Z per 3 secondi e rilasciandolo per sparare una palla di fuoco che fara' piu' danno di un normale proiettile
 \end{itemize}
-Il gioco dovra' essere in grado di presentare al \texttt{giocatore} una serie di stanze dove affrontare dei \texttt{nemici}. Questi potranno avere diversi comportamenti e diverse tipologie di \texttt{attacco}. Il giocatore dovrà stare attento ad evitare gli attacchi dei nemici per non perdere cuori e allo stesso tempo non entrarci in contatto, cosa che comportera' ulteriore danno.
-Saranno presenti degli \texttt{oggetti} raccoglibili (cuori, monete ecc.) che dovranno applicare degli \texttt{effetti} alle entita' con cui entrano in contatto, ad esempio l'incremento della vita oppure l'incremento della valuta posseduta dal giocatore. 
+Il gioco dovra' essere in grado di presentare al \texttt{giocatore} una serie di stanze dove affrontare dei \texttt{nemici}. Questi potranno avere diversi comportamenti e diverse tipologie di \texttt{attacco}. Il giocatore dovrà stare attento ad evitare gli attacchi dei nemici per non perdere cuori. I nemici possono attaccare sia dalla distanza con dei proiettili sia da vicino. Quando un'entita' esaurisce i cuori, essa deve essere rimossa dal \texttt{mondo} di gioco; inoltre alla rimozione di determinate entita' il gioco puo' reagire in diversi modi, ad esempio decretando il \textit{Game over} nel caso il player muoia, oppure la vittoria nel caso il boss venga sconfitto.
+Saranno presenti degli \texttt{oggetti} raccoglibili (cuori, monete ecc.) che dovranno applicare degli effetti alle entita' con cui entrano in contatto, ad esempio l'incremento della vita oppure l'incremento della valuta posseduta dal giocatore. 
 Lo shop sara' gestito \textit{in game}, nel senso che non comparirà un'interfaccia grafica che permettera' al giocatore di scegliere i potenziamenti, ma il giocatore dovra' interagire dinamicamente con degli oggetti presenti nella mappa per acquistarli.
 Anche gli attacchi applicheranno degli effetti con le entita' con cui entrano in contatto, come ad esempio la perdita di cuori.
-Il \texttt{mondo} di gioco (\textit{dungeon}) sara' composto di una serie di stanze. Tramite l'interazione con un oggetto portale, il giocatore sara' trasportato alla stanza successiva senza possibilità di tornare indietro. All'interno delle stanze sono presenti dei muri, che bloccano il passaggio al giocatore. Esistono tre tipi di stanze: normale, shop, boss. Nella stanza normale compariranno dei nemici, in numero e tipo variabile in base al momento della partita, nella stanza shop invece compariranno gli oggetti rappresentati i potenziamenti acquistabili, e nella stanza boss comparirà solo il nemico boss.
-Le stanze normali saranno intercambiate randomicamente tra un pool prescelto di mappe create a mano, mentre le stanze shop e boss saranno uniche.
+Il \texttt{mondo} di gioco  sara' composto di una serie di \texttt{stanze}. Tramite l'interazione con un oggetto portale, il giocatore sara' trasportato alla stanza successiva senza possibilità di tornare indietro. All'interno delle stanze sono presenti dei muri, che bloccano il passaggio al giocatore. Esistono tre tipi di stanze: normale, shop, boss. Nella stanza normale compariranno dei nemici, in numero e tipo variabile in base al momento della partita, nella stanza shop invece compariranno gli oggetti rappresentati i potenziamenti acquistabili, e nella stanza boss comparirà il nemico boss.
 
-La difficoltà sara' gestita in modo tale che proseguendo nel dungeon risulti piu' difficile il gioco, ad esempio facendo comparire piu' nemici nelle stanze oppure nemici piu' forti. Questo aumento della difficoltà sara' compensato dai potenziamenti che il giocatore potra' acquistare nello shop, che comparira' dopo un numero costante di stanze normali superate. 
-
-Una delle maggiori difficoltà consistera' nella creazione di un architettura che permetta la gestione sia di diversi tipi di nemici (zombie, shooter, boss ecc.), ognuno con un proprio comportamento, sia di diversi attacchi utilizzabili sia dal giocatore che dai nemici (proiettili, attacchi meele). Inoltre, si cerchera' di realizzare un sistema di combattimento \textit{real-time} quanto piu' possibile fluido e responsivo e un'alternanza di mappe e generazione dei nemici in modo tale da far sembrare ogni partita diversa.
+Una delle maggiori difficoltà consistera' nella creazione di un architettura che permetta la gestione sia di diversi tipi di nemici (zombie, shooter, boss ecc.), ognuno con un proprio comportamento, sia di diversi attacchi utilizzabili sia dal giocatore che dai nemici (proiettili, attacchi meele). Inoltre, si cerchera' di realizzare un sistema di combattimento \textit{action} e \textit{real-time} quanto piu' possibile fluido e responsivo e un'alternanza di mappe e generazione dei nemici in modo tale da far sembrare ogni partita diversa.
 
 Dato il monte ore previsto, si rimanda al futuro una gestione accurata delle performance del gioco.
 
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{uml/uml_analisi.png}
+	\caption{Diagramma UML dell'analisi del dominio rappresentante le varie entita' di gioco e i loro legami con il mondo e i livelli}
+\end{figure}
 
 
 \chapter{Design}
@@ -128,7 +128,9 @@ L'interfaccia \texttt{Entity}, invece, contiene tutti i metodi fondamentali per 
 
 Su queste semplici interfacce si basa l'intera struttura del \textit{pattern entity-component-system}, o meglio della parte \textit{entity-component}.
 
-Infine, ho realizzato una classe \texttt{EntityBuilder} che, tramite l'uso del \textit{builder pattern}, consente la creazione di entita' in modo dichiarativo semplicemente tramite l'aggiunta sequenziale di \texttt{Component} su cui si basano tutte le factory presenti nel progetto. Per creare nuove entita' e' quindi sufficiente aggiungere componenti tramite l'\texttt{EntityBuilder} e modificando i parametri di creazione di questi componenti oppure creandone di nuovi, e' di fatti possibile creare molto velocemente nemici, oggetti e attacchi nuovi e dalle caratteristiche diverse. (vedi factories)
+Infine, ho realizzato una classe \texttt{EntityBuilder} che, tramite l'uso del \textit{builder pattern}, consente la creazione di entita' in modo dichiarativo semplicemente tramite l'aggiunta sequenziale di \texttt{Component} su cui si basano tutte le factory presenti nel progetto. Per creare nuove entita' e' quindi sufficiente aggiungere componenti tramite l'\texttt{EntityBuilder} e modificando i parametri di creazione di questi componenti oppure creandone di nuovi, e' di fatti possibile creare molto velocemente nemici, oggetti e attacchi nuovi e dalle caratteristiche diverse.
+
+Un esempio di creazione di entita' sfruttando il builder e il \textit{pattern factory method} da me realizzato: (inserire permalink)
 
 \subsubsection{System}
 
@@ -139,10 +141,10 @@ Infine, ho realizzato una classe \texttt{EntityBuilder} che, tramite l'uso del \
 \end{figure}
 
 \paragraph{Problema}
-Le entita' e i componenti non definiscono logica di comportamento propria, quindi e' necessario che vengano manipolati dai \textit{system}. I sistemi devono essere divisi per specifico compito e ognuno deve essere in grado di riconoscere su quali entita' e' in grado di operare. Ad esempio, devono essere realizzati dei sistemi in grado di muovere le entita', rilevare e gestire le loro collisioni, rimuoverle dal mondo di gioco quando necessario ecc.
+Le entita' e i componenti non definiscono logica di comportamento propria, quindi e' necessario che vengano manipolati dai \textit{system}. I sistemi devono essere divisi per specifico compito e ognuno deve essere in grado di operare sulle entita' che hanno certi componenti. Ad esempio, devono essere realizzati dei sistemi in grado di muovere le entita', rilevare e gestire le loro collisioni, rimuoverle dal mondo di gioco quando necessario ecc.
 
 \paragraph[]{Soluzione}
-Ho realizzato un'interfaccia \texttt{GameSystem} che modella un generico \textit{system}. Il metodo esposto e' \texttt{update} e si occupa di far eseguire la logica del sistema. Visto che ogni \textit{system} deve essere in grado di operare solo su certe entita', per garantire il \textit{riuso} ho scelto di realizzare una classe astratta \texttt{AbstractSystem} che all'interno utilizza il \textit{pattern template method} dove il metodo template e' appunto \texttt{update}, che fa i dovuti controlli sulle entita' e poi richiama il metodo astratto e protetto \texttt{process} solo sulle entita' che hanno i componenti richiesti. In questo modo, ogni classe che estende \texttt{AbstractSystem} deve solamente occuparsi di definire tramite costruttore l'insieme di \texttt{Component} su cui vuole operare e poi implementare il metodo \texttt{process} che andra' ad operare solo su \texttt{Entity} che hanno i componenti precedentemente richiesti.
+Ho realizzato un'interfaccia \texttt{GameSystem} che modella un generico \textit{system}. Il metodo esposto e' \texttt{update} e si occupa di far eseguire la logica del sistema. Visto che ogni \textit{system} deve essere in grado di operare solo su certe entita', per garantire il \textit{riuso} ho scelto di realizzare una classe astratta \texttt{AbstractSystem} che all'interno utilizza il \textit{pattern template method} dove il metodo template e' appunto \texttt{update}, che fa i dovuti controlli sui componenti che compongono l'entita' e poi richiama il metodo astratto e protetto \texttt{process} solo sulle entita' che hanno i componenti richiesti. In questo modo, ogni classe che estende \texttt{AbstractSystem} deve solamente occuparsi di definire tramite costruttore l'insieme di \texttt{Component} su cui vuole operare e poi implementare il metodo \texttt{process} che andra' ad operare solo su \texttt{Entity} che hanno i componenti precedentemente richiesti.
 
 I \textit{system} sono in grado, avendo nel loro metodo \texttt{process} un riferimento al \texttt{World} di notificare, come spieghero' meglio in seguito, degli eventi; ma e' anche possibile un metodo di \textit{signaling} tra \textit{system} diversi. Questo e' possibile attaccando, in seguito al verificarsi di una determinata situazione, un componente \textit{informativo} all'entita' che si sta processando in modo tale da permettere a successivi \textit{system} di cercare entita' con quel componente \textit{informativo} e gestire la cosa adeguatamente.
 
@@ -162,7 +164,7 @@ Realizzare una classe che permetta lo svolgimento effettivo del main loop del gi
 
 \paragraph*{Soluzione} La soluzione e' ricaduta sulla creazione di un'interfaccia \texttt{Engine} con relativa implementazione \texttt{EngineImpl}. Questa classe fa uso del \textit{pattern game loop}, realizzato in un metodo privato e vengono esposti dall'interfaccia i metodi necessari alle altre classi (ad esempio le schermate della View) per controllare il loop. E' quindi possibile metterlo in pausa, riprenderlo e arrestarlo. Essendo questa classe la prima che viene creata al lancio dell'applicazione, essa si occupa anche internamente di creare il modello logico e la view.
 
-\subsubsection{World}
+\subsubsection{World e Eventi}
 
 \begin{figure}[h]
 	\centering
@@ -177,7 +179,7 @@ Occorre contenere e mantenere le \texttt{Entity}, e comandare la logica che oper
 \paragraph*{Soluzione}
 Ho scelto di unire in un'unica classe la funzione di contenere le entita' e i sistemi, e la rappresentazione grafica del mondo di gioco (\texttt{Scene}), quindi ho realizzato l'interfaccia \texttt{World} con la relativa implementazone \texttt{WorldImpl}. Ho optato per questa scelta di nome nonostante la funzione della classe sia piu' comparabile a quella di un classico \textit{Controller} del pattern MVC poiche' e' utilizzato spesso nel contesto del \textit{pattern ecs}.
 
-L'interfaccia \texttt{World} espone i metodi necessari al controllo del gioco vero e proprio, come ad esempio il metodo \texttt{update}, che viene chiamato ad ogni ciclo del \textit{game loop} in esecuzione sull'\texttt{Engine}. Questo e' il metodo principale della classe, perche' si occupa di:
+L'interfaccia \texttt{World} espone i metodi necessari al controllo del gioco vero e proprio e delle entita', come ad esempio il metodo \texttt{update}, che viene chiamato ad ogni ciclo del \textit{game loop}. Questo e' il metodo principale della classe, perche' si occupa di:
 
 \begin{itemize}
 	\item eseguire tutti i \texttt{GameSystem}, che equivale ad \textit{aggiornare} il modello
@@ -185,7 +187,7 @@ L'interfaccia \texttt{World} espone i metodi necessari al controllo del gioco ve
 	\item comandare alla scena di disegnare
 \end{itemize}
 
-Ho scelto di memorizzare e gestire i \texttt{GameSystem} direttamente in una lista dentro il \texttt{World} per semplicita' quando di fatti l'ordine con cui essi vengono memorizzati nella lista e quindi eseguiti ad ogni ciclo di \textit{update} potrebbe essere gestito da uno \textit{strategy pattern} ed essere modificabile in futuro con un'altra implementazione; tuttavia ho scelto di semplificare l'approccio perche' in ogni caso non viene gestita in nessun modo l'abilitazione/disabilitazione di sistemi a run-time (come e' comune nel \textit{pattern ecs}) e in generale in un gioco semplice come il nostro i pochi sistemi presenti devono eseguire strettamente uno dopo l'altro in un certo ordine preciso che di fatti lascia spazio a poche variazioni. Per quest'ultimo motivo, la gestione dei sistemi e' fissa e non modificabile, e per questo l'inizializzazione dei \texttt{System} e' gestita internamente al \texttt{World} e non e' visibile o modificabile dall'esterno.
+Ho scelto di memorizzare e gestire i \texttt{GameSystem} direttamente in una lista dentro il \texttt{World} per semplicita' quando di fatti l'ordine con cui essi vengono memorizzati nella lista e quindi eseguiti ad ogni ciclo di \textit{update} potrebbe essere gestito da uno \textit{strategy pattern} ed essere modificabile in futuro con un'altra implementazione; tuttavia ho scelto di semplificare l'approccio perche' in ogni caso non viene gestita in nessun modo l'abilitazione/disabilitazione di sistemi a run-time (come e' comune nel \textit{pattern ecs}) e in generale in un gioco semplice come il nostro i pochi sistemi presenti devono eseguire strettamente uno dopo l'altro in un certo ordine preciso che di fatti lascia spazio a poche variazioni. Per questi motivi, la gestione dei sistemi e' fissa e non modificabile, e per questo l'inizializzazione dei \texttt{System} e' gestita internamente al \texttt{World} e non e' visibile o modificabile dall'esterno.
 
 Poi il \texttt{World} espone i metodi per la gestione delle \texttt{Entity}, cioe' che permettono di aggiungere e rimuovere \texttt{Entity}, oppure di avere una copia delle entita' presenti in gioco.
 
@@ -240,7 +242,7 @@ Un \texttt{PhysicsSystem}, che esegue subito dopo il \texttt{CollisionSystem}, p
 
 Menziono qui anche la presenza di un \texttt{ClearCollisionSystem}, un semplice sistema che esegue dopo che hanno eseguito tutti i sistemi che dovevano in qualche modo gestire la reazione a una collisione (filtrando anche per \texttt{CollisionComponent}), rimuovendo tutti i \texttt{CollisionComponent} dalle entita' che ne hanno uno. In questo modo, al successivo loop di update dei system, non vengono lasciate collisioni non gestite.
 
-Per quanto riguarda ingine l'interfaccia \texttt{BodyShape}, essa puo' essere implementata potenzialmente da classi che rappresentano varie forme geometriche. Io ho realizzato una \texttt{RectBodyShape}, che rappresenta la forma geometrica del rettangolo, e una \texttt{CircleBodyShape}, che rappresenta il cerchio. L'interfaccia espone il metodo \texttt{computeShape(Vector2D)} che permette di ricevere il poligono calcolato in base alle coordinate fornite, utile poi al calcolo dell'intersezione con un altro poligono. Qui ho fatto uso di libreria come spiegato meglio nel paragrafo dedicato (riferimento). Inoltre, sono presenti i metodi \texttt{getBoundingWidth} e \texttt{getBoundingHeight} per conoscere il rettangolo che limita il poligono, utili sia alla View che in altri punti del progetto.
+Per quanto riguarda ingine l'interfaccia \texttt{BodyShape}, essa puo' essere implementata potenzialmente da classi che rappresentano varie forme geometriche. Io ho realizzato una \texttt{RectBodyShape}, che rappresenta la forma geometrica del rettangolo, e una \texttt{CircleBodyShape}, che rappresenta il cerchio. L'interfaccia espone il metodo \texttt{computeShape(Vector2D)} che permette di ricevere il poligono calcolato in base alle coordinate fornite, utile poi al calcolo dell'intersezione con un altro poligono. Qui ho fatto uso di libreria come spiegato meglio nel paragrafo dedicato (riferimento). Inoltre, sono presenti i metodi \texttt{getBoundingWidth()} e \texttt{getBoundingHeight()} per conoscere il rettangolo che limita il poligono, utili sia alla View che in altri punti del progetto.
 
 \newpage
 
@@ -435,81 +437,78 @@ Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzar
 
 \subsubsection*{Lorenzo Prati}
 
-\begin{itemize}
-	\item Base del \textit{pattern ecs}
-		\begin{itemize}
-			\item package entity
-				\begin{itemize}
-					\item interfaccia \texttt{Entity}
-					\item classe \texttt{EntityImpl}
-					\item classe \texttt{EntityBuilder}
-					\item classe \texttt{GenericFactory} solo per quanto riguarda il metodo di creazione del player
-				\end{itemize}
-			\item package component
-				\begin{itemize}
-					\item interfaccia \texttt{Component}
-					\item classe \texttt{PositionComponent}
-					\item classe \texttt{MovementComponent}
-					\item classe \texttt{PlayerComponent}
-					\item classe \texttt{CollisionComponent}
-					\item classe \texttt{InteractorComponent}
-				\end{itemize}
-			\item package systems
-				\begin{itemize}
-					\item interfaccia \texttt{GameSystem}
-					\item classe \texttt{AbstractSystem}
-					\item classe \texttt{PlayerInputSystem}
-					\item classe \texttt{MovementSystem}
-					\item classe \texttt{CollisionSystem}
-					\item classe \texttt{PhysicsSystem}
-					\item classe \texttt{ClearCollisionSystem}
-				\end{itemize}
-			\item package core
-				\begin{itemize}
-					\item interfaccia \texttt{Engine}
-					\item classe \texttt{EngineImpl}
-					\item interfaccia \texttt{World}
-					\item classe \texttt{WorldImpl}
-				\end{itemize}
-			\item package input
-				\begin{itemize}
-					\item interfaccia \texttt{Input}
-					\item classe \texttt{InputImpl}
-				\end{itemize}
-			\item package events
-				\begin{itemize}
-					\item interfaccia \texttt{WorldEvent}
-					\item classe \texttt{AddEntityEvent}
-					\item classe \texttt{RemoveEntityEvent}
-					\item classe \texttt{ChangeLevelEvent}
-				\end{itemize}
-			\item package logic
-				\begin{itemize}
-					\item logic.player
-						\begin{itemize}
-							\item interfaccia \texttt{PlayerState}
-							\item classe \texttt{PlayerState}
-							\item intero package player.states
-						\end{itemize}
-					\item logic.collision
-						\begin{itemize}
-							\item interfaccia \texttt{BodyShape}
-							\item classe \texttt{RectBodyShape}
-							\item classe \texttt{CircleBodyShape}
-						\end{itemize}
-					\item logic.util
-						\begin{itemize}
-							\item classe \texttt{DirectionUtil}
-						\end{itemize}
-				\end{itemize}
-			\item package view
-				\begin{itemize}
-					\item classe \texttt{InputListener}
-					\item classe \texttt{ResultScreen}
-				\end{itemize}
-		\end{itemize}
-	\item 
-\end{itemize}
+	\begin{itemize}
+		\item package entity
+			\begin{itemize}
+				\item interfaccia \texttt{Entity}
+				\item classe \texttt{EntityImpl}
+				\item classe \texttt{EntityBuilder}
+				\item classe \texttt{GenericFactory} solo per quanto riguarda il metodo di creazione del player
+			\end{itemize}
+		\item package component
+			\begin{itemize}
+				\item interfaccia \texttt{Component}
+				\item classe \texttt{PositionComponent}
+				\item classe \texttt{MovementComponent}
+				\item classe \texttt{PlayerComponent}
+				\item classe \texttt{CollisionComponent}
+				\item classe \texttt{InteractorComponent}
+			\end{itemize}
+		\item package systems
+			\begin{itemize}
+				\item interfaccia \texttt{GameSystem}
+				\item classe \texttt{AbstractSystem}
+				\item classe \texttt{PlayerInputSystem}
+				\item classe \texttt{MovementSystem}
+				\item classe \texttt{CollisionSystem}
+				\item classe \texttt{PhysicsSystem}
+				\item classe \texttt{ClearCollisionSystem}
+			\end{itemize}
+		\item package core
+			\begin{itemize}
+				\item interfaccia \texttt{Engine}
+				\item classe \texttt{EngineImpl}
+				\item interfaccia \texttt{World}
+				\item classe \texttt{WorldImpl}
+			\end{itemize}
+		\item package input
+			\begin{itemize}
+				\item interfaccia \texttt{Input}
+				\item classe \texttt{InputImpl}
+			\end{itemize}
+		\item package events
+			\begin{itemize}
+				\item interfaccia \texttt{WorldEvent}
+				\item classe \texttt{AddEntityEvent}
+				\item classe \texttt{RemoveEntityEvent}
+				\item classe \texttt{ChangeLevelEvent}
+			\end{itemize}
+		\item package logic
+			\begin{itemize}
+				\item logic.player
+					\begin{itemize}
+						\item interfaccia \texttt{PlayerState}
+						\item classe \texttt{PlayerState}
+						\item intero package player.states
+					\end{itemize}
+				\item logic.collision
+					\begin{itemize}
+						\item interfaccia \texttt{BodyShape}
+						\item classe \texttt{RectBodyShape}
+						\item classe \texttt{CircleBodyShape}
+					\end{itemize}
+				\item logic.util
+					\begin{itemize}
+						\item classe \texttt{DirectionUtil}
+					\end{itemize}
+			\end{itemize}
+		\item package view
+			\begin{itemize}
+				\item classe \texttt{InputListener}
+				\item classe \texttt{ResultScreen}
+			\end{itemize}
+	\end{itemize}
+
 
 
 
@@ -568,10 +567,16 @@ Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzar
 \subsubsection{Lorenzo Prati}
 
 \begin{itemize}
-	\item uso della libreria jts (\href[]{https://github.com/locationtech/jts}{link alla pagina github}) sia per la classe \texttt{Vector2D} che e' usata in tutto il progetto, sia per per creare facilmente forme geometriche di interfaccia \texttt{Polygon} che tra l'altro forniscono anche metodi per controllare le intersezioni tra poligoni. 
+	\item uso della libreria jts (Java Topology Suite)  sia per la classe \texttt{Vector2D} che e' usata in tutto il progetto, sia per per creare facilmente forme geometriche di interfaccia \texttt{Polygon} che tra l'altro forniscono anche metodi per controllare le intersezioni tra poligoni. 
+	
 	Esempio: \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/587a03e4db001028dbcf5649ed6af5807a3ef155/src/main/java/dimhol/logic/collision/RectBodyShape.java#L51-L62}
-	\item reflection, stream e lambda nella classe \texttt{EntityImpl}: \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/5d2b44fc5bf5fa50b6f0215695d2a5bac89cab85/src/main/java/dimhol/entity/EntityImpl.java#L61-L89}
-	\item stream e lambda utilizzati anche in \texttt{RemoveEntityEvent} e in \texttt{WorldImpl} e nel metodo template di \texttt{AbstractSystem}, e in minima parte in altri punti del codice
+
+	(\href[]{https://github.com/locationtech/jts}{link alla pagina github della libreria})
+
+	\item reflection, stream e lambda nella gestione delle \texttt{Entity}
+	
+	Esempio: \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/5d2b44fc5bf5fa50b6f0215695d2a5bac89cab85/src/main/java/dimhol/entity/EntityImpl.java#L61-L89}
+	\item stream e lambda utilizzati anche in \texttt{RemoveEntityEvent},in \texttt{WorldImpl}, nel metodo template di \texttt{AbstractSystem}, nel \texttt{CollisionSystem} e in altri punti del codice
 	\item sebbene faccia parte di java.util, menziono l'utilizzo della classe UUID per generare id per le entita'
 	\item Optional utilizzati sia in \texttt{PositionComponent} che nei vari stati del player
 \end{itemize}
@@ -585,11 +590,14 @@ Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzar
 
 \section{Autovalutazione e lavori futuri}
 
+\subsubsection{Lorenzo Prati}
 
+Mi ritengo complessivamente soddisfatto del lavoro svolto insieme ai miei compagni di gruppo, anche se ammetto che il percorso che ci ha portati ad arrivare a questo punto del progetto non e' stato facile. Inizialmente si era scelto di utilizzare il pattern architetturale MVC, ma a causa piu' che altro di una nostra mal comprensione delle dinamiche e caratteristiche del pattern, era risultato molto difficile pensare a una struttura adeguata tanto che si e' deciso di passare alla deadline successiva ricominciando quasi da capo. Infine siamo passati al \textit{pattern ecs} per gestire la logica del gioco, di cui mi sono molto informato personalmente tramite ricerche online. Visto che mi sono occupato di realizzare la base dell'architettura dell'\textit{ecs}, devo dire che il cercare di realizzare un'implementazione personale e sicuramente molto semplice di un pattern noto ma praticamente mai implementato a un livello \textit{semplice} e adatto al progetto o addirittura non molto usato con il linguaggio Java (infatti spesso versioni dell'\textit{ecs} che si trovano online sono realizzate in C++ o altri linguaggi), e' stata una bella sfida. La discussione con i docenti anche e' stata importante per chiarirci le idee su a cosa dovessimo effettivamente dare priorita'. Non escludo in futuro di tornare a lavorare a questo progetto, anche se per il momento ritengo essere state realizzate tutte le feature piu' importanti che ci eravamo prefissati.
 
 \section{Difficoltà incontrate e commenti per i docenti}
 
-
+\subsubsection{Lorenzo Prati}
+Le difficolta' maggiori che ho incontrato sono personali: il lavoro di gruppo, la gestione del tempo, la collaborazione e la discussione sul codice insieme ad altre persone, che erano tutte cose che non avevo mai affrontato prima in questo modo. Per quanto riguarda il corso, sarebbe stato utile vedere e discutere un esempio di un progetto di questa \textit{portata} in modo tale da avere dritte e consigli dai docenti fin da subito; comunque, ritengo che le basi forniteci a lezione sul linguaggio Java e sui pattern siano piu' che buone e assolutamente adatte per permetterci di costruire, da soli, un progetto di questo tipo.
 
 \appendix
 \chapter{Guida utente}
