@@ -33,7 +33,6 @@ public class EnemyFactory extends AbstractFactory {
      * Zombie health.
      */
     public static final int ZOMBIE_HEALTH = 2;
-
     /**
      * Shooter width.
      */

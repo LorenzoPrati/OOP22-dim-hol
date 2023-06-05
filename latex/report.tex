@@ -302,15 +302,18 @@ Ho realizzato anche una schermata di View, cioe' la schermata di vittoria e scon
 
 
 \subsection{Elvis Perlika}
-In questa sezione si approfondirà la parte di \textit{AI} dei nemici ed il \textit{Combat System} tra gli stessi nemici e player.
-\\ (Tendenzialmente affronterò la descrzione delle soluzioni con un approccio contrario di quello
+In questa sezione si approfondirà la parte di \textit{AI} dei nemici
+ed il \textit{Combat System} tra gli stessi nemici e player.\\
+(Tendenzialmente affronterò la descrzione delle soluzioni con un approccio contrario a quello
 del mio collega Lorenzo Prati, cioè Top-Bottom)
 
 \subsubsection{AI}
 
 \paragraph{Problema}
-Si vuole creare nemici con comportamenti differenti;
-il loro scopo principale deve comunque essere quello di eliminare il player.
+L'obbiettivo è quello di progettare nemici con caratteristche differenti, in modo
+da offrire al giocatore una varietà di situazioni e strategie da affrontare.
+Tuttavia, nonostante le differenze tra di loro, l'obbietivo dei nemici deve
+rimanere quello di eliminare il giocatore.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{uml/UML_AI_Image.png}
@@ -319,41 +322,53 @@ il loro scopo principale deve comunque essere quello di eliminare il player.
 \end{figure}
 
 \paragraph{Soluzione}
-Ho ideato un \texttt{AISystem} che "estende l'abstract system" e si occupa di aggiornare l'\texttt{AIComponent} e
-notificare al \texttt{World} nuovi eventi che i nemici possono aver creato.\\
+Ho costruito un \texttt{AISystem} che estende l'\texttt{AbstractSystem} e si occupa di aggiornare
+l'\texttt{AIComponent} e notificare al \texttt{World} nuovi eventi che i nemici possono aver creato.\\
 
 \textit{Ma come possono questi nemici creare eventi?}\\
-Ci riescono attraverso le \texttt{Action} che l'\texttt{AIComponent} contiene, il metodo \textit{execute()} ritorna una
-lista (opzionionale) di eventi. Tendenzialmente un nemico avrà più Action quindi ho deciso di creare una \texttt{RoutineFactory} che mi
-resitituisse un \textit{Comportamento} (inteso come: Insieme di azioni, di atteggiamenti con cui l'individuo esterna la propria
-personalità, rapportandosi agli altri e all'ambiente [Dizionario Italiano, Corriere della Sera]); ho costruito questa classe usando
-il \textit{Pattern Factory}. \\
+Ci riescono attraverso le \texttt{Action} che l'\texttt{AIComponent} contiene, il metodo \textit{execute()} presente
+nelle Action ritorna una lista (opzionionale) di eventi.
+Ho scelto di ritornare eventi direttamente nelle Action così da ampliare lo spettro delle
+possibili azioni che i nemici possono compiere\\
 
-\underline{Esempio:} \textit{createShooterRoutine()} restituisce una classica personalità zombie che segue
-il player se lo rileava nella sua aggro zone, lo attacca se è abbastanza vicino oppure si muove
+Esempio: in una futura versione del videogioco alcuni nemici, nel caso venissero eliminati,
+creeranno due o più versioni di loro stessi più piccole.\\
+
+Tendenzialmente un nemico avrà più Action quindi ho deciso di creare una \texttt{RoutineFactory} che mi
+resitituisse un \textit{Comportamento} (inteso come: Insieme di azioni,
+di atteggiamenti con cui l'individuo esterna la propria personalità, rapportandosi
+agli altri e all'ambiente) e mi sono assicurato che che
+a prescindere dal ordine in cui si inseriscono nuove Action nel \textit{Comportamento}
+sono oridnate in modo tale da dare precedenza a quelle che si attivano con la minor disatnza dal
+player; ho costruito questa classe usando il \textit{Pattern Factory}. \\
+
+\underline{Esempio:} \textit{createShooterRoutine()} restituisce una classica personalità da zombie:
+segue il player se lo rileva nella sua aggro zone, lo attacca se è abbastanza vicino oppure si muove
 casualmente nel caso non sia il caso di eseguire le precedenti azioni.
 
 Per la creazione delle \texttt{Action} mi sono ispirato allo Strategy Pattern.
-Nel mio caso però le Action oltre ad eseguire una certa azione valutano se è
-il caso di eseguirla.
+Nel mio caso però le Action oltre ad eseguire una certa azione valutano se è il caso di eseguirla.
 In questa prima versione del gioco il comportamento delle AI è determinato soltanto
 dalla distanza tra nemico e player (in altri termini: se il player entra nella
 aggro zone citata precedentemente) ed è comune a tutte le Action, per questo motivo ho deciso di
-implementare anche un \texttt{AbstractAction}. E' nota la limitazione che questo sistema provoca ma
-si è deciso che per un gameplay semplice come il nostro potesse comunque andare bene.
-In alcune Action viene fatta un ulteriore valutazione interna al esecuzione della stessa action,
-una valutazione di tipo temporale che rende i nemici soggetti al passare del tempo anche per la creazione degli eventi.\\
+implementare anche un \texttt{AbstractAction} che fattorizza il metodo di valutazione
+delle Action e altri metodi utili.
+E' nota la limitazione che questo sistema provoca ma si è deciso che per un gameplay semplice come il nostro
+potesse comunque andare bene. In alcune Action viene fatta un ulteriore valutazione
+interna al esecuzione della stessa action; una valutazione di tipo temporale che rende
+i nemici soggetti al passare del tempo.\\
 
 Per le Action che hanno bisogno di conoscere la posizione del player in termini di "direzione" più
 che "coordinate" ho pensato di creare una clase \texttt{AttackUtil} che espone un metodo utile
-ad ottenere, apputno, la direzione in cui is trova il player.
+ad ottenere, appunto, la direzione in cui si trova il player.
+Ho creato questa classe anche in previsione di altri metodi utili.
 
 In conclusione ho ritenuto questo sistema abbastanza semplice per la creazione di nuove azioni.
 Un sistema che permette di creare nuove \texttt{Action} basandosi sullo spazio intorno alla AI
 e sullo scorrere del tempo. Considerando che il nostro dominio di gioco fa riferimento soltanto a nemici che hanno
-come unico scopo quello di eliminare il player, nonostante questo sistema sia limitante, è abbastanza
-completo; infatti senza considerare il dominio si può sfruttare questo sistema per la
-creazione di NPC.
+come unico scopo quello di eliminare il player, nonostante le litazione che questo sistema presenta,
+è abbastanza completo; infatti anche senza considerare il dominio di gioco si può sfruttare questo sistema
+per la creazione di NPC diversi.
 
 \subsection{Emanuele Dajko}
 
