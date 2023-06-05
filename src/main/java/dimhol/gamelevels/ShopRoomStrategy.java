@@ -15,6 +15,8 @@ import java.util.*;
 public class ShopRoomStrategy extends AbstractRoomStrategy {
     private static final int NUM_ITEMS = 10;
     private static final int NUM_POWER_UP = 2;
+    private static final int ENTITY_WIDTH = 1;
+    private static final int ENTITY_HEIGHT = 1;
     private final GenericFactory genericFactory;
     private final ItemFactory itemFactory;
     private final InteractableObjectFactory interactableObjectFactory;
@@ -44,7 +46,7 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
         List<Entity> newListOfEntities = new ArrayList<>();
 
         //Place the player:
-        generatePlayer(freeTiles, entities, newListOfEntities);
+        generatePlayer(freeTiles, entities, newListOfEntities, ENTITY_WIDTH, ENTITY_HEIGHT);
 
         //Place the shop-keeper:
         createShopKeeper(freeTiles, newListOfEntities);

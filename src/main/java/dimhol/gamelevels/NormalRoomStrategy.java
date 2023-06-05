@@ -21,6 +21,8 @@ public class NormalRoomStrategy extends AbstractRoomStrategy {
     private static final int ENEMY_DENSITY = 100;
     private static final int MAX_ENEMIES = 10;
     private static final int MAX_ITEMS = 5;
+    private static final int ENTITY_WIDTH = 1;
+    private static final int ENTITY_HEIGHT = 1;
     private final EnemyFactory enemyFactory;
     private final ItemFactory itemFactory;
 
@@ -59,7 +61,7 @@ public class NormalRoomStrategy extends AbstractRoomStrategy {
         List<Entity> newListOfEntities = new ArrayList<>();
 
         //Place the player:
-        generatePlayer(availableTiles, entities, newListOfEntities);
+        generatePlayer(availableTiles, entities, newListOfEntities, ENTITY_WIDTH, ENTITY_HEIGHT);
 
         //Place the enemies:
         generateEnemies(availableTiles, newListOfEntities);
