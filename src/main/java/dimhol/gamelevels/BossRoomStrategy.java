@@ -102,47 +102,16 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
     }
 
     /**
-     * Creates a minion entity.
+     * Creates a coin minion entity and assigns it a random position from the set of available tiles.
      *
-     * @param freeTiles The set of available tiles where the minion can be placed.
+     * @param availableTiles The set of available tiles where the minion can be placed.
      * @return The created minion entity.
      */
-    private Entity createMinions(final Set<Pair<Integer, Integer>> freeTiles) {
-        var minionsFreeTiles = getRandomTile(freeTiles);
-        return bossFactory.createMinion(minionsFreeTiles.getLeft().doubleValue(),
-                minionsFreeTiles.getRight().doubleValue());
-    }
-
-    /**
-     * Generates and places the player entity in a random position.
-     *
-     * @param freeTiles          The set of available tiles where the player can be placed.
-     * @param entities           The
-     * @param newListOfEntities  The
-     * @param playerEntityWidth  The
-     * @param playerEntityHeight The
-     */
-    private void generatePlayer(final Set<Pair<Integer, Integer>> freeTiles,
-                                final List<Entity> entities,
-                                final List<Entity> newListOfEntities,
-                                final int playerEntityWidth,
-                                final int playerEntityHeight) {
-        Optional<Entity> existingEntity = entities.stream()
-                .filter(entity -> entity.hasComponent(PlayerComponent.class))
-                .findFirst();
-
-        if (existingEntity.isPresent()) {
-            var oldPlayer = existingEntity.get();
-            var position = (PositionComponent) oldPlayer.getComponent(PositionComponent.class);
-            oldPlayer.removeComponent(position);
-            var playerTiles = getRandomTile(freeTiles);
-            oldPlayer.addComponent(new PositionComponent(new Vector2D(playerTiles.getLeft().doubleValue(),
-                    playerTiles.getRight().doubleValue()), 1));
-            newListOfEntities.add(oldPlayer);
-        } else {
-            Entity player = createAndPlacePlayer(freeTiles, playerEntityWidth, playerEntityHeight);
-            newListOfEntities.add(player);
-        }
+    private Entity createMinions(final Set<Pair<Integer, Integer>> availableTiles) {
+        Pair<Integer, Integer> randomCoordinates = getRandomTile(availableTiles);
+        double x = randomCoordinates.getLeft();
+        double y = randomCoordinates.getRight();
+        return bossFactory.createMinion(x, y);
     }
 
     /**
