@@ -323,8 +323,8 @@ Ho ideato un \texttt{AISystem} che "estende l'abstract system" e si occupa di ag
 notificare al \texttt{World} nuovi eventi che i nemici possono aver creato.\\
 
 \textit{Ma come possono questi nemici creare eventi?}\\
-Ci riescono grazie alle \texttt{Action} che l'\texttt{AIComponent} contiene. Tendenzialmente
-un nemico avrà più Action quindi ho deciso di creare una \texttt{RoutineFactory} che mi
+Ci riescono attraverso le \texttt{Action} che l'\texttt{AIComponent} contiene, il metodo \textit{execute()} ritorna una
+lista (opzionionale) di eventi. Tendenzialmente un nemico avrà più Action quindi ho deciso di creare una \texttt{RoutineFactory} che mi
 resitituisse un \textit{Comportamento} (inteso come: Insieme di azioni, di atteggiamenti con cui l'individuo esterna la propria
 personalità, rapportandosi agli altri e all'ambiente [Dizionario Italiano, Corriere della Sera]); ho costruito questa classe usando
 il \textit{Pattern Factory}. \\
