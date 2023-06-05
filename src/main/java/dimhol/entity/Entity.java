@@ -4,7 +4,6 @@ import dimhol.components.Component;
 
 import java.util.Set;
 import java.util.UUID;
-import java.util.NoSuchElementException;
 
 /**
  * Represents an entity i.e. an object meant to hold references to {@link Component}.
@@ -38,7 +37,7 @@ public interface Entity {
      *
      * @param componentClass the class to find among entity's components
      * @return a component instance of @param
-     * @throws NoSuchElementException if the component of
+     * @throws java.util.NoSuchElementException if the component of
      * class @param is not present
      */
     Component getComponent(Class<? extends Component> componentClass);

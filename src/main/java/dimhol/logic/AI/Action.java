@@ -23,7 +23,15 @@ public interface Action {
      */
     Optional<List<WorldEvent>> execute();
 
+    /**
+     * Set player and his components.
+     * @param player
+     */
     void setPlayer(Entity player);
 
+    /**
+     * Set enemy and his components.
+     * @param enemy
+     */
     void setEnemy(Entity enemy);
 }

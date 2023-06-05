@@ -1,7 +1,9 @@
 package dimhol.view;
 
-import java.awt.*;
-import java.io.File;
+import java.awt.Graphics2D;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -57,6 +59,7 @@ public final class HUDImpl implements HUD {
         try {
             InputStream fontFile = getClass().getResourceAsStream("/asset/hud/font/Fipps-Regular.ttf");
             double fontSize = newTileHeight / FONT_SIZE_DIVISOR;
+            assert fontFile != null;
             var font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Math.round(fontSize));
             g2d.setFont(font);
         } catch (FontFormatException | IOException e) {

@@ -11,14 +11,17 @@ import dimhol.events.WorldEvent;
  */
 public final class AISystem extends AbstractSystem {
 
+    /**
+     * Constructs an AISystem.
+     */
     public AISystem() {
         super(AIComponent.class);
     }
 
     @Override
-    protected void process(final Entity enemy, final double dt, final World world) {
+    protected void process(final Entity enemy, final double deltaTime, final World world) {
         var enemyAI = (AIComponent) enemy.getComponent(AIComponent.class);
-        enemyAI.updateTime(dt);
+        enemyAI.updateTime(deltaTime);
         for (var action : enemyAI.getRoutine()) {
             world.getEntities()
                     .stream()

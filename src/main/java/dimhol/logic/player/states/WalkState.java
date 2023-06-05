@@ -23,6 +23,9 @@ public class WalkState extends AbstractState {
         this.getMov().setEnabled(true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<PlayerState> transition(final Input input) {
         if (input.isInteracting()) {
@@ -52,16 +55,16 @@ public class WalkState extends AbstractState {
     @Override
     public List<Entity> execute(final Input input) {
         if (input.isUp()) {
-            super.getMov().setDir(new Vector2D(0,-1));
+            super.getMov().setDir(new Vector2D(0, -1));
         }
         if (input.isDown()) {
-            super.getMov().setDir(new Vector2D(0, 1));
+            super.getMov().setDir(new Vector2D(0,  1));
         }
         if (input.isLeft()) {
-            super.getMov().setDir(new Vector2D(-1,0));
+            super.getMov().setDir(new Vector2D(-1, 0));
         }
         if (input.isRight()) {
-            super.getMov().setDir(new Vector2D(1,0));
+            super.getMov().setDir(new Vector2D(1, 0));
         }
         return super.execute(input);
     }

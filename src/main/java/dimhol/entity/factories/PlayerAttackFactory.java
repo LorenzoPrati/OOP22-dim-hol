@@ -78,7 +78,7 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
     public Entity createLittleBulletAttack(final Entity entity) {
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(entity,
-                        PLAYER_LITTLE_BULLET_RAY*2, PLAYER_LITTLE_BULLET_RAY*2), 0))
+                        PLAYER_LITTLE_BULLET_RAY * 2, PLAYER_LITTLE_BULLET_RAY * 2), 0))
                 .add(new MovementComponent(getDirection(entity), PLAYER_LITTLE_BULLET_SPEED, true))
                 .add(new BodyComponent(new CircleBodyShape(PLAYER_LITTLE_BULLET_RAY), false))
                 .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
@@ -90,7 +90,7 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
     public Entity createBigBulletAttack(final Entity entity) {
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(entity,
-                        PLAYER_BIG_BULLET_RAY*2, PLAYER_BIG_BULLET_RAY*2), 0))
+                        PLAYER_BIG_BULLET_RAY * 2, PLAYER_BIG_BULLET_RAY * 2), 0))
                 .add(new MovementComponent(getDirection(entity), PLAYER_BIG_BULLET_SPEED, true))
                 .add(new BodyComponent(new CircleBodyShape(PLAYER_BIG_BULLET_RAY), false))
                 .add(new AnimationComponent(map.get("fireball"), "idle"))

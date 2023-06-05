@@ -30,18 +30,34 @@ public final class AIComponent implements Component {
         return new ArrayList<>(actions);
     }
 
-    public void updateTime(double currentTime) {
+    /**
+     * Update the current time.
+     * @param currentTime
+     */
+    public void updateTime(final double currentTime) {
         this.currentTime += currentTime;
     }
 
+    /**
+     * Previous time getter.
+     * @return previous time
+     */
     public double getPrevTime() {
         return this.prevTime;
     }
 
+    /**
+     * Previous time setter.
+     * @param prevTime
+     */
     public void setPrevTime(final double prevTime) {
         this.prevTime = prevTime;
     }
 
+    /**
+     * Current time getter.
+     * @return current time
+     */
     public double getCurrentTime() {
         return this.currentTime;
     }
