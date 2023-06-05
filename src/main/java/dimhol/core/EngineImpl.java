@@ -43,6 +43,10 @@ public final class EngineImpl implements Engine {
      * True if tutorial done.
      */
     private boolean tutorialDone;
+    /**
+     * True if debug is enabled.
+     */
+    private boolean debug;
 
     /**
      * Constructs an EngineImpl.
@@ -140,6 +144,22 @@ public final class EngineImpl implements Engine {
     @Override
     public MainWindow getMainWindow() {
         return mainWindow;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setDebugMode(final boolean debug) {
+        this.debug = debug;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isDebug() {
+        return this.debug;
     }
 
     /**
