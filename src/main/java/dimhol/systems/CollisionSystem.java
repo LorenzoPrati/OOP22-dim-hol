@@ -23,10 +23,10 @@ public class CollisionSystem extends AbstractSystem {
      * so that next system can handle them.
      *
      * @param entity the entity to process
-     * @param dt
+     * @param deltaTime the delta time
      */
     @Override
-    protected void process(final Entity entity, final double dt, final World world) {
+    protected void process(final Entity entity, final double deltaTime, final World world) {
         for (var other : world.getEntities()) {
             if (!other.equals(entity) && other.hasComponent(BodyComponent.class)) {
                 this.checkCollision(entity, other);
@@ -39,7 +39,7 @@ public class CollisionSystem extends AbstractSystem {
         var b1 = (BodyComponent) entity.getComponent(BodyComponent.class);
         var p2 = (PositionComponent) other.getComponent(PositionComponent.class);
         var b2 = (BodyComponent) other.getComponent(BodyComponent.class);
-        if (this.collisionHappens(p1,p2,b1,b2)) {
+        if (this.collisionHappens(p1, p2, b1, b2)) {
             this.registerCollision(entity, other);
         }
     }

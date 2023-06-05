@@ -65,7 +65,7 @@ public abstract class AbstractState implements PlayerState {
     /**
      * {@inheritDoc}
      */
-    public abstract Optional<PlayerState> transition(final Input input);
+    public abstract Optional<PlayerState> transition(Input input);
 
     /**
      * {@inheritDoc}

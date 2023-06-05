@@ -21,7 +21,7 @@ public final class ItemSystem extends AbstractSystem {
     }
 
     @Override
-    protected void process(final Entity entity, final double dt, final World world) {
+    protected void process(final Entity entity, final double deltaTime, final World world) {
         var collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
         var itemComp = (ItemComponent) entity.getComponent(ItemComponent.class);
         for (var c: collisionComp.getCollided()) {

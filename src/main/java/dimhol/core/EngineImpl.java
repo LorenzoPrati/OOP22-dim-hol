@@ -1,6 +1,9 @@
 package dimhol.core;
 
-import dimhol.view.*;
+import dimhol.view.MainWindow;
+import dimhol.view.MainWindowImpl;
+import dimhol.view.ResultScreen;
+import dimhol.view.TutorialScreen;
 
 /**
  * Implementation of the Engine interface.

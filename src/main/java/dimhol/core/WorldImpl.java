@@ -1,13 +1,33 @@
 package dimhol.core;
 
-import dimhol.components.*;
+import dimhol.components.AnimationComponent;
+import dimhol.components.BodyComponent;
+import dimhol.components.CoinPocketComponent;
+import dimhol.components.HealthComponent;
+import dimhol.components.PlayerComponent;
+import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.events.WorldEvent;
 import dimhol.gamelevels.LevelManager;
 import dimhol.gamelevels.LevelManagerImpl;
 import dimhol.input.Input;
-import dimhol.systems.*;
-import dimhol.view.*;
+import dimhol.systems.AISystem;
+import dimhol.systems.AnimationSystem;
+import dimhol.systems.CheckHealthSystem;
+import dimhol.systems.ClearAttackSystem;
+import dimhol.systems.ClearCollisionSystem;
+import dimhol.systems.CollisionSystem;
+import dimhol.systems.CombatSystem;
+import dimhol.systems.GameSystem;
+import dimhol.systems.InteractableSystem;
+import dimhol.systems.ItemSystem;
+import dimhol.systems.MapCollisionSystem;
+import dimhol.systems.MovementSystem;
+import dimhol.systems.PhysicsSystem;
+import dimhol.systems.PlayerInputSystem;
+import dimhol.view.GraphicInfo;
+import dimhol.view.Scene;
+import dimhol.view.SceneImpl;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -30,6 +50,8 @@ public class WorldImpl implements World {
 
     /**
      * Constructs a world.
+     *
+     * @param engine the engine to pass to the scene
      */
     public WorldImpl(final Engine engine) {
         this.entities = new ArrayList<>();
@@ -71,7 +93,7 @@ public class WorldImpl implements World {
      * Find entities that need to be rendered on screen and update scene.
      */
     private void prepareRender() {
-        var renderList = new ArrayList<Pair<Integer,GraphicInfo>>();
+        var renderList = new ArrayList<Pair<Integer, GraphicInfo>>();
         this.getEntities().stream()
                 .filter(e -> e.hasComponent(AnimationComponent.class))
                 .forEach(e -> {
@@ -94,8 +116,8 @@ public class WorldImpl implements World {
                         var health = (HealthComponent) e.getComponent(HealthComponent.class);
                         var coins = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
                         this.scene.getHUD().updateHUD(health.getCurrentHealth(),
-                                                            health.getMaxHealth(),
-                                                            coins.getCurrentAmount());
+                                health.getMaxHealth(),
+                                coins.getCurrentAmount());
                     }
                 });
         renderList.stream()
@@ -143,7 +165,9 @@ public class WorldImpl implements World {
        this.entities.remove(entity);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void changeLevel() {
         var newEntities = this.levelManager.changeLevel(this.getEntities());
@@ -152,13 +176,19 @@ public class WorldImpl implements World {
         this.scene.setMap(this.getLevelManager().getTileMap());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LevelManager getLevelManager() {
         return this.levelManager;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setWin(boolean win) {
+    public void setWin(final boolean win) {
         this.win = win;
         this.gameOver = true;
     }

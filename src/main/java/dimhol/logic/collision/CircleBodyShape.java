@@ -28,7 +28,7 @@ public class CircleBodyShape implements BodyShape {
      */
     @Override
     public double getBoundingWidth() {
-        return this.radius*2;
+        return this.radius * 2;
     }
 
     /**
@@ -36,7 +36,7 @@ public class CircleBodyShape implements BodyShape {
      */
     @Override
     public double getBoundingHeight() {
-        return this.radius*2;
+        return this.radius * 2;
     }
 
     /**
@@ -46,8 +46,8 @@ public class CircleBodyShape implements BodyShape {
     public Polygon computeShape(final Vector2D vec) {
         final GeometricShapeFactory gsf = new GeometricShapeFactory();
         gsf.setNumPoints(4);
-        gsf.setSize(2*radius);
-        gsf.setCentre(new Coordinate(vec.getX()+radius, vec.getY()+radius));
+        gsf.setSize(2 * radius);
+        gsf.setCentre(new Coordinate(vec.getX() + radius, vec.getY() + radius));
         return gsf.createCircle();
     }
 }
