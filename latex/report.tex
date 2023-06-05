@@ -331,31 +331,31 @@ rimanere quello di eliminare il giocatore.
 \end{figure}
 
 \paragraph{Soluzione}
-Ho costruito un \texttt{AISystem} che estende l'\texttt{AbstractSystem} e si occupa di aggiornare
+Ho costruito un \texttt{AISystem}, classe che estende l'\texttt{AbstractSystem}, allo scopo di processare
 l'\texttt{AIComponent} e notificare al \texttt{World} nuovi eventi che i nemici possono aver creato.\\
 
-\textit{Ma come possono questi nemici creare eventi?}\\
-Ci riescono attraverso le \texttt{Action} che l'\texttt{AIComponent} contiene, il metodo \textit{execute()} presente
-nelle Action ritorna una lista (opzionionale) di eventi.
+I nemici riescono a creare eventi usando \texttt{WorldEvent}, attraverso le \texttt{Action} che 
+l'\texttt{AIComponent} contiene. 
+Il metodo \textit{execute()} di Action restituisce la lista (opzionale) di eventi.
 Ho scelto di ritornare eventi direttamente nelle Action così da ampliare lo spettro delle
-possibili azioni che i nemici possono compiere\\
+possibili azioni che i nemici possono compiere.\\
 
-Esempio: in una futura versione del videogioco alcuni nemici, nel caso venissero eliminati,
+\underline{Esempio:} in una futura versione del videogioco alcuni nemici, nel caso venissero eliminati,
 creeranno due o più versioni di loro stessi più piccole.\\
 
 Tendenzialmente un nemico avrà più Action quindi ho deciso di creare una \texttt{RoutineFactory} che mi
-resitituisse un \textit{Comportamento} (inteso come: Insieme di azioni,
+resitituisse un \textit{Comportamento} predefinito (inteso come: Insieme di azioni,
 di atteggiamenti con cui l'individuo esterna la propria personalità, rapportandosi
 agli altri e all'ambiente) e mi sono assicurato che che
-a prescindere dal ordine in cui si inseriscono nuove Action nel \textit{Comportamento}
-sono oridnate in modo tale da dare precedenza a quelle che si attivano con la minor disatnza dal
-player; ho costruito questa classe usando il \textit{Pattern Factory}. \\
+a prescindere dal ordine in cui vengono inserite nuove Action nel \textit{"Comportamento"},
+sono oridnate in modo tale da dare precedenza a quelle che si attivano con la minor distanza dal
+giocatore; ho costruito questa classe usando il \textit{Pattern Factory Method}.\\
 
 \underline{Esempio:} \textit{createShooterRoutine()} restituisce una classica personalità da zombie:
 segue il player se lo rileva nella sua aggro zone, lo attacca se è abbastanza vicino oppure si muove
 casualmente nel caso non sia il caso di eseguire le precedenti azioni.
 
-Per la creazione delle \texttt{Action} mi sono ispirato allo Strategy Pattern.
+Per la creazione delle \texttt{Action} mi sono ispirato al Pattern Strategy.
 Nel mio caso però le Action oltre ad eseguire una certa azione valutano se è il caso di eseguirla.
 In questa prima versione del gioco il comportamento delle AI è determinato soltanto
 dalla distanza tra nemico e player (in altri termini: se il player entra nella
@@ -364,13 +364,12 @@ implementare anche un \texttt{AbstractAction} che fattorizza il metodo di valuta
 delle Action e altri metodi utili.
 E' nota la limitazione che questo sistema provoca ma si è deciso che per un gameplay semplice come il nostro
 potesse comunque andare bene. In alcune Action viene fatta un ulteriore valutazione
-interna al esecuzione della stessa action; una valutazione di tipo temporale che rende
+interna al esecuzione della stessa action: una valutazione di tipo temporale che rende
 i nemici soggetti al passare del tempo.\\
 
 Per le Action che hanno bisogno di conoscere la posizione del player in termini di "direzione" più
-che "coordinate" ho pensato di creare una clase \texttt{AttackUtil} che espone un metodo utile
+che "coordinate" ho pensato di creare una clase \texttt{BehaviourUtil} che espone un metodo utile
 ad ottenere, appunto, la direzione in cui si trova il player.
-Ho creato questa classe anche in previsione di altri metodi utili.
 
 In conclusione ho ritenuto questo sistema abbastanza semplice per la creazione di nuove azioni.
 Un sistema che permette di creare nuove \texttt{Action} basandosi sullo spazio intorno alla AI
@@ -531,9 +530,51 @@ Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzar
 			\end{itemize}
 	\end{itemize}
 
+\subsubsection*{Elvis Perlika}
 
-
-
+\begin{itemize}
+	\item package entity
+	\begin{itemize}
+		\item factories
+			\begin{itemize}
+			\item classe \texttt{AbstractFactory}	
+			\item classe \texttt{AbstractAttackFactory}
+			\item classe \texttt{EnemyAttackFactory}
+			\item classe \texttt{EnemyFactory}
+			\item classe \texttt{PlayerAttackFactory}
+			\end{itemize}
+	\end{itemize}
+	\item package component
+		\begin{itemize}
+			\item classe \texttt{AIComponent}
+			\item classe \texttt{AttackComponent}
+			\item classe \texttt{MeleeComponent}
+		\end{itemize}
+	\item package systems
+		\begin{itemize}
+			\item classe \texttt{AISystem}
+			\item classe \texttt{CombatSystem}
+		\end{itemize}
+	\item package logic
+		\begin{itemize}
+			\item logic.AI
+				\begin{itemize}
+				\item interfaccia \texttt{Action}
+				\item classe \texttt{AbstarctAction}
+				\item classe \texttt{AttackUtil}
+				\item classe \texttt{DistanceAttack}
+				\item classe \texttt{FollowMovement}
+				\item classe \texttt{MeleeAttack}
+				\item classe \texttt{RoutineFactory}
+				\item classe \texttt{FollowMovement}
+				\end{itemize}
+		\end{itemize}
+	\item package view
+		\begin{itemize}
+			\item interfaccia \texttt{HUD}
+			\item classe \texttt{HUDImpl}
+		\end{itemize}
+\end{itemize}
 
 \subsection*{Alessandra Versari}
 \begin{itemize}
