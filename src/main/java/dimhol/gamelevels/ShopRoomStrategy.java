@@ -6,7 +6,11 @@ import dimhol.entity.factories.InteractableObjectFactory;
 import dimhol.entity.factories.ItemFactory;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * This class represents a strategy for generating a shop room.

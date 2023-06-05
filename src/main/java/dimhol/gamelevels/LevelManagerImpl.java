@@ -32,9 +32,9 @@ public class LevelManagerImpl implements LevelManager {
     private final NormalRoomStrategy normalRoomStrategy;
     private final ShopRoomStrategy shopRoomStrategy;
     private final BossRoomStrategy bossRoomStrategy;
+    private final int max_room_number;
     private TileMap tileMap;
     private int currentLevel;
-    private final int max_room_number;
 
     /**
      * Constructs a LevelManagerImpl object.
