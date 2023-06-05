@@ -109,7 +109,7 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
      * Creates a shopkeeper entity with a random position from the set of free tiles.
      *
      * @param freeTiles The set of available tiles where the shopkeeper can be placed.
-     * @param entities The
+     * @param entities  The
      */
     private void createShopKeeper(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
         var shopKeeperFreeTiles = getRandomTile(freeTiles);
