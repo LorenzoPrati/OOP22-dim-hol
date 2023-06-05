@@ -7,7 +7,7 @@ import dimhol.entity.EntityImpl;
 /**
  * Gets called when a new entity needs to be added to the world.
  */
-public final class AddEntityEvent implements WorldEvent {
+public class AddEntityEvent implements WorldEvent {
 
     /**
      * The entity to add.
