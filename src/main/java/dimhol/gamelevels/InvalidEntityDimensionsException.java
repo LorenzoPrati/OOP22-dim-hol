@@ -9,7 +9,7 @@ public class InvalidEntityDimensionsException extends RuntimeException {
      *
      * @param message the detail message
      */
-    public InvalidEntityDimensionsException(String message) {
+    public InvalidEntityDimensionsException(final String message) {
         super(message);
     }
 }
