@@ -29,7 +29,7 @@ public final class AreaAttack extends AbstractAction {
     @Override
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(false);
-        var direction = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
+        var direction = BehviourUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         getMovComp().setDir(direction);
         if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
             getAi().setPrevTime(getAi().getCurrentTime());

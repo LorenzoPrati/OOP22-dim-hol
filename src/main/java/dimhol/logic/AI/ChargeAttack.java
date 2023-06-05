@@ -33,7 +33,7 @@ public final class ChargeAttack extends AbstractAction {
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(true);
         getMovComp().setSpeed(chargeSpeed);
-        var direction = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
+        var direction = BehviourUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         getMovComp().setDir(direction);
         if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
             getAi().setPrevTime(getAi().getCurrentTime());

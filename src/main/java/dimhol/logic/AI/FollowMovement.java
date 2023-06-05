@@ -22,7 +22,7 @@ public final class FollowMovement extends AbstractAction {
     @Override
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(true);
-        var newDirection = AttackUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
+        var newDirection = BehviourUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         getMovComp().setDir(newDirection);
         return Optional.empty();
     }
