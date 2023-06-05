@@ -11,7 +11,7 @@ public class PositionComponent implements Component {
 
     private Vector2D pos;
     private Optional<Vector2D> lastPos;
-    private int z;
+    private final int z;
 
     /**
      * Constructs a PositionComponent with given position and z.

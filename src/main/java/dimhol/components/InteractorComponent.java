@@ -2,9 +2,9 @@ package dimhol.components;
 
 /**
  * Holds data about an interactor that is the ability to interact with
- * objects that has an {@link InteractableComponent}
+ * objects that has an {@link InteractableComponent}.
  */
-public class InteractorComponent implements Component{
+public class InteractorComponent implements Component {
 
     /**
      * The condition of the interaction.
