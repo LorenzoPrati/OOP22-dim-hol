@@ -13,7 +13,7 @@ public class RectBodyShape implements BodyShape {
     /**
      * The vertices of the rectangle.
      */
-    public final static int VERTICES = 4;
+    public static final int VERTICES = 4;
     /**
      * The width of the rectangle.
      */
@@ -37,6 +37,7 @@ public class RectBodyShape implements BodyShape {
     /**
      * {@inheritDoc}
      */
+    @Override
     public double getBoundingWidth() {
         return this.width;
     }
@@ -44,6 +45,7 @@ public class RectBodyShape implements BodyShape {
     /**
      * {@inheritDoc}
      */
+    @Override
     public double getBoundingHeight() {
         return this.height;
     }

@@ -22,7 +22,7 @@ public class InputImpl implements Input {
         try {
             return (InputImpl) super.clone();
         } catch (CloneNotSupportedException e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw (UnsupportedOperationException) new UnsupportedOperationException().initCause(e);
         }
     }
 

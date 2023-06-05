@@ -15,7 +15,7 @@ public class ClearAttackSystem extends AbstractSystem {
     }
 
     @Override
-    protected void process(final Entity entity, final double dt, final World world) {
+    protected void process(final Entity entity, final double deltaTime, final World world) {
         world.notifyEvent(new RemoveEntityEvent(entity));
     }
 }

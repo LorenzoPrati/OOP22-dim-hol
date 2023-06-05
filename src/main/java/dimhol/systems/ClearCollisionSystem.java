@@ -19,12 +19,11 @@ public class ClearCollisionSystem extends AbstractSystem {
     /**
      * Removes CollisionComponent from the entity.
      *
-     * @param entity  the entity to process
-     * @param dt
+     * @param entity the entity to process
+     * @param deltaTime the delta time
      */
     @Override
-    protected void process(final Entity entity, final double dt, final World world) {
-        var cc = (CollisionComponent) entity.getComponent(CollisionComponent.class);
-        entity.removeComponent(cc);
+    protected void process(final Entity entity, final double deltaTime, final World world) {
+        entity.removeComponent(entity.getComponent(CollisionComponent.class));
     }
 }
