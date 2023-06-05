@@ -37,6 +37,7 @@ public class RectBodyShape implements BodyShape {
     /**
      * {@inheritDoc}
      */
+    @Override
     public double getBoundingWidth() {
         return this.width;
     }
@@ -44,6 +45,7 @@ public class RectBodyShape implements BodyShape {
     /**
      * {@inheritDoc}
      */
+    @Override
     public double getBoundingHeight() {
         return this.height;
     }

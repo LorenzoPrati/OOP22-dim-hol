@@ -7,8 +7,8 @@ import dimhol.logic.collision.BodyShape;
  */
 public class BodyComponent implements Component {
 
-    private BodyShape bodyShape;
-    private boolean solid;
+    private final BodyShape bodyShape;
+    private final boolean solid;
 
     /**
      * Constructs a BodyComponent with given body shape and solidity.

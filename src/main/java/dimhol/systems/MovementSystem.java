@@ -25,8 +25,8 @@ public class MovementSystem extends AbstractSystem {
      */
     @Override
     protected void process(final Entity entity, final double deltaTime, final World world) {
-        var pos = (PositionComponent) entity.getComponent(PositionComponent.class);
-        var mov = (MovementComponent) entity.getComponent(MovementComponent.class);
+        final var pos = (PositionComponent) entity.getComponent(PositionComponent.class);
+        final var mov = (MovementComponent) entity.getComponent(MovementComponent.class);
         pos.updateLastPos();
         if (mov.isEnabled()) {
             pos.setPos(pos.getPos().add(mov.getDir().multiply(mov.getSpeed() * deltaTime)));

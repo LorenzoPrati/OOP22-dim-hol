@@ -109,7 +109,7 @@ public final class EngineImpl implements Engine {
         double dt;
         while (this.running) {
             if (!this.world.isGameOver()) {
-                long curr = System.currentTimeMillis();
+                final long curr = System.currentTimeMillis();
                 dt = curr - prev;
                 if (!this.pause) {
                     this.world.update(dt * MS_TO_SECOND);
@@ -124,12 +124,12 @@ public final class EngineImpl implements Engine {
     }
 
     private void waitForNextFrame(final long time) {
-        long dt = System.currentTimeMillis() - time;
+        final long dt = System.currentTimeMillis() - time;
         if (dt < MS_PER_FRAME) {
             try {
                 Thread.sleep(MS_PER_FRAME - dt);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+               throw new IllegalStateException(e);
             }
         }
     }

@@ -27,19 +27,16 @@ public class CollisionSystem extends AbstractSystem {
      */
     @Override
     protected void process(final Entity entity, final double deltaTime, final World world) {
-        for (var other : world.getEntities()) {
-            if (!other.equals(entity) && other.hasComponent(BodyComponent.class)) {
-                this.checkCollision(entity, other);
-            }
-        }
+        world.getEntities().stream()
+                .filter(other -> !other.equals(entity) && other.hasComponent(BodyComponent.class))
+                .forEach(other -> this.checkCollision(entity, other));
     }
 
     private void checkCollision(final Entity entity, final Entity other) {
-        var p1 = (PositionComponent) entity.getComponent(PositionComponent.class);
-        var b1 = (BodyComponent) entity.getComponent(BodyComponent.class);
-        var p2 = (PositionComponent) other.getComponent(PositionComponent.class);
-        var b2 = (BodyComponent) other.getComponent(BodyComponent.class);
-        if (this.collisionHappens(p1, p2, b1, b2)) {
+        if (this.collisionHappens((PositionComponent) entity.getComponent(PositionComponent.class),
+                                    (PositionComponent) other.getComponent(PositionComponent.class),
+                                    (BodyComponent) entity.getComponent(BodyComponent.class),
+                                    (BodyComponent) other.getComponent(BodyComponent.class))) {
             this.registerCollision(entity, other);
         }
     }
@@ -48,7 +45,7 @@ public class CollisionSystem extends AbstractSystem {
         if (!entity.hasComponent(CollisionComponent.class)) {
             entity.addComponent(new CollisionComponent());
         }
-        var cc = (CollisionComponent) entity.getComponent(CollisionComponent.class);
+        final var cc = (CollisionComponent) entity.getComponent(CollisionComponent.class);
         cc.addCollided(other);
     }
 

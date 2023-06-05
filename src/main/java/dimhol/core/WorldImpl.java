@@ -93,16 +93,16 @@ public class WorldImpl implements World {
      * Find entities that need to be rendered on screen and update scene.
      */
     private void prepareRender() {
-        var renderList = new ArrayList<Pair<Integer, GraphicInfo>>();
+        final var renderList = new ArrayList<Pair<Integer, GraphicInfo>>();
         this.getEntities().stream()
                 .filter(e -> e.hasComponent(AnimationComponent.class))
                 .forEach(e -> {
                     /*
                     Gets generic entity graphics elements
                      */
-                    var pos = (PositionComponent) e.getComponent(PositionComponent.class);
-                    var body = (BodyComponent) e.getComponent(BodyComponent.class);
-                    var anim = (AnimationComponent) e.getComponent(AnimationComponent.class);
+                    final var pos = (PositionComponent) e.getComponent(PositionComponent.class);
+                    final var body = (BodyComponent) e.getComponent(BodyComponent.class);
+                    final var anim = (AnimationComponent) e.getComponent(AnimationComponent.class);
                     renderList.add(new ImmutablePair<>(pos.getZ(),
                             new GraphicInfo(anim.getIndex(),
                                     anim.getImage(),
@@ -113,8 +113,8 @@ public class WorldImpl implements World {
                      * Gets hud elements
                      */
                     if (e.hasComponent(PlayerComponent.class)) {
-                        var health = (HealthComponent) e.getComponent(HealthComponent.class);
-                        var coins = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
+                        final var health = (HealthComponent) e.getComponent(HealthComponent.class);
+                        final var coins = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
                         this.scene.getHUD().updateHUD(health.getCurrentHealth(),
                                 health.getMaxHealth(),
                                 coins.getCurrentAmount());
@@ -170,7 +170,7 @@ public class WorldImpl implements World {
      */
     @Override
     public void changeLevel() {
-        var newEntities = this.levelManager.changeLevel(this.getEntities());
+        final var newEntities = this.levelManager.changeLevel(this.getEntities());
         this.entities.clear();
         this.entities.addAll(newEntities);
         this.scene.setMap(this.getLevelManager().getTileMap());

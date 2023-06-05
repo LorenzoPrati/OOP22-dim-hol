@@ -25,13 +25,13 @@ public class PlayerInputSystem extends AbstractSystem {
      */
     @Override
     protected void process(final Entity entity, final double deltaTime, final World world) {
-        var input = world.getInput();
-        var player = (PlayerComponent) entity.getComponent(PlayerComponent.class);
+        final var input = world.getInput();
+        final var player = (PlayerComponent) entity.getComponent(PlayerComponent.class);
 
-        var currState = player.getState();
+        final var currState = player.getState();
         currState.update(deltaTime, entity);
         if (currState.canTransition()) {
-            var newState = currState.transition(input);
+            final var newState = currState.transition(input);
             newState.ifPresent(s -> {
                 currState.exit();
                 player.setState(s);
