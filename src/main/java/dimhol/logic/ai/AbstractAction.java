@@ -1,4 +1,4 @@
-package dimhol.logic.AI;
+package dimhol.logic.ai;
 
 import dimhol.components.AIComponent;
 import dimhol.components.BodyComponent;
@@ -30,39 +30,22 @@ public abstract class AbstractAction implements Action {
     private AIComponent ai;
     private MovementComponent movComp;
 
-    /**
-     * {@inheritDoc}
-     * @return
-     */
+    @Override
     public boolean canExecute() {
         return getPlayerCentralPos().distance(getEnemyCentralPos()) <= aggroRay;
     }
 
-    /**
-     * {@inheritDoc}
-     * @return
-     */
+    @Override
     public abstract Optional<List<WorldEvent>> execute();
 
-    /**
-     * Player setter, thi method set also:
-     * - player's position
-     * - player's body
-     * - player's central position
-     */
+    @Override
     public final void setPlayer(final Entity player) {
         PositionComponent playerPosComp = (PositionComponent) player.getComponent(PositionComponent.class);
         BodyComponent playerBodyComp = (BodyComponent) player.getComponent(BodyComponent.class);
         playerCentralPos = getCentralPosition(playerPosComp.getPos(), playerBodyComp.getBodyShape());
     }
 
-    /**
-     * Enemy setter, this method set also:
-     * - enemy's position
-     * - enemy's body
-     * - enemy's central position
-     * - enemy's AI
-     */
+    @Override
     public final void setEnemy(final Entity enemy) {
         this.enemy = new EntityImpl(enemy);
         PositionComponent enemyPosComp = (PositionComponent) enemy.getComponent(PositionComponent.class);

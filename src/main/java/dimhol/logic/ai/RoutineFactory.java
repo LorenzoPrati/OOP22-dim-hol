@@ -1,4 +1,4 @@
-package dimhol.logic.AI;
+package dimhol.logic.ai;
 
 import java.util.Comparator;
 import java.util.List;

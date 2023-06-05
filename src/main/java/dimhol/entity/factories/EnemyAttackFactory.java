@@ -139,7 +139,6 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
      * @return the area attack entity
      */
     public Entity createAreaAttack(final Entity bossEntity) {
-        System.out.printf("AreaAttack");
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(bossEntity, BOSS_AREA_ATTACK_WIDTH, BOSS_AREA_ATTACK_HEIGHT), 0))
                 .add(new BodyComponent(new RectBodyShape(BOSS_AREA_ATTACK_WIDTH, BOSS_AREA_ATTACK_HEIGHT), false))
@@ -156,7 +155,6 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
      * @return the summoned minions entities
      */
     public Entity createSummoningMinions(final Entity bossEntity) {
-        System.out.printf("Minions");
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(bossEntity, 5, 5), 0))
                 .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), true))
@@ -173,7 +171,6 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
      * @return the charge attack entity
      */
     public Entity createChargeAttack(final Entity bossEntity) {
-        System.out.printf("chargeAttack");
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(bossEntity, BOSS_CHARGE_ATTACK_WIDTH, BOSS_CHARGE_ATTACK_HEIGHT), 0))
                 .add(new MovementComponent(getDirection(bossEntity), BOSS_CHARGE_ATTACK_SPEED, true))
@@ -192,7 +189,6 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
      * @return the defensive shield entity
      */
     public Entity createDefensiveShield(final Entity bossEntity) {
-        System.out.printf("shield");
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(bossEntity, 0, 0), 0))
                 .add(new BodyComponent(new RectBodyShape(2.5, 2.5), false))
