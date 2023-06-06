@@ -134,7 +134,7 @@ public class InputImpl implements Input {
      * {@inheritDoc}
      */
     @Override
-    public void setShoot(final boolean shoot) {
+    public void setShooting(final boolean shoot) {
         this.shoot = shoot;
     }
 
@@ -150,7 +150,7 @@ public class InputImpl implements Input {
      * {@inheritDoc}
      */
     @Override
-    public void setInteract(final boolean interact) {
+    public void setInteracting(final boolean interact) {
         this.interact = interact;
     }
 
@@ -158,7 +158,7 @@ public class InputImpl implements Input {
      * {@inheritDoc}
      */
     @Override
-    public void setChargeFireball(final boolean chargeFireball) {
+    public void setChargingFireball(final boolean chargeFireball) {
         this.chargeFireball = chargeFireball;
     }
 }
