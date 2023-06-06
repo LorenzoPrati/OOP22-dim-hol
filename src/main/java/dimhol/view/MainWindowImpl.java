@@ -1,6 +1,8 @@
 package dimhol.view;
 
 import dimhol.core.Engine;
+import dimhol.view.screens.HomeScreen;
+
 import javax.swing.*;
 import java.awt.*;
 

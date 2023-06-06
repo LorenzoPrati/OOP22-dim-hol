@@ -4,8 +4,6 @@ import dimhol.components.*;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import java.util.function.BiFunction;
 import dimhol.logic.collision.CircleBodyShape;
 import org.locationtech.jts.math.Vector2D;
@@ -50,7 +48,7 @@ public class ItemFactory extends AbstractFactory {
         .add(new PositionComponent(new Vector2D(x, y), 0))
         .add(new BodyComponent(new CircleBodyShape(W/2), false))
         .add(new ItemComponent(increaseCurrentHealth))
-        .add(new AnimationComponent(this.map.get("heart"), "idle"))
+        .add(new AnimationComponent(getAnimationsMap().get("heart"), "idle"))
         .build();
     }
 
@@ -59,7 +57,7 @@ public class ItemFactory extends AbstractFactory {
         .add(new PositionComponent(new Vector2D(x,y), 0))
         .add(new BodyComponent(new RectBodyShape(W,H), false))
         .add(new ItemComponent(increaseCurrentCoinsAmount))
-        .add(new AnimationComponent(this.map.get("coin"), "idle"))
+        .add(new AnimationComponent(getAnimationsMap().get("coin"), "idle"))
         .build();
     }
 }

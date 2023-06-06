@@ -20,9 +20,9 @@ public final class AISystem extends AbstractSystem {
 
     @Override
     protected void process(final Entity enemy, final double deltaTime, final World world) {
-        var enemyAI = (AIComponent) enemy.getComponent(AIComponent.class);
+        final var enemyAI = (AIComponent) enemy.getComponent(AIComponent.class);
         enemyAI.updateTime(deltaTime);
-        for (var action : enemyAI.getRoutine()) {
+        for (final var action : enemyAI.getRoutine()) {
             world.getEntities()
                     .stream()
                     .filter(e -> e.hasComponent(PlayerComponent.class))
@@ -30,9 +30,9 @@ public final class AISystem extends AbstractSystem {
                     .ifPresent(action::setPlayer);
             action.setEnemy(enemy);
             if (action.canExecute()) {
-                var routineExecute = action.execute();
+                final var routineExecute = action.execute();
                 if (routineExecute.isPresent()) {
-                    for (WorldEvent event : routineExecute.get()) {
+                    for (final WorldEvent event : routineExecute.get()) {
                         world.notifyEvent(event);
                     }
                 }

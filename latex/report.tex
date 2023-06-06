@@ -311,15 +311,18 @@ Ho realizzato anche una schermata di View, cioe' la schermata di vittoria e scon
 
 
 \subsection{Elvis Perlika}
-In questa sezione si approfondirà la parte di \textit{AI} dei nemici ed il \textit{Combat System} tra gli stessi nemici e player.
-\\ (Tendenzialmente affronterò la descrzione delle soluzioni con un approccio contrario di quello
+In questa sezione si approfondirà la parte di \textit{AI} dei nemici
+ed il \textit{Combat System} tra gli stessi nemici e player.\\
+(Tendenzialmente affronterò la descrzione delle soluzioni con un approccio contrario a quello
 del mio collega Lorenzo Prati, cioè Top-Bottom)
 
 \subsubsection{AI}
 
-\paragraph{Problema}
-Si vuole creare nemici con comportamenti differenti;
-il loro scopo principale deve comunque essere quello di eliminare il player.
+\paragraph{Obbiettivo}
+Progettare nemici con caratteristche differenti, in modo
+da offrire al giocatore una varietà di situazioni e strategie da affrontare.
+Tuttavia, nonostante le differenze tra di loro, l'obbietivo dei nemici deve
+rimanere quello di eliminare il giocatore.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{uml/UML_AI_Image.png}
@@ -327,42 +330,79 @@ il loro scopo principale deve comunque essere quello di eliminare il player.
 	\label{img:badarch}
 \end{figure}
 
+\paragraph{Problema}
+I nemici devono avere comportamenti diversi.
+Per \textit{Comportamento} si intende "Insieme di azioni, di atteggiamenti con cui 
+l'individuo esterna la propria personalità, rapportandosi agli altri e all'ambiente".
 \paragraph{Soluzione}
-Ho ideato un \texttt{AISystem} che "estende l'abstract system" e si occupa di aggiornare l'\texttt{AIComponent} e
-notificare al \texttt{World} nuovi eventi che i nemici possono aver creato.\\
+Prendendo spunto dal \textit{Pattern Strategy} ho creato l'interfaccia \texttt{Action}.
+Nel mio caso però le Action, a differenza del classico \textit{Pattern Stratgy}, 
+oltre ad eseguire una certa azione valutano se è il caso di eseguirla.
+Data la definizione di \textit{Comportamento} citata prima, per creare comportamenti predefiniti 
+ho deciso di implementare la classe \texttt{RoutineFactory} che crea collezioni di azioni 
+seguendo il \textit{Pattern Factory Method}.\\
 
-\textit{Ma come possono questi nemici creare eventi?}\\
-Ci riescono attraverso le \texttt{Action} che l'\texttt{AIComponent} contiene, il metodo \textit{execute()} ritorna una
-lista (opzionionale) di eventi. Tendenzialmente un nemico avrà più Action quindi ho deciso di creare una \texttt{RoutineFactory} che mi
-resitituisse un \textit{Comportamento} (inteso come: Insieme di azioni, di atteggiamenti con cui l'individuo esterna la propria
-personalità, rapportandosi agli altri e all'ambiente [Dizionario Italiano, Corriere della Sera]); ho costruito questa classe usando
-il \textit{Pattern Factory}. \\
-
-\underline{Esempio:} \textit{createShooterRoutine()} restituisce una classica personalità zombie che segue
-il player se lo rileava nella sua aggro zone, lo attacca se è abbastanza vicino oppure si muove
+\underline{Esempio:} \textit{createShooterRoutine()} restituisce una classica personalità da zombie:
+segue il player se lo rileva nella sua aggro zone, lo attacca se è abbastanza vicino oppure si muove
 casualmente nel caso non sia il caso di eseguire le precedenti azioni.
 
-Per la creazione delle \texttt{Action} mi sono ispirato allo Strategy Pattern.
-Nel mio caso però le Action oltre ad eseguire una certa azione valutano se è
-il caso di eseguirla.
-In questa prima versione del gioco il comportamento delle AI è determinato soltanto
-dalla distanza tra nemico e player (in altri termini: se il player entra nella
-aggro zone citata precedentemente) ed è comune a tutte le Action, per questo motivo ho deciso di
-implementare anche un \texttt{AbstractAction}. E' nota la limitazione che questo sistema provoca ma
-si è deciso che per un gameplay semplice come il nostro potesse comunque andare bene.
-In alcune Action viene fatta un ulteriore valutazione interna al esecuzione della stessa action,
-una valutazione di tipo temporale che rende i nemici soggetti al passare del tempo anche per la creazione degli eventi.\\
+\paragraph{Problema}
+Tutte le Action in questa prima versione del gioco presentano una caratteristca comune:
+si attivano tenendo conto soltanto della distanza dal player.
+\paragraph{Soluzione}
+Ho deciso di creare la classe astratta \texttt{AbstractAction} che implementa il metodo \textit{canExecute()} il quale 
+valuta la distanza tra AI e giocatore. Oltre a quel metodo ho sfruttto la classe astratta per fattorizzare altri metodi comuni.
+E' nota la limitazione che questo sistema provoca ma si è deciso che per un gameplay semplice come il nostro
+potesse comunque andare bene.
 
-Per le Action che hanno bisogno di conoscere la posizione del player in termini di "direzione" più
-che "coordinate" ho pensato di creare una clase \texttt{AttackUtil} che espone un metodo utile
-ad ottenere, apputno, la direzione in cui is trova il player.
+\paragraph{Problema}
+Permettere alle Action di creare nuove entità, ad esempio: attacchi.
+\paragraph{Soluzione}
+Per creare nuovi attacchi performati dalle AI nemiche ho creato la classe \texttt{EnemyAttackFactory} seguendo il 
+\textit{Pattern Factory Method}.\\
 
-In conclusione ho ritenuto questo sistema abbastanza semplice per la creazione di nuove azioni.
-Un sistema che permette di creare nuove \texttt{Action} basandosi sullo spazio intorno alla AI
-e sullo scorrere del tempo. Considerando che il nostro dominio di gioco fa riferimento soltanto a nemici che hanno
-come unico scopo quello di eliminare il player, nonostante questo sistema sia limitante, è abbastanza
-completo; infatti senza considerare il dominio si può sfruttare questo sistema per la
-creazione di NPC.
+\underline{Nota:} Per distinguere gli attachi da altre entità ho creato l'\texttt{AttackComponent}.
+L'\texttt{AttackComponent} mantiene anche i dati relativi al danno del attacco.\\
+
+Ho quindi deciso di far restituire dal metodo \textit{execute()}, presente nelle \texttt{Action}, una 
+lista opzionale di \texttt{WorldEvent} che l'\texttt{AISystem} si occuperà di notificare al \texttt{World}.
+In una Action utile per attaccare sarà logico restituire una lista con eventi di tipo \textit{AddEntityEvent}
+che prendono come parametro entità create dalla \texttt{EnemyAttackFactory}.
+
+\paragraph{Problema}
+La classi utili alla creazione di attacchi come \texttt{EnemyAttackFactory} oppure \texttt{PlayerAttackFactory}
+hanno metodi comuni utili al corretto posizionamento e direzionamento degli attacchi.
+\paragraph{Soluzione}
+Ho fattorizzato i metodi comuni in una classe astratta \texttt{AbstractAttackFactory}.
+Non ho fatto lo stesso per il metodo \textit{getPlayerDirection()} che permette alle
+AI di rintracciare il player perché ha la sua utilità sia in Action di attacco che non;
+quindi ho inserito il metodo nella classe \texttt{BehaviourUtil}. 
+
+\paragraph{Conclusione}
+Ho ideato quindi un sistema che permette di creare nuove \texttt{Action} basandosi sullo spazio 
+intorno alla AI e sullo scorrere del tempo. 
+Considerato il dominio di gioco semplice, nonostante le chiare litazione che questo sistema presenta, 
+riesce, nel suo piccolo, nella creazione di nuove personalità.
+Nelle sezione precedenti ho trattato soltanto di AI nemiche ma questo sistema
+permette anche la creazione di AI assegnabili ad NPC.
+
+\subsubsection{Combat System}
+
+\paragraph{Problema}
+Evitare che le AI nemiche causino danno a loro AI alleate.
+\paragraph{Soluzione}
+Ho sfruttato lo stesso sistema ideato dalla collega Alessandra Versari 
+per la creazione degli Item.\\
+
+\underline{Nota:} Per dettagli referenzio alla sezione di Design Dettagliato 
+della collega Alessandra Versari.
+
+\subsubsection{HUD}
+
+\paragraph{Problema}
+a
+\paragraph{Soluzione}
+
 
 \subsection{Emanuele Dajko}
 
@@ -520,9 +560,52 @@ Ho realizzato la classe \texttt{ItemTest}, che contiene due metodi, uno per test
 			\end{itemize}
 	\end{itemize}
 
+\subsubsection*{Elvis Perlika}
 
-
-
+\begin{itemize}
+	\item package entity
+	\begin{itemize}
+		\item factories
+			\begin{itemize}
+			\item classe \texttt{AbstractFactory}	
+			\item classe \texttt{AbstractAttackFactory}
+			\item classe \texttt{EnemyAttackFactory}
+			\item classe \texttt{EnemyFactory}
+			\item classe \texttt{PlayerAttackFactory}
+			\end{itemize}
+	\end{itemize}
+	\item package component
+		\begin{itemize}
+			\item classe \texttt{AIComponent}
+			\item classe \texttt{AttackComponent}
+			\item classe \texttt{MeleeComponent}
+			\item classe \texttt{BulletComponent}
+		\end{itemize}
+	\item package systems
+		\begin{itemize}
+			\item classe \texttt{AISystem}
+			\item classe \texttt{CombatSystem}
+		\end{itemize}
+	\item package logic
+		\begin{itemize}
+			\item logic.AI
+				\begin{itemize}
+				\item interfaccia \texttt{Action}
+				\item classe \texttt{AbstarctAction}
+				\item classe \texttt{BehaviourUtil}
+				\item classe \texttt{DistanceAttack}
+				\item classe \texttt{FollowMovement}
+				\item classe \texttt{MeleeAttack}
+				\item classe \texttt{RoutineFactory}
+				\item classe \texttt{FollowMovement}
+				\end{itemize}
+		\end{itemize}
+	\item package view
+		\begin{itemize}
+			\item interfaccia \texttt{HUD}
+			\item classe \texttt{HUDImpl}
+		\end{itemize}
+\end{itemize}
 
 \subsection*{Alessandra Versari}
 \begin{itemize}

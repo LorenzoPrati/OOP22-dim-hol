@@ -1,9 +1,9 @@
-package dimhol.logic.AI;
+package dimhol.logic.ai;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Implementation of enemy's behaviour routines.
@@ -86,11 +86,10 @@ public class RoutineFactory {
      * @return the behaviour of a shooter enemy.
      */
     public final List<Action> createShooterRoutine() {
-        return new ArrayList<>(List.of(
+        return Stream.of(
                 new DistanceAttack(DISTANCE_ATTACK_AGGRO, DISTANCE_ATTACK_RELOAD_TIME),
                 new RandomMovement(CHANGE_DIRECTION_TIME)
-        )).stream().sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
-
+        ).sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
     }
 
     /**
@@ -98,11 +97,11 @@ public class RoutineFactory {
      * @return the behaviour of a zombie enemy.
      */
     public final List<Action> createZombieRoutine() {
-        return new ArrayList<>(List.of(
+        return Stream.of(
                 new MeleeAttack(MELEE_ATTACK_AGGRO, MELEE_RELOAD_TIME),
                 new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
                 new RandomMovement(CHANGE_DIRECTION_TIME)
-        )).stream().sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
+        ).sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
     }
 
     /**
@@ -110,13 +109,13 @@ public class RoutineFactory {
      * @return the list of actions in the boss routine
      */
     public List<Action> createBossRoutine() {
-        return new ArrayList<>(List.of(
+        return Stream.of(
                 new MeleeAttack(MELEE_ATTACK_AGGRO, BOSS_MELEE_RELOAD_TIME),
                 new DistanceAttack(DISTANCE_ATTACK_AGGRO, BOSS_DISTANCE_ATTACK_RELOAD_TIME),
                 new AreaAttack(BOSS_AREA_ATTACK_AGGRO, BOSS_AREA_ATTACK_DAMAGE, BOSS_AREA_ATTACK_RELOAD_TIME),
                 new ChargeAttack(CHARGE_SPEED, CHARGE_ATTACK_DAMAGE, CHARGE_ATTACK_AGGRO, CHARGE_ATTACK_RELOAD_TIME),
                 new SummonMinions(SUMMONS_RELOAD_TIME, BOSS_SUMMON_MINIONS_NUMBER)
 //                new DefensiveShield()
-        )).stream().sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
+        ).sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
     }
 }

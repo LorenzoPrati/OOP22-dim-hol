@@ -2,6 +2,7 @@ package dimhol.view;
 
 import dimhol.gamelevels.map.TileMap;
 import dimhol.input.Input;
+import dimhol.view.HUD.HUD;
 
 import javax.swing.*;
 

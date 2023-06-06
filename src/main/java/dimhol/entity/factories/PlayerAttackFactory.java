@@ -1,6 +1,13 @@
 package dimhol.entity.factories;
 
-import dimhol.components.*;
+import dimhol.components.PositionComponent;
+import dimhol.components.BodyComponent;
+import dimhol.components.AttackComponent;
+import dimhol.components.MeleeComponent;
+import dimhol.components.AIComponent;
+import dimhol.components.MovementComponent;
+import dimhol.components.AnimationComponent;
+import dimhol.components.BulletComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.logic.collision.CircleBodyShape;
@@ -9,6 +16,9 @@ import dimhol.logic.util.DirectionUtil;
 
 import java.util.function.Predicate;
 
+/**
+ * This class spawn player's attack.
+ */
 public class PlayerAttackFactory extends AbstractAttackFactory {
 
     /**
@@ -24,14 +34,6 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
      */
     private static final int PLAYER_MELEE_DAMAGE = 1;
     /**
-     * Player little bullet width.
-     */
-    public static final double PLAYER_LITTLE_BULLET_WIDTH = 0.5;
-    /**
-     * Player little bullet height.
-     */
-    public static final double PLAYER_LITTLE_BULLET_HEIGHT = 0.5;
-    /**
      * Player little bullet speed.
      */
     public static final int PLAYER_LITTLE_BULLET_SPEED = 3;
@@ -39,14 +41,6 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
      * Player little bullet damage.
      */
     private static final int PLAYER_LITTLE_BULLET_DAMAGE = 1;
-    /**
-     * Player big bullet width.
-     */
-    public static final double PLAYER_BIG_BULLET_WIDTH = 1;
-    /**
-     * Player big bullet height.
-     */
-    public static final double PLAYER_BIG_BULLET_HEIGHT = 1;
     /**
      * Player big bullet speed.
      */
@@ -66,6 +60,11 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
 
     private final Predicate<Entity> checkEnemy = entity -> entity.hasComponent(AIComponent.class);
 
+    /**
+     * Spawn an attack near the player.
+     * @param entity
+     * @return a melee attack
+     */
     public Entity createMeleeAttack(final Entity entity) {
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(entity, PLAYER_MELEE_WIDTH, PLAYER_MELEE_HEIGHT), 0))
@@ -75,25 +74,36 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
                 .build();
     }
 
+    /**
+     * Spawn a little bullet.
+     * @param entity
+     * @return a little bullet
+     */
     public Entity createLittleBulletAttack(final Entity entity) {
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(entity,
                         PLAYER_LITTLE_BULLET_RAY * 2, PLAYER_LITTLE_BULLET_RAY * 2), 0))
                 .add(new MovementComponent(getDirection(entity), PLAYER_LITTLE_BULLET_SPEED, true))
                 .add(new BodyComponent(new CircleBodyShape(PLAYER_LITTLE_BULLET_RAY), false))
-                .add(new AnimationComponent(map.get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
+                .add(new AnimationComponent(getAnimationsMap().get("bullet"),
+                        DirectionUtil.getStringFromVec(getDirection(entity))))
                 .add(new AttackComponent(PLAYER_LITTLE_BULLET_DAMAGE, checkEnemy))
                 .add(new BulletComponent())
                 .build();
     }
 
+    /**
+     * Spawn a big bullet.
+     * @param entity
+     * @return a big bullet
+     */
     public Entity createBigBulletAttack(final Entity entity) {
         return new EntityBuilder()
                 .add(new PositionComponent(getAttackPos(entity,
                         PLAYER_BIG_BULLET_RAY * 2, PLAYER_BIG_BULLET_RAY * 2), 0))
                 .add(new MovementComponent(getDirection(entity), PLAYER_BIG_BULLET_SPEED, true))
                 .add(new BodyComponent(new CircleBodyShape(PLAYER_BIG_BULLET_RAY), false))
-                .add(new AnimationComponent(map.get("fireball"), "idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("fireball"), "idle"))
                 .add(new AttackComponent(PLAYER_BIG_BULLET_DAMAGE, checkEnemy))
                 .add(new BulletComponent())
                 .build();

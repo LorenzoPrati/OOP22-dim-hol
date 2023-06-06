@@ -1,4 +1,4 @@
-package dimhol.logic.AI;
+package dimhol.logic.ai;
 
 import dimhol.events.WorldEvent;
 import org.locationtech.jts.math.Vector2D;
@@ -23,7 +23,7 @@ public final class RandomMovement extends AbstractAction {
     @Override
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(true);
-        Vector2D[] directions = {new Vector2D(0, 1), new Vector2D(0, -1), new Vector2D(1, 0), new Vector2D(-1, 0)};
+        final Vector2D[] directions = {new Vector2D(0, 1), new Vector2D(0, -1), new Vector2D(1, 0), new Vector2D(-1, 0)};
         if (reloadTimePassed()) {
             getMovComp().setDir(directions[ThreadLocalRandom.current().nextInt(directions.length)]);
         }

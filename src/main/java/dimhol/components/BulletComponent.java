@@ -1,4 +1,7 @@
 package dimhol.components;
 
-public class BulletComponent implements Component{
+/**
+ * This is a tag component for bullets.
+ */
+public class BulletComponent implements Component {
 }

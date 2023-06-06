@@ -88,7 +88,7 @@ public final class BossAttackFactory extends AbstractAttackFactory {
                 .add(new AttackComponent(BOSS_AREA_ATTACK_DAMAGE, isPlayer))
                 .add(new AreaAttackComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("boss"), "idle"))
                 .build();
     }
 
@@ -106,7 +106,7 @@ public final class BossAttackFactory extends AbstractAttackFactory {
                 .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, isPlayer))
                 .add(new MinionComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("boss"), "idle"))
                 .build();
     }
 
@@ -125,7 +125,7 @@ public final class BossAttackFactory extends AbstractAttackFactory {
                 .add(new AttackComponent(BOSS_CHARGE_ATTACK_DAMAGE, isPlayer))
                 .add(new ChargeAttackComponent())
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("boss"), "idle"))
                 //DirectionUtil.getStringFromVec(getDirection(bossEntity))))
                 .build();
     }
@@ -143,7 +143,7 @@ public final class BossAttackFactory extends AbstractAttackFactory {
                         BOSS_DEFENSIVE_SHIELD_HEIGHT), 0))
                 .add(new BodyComponent(new RectBodyShape(BOSS_DEFENSIVE_SHIELD_WIDTH, BOSS_DEFENSIVE_SHIELD_HEIGHT), false))
                 .add(new CollisionComponent())
-                .add(new AnimationComponent(map.get("boss"), "idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("boss"), "idle"))
                 .add(new DefensiveShieldComponent(BOSS_DEFENSIVE_SHIELD_DURATION))
                 .build();
     }
