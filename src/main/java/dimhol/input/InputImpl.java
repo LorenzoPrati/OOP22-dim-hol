@@ -9,10 +9,10 @@ public class InputImpl implements Input {
     private boolean down;
     private boolean left;
     private boolean right;
-    private boolean normalMelee;
-    private boolean shoot;
-    private boolean chargeFireball;
-    private boolean interact;
+    private boolean attacking;
+    private boolean shooting;
+    private boolean chargingFireball;
+    private boolean interacting;
 
     /**
      * {@inheritDoc}
@@ -63,7 +63,7 @@ public class InputImpl implements Input {
      */
     @Override
     public boolean isInteracting() {
-        return this.interact;
+        return this.interacting;
     }
 
     /**
@@ -79,7 +79,7 @@ public class InputImpl implements Input {
      */
     @Override
     public boolean isShooting() {
-        return this.shoot;
+        return this.shooting;
     }
 
     /**
@@ -87,7 +87,7 @@ public class InputImpl implements Input {
      */
     @Override
     public boolean isAttacking() {
-        return this.normalMelee;
+        return this.attacking;
     }
 
     /**
@@ -95,7 +95,7 @@ public class InputImpl implements Input {
      */
     @Override
     public boolean isChargingFireball() {
-        return this.chargeFireball;
+        return this.chargingFireball;
     }
 
     /**
@@ -134,32 +134,32 @@ public class InputImpl implements Input {
      * {@inheritDoc}
      */
     @Override
-    public void setShoot(final boolean shoot) {
-        this.shoot = shoot;
+    public void setShooting(final boolean shooting) {
+        this.shooting = shooting;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setAttacking(final boolean normalMelee) {
-        this.normalMelee = normalMelee;
+    public void setAttacking(final boolean attacking) {
+        this.attacking = attacking;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setInteract(final boolean interact) {
-        this.interact = interact;
+    public void setInteracting(final boolean interacting) {
+        this.interacting = interacting;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setChargeFireball(final boolean chargeFireball) {
-        this.chargeFireball = chargeFireball;
+    public void setChargingFireball(final boolean chargingFireball) {
+        this.chargingFireball = chargingFireball;
     }
 }
 
