@@ -14,7 +14,7 @@ public interface LevelManager {
      * Changes the current level in the game and returns the updated list of entities.
      *
      * @param entities the list of entities in the current level.
-     * the updated state of the game, including the list of entities.
+     *                 the updated state of the game, including the list of entities.
      * @return The
      */
     List<Entity> changeLevel(List<Entity> entities);
