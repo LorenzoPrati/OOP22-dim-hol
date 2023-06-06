@@ -37,8 +37,8 @@ public final class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_S -> this.input.setDown(true);
             case KeyEvent.VK_A -> this.input.setLeft(true);
             case KeyEvent.VK_D -> this.input.setRight(true);
-            case KeyEvent.VK_Z -> this.input.setChargeFireball(true);
-            case KeyEvent.VK_E -> this.input.setInteract(true);
+            case KeyEvent.VK_Z -> this.input.setChargingFireball(true);
+            case KeyEvent.VK_E -> this.input.setInteracting(true);
             case KeyEvent.VK_ESCAPE -> {
                 this.engine.pauseGame();
                 this.engine.getMainWindow().changePanel(this.pauseScreen);
@@ -55,8 +55,8 @@ public final class InputListener implements KeyListener, MouseListener {
             case KeyEvent.VK_S -> this.input.setDown(false);
             case KeyEvent.VK_A -> this.input.setLeft(false);
             case KeyEvent.VK_D -> this.input.setRight(false);
-            case KeyEvent.VK_Z -> this.input.setChargeFireball(false);
-            case KeyEvent.VK_E -> this.input.setInteract(false);
+            case KeyEvent.VK_Z -> this.input.setChargingFireball(false);
+            case KeyEvent.VK_E -> this.input.setInteracting(false);
             default -> {
             }
         }
@@ -66,7 +66,7 @@ public final class InputListener implements KeyListener, MouseListener {
     public void mousePressed(final MouseEvent e) {
         switch (e.getButton()) {
             case MouseEvent.BUTTON1 -> this.input.setAttacking(true);
-            case MouseEvent.BUTTON3 -> this.input.setShoot(true);
+            case MouseEvent.BUTTON3 -> this.input.setShooting(true);
             default -> {
             }
         }
@@ -76,7 +76,7 @@ public final class InputListener implements KeyListener, MouseListener {
     public void mouseReleased(final MouseEvent e) {
         switch (e.getButton()) {
             case MouseEvent.BUTTON1 -> this.input.setAttacking(false);
-            case MouseEvent.BUTTON3 -> this.input.setShoot(false);
+            case MouseEvent.BUTTON3 -> this.input.setShooting(false);
             default -> {
             }
         }

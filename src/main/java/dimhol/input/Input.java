@@ -78,56 +78,56 @@ public interface Input extends Cloneable {
     /**
      * Sets the up movement.
      *
-     * @param up
+     * @param up true to set up movement
      */
     void setUp(boolean up);
 
     /**
      * Sets the down movement.
      *
-     * @param down
+     * @param down true to set down movement
      */
     void setDown(boolean down);
 
     /**
      * Sets the left movement.
      *
-     * @param left
+     * @param left true to set left movement
      */
     void setLeft(boolean left);
 
     /**
      * Sets the right movement.
      *
-     * @param right
+     * @param right true to set right movement
      */
     void setRight(boolean right);
 
     /**
      * Sets the shooting.
      *
-     * @param shoot
+     * @param shooting true to set the shoot
      */
-    void setShoot(boolean shoot);
+    void setShooting(boolean shooting);
 
     /**
-     * Sets the normal melee attack.
+     * Sets the sword attack.
      *
-     * @param normalMeele
+     * @param attacking true to set the sword attack
      */
-    void setAttacking(boolean normalMeele);
+    void setAttacking(boolean attacking);
 
     /**
      * Sets the interaction.
      *
-     * @param interact
+     * @param interacting true to set the interaction
      */
-    void setInteract(boolean interact);
+    void setInteracting(boolean interacting);
 
     /**
      * Sets che fireball charging.
      *
-     * @param chargeFireball
+     * @param chargingFireball true to set fireball
      */
-    void setChargeFireball(boolean chargeFireball);
+    void setChargingFireball(boolean chargingFireball);
 }
