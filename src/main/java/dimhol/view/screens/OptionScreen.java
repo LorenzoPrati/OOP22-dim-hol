@@ -1,4 +1,4 @@
-package dimhol.view;
+package dimhol.view.screens;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
