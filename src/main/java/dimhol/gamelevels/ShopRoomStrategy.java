@@ -1,6 +1,7 @@
 package dimhol.gamelevels;
 
 import dimhol.entity.Entity;
+import dimhol.entity.factories.EnemyFactory;
 import dimhol.entity.factories.GenericFactory;
 import dimhol.entity.factories.InteractableObjectFactory;
 import dimhol.entity.factories.ItemFactory;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * This class represents a strategy for generating a shop room.
@@ -19,23 +21,26 @@ import java.util.Set;
 public class ShopRoomStrategy extends AbstractRoomStrategy {
     private static final int NUM_ITEMS = 10;
     private static final int NUM_POWER_UP = 2;
+    private static final int NUM_SHOP_KEEPER = 1;
     private static final int ENTITY_WIDTH = 1;
     private static final int ENTITY_HEIGHT = 1;
+    private static final int NUM_INTERACTABLE = 1;
     private final GenericFactory genericFactory;
-    private final ItemFactory itemFactory;
     private final InteractableObjectFactory interactableObjectFactory;
 
     /**
      * Constructs a ShopRoomStrategy object with the specified generic factory and random number generator.
      *
-     * @param genericFactory            The generic factory used for creating entities.
+     * @param genericFactory            The generic factory used for creating generic entities.
+     * @param enemyFactory              The enemy factory used for creating enemy entities.
      * @param itemFactory               The item factory used to create items in the room.
      * @param interactableObjectFactory The interactable object factory used to create interactable objects in the room.
+     * @param random                    The random generator.
      */
-    public ShopRoomStrategy(final GenericFactory genericFactory, final ItemFactory itemFactory,
-                            final InteractableObjectFactory interactableObjectFactory) {
-        super(genericFactory, interactableObjectFactory);
-        this.itemFactory = itemFactory;
+    public ShopRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory, final ItemFactory itemFactory,
+                            final InteractableObjectFactory interactableObjectFactory,
+                            final Random random) {
+        super(genericFactory, enemyFactory, itemFactory, interactableObjectFactory, random);
         this.interactableObjectFactory = new InteractableObjectFactory();
         this.genericFactory = new GenericFactory();
     }
@@ -44,82 +49,99 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
      * {@inheritDoc}
      */
     @Override
-    public List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> freeTiles,
+    public List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> availableTiles,
                                  final List<Entity> entities) {
 
-        List<Entity> newListOfEntities = new ArrayList<>();
+        final List<Entity> newListOfEntities = new ArrayList<>();
 
         //Place the player:
-        generatePlayer(freeTiles, entities, newListOfEntities, ENTITY_WIDTH, ENTITY_HEIGHT);
+        generatePlayer(availableTiles, entities, newListOfEntities, ENTITY_WIDTH, ENTITY_HEIGHT);
 
         //Place the shop-keeper:
-        createShopKeeper(freeTiles, newListOfEntities);
+        generateShopKeeper(NUM_SHOP_KEEPER, availableTiles, entities);
 
         //Place coins:
-        generateCoins(freeTiles, newListOfEntities);
+        generateCoins(NUM_ITEMS, availableTiles, newListOfEntities);
 
         //Place heart:
-        generateHearts(freeTiles, newListOfEntities);
+        generateHearts(NUM_ITEMS, availableTiles, newListOfEntities);
 
         //Place heartPowerUp:
-        generateHeartPowerUp(freeTiles, newListOfEntities);
+        generateHeartPowerUp(NUM_POWER_UP, availableTiles, newListOfEntities);
 
         //Place velocityPowerUp:
-        generateVelocityPowerUp(freeTiles, newListOfEntities);
+        generateVelocityPowerUp(NUM_POWER_UP, availableTiles, newListOfEntities);
 
         //Place gate:
-        generateGate(freeTiles, newListOfEntities);
+        generateGate(NUM_INTERACTABLE, availableTiles, newListOfEntities);
 
 
         return newListOfEntities;
     }
 
-    private void generateHeartPowerUp(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
-        int heartPowerUp = new Random().nextInt(NUM_POWER_UP);
-        for (int i = 0; i < heartPowerUp; i++) {
-            var heartPowerUpFreeTiles = getRandomTile(freeTiles);
-            entities.add(interactableObjectFactory.createShopHeart(heartPowerUpFreeTiles.getLeft().doubleValue(),
-                    heartPowerUpFreeTiles.getRight().doubleValue()));
-        }
+    private void generateHeartPowerUp(final int numPowerUp,
+                                      final Set<Pair<Integer, Integer>> availableTiles,
+                                      final List<Entity> entities) {
+        final List<Entity> heartPowerUp = IntStream.rangeClosed(1, numPowerUp)
+                .mapToObj(i -> createHeartPowerUp(availableTiles))
+                .peek(heartPower -> placeEntityAtRandomPosition(heartPower, availableTiles, ENTITY_WIDTH, ENTITY_HEIGHT))
+                .toList();
+
+        entities.addAll(heartPowerUp);
     }
 
-    private void generateVelocityPowerUp(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
-        int velocityPowerUp = new Random().nextInt(NUM_POWER_UP);
-        for (int i = 0; i < velocityPowerUp; i++) {
-            var velocityPowerUpFreeTiles = getRandomTile(freeTiles);
-            entities.add(interactableObjectFactory.createShopVelocity(velocityPowerUpFreeTiles.getLeft().doubleValue(),
-                    velocityPowerUpFreeTiles.getRight().doubleValue()));
-        }
+    private Entity createHeartPowerUp(final Set<Pair<Integer, Integer>> availableTiles) {
+        final Pair<Integer, Integer> randomCoordinates = getRandomTile(availableTiles);
+        final double x = randomCoordinates.getLeft().doubleValue();
+        final double y = randomCoordinates.getRight().doubleValue();
+        return interactableObjectFactory.createShopHeart(x, y);
     }
 
-    private void generateCoins(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
-        int coins = new Random().nextInt(NUM_ITEMS);
-        for (int i = 0; i < coins; i++) {
-            var coinsFreeTiles = getRandomTile(freeTiles);
-            entities.add(itemFactory.createCoin(coinsFreeTiles.getLeft().doubleValue(),
-                    coinsFreeTiles.getRight().doubleValue()));
-        }
+    private void generateVelocityPowerUp(final int numPowerUp,
+                                         final Set<Pair<Integer, Integer>> availableTiles,
+                                         final List<Entity> entities) {
+        final List<Entity> velocityPowerUp = IntStream.rangeClosed(1, numPowerUp)
+                .mapToObj(i -> createVelocityPowerUp(availableTiles))
+                .peek(velocityPower -> placeEntityAtRandomPosition(velocityPower, availableTiles, ENTITY_WIDTH, ENTITY_HEIGHT))
+                .toList();
+
+        entities.addAll(velocityPowerUp);
     }
 
-    private void generateHearts(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
-        int hearts = new Random().nextInt(NUM_ITEMS);
-        for (int i = 0; i < hearts; i++) {
-            var hearthsFreeTile = getRandomTile(freeTiles);
-            entities.add(itemFactory.createHeart(hearthsFreeTile.getLeft().doubleValue(),
-                    hearthsFreeTile.getRight().doubleValue()));
-
-        }
+    private Entity createVelocityPowerUp(final Set<Pair<Integer, Integer>> availableTiles) {
+        final Pair<Integer, Integer> randomCoordinates = getRandomTile(availableTiles);
+        final double x = randomCoordinates.getLeft().doubleValue();
+        final double y = randomCoordinates.getRight().doubleValue();
+        return interactableObjectFactory.createShopVelocity(x, y);
     }
 
     /**
-     * Creates a shopkeeper entity with a random position from the set of free tiles.
+     * Creates a coin shop-keeper entity and assigns it a random position from the set of available tiles.
      *
-     * @param freeTiles The set of available tiles where the shopkeeper can be placed.
-     * @param entities  The
+     * @param availableTiles The set of available tiles where the shop-keeper can be placed.
+     * @return The created shop-keeper item entity.
      */
-    private void createShopKeeper(final Set<Pair<Integer, Integer>> freeTiles, final List<Entity> entities) {
-        var shopKeeperFreeTiles = getRandomTile(freeTiles);
-        entities.add(genericFactory.createShopkeeper(shopKeeperFreeTiles.getLeft().doubleValue(),
-                shopKeeperFreeTiles.getRight().doubleValue()));
+    private Entity createShopKeeper(final Set<Pair<Integer, Integer>> availableTiles) {
+        final Pair<Integer, Integer> randomCoordinates = getRandomTile(availableTiles);
+        final double x = randomCoordinates.getLeft().doubleValue();
+        final double y = randomCoordinates.getRight().doubleValue();
+        return genericFactory.createShopkeeper(x, y);
+    }
+
+    /**
+     * Generates a heart item and places it in the room.
+     *
+     * @param numShopKeeper  The number of shop-keeper to generate.
+     * @param availableTiles The set of available tiles where the hearts can be placed.
+     * @param entities       The list of entities to add the hearts to.
+     */
+    private void generateShopKeeper(final int numShopKeeper, final Set<Pair<Integer, Integer>> availableTiles,
+                                    final List<Entity> entities) {
+        final List<Entity> shopKeepers = IntStream.range(0, numShopKeeper)
+                .mapToObj(i -> createShopKeeper(availableTiles))
+                .peek(keeper -> placeEntityAtRandomPosition(keeper, availableTiles, ENTITY_WIDTH, ENTITY_HEIGHT))
+                .toList();
+
+        entities.addAll(shopKeepers);
     }
 }
