@@ -14,7 +14,6 @@ import java.util.Map;
 import dimhol.core.Engine;
 
 public class OptionScreen extends AbstractScreen {
-    public static final int INSETS = 10;
     public static final int LABEL_ORIGINAL_W = 10;
     public static final int LABEL_ORIGINAL_H = 10;
     private final Map<String, Dimension> mapResolutions =  new HashMap<>() {
