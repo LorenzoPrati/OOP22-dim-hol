@@ -1,15 +1,18 @@
-package dimhol.gamelevels.bossactions.bossAI;
+package dimhol.entity.factories;
 
 import dimhol.components.AnimationComponent;
+import dimhol.components.AreaAttackComponent;
 import dimhol.components.AttackComponent;
 import dimhol.components.BodyComponent;
+import dimhol.components.ChargeAttackComponent;
 import dimhol.components.CollisionComponent;
+import dimhol.components.DefensiveShieldComponent;
+import dimhol.components.MinionComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PlayerComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
-import dimhol.entity.factories.AbstractAttackFactory;
 import dimhol.logic.collision.RectBodyShape;
 
 import java.util.function.Predicate;

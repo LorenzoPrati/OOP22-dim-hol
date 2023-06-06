@@ -1,5 +1,9 @@
 package dimhol.logic.AI;
 
+import dimhol.logic.AI.bossactions.AreaAttack;
+import dimhol.logic.AI.bossactions.ChargeAttack;
+import dimhol.logic.AI.bossactions.SummonMinions;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

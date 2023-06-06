@@ -12,10 +12,10 @@ import dimhol.components.PlayerComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
-import dimhol.gamelevels.bossactions.bossAI.AreaAttackComponent;
-import dimhol.gamelevels.bossactions.bossAI.ChargeAttackComponent;
-import dimhol.gamelevels.bossactions.bossAI.DefensiveShieldComponent;
-import dimhol.gamelevels.bossactions.bossAI.MinionComponent;
+import dimhol.components.AreaAttackComponent;
+import dimhol.components.ChargeAttackComponent;
+import dimhol.components.DefensiveShieldComponent;
+import dimhol.components.MinionComponent;
 import dimhol.logic.collision.RectBodyShape;
 import dimhol.logic.util.DirectionUtil;
 

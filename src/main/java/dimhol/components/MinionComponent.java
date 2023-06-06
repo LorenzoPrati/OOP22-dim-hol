@@ -1,4 +1,4 @@
-package dimhol.gamelevels.bossactions.bossAI;
+package dimhol.components;
 
 import dimhol.components.Component;
 

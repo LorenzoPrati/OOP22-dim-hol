@@ -1,7 +1,9 @@
-package dimhol.logic.AI;
+package dimhol.logic.AI.bossactions;
 
 import dimhol.events.AddEntityEvent;
 import dimhol.events.WorldEvent;
+import dimhol.logic.AI.AbstractAction;
+import dimhol.logic.AI.AttackUtil;
 
 import java.util.ArrayList;
 import java.util.List;
