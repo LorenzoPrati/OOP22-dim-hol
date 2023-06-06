@@ -16,7 +16,6 @@ import java.util.stream.IntStream;
 
 /**
  * This class represents a strategy for generating a shop room.
- * It implements the RoomStrategy interface.
  */
 public class ShopRoomStrategy extends AbstractRoomStrategy {
     private static final int NUM_ITEMS = 10;
@@ -24,7 +23,7 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
     private static final int NUM_SHOP_KEEPER = 1;
     private static final int ENTITY_WIDTH = 1;
     private static final int ENTITY_HEIGHT = 1;
-    private static final int NUM_INTERACTABLE = 1;
+    private static final int NUM_INTERACTIVE = 1;
     private final GenericFactory genericFactory;
     private final InteractableObjectFactory interactableObjectFactory;
 
@@ -34,7 +33,7 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
      * @param genericFactory            The generic factory used for creating generic entities.
      * @param enemyFactory              The enemy factory used for creating enemy entities.
      * @param itemFactory               The item factory used to create items in the room.
-     * @param interactableObjectFactory The interactable object factory used to create interactable objects in the room.
+     * @param interactableObjectFactory The interactive object factory used to create interactive objects in the room.
      * @param random                    The random generator.
      */
     public ShopRoomStrategy(final GenericFactory genericFactory, final EnemyFactory enemyFactory, final ItemFactory itemFactory,
@@ -54,31 +53,31 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
 
         final List<Entity> newListOfEntities = new ArrayList<>();
 
-        //Place the player:
         generatePlayer(availableTiles, entities, newListOfEntities, ENTITY_WIDTH, ENTITY_HEIGHT);
 
-        //Place the shop-keeper:
         generateShopKeeper(NUM_SHOP_KEEPER, availableTiles, entities);
 
-        //Place coins:
         generateCoins(NUM_ITEMS, availableTiles, newListOfEntities);
 
-        //Place heart:
         generateHearts(NUM_ITEMS, availableTiles, newListOfEntities);
 
-        //Place heartPowerUp:
         generateHeartPowerUp(NUM_POWER_UP, availableTiles, newListOfEntities);
 
-        //Place velocityPowerUp:
         generateVelocityPowerUp(NUM_POWER_UP, availableTiles, newListOfEntities);
 
-        //Place gate:
-        generateGate(NUM_INTERACTABLE, availableTiles, newListOfEntities);
+        generateGate(NUM_INTERACTIVE, availableTiles, newListOfEntities);
 
 
         return newListOfEntities;
     }
 
+    /**
+     * Generates heart power-ups and adds them to the list of entities.
+     *
+     * @param numPowerUp     The number of heart power-ups to generate.
+     * @param availableTiles The set of available tiles where the heart power-ups can be placed.
+     * @param entities       The list of entities to add the heart power-ups to.
+     */
     private void generateHeartPowerUp(final int numPowerUp,
                                       final Set<Pair<Integer, Integer>> availableTiles,
                                       final List<Entity> entities) {
@@ -90,6 +89,12 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
         entities.addAll(heartPowerUp);
     }
 
+    /**
+     * Creates a heart power-up entity with a random position.
+     *
+     * @param availableTiles The set of available tiles where the heart power-up can be placed.
+     * @return The created heart power-up entity.
+     */
     private Entity createHeartPowerUp(final Set<Pair<Integer, Integer>> availableTiles) {
         final Pair<Integer, Integer> randomCoordinates = getRandomTile(availableTiles);
         final double x = randomCoordinates.getLeft().doubleValue();
@@ -97,6 +102,13 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
         return interactableObjectFactory.createShopHeart(x, y);
     }
 
+    /**
+     * Generates velocity power-ups and adds them to the list of entities.
+     *
+     * @param numPowerUp     The number of velocity power-ups to generate.
+     * @param availableTiles The set of available tiles where the velocity power-ups can be placed.
+     * @param entities       The list of entities to add the velocity power-ups to.
+     */
     private void generateVelocityPowerUp(final int numPowerUp,
                                          final Set<Pair<Integer, Integer>> availableTiles,
                                          final List<Entity> entities) {
@@ -108,6 +120,12 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
         entities.addAll(velocityPowerUp);
     }
 
+    /**
+     * Creates a velocity power-up entity with a random position.
+     *
+     * @param availableTiles The set of available tiles where the velocity power-up can be placed.
+     * @return The created velocity power-up entity.
+     */
     private Entity createVelocityPowerUp(final Set<Pair<Integer, Integer>> availableTiles) {
         final Pair<Integer, Integer> randomCoordinates = getRandomTile(availableTiles);
         final double x = randomCoordinates.getLeft().doubleValue();
@@ -116,10 +134,10 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
     }
 
     /**
-     * Creates a coin shop-keeper entity and assigns it a random position from the set of available tiles.
+     * Creates a shop-keeper entity and assigns it a random position from the set of available tiles.
      *
      * @param availableTiles The set of available tiles where the shop-keeper can be placed.
-     * @return The created shop-keeper item entity.
+     * @return The created shop-keeper entity.
      */
     private Entity createShopKeeper(final Set<Pair<Integer, Integer>> availableTiles) {
         final Pair<Integer, Integer> randomCoordinates = getRandomTile(availableTiles);
@@ -129,17 +147,17 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
     }
 
     /**
-     * Generates a heart item and places it in the room.
+     * Generates shop-keeper entities and places them in the room.
      *
-     * @param numShopKeeper  The number of shop-keeper to generate.
-     * @param availableTiles The set of available tiles where the hearts can be placed.
-     * @param entities       The list of entities to add the hearts to.
+     * @param numShopKeeper  The number of shop-keepers to generate.
+     * @param availableTiles The set of available tiles where the shop-keepers can be placed.
+     * @param entities       The list of entities to add the shop-keepers to.
      */
     private void generateShopKeeper(final int numShopKeeper, final Set<Pair<Integer, Integer>> availableTiles,
                                     final List<Entity> entities) {
         final List<Entity> shopKeepers = IntStream.range(0, numShopKeeper)
                 .mapToObj(i -> createShopKeeper(availableTiles))
-                .peek(keeper -> placeEntityAtRandomPosition(keeper, availableTiles, ENTITY_WIDTH, ENTITY_HEIGHT))
+                .peek(shopkeeper -> placeEntityAtRandomPosition(shopkeeper, availableTiles, ENTITY_WIDTH, ENTITY_HEIGHT))
                 .toList();
 
         entities.addAll(shopKeepers);

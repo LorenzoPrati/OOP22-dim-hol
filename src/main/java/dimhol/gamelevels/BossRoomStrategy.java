@@ -37,12 +37,12 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
     /**
      * Constructs a BossRoomStrategy.
      *
-     * @param genericFactory  The factory for creating generic entities.
-     * @param itemFactory     The factory for creating item entities.
-     * @param enemyFactory    The factory for creating enemy entities.
+     * @param genericFactory            The factory for creating generic entities.
+     * @param itemFactory               The factory for creating item entities.
+     * @param enemyFactory              The factory for creating enemy entities.
      * @param interactableObjectFactory The factory for creating interactable objects entities.
-     * @param randomGenerator The random number generator.
-     * @param bossFactory     The factory for creating boss entities.
+     * @param randomGenerator           The random number generator.
+     * @param bossFactory               The factory for creating boss entities.
      */
     public BossRoomStrategy(final GenericFactory genericFactory, final ItemFactory itemFactory,
                             final EnemyFactory enemyFactory,
@@ -132,10 +132,10 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
     /**
      * Places the entity at a random position with specified dimensions within the set of free tiles.
      *
-     * @param entity       The entity to place.
-     * @param freeTiles    The set of available tiles where the entity can be placed.
-     * @param entityWidth  The width of the entity.
-     * @param entityHeight The height of the entity.
+     * @param entity          The entity to place.
+     * @param freeTiles       The set of available tiles where the entity can be placed.
+     * @param entityWidth     The width of the entity.
+     * @param entityHeight    The height of the entity.
      * @param randomGenerator The random generator.
      */
     private void placeEntityWithDimension(final Entity entity, final Set<Pair<Integer, Integer>> freeTiles,

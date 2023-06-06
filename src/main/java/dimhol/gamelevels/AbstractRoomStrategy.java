@@ -46,11 +46,11 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
     /**
      * Constructs an abstract class used by all the room strategies.
      *
-     * @param genericFactory The generic entity factory.
-     * @param enemyFactory The enemy factory.
-     * @param itemFactory The item factory.
+     * @param genericFactory            The generic entity factory.
+     * @param enemyFactory              The enemy factory.
+     * @param itemFactory               The item factory.
      * @param interactableObjectFactory The interactable objects factory.
-     * @param randomGenerator The random generator.
+     * @param randomGenerator           The random generator.
      */
     protected AbstractRoomStrategy(final GenericFactory genericFactory,
                                    final EnemyFactory enemyFactory,
@@ -288,7 +288,7 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
     /**
      * Generates the gate entity and places it in the room.
      *
-     * @param numGates The number of gate entities to be generated.
+     * @param numGates       The number of gate entities to be generated.
      * @param availableTiles The set of available tiles where the gate can be placed.
      * @param entities       The list of entities to add the gate to.
      */
@@ -511,7 +511,7 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
      * Calculates the number of items to generate based on the number of available tiles.
      *
      * @param numberOfAvailableTiles The number of available tiles in the room.
-     * @param maxItems The maximum number of items to be generated.
+     * @param maxItems               The maximum number of items to be generated.
      * @return The number of items to generate.
      */
     protected int calculateNumItems(final int numberOfAvailableTiles, final int maxItems) {
