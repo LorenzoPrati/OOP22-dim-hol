@@ -26,6 +26,10 @@ public final class MapLoaderImpl implements MapLoader {
     private int tileHeight;
     private List<Tile[][]> mapTileLayers;
 
+    public MapLoaderImpl() {
+        mapTileLayers = new ArrayList<>();
+    }
+
     /**
      * Loads a map from an XML file.
      *
