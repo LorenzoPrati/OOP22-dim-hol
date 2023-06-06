@@ -424,8 +424,6 @@ creazione di NPC.
 	In questo modo nelle classi che implementano i vari menù e schermate compaiono solo gli elementi differenti e non utilizzati negli altri menù o schermate.
 
 
-
-
 \chapter{Sviluppo}
 
 \section{Testing automatizzato}
@@ -439,6 +437,12 @@ Ho realizzato una classe \texttt{EntityTest}, che contiene un metodo di test che
 
 \paragraph*{Test del player, input e stati}
 Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzare l'entita' che rappresenta il giocatore, tramite relativa factory, poi sono presenti due metodi di test: il primo controlla la corretta inizializzazione del player, il secondo testa il funzionamento degli stati e dell'input. 
+
+\subsubsection*{Alessandra Versari}
+
+\paragraph*{Test degli effetti degli items}
+Ho realizzato la classe \texttt{ItemTest}, che contiene due metodi, uno per testare l'effetto dell'item cuore e l'effetto dell'item moneta, confrontando i valori contenuti nei component dei player dopo che l'effetto è stato applicato
+
 
 \section{Metodologia di lavoro}
 
@@ -558,6 +562,7 @@ Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzar
 		\end{itemize}
 	\end{itemize}
 
+
 \subsubsection*{Parti sviluppate in collaborazione}
 \begin{itemize}
 	\item classe \texttt{SceneImpl}
@@ -588,7 +593,15 @@ Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzar
 	\item Optional utilizzati sia in \texttt{PositionComponent} che nei vari stati del player
 \end{itemize}
 
-
+\subsubsection*{Alessandra Versari}
+\begin{itemize}
+	\item uso della libreria SnakeYAML sia per la classe AbstractFactory sia per la classe ResourceLoader.
+	Esempio: \url{}
+	\item reflection, stream e lambda utilizzate in varie classi. Seguono alcuni esempi:
+	Esempio: utilizzo reflection in ItemSystem \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/78f510d43dec8c4b5855980ccefefa539f23f48e/src/main/java/dimhol/systems/ItemSystem.java#LL20C8-L20C8}
+	Esempio: utilizzo lambda in InteractableObjectsFactory \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/cc4664659311592c5d0f16e6f7d332ba8f5b8131/src/main/java/dimhol/entity/factories/InteractableObjectFactory.java#L29}
+	Esempio: utilizzo stream in AnimationComponent \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/cc4664659311592c5d0f16e6f7d332ba8f5b8131/src/main/java/dimhol/components/AnimationComponent.java#LL64C4-L72C1}
+\end{itemize}
 
 
 \chapter{Commenti finali}
@@ -601,12 +614,19 @@ Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzar
 
 Mi ritengo complessivamente soddisfatto del lavoro svolto insieme ai miei compagni di gruppo, anche se ammetto che il percorso che ci ha portati ad arrivare a questo punto del progetto non e' stato facile. Inizialmente si era scelto di utilizzare il pattern architetturale MVC, ma a causa piu' che altro di una nostra mal comprensione delle dinamiche e caratteristiche del pattern, era risultato molto difficile pensare a una struttura adeguata tanto che si e' deciso di passare alla deadline successiva ricominciando quasi da capo. Infine siamo passati al \textit{pattern ecs} per gestire la logica del gioco, di cui mi sono molto informato personalmente tramite ricerche online. Visto che mi sono occupato di realizzare la base dell'architettura dell'\textit{ecs}, devo dire che il cercare di realizzare un'implementazione personale e sicuramente molto semplice di un pattern noto ma praticamente mai implementato a un livello \textit{semplice} e adatto al progetto o addirittura non molto usato con il linguaggio Java (infatti spesso versioni dell'\textit{ecs} che si trovano online sono realizzate in C++ o altri linguaggi), e' stata una bella sfida. La discussione con i docenti anche e' stata importante per chiarirci le idee su a cosa dovessimo effettivamente dare priorita'. Non escludo in futuro di tornare a lavorare a questo progetto, anche se per il momento ritengo essere state realizzate tutte le feature piu' importanti che ci eravamo prefissati.
 
+\subsubsection*{Alessandra Versari}
+Sono abbastanza soddisfatta del risultato raggiunto insieme al gruppo soprattutto considerando le varie difficoltà iniziali. Credo ci abbia insegnato molto soprattutto su come affrontare progetti di gruppo in futuro. Ammetto di aver avuto molte difficoltà all'inizio sia perchè era un progetto diverso dal solito (molto più lungo e complesso), sia perchè bisogna svilupparlo nel secondo periodo, mentre ci sono lezioni di altri corsi che portano via molto tempo e per quanto mi riguarda è stato parecchio complicato riuscire a incastrare tutto. Al momento non credo che continuerò a lavorarci per mancanza di tempo e per dare spazio alle altre materie, ma non escludo di farlo in futuro. 
+
 \section{Difficoltà incontrate e commenti per i docenti}
 
 \subsubsection{Lorenzo Prati}
 Le difficolta' maggiori che ho incontrato sono personali: il lavoro di gruppo, la gestione del tempo, la collaborazione e la discussione sul codice insieme ad altre persone, che erano tutte cose che non avevo mai affrontato prima in questo modo. Per quanto riguarda il corso, sarebbe stato utile vedere e discutere un esempio di un progetto di questa \textit{portata} in modo tale da avere dritte e consigli dai docenti fin da subito; comunque, ritengo che le basi forniteci a lezione sul linguaggio Java e sui pattern siano piu' che buone e assolutamente adatte per permetterci di costruire, da soli, un progetto di questo tipo.
 
-\appendix
+\subsubsection*{Alessandra Versari}
+Essendo un progetto abbastanza grande rispetto a ciò a cui siamo abituati mi sono trovata un po' spaesata soprattutto all'inizio e la collaborazione con i miei compagni è stata fondamentale. Sicuramente ciò che ho ritenuto più difficile è la scelta di un'architettura adeguata a ciò che avevamo in mente di sviluppare.
+Inoltre il fatto di aver dovuto ricominciare il progetto quasi a ridosso della scadenza scelta (a causa di nostre scelte errate) e aver dovuto lavorarci per più mesi del previsto, facendo sempre fatica a trovare il tempo per le altre materie e altri impegni mi ha un po' buttato giù.
+Mi sarebbe piaciuto vedere qualche progetto degli anni precedenti a lezione, così da sentirmi magari più pronta all'inizio del progetto, ma complessivamente ritengo che le competenze acquisite siano sufficienti.
+
 \chapter{Guida utente}
 
 
