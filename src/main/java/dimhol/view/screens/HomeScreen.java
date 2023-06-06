@@ -1,6 +1,7 @@
-package dimhol.view;
+package dimhol.view.screens;
 
 import dimhol.core.Engine;
+
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

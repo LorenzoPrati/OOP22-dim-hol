@@ -3,6 +3,7 @@ package dimhol.view;
 import dimhol.core.Engine;
 import dimhol.input.Input;
 import dimhol.input.InputImpl;
+import dimhol.view.screens.PauseScreen;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

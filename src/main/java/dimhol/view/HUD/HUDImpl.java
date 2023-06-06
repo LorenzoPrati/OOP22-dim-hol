@@ -1,4 +1,7 @@
-package dimhol.view;
+package dimhol.view.HUD;
+
+import dimhol.view.HUD.HUD;
+import dimhol.view.ResourceLoader;
 
 import java.awt.Graphics2D;
 import java.awt.Font;
@@ -37,6 +40,10 @@ public final class HUDImpl implements HUD {
      */
     private static final  int COIN_AMOUNT_DIVISOR = 10;
     /**
+     * Pixel art font.
+     */
+    public static final String FIPPS_REGULAR_FONT = "/asset/hud/font/Fipps-Regular.ttf";
+    /**
      * Coin high-position multiplier.
      */
     public static final int COIN_HIGH_MUL = 3;
@@ -57,7 +64,15 @@ public final class HUDImpl implements HUD {
     public void show(final Graphics2D g2d, final double newTileWidth,
                      final double newTileHeight, final int offsetX, final int offsetY) {
 
-        final InputStream fontFile = getClass().getResourceAsStream("/asset/hud/font/Fipps-Regular.ttf");
+        setFont(g2d, newTileHeight);
+
+
+        showHealthInfo(g2d, offsetX, offsetY, newTileWidth, newTileHeight);
+        showCoinInfo(g2d, offsetX, offsetY, newTileWidth, newTileHeight);
+    }
+
+    private void setFont(final Graphics2D g2d, final double newTileHeight) {
+        final InputStream fontFile = getClass().getResourceAsStream(FIPPS_REGULAR_FONT);
         final double fontSize = newTileHeight / FONT_SIZE_DIVISOR;
         final Font font;
         try {
@@ -66,10 +81,6 @@ public final class HUDImpl implements HUD {
             throw new RuntimeException(e);
         }
         g2d.setFont(font);
-
-
-        showHealthInfo(g2d, offsetX, offsetY, newTileWidth, newTileHeight);
-        showCoinInfo(g2d, offsetX, offsetY, newTileWidth, newTileHeight);
     }
 
     private void showHealthInfo(final Graphics2D g2d, final int offsetX, final int offsetY,

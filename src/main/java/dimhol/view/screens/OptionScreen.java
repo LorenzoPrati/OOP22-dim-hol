@@ -1,4 +1,4 @@
-package dimhol.view;
+package dimhol.view.screens;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -44,8 +44,8 @@ public class OptionScreen extends AbstractScreen {
         optionListPanel.add(labelResolution, gbc);
         optionListPanel.add(comboBox, gbc);
         optionListPanel.add(super.createButton(l -> {
-            var selecteResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
-            var res = mapResolutions.get(selecteResolution);
+            var selectedResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
+            var res = mapResolutions.get(selectedResolution);
             engine.getMainWindow().changeResolution(new Dimension(res));}, "DONE", Color.BLACK), gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
