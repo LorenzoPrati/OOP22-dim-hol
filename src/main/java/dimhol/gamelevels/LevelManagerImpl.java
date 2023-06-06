@@ -38,6 +38,7 @@ public class LevelManagerImpl implements LevelManager {
 
     /**
      * Constructs a LevelManagerImpl object.
+     *
      * @param debug The debug mode, created to reach through the reduced length path the boss room.
      */
     public LevelManagerImpl(final boolean debug) {
