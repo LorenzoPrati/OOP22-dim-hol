@@ -18,7 +18,7 @@ public class InteractableObjectFactory extends AbstractFactory {
     private static final double W_GATE = 2;
     private static final double H_GATE = 2;
     private static final int MAX_HEALTH_INCREASE = 10;
-    private static final double VELOCITY_INCREASE = 0.5;
+    private static final double VELOCITY_INCREASE = 0.8;
     private static final int MAX_HEALTH_PRICE = 10;
     private static final int VELOCITY_PRICE = 15;
 

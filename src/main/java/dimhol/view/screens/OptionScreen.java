@@ -1,5 +1,6 @@
-package dimhol.view.screens;
+package dimhol.view;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,7 +15,6 @@ import java.util.Map;
 import dimhol.core.Engine;
 
 public class OptionScreen extends AbstractScreen {
-    public static final int INSETS = 10;
     public static final int LABEL_ORIGINAL_W = 10;
     public static final int LABEL_ORIGINAL_H = 10;
     private final Map<String, Dimension> mapResolutions =  new HashMap<>() {
@@ -32,6 +32,9 @@ public class OptionScreen extends AbstractScreen {
         Font font2 = new Font("Helvetica", Font.BOLD, 17);
         JPanel optionListPanel = new JPanel();
         JComboBox<String> comboBox = new JComboBox<>();
+        var debugButton = new JCheckBox("DEBUG MODE ON", false);
+        debugButton.setFont(this.font);
+        debugButton.setForeground(Color.BLACK);
         for (var resolution: mapResolutions.keySet()){
             comboBox.addItem(resolution);
         }
@@ -43,10 +46,17 @@ public class OptionScreen extends AbstractScreen {
         this.add(super.createLabel("/asset/bg/options.png"),gbc);
         optionListPanel.add(labelResolution, gbc);
         optionListPanel.add(comboBox, gbc);
+        optionListPanel.add(debugButton, gbc);
         optionListPanel.add(super.createButton(l -> {
-            var selectedResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
-            var res = mapResolutions.get(selectedResolution);
-            engine.getMainWindow().changeResolution(new Dimension(res));}, "DONE", Color.BLACK), gbc);
+            var selecteResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
+            var res = mapResolutions.get(selecteResolution);
+            engine.getMainWindow().changeResolution(new Dimension(res));
+            if(debugButton.isSelected()){
+                engine.setDebugMode(true);
+            }
+            else{
+                engine.setDebugMode(false);
+            }}, "DONE", Color.BLACK), gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
