@@ -1,5 +1,6 @@
 package dimhol.entity.factories;
 
+import dimhol.components.AIComponent;
 import dimhol.components.AnimationComponent;
 import dimhol.components.BodyComponent;
 import dimhol.components.CoinPocketComponent;
@@ -8,8 +9,10 @@ import dimhol.components.InteractorComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PlayerComponent;
 import dimhol.components.PositionComponent;
+import dimhol.components.ShopKeeperComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
+import dimhol.logic.ai.RoutineFactory;
 import dimhol.logic.collision.RectBodyShape;
 import org.locationtech.jts.math.Vector2D;
 
@@ -19,7 +22,7 @@ import org.locationtech.jts.math.Vector2D;
 public class GenericFactory extends AbstractFactory {
 
     private static final double PLAYER_SPEED = 3;
-    private static final double SHOP_KEEPER_SPEED = 1;
+    private static final double SHOP_KEEPER_SPEED = 0.2;
     private static final int PLAYER_HEALTH = 10;
     private static final double PLAYER_WIDTH = 1;
     private static final double PLAYER_HEIGHT = 1;
@@ -43,11 +46,13 @@ public class GenericFactory extends AbstractFactory {
     }
 
     public Entity createShopkeeper(final double x, final double y) {
-        return new EntityBuilder()
+        return new EntityBuilder().add(new ShopKeeperComponent())
                 .add(new PositionComponent(new Vector2D(x,y), 0))
                 .add(new MovementComponent(new Vector2D(0, 1), SHOP_KEEPER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(SHOP_KEEPER_WIDTH, SHOP_KEEPER_HEIGHT), true))
+                .add(new HealthComponent(PLAYER_HEALTH))
                 .add(new AnimationComponent(getAnimationsMap().get("shopkeeper"),"idle"))
+                .add(new AIComponent(new RoutineFactory().createShopKeeperRoutine()))
                 .build();
     }
 }
