@@ -1,13 +1,13 @@
 package dimhol.entity.factories;
 
-import dimhol.components.PositionComponent;
-import dimhol.components.BodyComponent;
-import dimhol.components.AttackComponent;
-import dimhol.components.MeleeComponent;
 import dimhol.components.AIComponent;
-import dimhol.components.MovementComponent;
 import dimhol.components.AnimationComponent;
+import dimhol.components.AttackComponent;
+import dimhol.components.BodyComponent;
 import dimhol.components.BulletComponent;
+import dimhol.components.MeleeComponent;
+import dimhol.components.MovementComponent;
+import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.logic.collision.CircleBodyShape;
