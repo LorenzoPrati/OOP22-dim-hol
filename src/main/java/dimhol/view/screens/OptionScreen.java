@@ -1,6 +1,6 @@
 package dimhol.view.screens;
 
-import javax.swing.JCheckBox;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,9 +32,6 @@ public class OptionScreen extends AbstractScreen {
         Font font2 = new Font("Helvetica", Font.BOLD, 17);
         JPanel optionListPanel = new JPanel();
         JComboBox<String> comboBox = new JComboBox<>();
-        var debugButton = new JCheckBox("DEBUG MODE ON", engine.isDebug());
-        debugButton.setFont(this.font);
-        debugButton.setForeground(Color.BLACK);
         for (var resolution: mapResolutions.keySet()){
             comboBox.addItem(resolution);
         }
@@ -46,17 +43,16 @@ public class OptionScreen extends AbstractScreen {
         this.add(super.createLabel("/asset/bg/options.png"),gbc);
         optionListPanel.add(labelResolution, gbc);
         optionListPanel.add(comboBox, gbc);
-        optionListPanel.add(debugButton, gbc);
+        optionListPanel.add(super.createButton((e -> {
+            engine.switchDebugMode();
+            var button = (JButton)e.getSource();
+            button.setText(engine.isDebug()? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE");
+            }), (engine.isDebug()? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE"), Color.BLACK), gbc);
         optionListPanel.add(super.createButton(l -> {
             var selecteResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
             var res = mapResolutions.get(selecteResolution);
             engine.getMainWindow().changeResolution(new Dimension(res));
-            if(debugButton.isSelected()){
-                engine.setDebugMode(true);
-            }
-            else{
-                engine.setDebugMode(false);
-            }}, "DONE", Color.BLACK), gbc);
+            }, "DONE", Color.BLACK), gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
