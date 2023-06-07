@@ -1,7 +1,7 @@
 package dimhol.input;
 
 /**
- * An interface to model input.
+ * An interface to model user input.
  */
 public interface Input extends Cloneable {
 
