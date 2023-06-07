@@ -56,7 +56,7 @@ public class GenericFactory extends AbstractFactory {
                 .add(new PositionComponent(new Vector2D(x,y), 0))
                 .add(new MovementComponent(new Vector2D(0, 1), SHOP_KEEPER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(PLAYER_WIDTH, PLAYER_HEIGHT), true))
-                .add(new HealthComponent(PLAYER_HEALTH))
+                .add(new HealthComponent(PLAYER_BASE_HEALTH))
                 .add(new AnimationComponent(getAnimationsMap().get("shopkeeper"),"idle"))
                 .add(new AIComponent(new RoutineFactory().createShopKeeperRoutine()))
                 .build();
