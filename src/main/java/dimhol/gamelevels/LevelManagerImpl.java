@@ -27,31 +27,36 @@ import java.util.stream.IntStream;
 public class LevelManagerImpl implements LevelManager {
     private static final int DEFAULT_LENGTH_TO_BOSS_ROOM = 15;
     private static final int DEBUG_LENGTH_TO_BOSS_ROOM = 4;
-    // This will give us a cyclic pattern of 0, 1, 2, 3, 4, - 0, 1, 2, 3, 4 and so on.
     private static final int DEFAULT_SHOPS_PER_CYCLE = 3;
     private final MapLoader mapLoader;
     private final NormalRoomStrategy normalRoomStrategy;
     private final ShopRoomStrategy shopRoomStrategy;
     private final BossRoomStrategy bossRoomStrategy;
+    private final int maxRoomNumber;
     private TileMap tileMap;
     private int currentLevel;
-    private final int max_room_number;
 
     /**
      * Constructs a LevelManagerImpl object.
+     *
+     * @param debug The debug mode, created to reach through the reduced length path the boss room.
      */
-    public LevelManagerImpl(boolean debug) {
-        this.max_room_number = debug ? DEBUG_LENGTH_TO_BOSS_ROOM : DEFAULT_LENGTH_TO_BOSS_ROOM;
+    public LevelManagerImpl(final boolean debug) {
+        this.maxRoomNumber = debug ? DEBUG_LENGTH_TO_BOSS_ROOM : DEFAULT_LENGTH_TO_BOSS_ROOM;
         this.mapLoader = new MapLoaderImpl();
-        GenericFactory genericFactory = new GenericFactory();
-        EnemyFactory enemyFactory = new EnemyFactory();
-        ItemFactory itemFactory = new ItemFactory();
-        InteractableObjectFactory interactableObjectFactory = new InteractableObjectFactory();
-        Random random = new Random();
+        final GenericFactory genericFactory = new GenericFactory();
+        final EnemyFactory enemyFactory = new EnemyFactory();
+        final ItemFactory itemFactory = new ItemFactory();
+        final BossFactory bossFactory = new BossFactory();
+        final InteractableObjectFactory interactableObjectFactory = new InteractableObjectFactory();
+        final Random randomGenerator = new Random();
         this.tileMap = mapLoader.loadNormalRoom();
-        normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, itemFactory, interactableObjectFactory, random);
-        shopRoomStrategy = new ShopRoomStrategy(genericFactory, itemFactory, interactableObjectFactory);
-        bossRoomStrategy = new BossRoomStrategy(genericFactory, enemyFactory, new BossFactory());
+        normalRoomStrategy = new NormalRoomStrategy(genericFactory, enemyFactory, itemFactory,
+                interactableObjectFactory, randomGenerator);
+        shopRoomStrategy = new ShopRoomStrategy(genericFactory, enemyFactory, itemFactory,
+                interactableObjectFactory, randomGenerator);
+        bossRoomStrategy = new BossRoomStrategy(genericFactory, itemFactory, enemyFactory,
+                interactableObjectFactory, randomGenerator, bossFactory);
         this.currentLevel = 0;
     }
 
@@ -64,7 +69,7 @@ public class LevelManagerImpl implements LevelManager {
     @Override
     public List<Entity> changeLevel(final List<Entity> entities) {
         currentLevel++;
-        var player = savePlayer(entities);
+        final var player = savePlayer(entities);
         return generateLevel(player, entities);
     }
 
@@ -74,25 +79,18 @@ public class LevelManagerImpl implements LevelManager {
      * @return The room strategy for generating the current room.
      */
     private RoomStrategy determineRoomType() {
-        // Calculate the room index within the current cycle
-        if (currentLevel == max_room_number) {  // Check the room index to determine the room type
+        if (currentLevel == maxRoomNumber) {  // Check the room index to determine the room type
             //Generate a boss room
             tileMap = mapLoader.loadBossRoom();
-            System.out.println("Boss");
-            System.out.println("current room " + currentLevel);
             return bossRoomStrategy;
         }
         if (currentLevel % DEFAULT_SHOPS_PER_CYCLE == 0) {
             //Generate a shop
             tileMap = mapLoader.loadShopRoom();
-            System.out.println("Shop");
-            System.out.println("current room " + currentLevel);
             return shopRoomStrategy;
         }
         //Generate a normal room
         tileMap = mapLoader.loadNormalRoom();
-        System.out.println("Normal");
-        System.out.println("current room " + currentLevel);
         return normalRoomStrategy;
     }
 
