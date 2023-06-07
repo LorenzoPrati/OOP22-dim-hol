@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Represents the logic execution of an action.
+ * This Action interface defines the necessary methods to perform
+ * an AI action within the game.
+ * The action can only be executed if the canExecute() method returns true.
+ * The execution of the action returns an optional list of WorldEvent.
  */
 public interface Action {
 
@@ -25,13 +28,13 @@ public interface Action {
 
     /**
      * Set player and his components.
-     * @param player
+     * @param player .
      */
     void setPlayer(Entity player);
 
     /**
      * Set enemy and his components.
-     * @param enemy
+     * @param enemy .
      */
     void setEnemy(Entity enemy);
 }
