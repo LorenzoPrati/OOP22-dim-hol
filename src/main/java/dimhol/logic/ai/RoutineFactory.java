@@ -23,10 +23,6 @@ public class RoutineFactory {
      */
     public static final double DISTANCE_ATTACK_RELOAD_TIME = 2;
     /**
-     * Random movement changes direction time.
-     */
-    public static final double CHANGE_DIRECTION_TIME = 1;
-    /**
      * Melee reload time.
      */
     public static final double MELEE_RELOAD_TIME = 2;
@@ -86,10 +82,10 @@ public class RoutineFactory {
      * @return the behaviour of a shooter enemy.
      */
     public final List<Action> createShooterRoutine() {
-        return Stream.of(
+        return List.of(
                 new DistanceAttack(DISTANCE_ATTACK_AGGRO, DISTANCE_ATTACK_RELOAD_TIME),
-                new RandomMovement(CHANGE_DIRECTION_TIME)
-        ).sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
+                new RandomMovement()
+        );
     }
 
     /**
@@ -97,11 +93,11 @@ public class RoutineFactory {
      * @return the behaviour of a zombie enemy.
      */
     public final List<Action> createZombieRoutine() {
-        return Stream.of(
+        return List.of(
                 new MeleeAttack(MELEE_ATTACK_AGGRO, MELEE_RELOAD_TIME),
                 new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
-                new RandomMovement(CHANGE_DIRECTION_TIME)
-        ).sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
+                new RandomMovement()
+        );
     }
 
     /**
