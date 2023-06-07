@@ -12,6 +12,10 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public final class RandomMovement extends AbstractAction {
 
+    public RandomMovement(final double changeDirectionTime) {
+        setWaitingTime(changeDirectionTime);
+    }
+
     @Override
     public boolean canExecute() {
         return true;

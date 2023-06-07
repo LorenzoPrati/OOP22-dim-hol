@@ -1,5 +1,8 @@
 package dimhol.logic.ai;
 
+import dimhol.logic.ai.boss.BossSpeedBoostAction;
+import dimhol.logic.ai.boss.BossMeleeAttackAction;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +17,10 @@ public class RoutineFactory {
      * Melee attack aggro.
      */
     public static final double MELEE_ATTACK_AGGRO = 1.5;
+    /**
+     * Zombie change direction time.
+     */
+    public static final double ZOMBIE_CHANGE_DIRECTION_TIME = 1;
     /**
      * Distance attack aggro.
      */
@@ -35,6 +42,9 @@ public class RoutineFactory {
      * Follow movement aggro.
      */
     public static final double FOLLOW_MOVEMENT_AGGRO = 5;
+    /**
+     *
+     */
     public static final double BOSS_FOLLOW_MOVEMENT_AGGRO = 7;
     /**
      * Minions melee reload time.
@@ -60,7 +70,7 @@ public class RoutineFactory {
     public final List<Action> createShooterRoutine() {
         return List.of(
                 new DistanceAttack(DISTANCE_ATTACK_AGGRO, DISTANCE_ATTACK_RELOAD_TIME),
-                new RandomMovement()
+                new RandomMovement(ZOMBIE_CHANGE_DIRECTION_TIME)
         );
     }
 
@@ -72,7 +82,7 @@ public class RoutineFactory {
         return List.of(
                 new MeleeAttack(MELEE_ATTACK_AGGRO, MELEE_RELOAD_TIME),
                 new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
-                new RandomMovement()
+                new RandomMovement(ZOMBIE_CHANGE_DIRECTION_TIME)
         );
     }
 
