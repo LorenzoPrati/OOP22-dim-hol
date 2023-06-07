@@ -14,10 +14,12 @@ Rogue like game developed in Java.
 - [Emanele Dajko](emanuele.dajko@studio.unibo.it)
 
 ## Images
-
-
-![readMeImage1.png](..%2FreadMeImage1.png)
-![readMeImage2.png](..%2FreadMeImage2.png)
+<p align="center">
+  <img src="https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7f69401964b4039b5efbc3490037f19ccdaafa75/src/main/resources/readMe/readMeImage1.png?raw=true" width="1080" />
+</p>
+<p align="center">
+  <img src="https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7f69401964b4039b5efbc3490037f19ccdaafa75/src/main/resources/readMe/readMeImage2.png?raw=true" width="1080" />
+</p>
 
 ## Build
 
