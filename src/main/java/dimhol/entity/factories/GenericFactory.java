@@ -23,6 +23,8 @@ public class GenericFactory extends AbstractFactory {
     private static final int PLAYER_HEALTH = 10;
     private static final double PLAYER_WIDTH = 1;
     private static final double PLAYER_HEIGHT = 1;
+    private static final double SHOP_KEEPER_WIDTH= 2;
+    private static final double SHOP_KEEPER_HEIGHT = 2;
 
     public GenericFactory() {
         super();
@@ -44,9 +46,8 @@ public class GenericFactory extends AbstractFactory {
         return new EntityBuilder()
                 .add(new PositionComponent(new Vector2D(x,y), 0))
                 .add(new MovementComponent(new Vector2D(0, 1), SHOP_KEEPER_SPEED, false))
-                .add(new BodyComponent(new RectBodyShape(PLAYER_WIDTH, PLAYER_HEIGHT), true))
-                .add(new InteractorComponent())
-                .add(new AnimationComponent(getAnimationsMap().get("player"),"idle down"))
+                .add(new BodyComponent(new RectBodyShape(SHOP_KEEPER_WIDTH, SHOP_KEEPER_HEIGHT), true))
+                .add(new AnimationComponent(getAnimationsMap().get("shopkeeper"),"idle"))
                 .build();
     }
 }
