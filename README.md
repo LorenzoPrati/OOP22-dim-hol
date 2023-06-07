@@ -8,10 +8,10 @@ Rogue like game developed in Java.
 
 ## Members:
 
-- [Lorenzo Prati](lorenzo.prati3@studio.unibo.it)
-- [Elvis Perlika](elvis.perlika@studio.unibo.it)
-- [Alessandra Versari](alessandra.versari@studio.unibo.it)
-- [Emanele Dajko](emanuele.dajko@studio.unibo.it)
+- Lorenzo Prati - lorenzo.prati3@studio.unibo.it
+- Elvis Perlika - elvis.perlika@studio.unibo.it
+- Alessandra Versari - alessandra.versari@studio.unibo.it
+- Emanele Dajko - emanuele.dajko@studio.unibo.it
 
 ## Images
 <p align="center">
