@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.function.BiFunction;
 import dimhol.entity.Entity;
 
+/**
+ * A component for 
+ */
 public class ItemComponent implements Component {
     private BiFunction<Entity, List<Class<? extends Component>>, Boolean> effect; 
 
