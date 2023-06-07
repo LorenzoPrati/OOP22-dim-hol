@@ -55,7 +55,7 @@ public class ShopRoomStrategy extends AbstractRoomStrategy {
 
         generatePlayer(availableTiles, entities, newListOfEntities, ENTITY_WIDTH, ENTITY_HEIGHT);
 
-        generateShopKeeper(NUM_SHOP_KEEPER, availableTiles, entities);
+        generateShopKeeper(NUM_SHOP_KEEPER, availableTiles, newListOfEntities);
 
         generateCoins(NUM_ITEMS, availableTiles, newListOfEntities);
 

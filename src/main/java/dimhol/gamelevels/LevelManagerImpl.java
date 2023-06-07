@@ -80,16 +80,13 @@ public class LevelManagerImpl implements LevelManager {
      */
     private RoomStrategy determineRoomType() {
         if (currentLevel == maxRoomNumber) {  // Check the room index to determine the room type
-            //Generate a boss room
             tileMap = mapLoader.loadBossRoom();
             return bossRoomStrategy;
         }
         if (currentLevel % DEFAULT_SHOPS_PER_CYCLE == 0) {
-            //Generate a shop
             tileMap = mapLoader.loadShopRoom();
             return shopRoomStrategy;
         }
-        //Generate a normal room
         tileMap = mapLoader.loadNormalRoom();
         return normalRoomStrategy;
     }
