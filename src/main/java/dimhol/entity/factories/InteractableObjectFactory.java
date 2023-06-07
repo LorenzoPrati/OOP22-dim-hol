@@ -61,13 +61,17 @@ public class InteractableObjectFactory extends AbstractFactory {
     };
 
     BiFunction<Entity, World, Boolean> useGate = (e,w)-> {
-        if(checkAllEnemyAreDead.test(w)) {
+        if(checkAllEnemyAreDead.test(w) || checkForShopKeeperEntity(w)) {
             w.notifyEvent(new ChangeLevelEvent());
             return true;
         }
         return false;
     };
-    
+
+    private boolean checkForShopKeeperEntity(World world) {
+        return world.getEntities().stream().anyMatch(e -> e.hasComponent(ShopKeeperComponent.class));
+    }
+
     public Entity createShopHeart(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x,y), 0))
