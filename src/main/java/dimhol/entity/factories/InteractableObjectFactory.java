@@ -5,6 +5,7 @@ import dimhol.components.HealthComponent;
 import dimhol.components.InteractableComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
+import dimhol.components.ShopKeeperComponent;
 import dimhol.components.AIComponent;
 import dimhol.components.AnimationComponent;
 import dimhol.components.BodyComponent;
