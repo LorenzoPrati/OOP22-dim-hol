@@ -407,6 +407,13 @@ visualizzazione del HUD.
 
 \subsection{Emanuele Dajko}
 
+
+
+
+
+
+
+
 \subsection{Alessandra Versari}
 \subsubsection*{Items}
 \paragraph*{Problema}
@@ -423,7 +430,6 @@ visualizzazione del HUD.
 	Inizialmente avevo scelto di creare gli effetti utilizzando il Factory Method perché pensavo potesse rendere più riutilizzabili gli effetti e velocizzarne la creazione, ma il risultato era un insieme di classi Factory, molto simili tra loro e la cui unica differenza era operare su componenti diversi (una factory per gli effetti che modificavano la vita, un'altra per quelli che modificavano l'ammontare delle monete e così via).
 	Inoltre siccome gli effetti alla fine sono praticamente solo incrementi e decrementi, mi è sembrato più sensato utilizzare interfacce funzionali e lamba per crearli all'interno della factory. 
 	Per quanto riguarda le interfacce funzionali, ho deciso di utilizzare le Bifuction così da poter restituire un boolean che permette di capire se l'effetto è stato applicato o meno e se quindi è necessario rimuovere l'item.
-
 
 \paragraph*{Pattern utilizzati}
 	Nella classe ItemFactory è stato utilizzato il Factory Method.
@@ -469,7 +475,8 @@ visualizzazione del HUD.
 
 \section{Testing automatizzato}
 
-Tutti i test sono stati realizzati con JUnit. Non sono stati testati i system.
+Tutti i test sono stati realizzati con JUnit. Abbiamo deciso di concentrare i test su i component principali realizzati da ciascun membro, tralasciando il testing dei systems poichè troppo interconnessi con il resto dell'architettura.
+Si è deciso inoltre di non testare la parte grafica.
 
 \subsubsection*{Lorenzo Prati}
 
@@ -486,6 +493,9 @@ Ho realizzato la classe \texttt{ItemTest}, che contiene due metodi, uno per test
 
 
 \section{Metodologia di lavoro}
+Per l'intera durata del progetto abbiamo cercato di rispettare i ruoli dichiarati al momento della proposta e di limitare il lavoro svolto collettivamente. 
+L'intero progetto è stato svolto con l'utilizzo di GitHub: abbiamo lavorato su un'unica repository proteggendo il branch master tramite apposita feature di GitHub.
+Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feature), per poi unire il proprio lavoro grazie a Pull Request che necessivano dell'approvazione di un altro membro (anche per mantenerci aggiornati sullo stato del progetto).
 
 \subsubsection*{Lorenzo Prati}
 
@@ -688,10 +698,11 @@ Ho realizzato la classe \texttt{ItemTest}, che contiene due metodi, uno per test
 \begin{itemize}
 	\item uso della libreria SnakeYAML sia per la classe AbstractFactory sia per la classe ResourceLoader.
 	Esempio: \url{}
-	\item reflection, stream e lambda utilizzate in varie classi. Seguono alcuni esempi:
+	\item reflection, stream, interfacce funzionali e lambda utilizzate in varie classi. Seguono alcuni esempi:
 	Esempio: utilizzo reflection in ItemSystem \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/78f510d43dec8c4b5855980ccefefa539f23f48e/src/main/java/dimhol/systems/ItemSystem.java#LL20C8-L20C8}
 	Esempio: utilizzo lambda in InteractableObjectsFactory \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/cc4664659311592c5d0f16e6f7d332ba8f5b8131/src/main/java/dimhol/entity/factories/InteractableObjectFactory.java#L29}
 	Esempio: utilizzo stream in AnimationComponent \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/cc4664659311592c5d0f16e6f7d332ba8f5b8131/src/main/java/dimhol/components/AnimationComponent.java#LL64C4-L72C1}
+	Esempio: utilizzo interfacce funzionali in InteractableObjectsFactory \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/cc4664659311592c5d0f16e6f7d332ba8f5b8131/src/main/java/dimhol/entity/factories/InteractableObjectFactory.java#LL29C4-L70C5}
 \end{itemize}
 
 
