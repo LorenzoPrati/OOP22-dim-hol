@@ -90,7 +90,7 @@ public class WorldImpl implements World {
     }
 
     /**
-     * Find entities that need to be rendered on screen and update scene.
+     * Find entities that need to be rendered on screen and update scene with necessary information.
      */
     private void prepareRender() {
         final var renderList = new ArrayList<Pair<Integer, GraphicInfo>>();

@@ -17,7 +17,7 @@ public abstract class AbstractSystem implements GameSystem {
     private final Set<Class<? extends Component>> family = new HashSet<>();
 
     /**
-     * Constructs a system to operates on a given world and family of components.
+     * Constructs a system to operate on a given family of components.
      *
      * @param comps the family of components
      */

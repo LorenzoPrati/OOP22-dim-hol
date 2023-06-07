@@ -6,7 +6,7 @@ import dimhol.events.AddEntityEvent;
 import dimhol.components.PlayerComponent;
 
 /**
- * A system to handle player logic.
+ * A system to handle player input.
  */
 public class PlayerInputSystem extends AbstractSystem {
 
@@ -18,10 +18,10 @@ public class PlayerInputSystem extends AbstractSystem {
     }
 
     /**
-     * Handle player logic.
+     * Handle player input logic.
      *
-     * @param entity  the entity to process
-     * @param deltaTime
+     * @param entity the entity to process
+     * @param deltaTime the delta time
      */
     @Override
     protected void process(final Entity entity, final double deltaTime, final World world) {
