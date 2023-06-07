@@ -26,16 +26,16 @@ public class AbstractAttackFactory extends AbstractFactory {
 
         double bulletX;
         double bulletY;
-        var posComp = (PositionComponent) shooter.getComponent(PositionComponent.class);
-        var bodyComp = (BodyComponent) shooter.getComponent(BodyComponent.class);
-        var shooterX = posComp.getPos().getX();
-        var shooterY = posComp.getPos().getY();
-        var shooterWidth = bodyComp.getBodyShape().getBoundingWidth();
-        var shooterHeight = bodyComp.getBodyShape().getBoundingHeight();
-        var centralShooterY = shooterY + (shooterHeight / DIVISOR);
-        var centralShooterX = shooterX + (shooterWidth / DIVISOR);
-        var halfAttackHeight = attackHeight / DIVISOR;
-        var halfAttackWidth = attackWidth / DIVISOR;
+        final var posComp = (PositionComponent) shooter.getComponent(PositionComponent.class);
+        final var bodyComp = (BodyComponent) shooter.getComponent(BodyComponent.class);
+        final var shooterX = posComp.getPos().getX();
+        final var shooterY = posComp.getPos().getY();
+        final var shooterWidth = bodyComp.getBodyShape().getBoundingWidth();
+        final var shooterHeight = bodyComp.getBodyShape().getBoundingHeight();
+        final var centralShooterY = shooterY + (shooterHeight / DIVISOR);
+        final var centralShooterX = shooterX + (shooterWidth / DIVISOR);
+        final var halfAttackHeight = attackHeight / DIVISOR;
+        final var halfAttackWidth = attackWidth / DIVISOR;
 
         switch (DirectionUtil.getStringFromVec(getDirection(shooter))) {
             case "right" -> {
@@ -65,7 +65,7 @@ public class AbstractAttackFactory extends AbstractFactory {
      * @return the direction
      */
     public final Vector2D getDirection(final Entity entity) {
-        var movComp = (MovementComponent) entity.getComponent(MovementComponent.class);
+        final var movComp = (MovementComponent) entity.getComponent(MovementComponent.class);
         return movComp.getDir();
     }
 

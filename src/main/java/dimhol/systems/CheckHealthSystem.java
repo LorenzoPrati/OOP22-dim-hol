@@ -9,7 +9,7 @@ import dimhol.components.HealthComponent;
  * A system that removes entities from the game world if they are dead.
  * An entity is considered dead if its HealthComponent's current health is equal to or less than 0.
  */
-public class CheckHealthSystem extends AbstractSystem {
+public final class CheckHealthSystem extends AbstractSystem {
 
     /**
      * Constructs a system to operates on a given world and family of components.

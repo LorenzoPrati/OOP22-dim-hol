@@ -12,19 +12,28 @@ import java.util.Map;
  */
 public abstract class AbstractFactory {
 
-    protected final Map<String, Map<String, ArrayList<Integer>>> map = new HashMap<>();
+    private final Map<String, Map<String, ArrayList<Integer>>> map = new HashMap<>();
 
     /**
      * Abstract Factory contains a map of game entity graphics.
      */
     public AbstractFactory() {
         try {
-            InputStream input = getClass().getResourceAsStream("/config/animations.yaml");
-            Yaml yaml = new Yaml();
-            Map<String, Map<String, ArrayList<Integer>>> mapLoaded = yaml.load(input);
+            final InputStream input = getClass().getResourceAsStream("/config/animations.yaml");
+            final Yaml yaml = new Yaml();
+            final Map<String, Map<String, ArrayList<Integer>>> mapLoaded = yaml.load(input);
             map.putAll(mapLoaded);
+            input.close();
         } catch (Exception e) {
-            System.out.println("File not found. ");
+            e.getStackTrace();
         }
+    }
+
+    /**
+     * Animation map getter.
+     * @return the animation's map
+     */
+    public Map<String, Map<String, ArrayList<Integer>>> getAnimationsMap() {
+        return map;
     }
 }

@@ -86,7 +86,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         .add(new PositionComponent(new Vector2D(x,y), 0))
         .add(new BodyComponent(new RectBodyShape(W_POWERUP, H_POWERUP), false))
         .add(new InteractableComponent(powerUpMaxHealth))
-        .add(new AnimationComponent(this.map.get("shopHeart"), "idle"))
+        .add(new AnimationComponent(getAnimationsMap().get("shopHeart"), "idle"))
         .build();
     }
 
@@ -95,7 +95,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         .add(new PositionComponent(new Vector2D(x,y), 0))
         .add(new BodyComponent(new RectBodyShape(W_POWERUP, H_POWERUP), false))
         .add(new InteractableComponent(powerUpSpeed))
-        .add(new AnimationComponent(this.map.get("shopSpeed"), "idle"))
+        .add(new AnimationComponent(getAnimationsMap().get("shopSpeed"), "idle"))
         .build();
     }
 
@@ -104,7 +104,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         .add(new PositionComponent(new Vector2D(x,y), 0))
         .add(new BodyComponent(new RectBodyShape(W_GATE, H_GATE), false))
         .add(new InteractableComponent(useGate))
-        .add(new AnimationComponent(this.map.get("gate"), "idle")) 
+        .add(new AnimationComponent(getAnimationsMap().get("gate"), "idle"))
         .build();
     }
 }

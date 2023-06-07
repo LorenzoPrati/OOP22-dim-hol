@@ -27,6 +27,13 @@ public final class MapLoaderImpl implements MapLoader {
     private List<Tile[][]> mapTileLayers;
 
     /**
+     * Constructor for the map loader implementation.
+     */
+    public MapLoaderImpl() {
+        mapTileLayers = new ArrayList<>();
+    }
+
+    /**
      * Loads a map from an XML file.
      *
      * @param inputStream The input stream of the XML file.
