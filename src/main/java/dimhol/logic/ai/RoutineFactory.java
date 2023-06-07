@@ -112,9 +112,10 @@ public class RoutineFactory {
         return Stream.of(
                 new MeleeAttack(MELEE_ATTACK_AGGRO, BOSS_MELEE_RELOAD_TIME),
                 new DistanceAttack(DISTANCE_ATTACK_AGGRO, BOSS_DISTANCE_ATTACK_RELOAD_TIME),
-                new AreaAttack(BOSS_AREA_ATTACK_AGGRO, BOSS_AREA_ATTACK_DAMAGE, BOSS_AREA_ATTACK_RELOAD_TIME),
-                new ChargeAttack(CHARGE_SPEED, CHARGE_ATTACK_DAMAGE, CHARGE_ATTACK_AGGRO, CHARGE_ATTACK_RELOAD_TIME),
-                new SummonMinions(SUMMONS_RELOAD_TIME, BOSS_SUMMON_MINIONS_NUMBER)
+                new RandomMovement(CHANGE_DIRECTION_TIME)
+//                new AreaAttack(BOSS_AREA_ATTACK_AGGRO, BOSS_AREA_ATTACK_DAMAGE, BOSS_AREA_ATTACK_RELOAD_TIME),
+//                new ChargeAttack(CHARGE_SPEED, CHARGE_ATTACK_DAMAGE, CHARGE_ATTACK_AGGRO, CHARGE_ATTACK_RELOAD_TIME),
+//                new SummonMinions(SUMMONS_RELOAD_TIME, BOSS_SUMMON_MINIONS_NUMBER)
 //                new DefensiveShield()
         ).sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
     }
