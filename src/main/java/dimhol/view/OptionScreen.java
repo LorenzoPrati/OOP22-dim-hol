@@ -32,7 +32,7 @@ public class OptionScreen extends AbstractScreen {
         Font font2 = new Font("Helvetica", Font.BOLD, 17);
         JPanel optionListPanel = new JPanel();
         JComboBox<String> comboBox = new JComboBox<>();
-        var debugButton = new JCheckBox("DEBUG MODE ON", false);
+        var debugButton = new JCheckBox("DEBUG MODE ON", engine.isDebug());
         debugButton.setFont(this.font);
         debugButton.setForeground(Color.BLACK);
         for (var resolution: mapResolutions.keySet()){

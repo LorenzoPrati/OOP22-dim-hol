@@ -1,6 +1,13 @@
 package dimhol.entity.factories;
 
-import dimhol.components.*;
+import dimhol.components.CoinPocketComponent;
+import dimhol.components.HealthComponent;
+import dimhol.components.InteractableComponent;
+import dimhol.components.MovementComponent;
+import dimhol.components.PositionComponent;
+import dimhol.components.AIComponent;
+import dimhol.components.AnimationComponent;
+import dimhol.components.BodyComponent;
 import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
@@ -12,6 +19,9 @@ import java.util.function.Predicate;
 import org.locationtech.jts.math.Vector2D;
 import dimhol.logic.collision.RectBodyShape;
 
+/**
+ * .
+ */
 public class InteractableObjectFactory extends AbstractFactory {
     private static final double W_POWERUP = 1;
     private static final double H_POWERUP = 1;
@@ -22,6 +32,9 @@ public class InteractableObjectFactory extends AbstractFactory {
     private static final int MAX_HEALTH_PRICE = 10;
     private static final int VELOCITY_PRICE = 15;
 
+    /**
+     * .
+     */
     public InteractableObjectFactory() {
         super();
     }
