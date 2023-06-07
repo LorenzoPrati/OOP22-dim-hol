@@ -1,6 +1,13 @@
 package dimhol.entity.factories;
 
-import dimhol.components.*;
+import dimhol.components.AnimationComponent;
+import dimhol.components.BodyComponent;
+import dimhol.components.CoinPocketComponent;
+import dimhol.components.HealthComponent;
+import dimhol.components.InteractorComponent;
+import dimhol.components.MovementComponent;
+import dimhol.components.PlayerComponent;
+import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.logic.collision.RectBodyShape;
@@ -34,7 +41,7 @@ public class GenericFactory extends AbstractFactory {
     }
 
     public Entity createShopkeeper(final double x, final double y) {
-        return new EntityBuilder().add(new ShoopKeeperComponent())
+        return new EntityBuilder()
                 .add(new PositionComponent(new Vector2D(x,y), 0))
                 .add(new MovementComponent(new Vector2D(0, 1), SHOP_KEEPER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(PLAYER_WIDTH, PLAYER_HEIGHT), true))
