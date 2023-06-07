@@ -5,7 +5,7 @@ import org.locationtech.jts.math.Vector2D;
 /**
  * This class has util method for AI actions.
  */
-public final class BehviourUtil {
+public final class BehaviourUtil {
 
     /**
      * This value indicates the angle that forms the viewing quadrant of the entity
@@ -20,7 +20,7 @@ public final class BehviourUtil {
     /**
      * Private constructors since it's util class.
      */
-    private BehviourUtil() {
+    private BehaviourUtil() {
     }
 
     /**

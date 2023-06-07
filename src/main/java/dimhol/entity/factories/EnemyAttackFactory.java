@@ -78,7 +78,6 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new BodyComponent(new RectBodyShape(ENEMY_MELEE_WIDTH, ENEMY_MELEE_HEIGHT), false))
                 .add(new AttackComponent(ENEMY_MELEE_DAMAGE, checkPlayer))
                 .add(new MeleeComponent())
-                .add(new CollisionComponent())
                 .add(new AnimationComponent(getAnimationsMap().get("enemyMeleeAttack"), "idle"))
                 .build();
     }
@@ -94,7 +93,6 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new PositionComponent(getAttackPos(entity, ENEMY_BULLET_WIDTH, ENEMY_BULLET_HEIGHT), 0))
                 .add(new MovementComponent(getDirection(entity), ENEMY_BULLET_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(ENEMY_BULLET_WIDTH, ENEMY_BULLET_HEIGHT), false))
-                .add(new CollisionComponent())
                 .add(new AnimationComponent(getAnimationsMap().get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
                 .add(new AttackComponent(ENEMY_BULLET_DAMAGE, checkPlayer))
                 .add(new BulletComponent())

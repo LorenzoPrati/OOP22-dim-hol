@@ -26,7 +26,7 @@ public final class DistanceAttack extends AbstractAction {
     @Override
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(false);
-        final var direction = BehviourUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
+        final var direction = BehaviourUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         getMovComp().setDir(direction);
         if (reloadTimePassed()) {
             return distanceAttack();

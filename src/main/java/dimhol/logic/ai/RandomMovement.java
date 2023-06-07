@@ -12,12 +12,13 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public final class RandomMovement extends AbstractAction {
 
-    /**
-     * Random Movement constructor.
-     * @param changeDirectionTime is the time that passes before the entity changes the direction.
-     */
     public RandomMovement(final double changeDirectionTime) {
         setWaitingTime(changeDirectionTime);
+    }
+
+    @Override
+    public boolean canExecute() {
+        return true;
     }
 
     @Override

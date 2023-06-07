@@ -11,7 +11,7 @@ public class PauseScreen extends AbstractScreen {
 
     public PauseScreen(Engine engine, final Scene scene) {
         super(engine);
-        super.setBackground("/asset/bg/pauseScreen.jpg");
+        super.setBackground("/asset/bg/Interior 6.png");
         Color color = new Color(102,0,153);
         this.add(super.createLabel("/asset/bg/pauseTitle.png"),gbc);
         gbc.anchor = GridBagConstraints.CENTER;
