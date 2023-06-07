@@ -43,9 +43,9 @@ public interface Engine {
     void setDebugMode(boolean debug);
 
     /**
-     * Checks if the debug mode is active.
+     * Checks if the debug mode is enabled.
      *
-     * @return the debug mode
+     * @return true if the debug mode is enabled
      */
     boolean isDebug();
 }

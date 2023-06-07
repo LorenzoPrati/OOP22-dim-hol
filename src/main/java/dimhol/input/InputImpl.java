@@ -1,7 +1,7 @@
 package dimhol.input;
 
 /**
- * Stores user input.
+ * Implementation of Input interface.
  */
 public class InputImpl implements Input {
 
