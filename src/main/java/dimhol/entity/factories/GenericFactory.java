@@ -18,23 +18,34 @@ import org.locationtech.jts.math.Vector2D;
  */
 public class GenericFactory extends AbstractFactory {
 
-    private static final double PLAYER_SPEED = 3;
+    private static final double PLAYER_BASE_SPEED = 3;
     private static final double SHOP_KEEPER_SPEED = 1;
-    private static final int PLAYER_HEALTH = 10;
+    private static final int PLAYER_BASE_HEALTH = 10;
+    private static final int PLAYER_BASE_COINS = 15;
     private static final double PLAYER_WIDTH = 1;
     private static final double PLAYER_HEIGHT = 1;
 
+    /**
+     * Constructs a generic factory.
+     */
     public GenericFactory() {
         super();
     }
 
+    /**
+     * Creates the player.
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return the player entity
+     */
     public Entity createPlayer(final double x, final double y) {
         return new EntityBuilder().add(new PlayerComponent())
                 .add(new PositionComponent(new Vector2D(x,y), 1))
-                .add(new MovementComponent(new Vector2D(0,1), PLAYER_SPEED, false))
+                .add(new MovementComponent(new Vector2D(0,1), PLAYER_BASE_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(PLAYER_WIDTH, PLAYER_HEIGHT), true))
-                .add(new CoinPocketComponent(20))
-                .add(new HealthComponent(PLAYER_HEALTH))
+                .add(new CoinPocketComponent(PLAYER_BASE_COINS))
+                .add(new HealthComponent(PLAYER_BASE_HEALTH))
                 .add(new InteractorComponent())
                 .add(new AnimationComponent(getAnimationsMap().get("player"),"idle down"))
                 .build();
