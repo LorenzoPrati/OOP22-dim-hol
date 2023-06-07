@@ -1,14 +1,14 @@
 package dimhol.logic.ai;
 
-import dimhol.logic.ai.boss.BossSpeedBoostAction;
 import dimhol.logic.ai.boss.BossMeleeAttackAction;
+import dimhol.logic.ai.boss.BossSpeedBoostAction;
 
 import java.util.List;
 
 /**
  * Implementation of enemy's behaviour routines.
  */
-public class RoutineFactory {
+public final class RoutineFactory {
 
     /**
      * Melee attack aggro.
@@ -68,7 +68,7 @@ public class RoutineFactory {
      *
      * @return the behaviour of a shooter enemy.
      */
-    public final List<Action> createShooterRoutine() {
+    public List<Action> createShooterRoutine() {
         return List.of(
                 new DistanceAttack(DISTANCE_ATTACK_AGGRO, DISTANCE_ATTACK_RELOAD_TIME),
                 new RandomMovement(ZOMBIE_CHANGE_DIRECTION_TIME)
@@ -76,10 +76,10 @@ public class RoutineFactory {
     }
 
     /**
-     *
-     * @return the behaviour of a zombie enemy.
+     * Create a zombie behaviour.
+     * @return the list of actions
      */
-    public final List<Action> createZombieRoutine() {
+    public List<Action> createZombieRoutine() {
         return List.of(
                 new MeleeAttack(MELEE_ATTACK_AGGRO, MELEE_RELOAD_TIME),
                 new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
@@ -88,8 +88,8 @@ public class RoutineFactory {
     }
 
     /**
-     * Create the behaviour routine for a boss enemy.
-     * @return the list of actions in the boss routine
+     * Create a boss behavior.
+     * @return the list of actions
      */
     public List<Action> createBossRoutine() {
         return List.of(
@@ -101,7 +101,11 @@ public class RoutineFactory {
         );
     }
 
-    public List<Action> createMinionsRoutine() {
+    /**
+     * Create a minion behaviour.
+     * @return the list of actions
+     */
+    public List<Action> createMinionRoutine() {
         return List.of(
                 new MeleeAttack(MELEE_ATTACK_AGGRO, MINIONS_MELEE_RELOAD_TIME),
                 new FollowMovement(FOLLOW_MOVEMENT_AGGRO),

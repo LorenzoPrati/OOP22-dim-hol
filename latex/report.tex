@@ -325,7 +325,7 @@ Tuttavia, nonostante le differenze tra di loro, l'obbietivo dei nemici deve
 rimanere quello di eliminare il giocatore.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{uml/UML_AI_Image.png}
+	\includegraphics[width=\textwidth]{uml/UML_AI.png}
 	\caption{Diagramma UML delle Action.}
 	\label{img:badarch}
 \end{figure}
@@ -597,8 +597,8 @@ Ho realizzato la classe \texttt{ItemTest}, che contiene due metodi, uno per test
 				\item classe \texttt{DistanceAttack}
 				\item classe \texttt{FollowMovement}
 				\item classe \texttt{MeleeAttack}
-				\item classe \texttt{RoutineFactory}
 				\item classe \texttt{FollowMovement}
+				\item classe \texttt{RoutineFactory}
 				\end{itemize}
 		\end{itemize}
 	\item package view
@@ -677,6 +677,13 @@ Ho realizzato la classe \texttt{ItemTest}, che contiene due metodi, uno per test
 	\item Optional utilizzati sia in \texttt{PositionComponent} che nei vari stati del player
 \end{itemize}
 
+\subsubsection{Elvis Perlika}
+\begin{itemize}
+	\item uso di Optional per la creazione di nuove entità create dalle Action delle AI \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/2e16e10f3be14f1267b82342076954256f6c2a2d/src/main/java/dimhol/logic/ai/Action.java#L27}
+	
+	
+\end{itemize}
+
 \subsubsection*{Alessandra Versari}
 \begin{itemize}
 	\item uso della libreria SnakeYAML sia per la classe AbstractFactory sia per la classe ResourceLoader.
@@ -698,6 +705,18 @@ Ho realizzato la classe \texttt{ItemTest}, che contiene due metodi, uno per test
 
 Mi ritengo complessivamente soddisfatto del lavoro svolto insieme ai miei compagni di gruppo, anche se ammetto che il percorso che ci ha portati ad arrivare a questo punto del progetto non e' stato facile. Inizialmente si era scelto di utilizzare il pattern architetturale MVC, ma a causa piu' che altro di una nostra mal comprensione delle dinamiche e caratteristiche del pattern, era risultato molto difficile pensare a una struttura adeguata tanto che si e' deciso di passare alla deadline successiva ricominciando quasi da capo. Infine siamo passati al \textit{pattern ecs} per gestire la logica del gioco, di cui mi sono molto informato personalmente tramite ricerche online. Visto che mi sono occupato di realizzare la base dell'architettura dell'\textit{ecs}, devo dire che il cercare di realizzare un'implementazione personale e sicuramente molto semplice di un pattern noto ma praticamente mai implementato a un livello \textit{semplice} e adatto al progetto o addirittura non molto usato con il linguaggio Java (infatti spesso versioni dell'\textit{ecs} che si trovano online sono realizzate in C++ o altri linguaggi), e' stata una bella sfida. La discussione con i docenti anche e' stata importante per chiarirci le idee su a cosa dovessimo effettivamente dare priorita'. Non escludo in futuro di tornare a lavorare a questo progetto, anche se per il momento ritengo essere state realizzate tutte le feature piu' importanti che ci eravamo prefissati.
 
+\subsubsection*{Elvis Perlika}
+Ritengo di aver fatto un lavoro soddisfacente nella consapevole che ci sia sempre spazio 
+al miglioramento.
+In generale mi sento di aver avuto un buon equilibrio tra progetto di OOP, lo studio delle
+altre materie ed impegni personali.
+Comprendo un po' meglio le difficoltà nel rilascaire un software entro una certa 
+data con una squadra che a livello "lavorativo" non avevo modo di conoscere, esattamente come 
+in un classico ambiente lavorativo. 
+Mi sono sinceramente divertito nel ideare e creare da zero questo videogame e mi piacerebbe 
+in futuro migliorarne il codice, in particolar modo mi piacerebbe creare AI sempre più intelligenti. 
+In generale mi ritengo soddisfatto del risultato.  
+
 \subsubsection*{Alessandra Versari}
 Sono abbastanza soddisfatta del risultato raggiunto insieme al gruppo soprattutto considerando le varie difficoltà iniziali. Credo ci abbia insegnato molto soprattutto su come affrontare progetti di gruppo in futuro. Ammetto di aver avuto molte difficoltà all'inizio sia perchè era un progetto diverso dal solito (molto più lungo e complesso), sia perchè bisogna svilupparlo nel secondo periodo, mentre ci sono lezioni di altri corsi che portano via molto tempo e per quanto mi riguarda è stato parecchio complicato riuscire a incastrare tutto. Al momento non credo che continuerò a lavorarci per mancanza di tempo e per dare spazio alle altre materie, ma non escludo di farlo in futuro. 
 
@@ -709,8 +728,7 @@ Le difficolta' maggiori che ho incontrato sono personali: il lavoro di gruppo, l
 \subsubsection{Elvis Perlika}
 Il lavoro di squadra è probabilmete lo scoglio più grande ma non insommortabile.
 Non saprei ben descrivere altre difficoltà incontrate se non quelle legate 
-alle mie personali competenze.
-
+alle mie personali competenze, le quali sono andate ampliandosi durante il progetto stesso.
 
 \subsubsection*{Alessandra Versari}
 Essendo un progetto abbastanza grande rispetto a ciò a cui siamo abituati mi sono trovata un po' spaesata soprattutto all'inizio e la collaborazione con i miei compagni è stata fondamentale. Sicuramente ciò che ho ritenuto più difficile è la scelta di un'architettura adeguata a ciò che avevamo in mente di sviluppare.
