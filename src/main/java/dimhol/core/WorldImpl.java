@@ -105,7 +105,7 @@ public class WorldImpl implements World {
                     final var anim = (AnimationComponent) e.getComponent(AnimationComponent.class);
                     renderList.add(new ImmutablePair<>(pos.getZ(),
                             new GraphicInfo(anim.getIndex(),
-                                    anim.getImage(),
+                                    anim.getImageNumber(),
                                     pos.getPos(),
                                     body.getBodyShape().getBoundingWidth(),
                                     body.getBodyShape().getBoundingHeight())));
