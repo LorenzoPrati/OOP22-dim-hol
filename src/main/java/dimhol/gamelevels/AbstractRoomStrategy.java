@@ -154,19 +154,14 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
 
         if (existingPlayer.isPresent()) {
             final Entity player = existingPlayer.get();
-            final PositionComponent position = (PositionComponent) player.getComponent(PositionComponent.class);
-            player.removeComponent(position);
-
-            final Pair<Integer, Integer> playerPosition = getRandomTile(availableTiles);
-            final double x = playerPosition.getLeft().doubleValue();
-            final double y = playerPosition.getRight().doubleValue();
-            final PositionComponent newPosition = new PositionComponent(new Vector2D(x, y), 1);
-            player.addComponent(newPosition);
+            placeEntityAtRandomPosition(player, availableTiles, ENTITY_WIDTH, ENTITY_HEIGHT);
             updatedEntityList.add(player);
+
         } else {
             final Entity newPlayer = createAndPlacePlayer(availableTiles, playerWidth, playerHeight);
             updatedEntityList.add(newPlayer);
         }
+
     }
 
     /**
@@ -275,8 +270,8 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
                 findAvailablePositions(availableTiles, entityWidth, entityHeight));
         if (!availablePositions.isEmpty()) {
             final Pair<Integer, Integer> position = getRandomTile(availableTiles);
-            final int x = position.getLeft();
-            final int y = position.getRight();
+            final double x = position.getLeft().doubleValue();
+            final double y = position.getRight().doubleValue();
             final var pos = (PositionComponent) entity.getComponent(PositionComponent.class);
             pos.setPos(new Vector2D(x, y));
 
