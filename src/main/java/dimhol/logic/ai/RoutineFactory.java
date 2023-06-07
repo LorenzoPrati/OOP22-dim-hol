@@ -1,5 +1,8 @@
 package dimhol.logic.ai;
 
+import dimhol.logic.ai.boss.BossSpeedBoostAction;
+import dimhol.logic.ai.boss.BossMeleeAttackAction;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +28,7 @@ public class RoutineFactory {
     /**
      * Random movement changes direction time.
      */
-    public static final double CHANGE_DIRECTION_TIME = 1;
+    public static final double CHANGE_DIRECTION_TIME = 0.5;
     /**
      * Melee reload time.
      */
@@ -35,51 +38,23 @@ public class RoutineFactory {
      * Follow movement aggro.
      */
     public static final double FOLLOW_MOVEMENT_AGGRO = 5;
-
+    public static final double BOSS_FOLLOW_MOVEMENT_AGGRO = 7;
     /**
-     * Boss melee reload time.
+     * Minions melee reload time.
      */
-    public static final double BOSS_MELEE_RELOAD_TIME = 2;
+    public static final double MINIONS_MELEE_RELOAD_TIME = 1;
     /**
      * Boss distance attack reload time.
      */
     public static final double BOSS_DISTANCE_ATTACK_RELOAD_TIME = 3;
     /**
-     * Boss Summon minions reload time.
-     */
-    private static final int SUMMONS_RELOAD_TIME = 15;
-    /**
-     * Boss Summon minions number.
-     */
-    public static final int BOSS_SUMMON_MINIONS_NUMBER = 3;
-    /**
      * Boss damage for area aggro.
      */
-    public static final double BOSS_AREA_ATTACK_AGGRO = 3;
+    public static final double BOSS_MELEE_ATTACK_AGGRO = 5;
     /**
      * Boss attack area reload time.
      */
-    public static final double BOSS_AREA_ATTACK_RELOAD_TIME = 5;
-    /**
-     * Boss attack area damage.
-     */
-    private static final double BOSS_AREA_ATTACK_DAMAGE = 0.5;
-    /**
-     * Boss charge attack aggro ray.
-     */
-    private static final int CHARGE_ATTACK_AGGRO = 4;
-    /**
-     * Boss charge attack speed.
-     */
-    private static final double CHARGE_SPEED = 5;
-    /**
-     * Boss charge attack damage.
-     */
-    private static final int CHARGE_ATTACK_DAMAGE = 3;
-    /**
-     * Boss charge attack reload time.
-     */
-    private static final int CHARGE_ATTACK_RELOAD_TIME = 5;
+    public static final double BOSS_MELEE_ATTACK_RELOAD_TIME = 10;
 
     /**
      *
@@ -109,14 +84,20 @@ public class RoutineFactory {
      * @return the list of actions in the boss routine
      */
     public List<Action> createBossRoutine() {
-        return Stream.of(
-                new MeleeAttack(MELEE_ATTACK_AGGRO, BOSS_MELEE_RELOAD_TIME),
+        return List.of(
+                new BossSpeedBoostAction(),
+                new BossMeleeAttackAction(BOSS_MELEE_ATTACK_AGGRO, BOSS_MELEE_ATTACK_RELOAD_TIME),
                 new DistanceAttack(DISTANCE_ATTACK_AGGRO, BOSS_DISTANCE_ATTACK_RELOAD_TIME),
+                new FollowMovement(BOSS_FOLLOW_MOVEMENT_AGGRO),
                 new RandomMovement(CHANGE_DIRECTION_TIME)
-//                new AreaAttack(BOSS_AREA_ATTACK_AGGRO, BOSS_AREA_ATTACK_DAMAGE, BOSS_AREA_ATTACK_RELOAD_TIME),
-//                new ChargeAttack(CHARGE_SPEED, CHARGE_ATTACK_DAMAGE, CHARGE_ATTACK_AGGRO, CHARGE_ATTACK_RELOAD_TIME),
-//                new SummonMinions(SUMMONS_RELOAD_TIME, BOSS_SUMMON_MINIONS_NUMBER)
-//                new DefensiveShield()
-        ).sorted(Comparator.comparingDouble(AbstractAction::getAggroRay)).collect(Collectors.toList());
+        );
+    }
+
+    public List<Action> createMinionsRoutine() {
+        return List.of(
+                new MeleeAttack(MELEE_ATTACK_AGGRO, MINIONS_MELEE_RELOAD_TIME),
+                new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
+                new RandomMovement(CHANGE_DIRECTION_TIME)
+        );
     }
 }
