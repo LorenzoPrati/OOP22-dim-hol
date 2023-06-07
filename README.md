@@ -15,10 +15,22 @@ Rogue like game developed in Java.
 
 ## Images
 <p align="center">
-  <img src="https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7f69401964b4039b5efbc3490037f19ccdaafa75/src/main/resources/readMe/readMeImage1.png?raw=true" width="1080" />
+  <img src="https://github.com/LorenzoPrati/OOP22-dim-hol/blob/62b92590ecedda8032c3c06cd00e1a0ad2a6942b/src/main/resources/readMe/homeScreenScreenshot.png?raw=true" width="1080" />
 </p>
 <p align="center">
-  <img src="https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7f69401964b4039b5efbc3490037f19ccdaafa75/src/main/resources/readMe/readMeImage2.png?raw=true" width="1080" />
+  <img src="https://github.com/LorenzoPrati/OOP22-dim-hol/blob/62b92590ecedda8032c3c06cd00e1a0ad2a6942b/src/main/resources/readMe/optionScreenshot.png?raw=true" width="1080" />
+</p>
+<p align="center">
+  <img src="https://github.com/LorenzoPrati/OOP22-dim-hol/blob/62b92590ecedda8032c3c06cd00e1a0ad2a6942b/src/main/resources/readMe/levelScreenshot.png?raw=true" width="1080" />
+</p>
+<p align="center">
+  <img src="https://github.com/LorenzoPrati/OOP22-dim-hol/blob/62b92590ecedda8032c3c06cd00e1a0ad2a6942b/src/main/resources/readMe/pauseScreenshot.png?raw=true" width="1080" />
+</p>
+<p align="center">
+  <img src="https://github.com/LorenzoPrati/OOP22-dim-hol/blob/62b92590ecedda8032c3c06cd00e1a0ad2a6942b/src/main/resources/readMe/bossScreeshot.png?raw=true" width="1080" />
+</p>
+<p align="center">
+  <img src="https://github.com/LorenzoPrati/OOP22-dim-hol/blob/62b92590ecedda8032c3c06cd00e1a0ad2a6942b/src/main/resources/readMe/youLostScreenshot.png?raw=true" width="1080" />
 </p>
 
 ## Build
