@@ -27,9 +27,13 @@ public final class RoutineFactory {
      */
     public static final double DISTANCE_ATTACK_RELOAD_TIME = 2;
     /**
-     * Random movement changes direction time.
+     * Random boss and minions movement changes direction time.
      */
-    public static final double CHANGE_DIRECTION_TIME = 0.5;
+    public static final double BOSS_CHANGE_DIRECTION_TIME = 0.5;
+    /**
+     * Random shop-keeper movement changes direction time.
+     */
+    private static final double SHOP_KEEPER_DIRECTION_TIME = 5;
     /**
      * Melee reload time.
      */
@@ -40,7 +44,7 @@ public final class RoutineFactory {
      */
     public static final double FOLLOW_MOVEMENT_AGGRO = 5;
     /**
-     *
+     * Follow boss movement aggro.
      */
     public static final double BOSS_FOLLOW_MOVEMENT_AGGRO = 7;
     /**
@@ -93,7 +97,7 @@ public final class RoutineFactory {
                 new BossMeleeAttackAction(BOSS_MELEE_ATTACK_AGGRO, BOSS_MELEE_ATTACK_RELOAD_TIME),
                 new DistanceAttack(DISTANCE_ATTACK_AGGRO, BOSS_DISTANCE_ATTACK_RELOAD_TIME),
                 new FollowMovement(BOSS_FOLLOW_MOVEMENT_AGGRO),
-                new RandomMovement(CHANGE_DIRECTION_TIME)
+                new RandomMovement(BOSS_CHANGE_DIRECTION_TIME)
         );
     }
 
@@ -105,7 +109,13 @@ public final class RoutineFactory {
         return List.of(
                 new MeleeAttack(MELEE_ATTACK_AGGRO, MINIONS_MELEE_RELOAD_TIME),
                 new FollowMovement(FOLLOW_MOVEMENT_AGGRO),
-                new RandomMovement(CHANGE_DIRECTION_TIME)
+                new RandomMovement(BOSS_CHANGE_DIRECTION_TIME)
+        );
+    }
+
+    public List<Action> createShopKeeperRoutine() {
+        return List.of(
+                new RandomMovement(SHOP_KEEPER_DIRECTION_TIME)
         );
     }
 }
