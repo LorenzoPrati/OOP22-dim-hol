@@ -1,4 +1,4 @@
-package dimhol.logic.AI;
+package dimhol.logic.ai;
 
 import dimhol.components.AIComponent;
 import dimhol.components.BodyComponent;
@@ -14,6 +14,9 @@ import org.locationtech.jts.math.Vector2D;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class implement Action common methods.
+ */
 public abstract class AbstractAction implements Action {
 
     /**
@@ -22,7 +25,7 @@ public abstract class AbstractAction implements Action {
     private static final int DIVISOR = 2;
 
     private double aggroRay = Double.MAX_VALUE;
-    private double waitingTime = 0;
+    private double waitingTime = Double.NaN;
     private Vector2D playerCentralPos;
     private Vector2D enemyCentralPos;
     private Entity enemy;
@@ -30,44 +33,27 @@ public abstract class AbstractAction implements Action {
     private AIComponent ai;
     private MovementComponent movComp;
 
-    /**
-     * {@inheritDoc}
-     * @return
-     */
-    public boolean canExecute() {
+    @Override
+    public final boolean canExecute() {
         return getPlayerCentralPos().distance(getEnemyCentralPos()) <= aggroRay;
     }
 
-    /**
-     * {@inheritDoc}
-     * @return
-     */
+    @Override
     public abstract Optional<List<WorldEvent>> execute();
 
-    /**
-     * Player setter, thi method set also:
-     * - player's position
-     * - player's body
-     * - player's central position
-     */
+    @Override
     public final void setPlayer(final Entity player) {
-        PositionComponent playerPosComp = (PositionComponent) player.getComponent(PositionComponent.class);
-        BodyComponent playerBodyComp = (BodyComponent) player.getComponent(BodyComponent.class);
+        final PositionComponent playerPosComp = (PositionComponent) player.getComponent(PositionComponent.class);
+        final BodyComponent playerBodyComp = (BodyComponent) player.getComponent(BodyComponent.class);
         playerCentralPos = getCentralPosition(playerPosComp.getPos(), playerBodyComp.getBodyShape());
     }
 
-    /**
-     * Enemy setter, this method set also:
-     * - enemy's position
-     * - enemy's body
-     * - enemy's central position
-     * - enemy's AI
-     */
+    @Override
     public final void setEnemy(final Entity enemy) {
         this.enemy = new EntityImpl(enemy);
-        PositionComponent enemyPosComp = (PositionComponent) enemy.getComponent(PositionComponent.class);
-        BodyComponent enemyBodyComp = (BodyComponent) enemy.getComponent(BodyComponent.class);
-        Vector2D enemyPos = enemyPosComp.getPos();
+        final PositionComponent enemyPosComp = (PositionComponent) enemy.getComponent(PositionComponent.class);
+        final BodyComponent enemyBodyComp = (BodyComponent) enemy.getComponent(BodyComponent.class);
+        final Vector2D enemyPos = enemyPosComp.getPos();
         enemyCentralPos = getCentralPosition(enemyPos, enemyBodyComp.getBodyShape());
         ai = (AIComponent) enemy.getComponent(AIComponent.class);
         movComp = (MovementComponent) enemy.getComponent(MovementComponent.class);
@@ -86,6 +72,7 @@ public abstract class AbstractAction implements Action {
 
     /**
      * Player's central position getter.
+     * @return player's central position
      */
     protected Vector2D getPlayerCentralPos() {
         return playerCentralPos;
@@ -93,6 +80,7 @@ public abstract class AbstractAction implements Action {
 
     /**
      * Enemy' central position getter.
+     * @return enemy's central position
      */
     protected Vector2D getEnemyCentralPos() {
         return enemyCentralPos;
@@ -100,6 +88,7 @@ public abstract class AbstractAction implements Action {
 
     /**
      * Attack Factory getter.
+     * @return EnemyAttackFactory
      */
     protected final EnemyAttackFactory getAttackFactory() {
         return attackFactory;
@@ -107,6 +96,7 @@ public abstract class AbstractAction implements Action {
 
     /**
      * Aggro ray setter.
+     * @param aggroRay
      */
     protected final void setAggroRay(final double aggroRay) {
         this.aggroRay = aggroRay;
@@ -114,6 +104,7 @@ public abstract class AbstractAction implements Action {
 
     /**
      * Waiting time setter.
+     * @param waitingTime
      */
     protected final void setWaitingTime(final double waitingTime) {
         this.waitingTime = waitingTime;
@@ -121,6 +112,7 @@ public abstract class AbstractAction implements Action {
 
     /**
      * Enemy's AI getter.
+     * @return enemy's AI.
      */
     protected final AIComponent getAi() {
         return ai;
@@ -129,12 +121,17 @@ public abstract class AbstractAction implements Action {
     /**
      * Enemy's movement component getter.
      */
+    /**
+     * Enemy's movement component getter.
+     * @return enemy's MovementComponent
+     */
     protected final MovementComponent getMovComp() {
         return movComp;
     }
 
     /**
      * Enemy getter.
+     * @return the enemy (action's owner)
      */
     protected Entity getEnemy() {
         return enemy;
@@ -158,7 +155,7 @@ public abstract class AbstractAction implements Action {
 
     /**
      * Check if waiting time passed.
-     * @return
+     * @return true waiting time is passed
      */
     protected boolean reloadTimePassed() {
         if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {

@@ -3,6 +3,9 @@ package dimhol.view;
 import dimhol.core.Engine;
 import dimhol.input.Input;
 import dimhol.gamelevels.map.TileMap;
+import dimhol.view.HUD.HUD;
+import dimhol.view.HUD.HUDImpl;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;

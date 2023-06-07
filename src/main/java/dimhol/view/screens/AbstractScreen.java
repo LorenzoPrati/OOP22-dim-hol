@@ -1,4 +1,4 @@
-package dimhol.view;
+package dimhol.view.screens;
 
 import dimhol.core.Engine;
 
@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public abstract class AbstractScreen extends JPanel{
+    public static final int INSETS = 10;
     protected final Engine engine;
     protected ImageIcon background;
     protected Font font;

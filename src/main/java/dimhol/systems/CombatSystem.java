@@ -1,6 +1,8 @@
 package dimhol.systems;
 
-import dimhol.components.*;
+import dimhol.components.AttackComponent;
+import dimhol.components.CollisionComponent;
+import dimhol.components.HealthComponent;
 import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;
@@ -21,12 +23,12 @@ public final class CombatSystem extends AbstractSystem {
 
     @Override
     protected void process(final Entity entity, final double deltaTime, final World world) {
-        AttackComponent attackComp = (AttackComponent) entity.getComponent(AttackComponent.class);
-        CollisionComponent collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
+        final AttackComponent attackComp = (AttackComponent) entity.getComponent(AttackComponent.class);
+        final CollisionComponent collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
 
-        for (var collided : collisionComp.getCollided()) {
+        for (final var collided : collisionComp.getCollided()) {
             if (attackComp.getPredicate().test(collided)) {
-                var healthComp = (HealthComponent) collided.getComponent(HealthComponent.class);
+                final var healthComp = (HealthComponent) collided.getComponent(HealthComponent.class);
                 healthComp.setCurrentHealth(healthComp.getCurrentHealth() - attackComp.getDamage());
                 world.notifyEvent(new RemoveEntityEvent(entity));
             }
