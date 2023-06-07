@@ -25,6 +25,7 @@ class PlayerTest {
 
     private static final double PLAYER_BASE_SPEED = 3;
     private static final int PLAYER_BASE_HEALTH = 10;
+    private static final int PLAYER_BASE_COINS = 15;
 
     private final HealthComponent health;
     private final CoinPocketComponent coins;
@@ -48,7 +49,7 @@ class PlayerTest {
     void testBaseValue() {
         assertEquals(PLAYER_BASE_HEALTH, this.health.getCurrentHealth());
         assertEquals(PLAYER_BASE_SPEED, this.mov.getSpeed());
-        assertEquals(0, this.coins.getCurrentAmount());
+        assertEquals(PLAYER_BASE_COINS, this.coins.getCurrentAmount());
         assertEquals(1, this.body.getBodyShape().getBoundingWidth());
         assertEquals(1, this.body.getBodyShape().getBoundingHeight());
         assertEquals(new Vector2D(0, 0), this.position.getPos());
