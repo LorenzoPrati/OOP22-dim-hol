@@ -39,7 +39,7 @@ public class GenericFactory extends AbstractFactory {
                 .add(new MovementComponent(new Vector2D(0, 1), SHOP_KEEPER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(PLAYER_WIDTH, PLAYER_HEIGHT), true))
                 .add(new InteractorComponent())
-                .add(new AnimationComponent(map.get("shopkeeper"),"idle down"))
+                .add(new AnimationComponent(map.get("player"),"idle down"))
                 .build();
     }
 }
