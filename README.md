@@ -7,14 +7,15 @@ The tools seen in the lab are pre-integrated in the build file.
 Rogue like game developed in Java.
 
 ## Members:
+
 - [Lorenzo Prati](lorenzo.prati3@studio.unibo.it)
 - [Elvis Perlika](elvis.perlika@studio.unibo.it)
 - [Alessandra Versari](alessandra.versari@studio.unibo.it)
 - [Emanele Dajko](emanuele.dajko@studio.unibo.it)
 
-## Game
-
 ## Images
+
+
 ![readMeImage1.png](..%2FreadMeImage1.png)
 ![readMeImage2.png](..%2FreadMeImage2.png)
 
