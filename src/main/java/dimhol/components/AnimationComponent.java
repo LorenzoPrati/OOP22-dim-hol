@@ -5,7 +5,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AnimationComponent implements Component{
+/**
+ * A component which contains all the information necessary for animation.
+ */
+public class AnimationComponent implements Component {
     private final Map<String,ArrayList<Integer>> map = new HashMap<>();
     private String state; 
     private String lastState;
@@ -13,55 +16,100 @@ public class AnimationComponent implements Component{
     private int counter;
     private boolean completed;
 
-    public AnimationComponent(final Map<String,ArrayList<Integer>> map, String initialState){
+    /**
+     * Sets the initial state of the entity and the map cointaining all the information about that kind of entity.
+     */
+    public AnimationComponent(final Map<String,ArrayList<Integer>> map, final String initialState) {
         this.index = 0;
         this.map.putAll(map);
         this.state = initialState;
         this.lastState = state;
     }
     
+    /**
+     * .
+     * @return
+     */
     public String getState() {
         return this.state;
     }
 
+    /**
+     * .
+     * @return
+     */
     public String getLastState() {
         return this.lastState;
     }
 
+    /**
+     * .
+     * @param state
+     */
     public void setState(final String state) {
         this.lastState = this.state;
         this.state = state;
     }
     
-    public int getIndex(){
+    /**
+     * .
+     * @return
+     */
+    public int getIndex() {
         return this.index;
     }
 
+    /**
+     * .
+     * @param index
+     */
     public void setIndex(final int index) {
         this.index = index;
     }
 
+    /**
+     * 
+     */
     public int getCounter() {
         return this.counter;
     }
 
+    /**
+     * 
+     * @param counter
+     */
     public void setCounter(final int counter) {
         this.counter = counter;
     }
 
+    /**
+     * .
+     */
     public Map<String, ArrayList<Integer>> getMap() {
         return Collections.unmodifiableMap(this.map);
     }
     
-    public boolean isCompleted(){
+    /**
+     * 
+     * @return
+     */
+    public boolean isCompleted() {
         return this.completed;
     }
 
-    public void setCompleted(boolean completed){
+    /**
+     * 
+     * @param completed
+     */
+    public void setCompleted(final boolean completed) {
         this.completed = completed;
     }
 
-    public int getMaxIndex(){
+    /**
+     * 
+     * @return
+     */
+    public int getMaxIndex() {
         return map.entrySet().stream()
             .filter(e -> e.getKey().equals(state))
             .map(e -> e.getValue())
@@ -70,7 +118,11 @@ public class AnimationComponent implements Component{
             .get(0);
     }
 
-    public int getImage(){
+    /**
+     * 
+     * @return
+     */
+    public int getImage() {
         return map.entrySet().stream()
                 .filter(e -> e.getKey().equals(state))
                 .map(Map.Entry::getValue)
@@ -79,7 +131,11 @@ public class AnimationComponent implements Component{
                 .get(1);
     }
 
-    public boolean isBlocking(){
+    /**
+     * 
+     * @return
+     */
+    public boolean isBlocking() {
         var flag = map.entrySet().stream()
             .filter(e -> e.getKey().equals(state))
             .map(e -> e.getValue())
@@ -88,16 +144,5 @@ public class AnimationComponent implements Component{
             .get(2)
             .equals(1);
         return flag;
-    }
-
-    @Override
-    public String toString(){
-        return "AnimationComponent{ " + 
-            ", state='" + state +'\'' + 
-            ", lastState='" + lastState + '\'' + 
-            ", index=" + index + 
-            ", counter=" + counter +
-            ", completed=" + completed + 
-            '}';
     }
 }
