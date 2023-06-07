@@ -153,8 +153,8 @@ public final class EngineImpl implements Engine {
      * {@inheritDoc}
      */
     @Override
-    public void setDebugMode(final boolean debug) {
-        this.debug = debug;
+    public void switchDebugMode() {
+        this.debug = !this.debug;
     }
 
     /**

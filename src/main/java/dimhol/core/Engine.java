@@ -36,11 +36,9 @@ public interface Engine {
     MainWindow getMainWindow();
 
     /**
-     * Sets the debug mode.
-     *
-     * @param debug true if debug mode needs to be enabled
+     * Switches the debug mode.
      */
-    void setDebugMode(boolean debug);
+    void switchDebugMode();
 
     /**
      * Checks if the debug mode is enabled.
