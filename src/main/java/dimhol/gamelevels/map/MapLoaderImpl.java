@@ -26,6 +26,9 @@ public final class MapLoaderImpl implements MapLoader {
     private int tileHeight;
     private List<Tile[][]> mapTileLayers;
 
+    /**
+     * Constructor for the map loader implementation.
+     */
     public MapLoaderImpl() {
         mapTileLayers = new ArrayList<>();
     }
