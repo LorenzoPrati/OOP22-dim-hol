@@ -8,6 +8,7 @@ import dimhol.components.BulletComponent;
 import dimhol.components.MeleeComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PositionComponent;
+import dimhol.components.ShopKeeperComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.logic.collision.CircleBodyShape;
@@ -58,7 +59,7 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
      */
     private static final double PLAYER_LITTLE_BULLET_RAY = 0.2;
 
-    private final Predicate<Entity> checkEnemy = entity -> entity.hasComponent(AIComponent.class);
+    private final Predicate<Entity> checkEnemy = entity -> entity.hasComponent(AIComponent.class) && !entity.hasComponent(ShopKeeperComponent.class);
 
     /**
      * Spawn an attack near the player.

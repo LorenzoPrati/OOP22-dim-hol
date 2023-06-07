@@ -37,3 +37,6 @@ boss:
 fireball:
   - 512
   - 512
+shopkeeper:
+  - 48
+  - 48

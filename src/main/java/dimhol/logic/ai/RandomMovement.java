@@ -12,6 +12,10 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public final class RandomMovement extends AbstractAction {
 
+    /**
+     * Construct a Random Movement Action and set the change direction time.
+     * @param changeDirectionTime to set
+     */
     public RandomMovement(final double changeDirectionTime) {
         setWaitingTime(changeDirectionTime);
     }
