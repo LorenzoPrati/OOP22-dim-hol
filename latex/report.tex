@@ -80,7 +80,7 @@ Dato il monte ore previsto, si rimanda al futuro una gestione accurata delle per
 
 
 \section{Architettura}
-Abbiamo deciso di utilizzare per il modello del gioco una versione semplificata del \textit{pattern entity-component-system} (ECS) mantenendo la parte grafica separata.
+Abbiamo deciso di utilizzare per il modello del gioco una versione semplificata del \textit{pattern entity-component-system} (\textit{ecs}) mantenendo la parte grafica separata.
 
 Dopo aver tentato un approccio piu' orientato alle gerarchie di classi, ci e' sembrato naturale spostarci verso una visione che fattorizzasse gli aspetti comuni dei diversi attori in gioco in modo piu' modulare, cercando di separare i \textit{dati} (\textit{component}) dalla \textit{logica} che li comanda (\textit{system}).
 
@@ -711,7 +711,9 @@ Inoltre il fatto di aver dovuto ricominciare il progetto quasi a ridosso della s
 Mi sarebbe piaciuto vedere qualche progetto degli anni precedenti a lezione, così da sentirmi magari più pronta all'inizio del progetto, ma complessivamente ritengo che le competenze acquisite siano sufficienti.
 
 \chapter{Guida utente}
+Tutti i comandi di gioco e le regole di base sono spiegate in una schermata tutorial che compare la prima volta che si gioca ad ogni apertura dell'applicazione. 
 
+Inoltre, e' possibile attivare una \textbf{Modalita' DEBUG}. Per farlo, andare in \textit{HOME} $\rightarrow$ \textit{OPTIONS} $\rightarrow$ spuntare il check \textit{DEBUG MODE}. Questa modalita' puo' essere utile, ad esempio ai docenti per motivi di testing, per visitare facilmente tutti i tipi le stanze e arrivare molto velocemente al boss.
 
 \chapter{Esercitazioni di laboratorio}
 
