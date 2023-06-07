@@ -5,20 +5,26 @@ import java.util.function.BiFunction;
 import dimhol.entity.Entity;
 
 /**
- * A component for.
+ * A component for items (pickable objects).
  */
 public class ItemComponent implements Component {
-    private BiFunction<Entity, List<Class<? extends Component>>, Boolean> effect; 
+    private final BiFunction<Entity, List<Class<? extends Component>>, Boolean> effect; 
 
     /**
-     * 
-     * @param effect .
+     * Constructs an ItemComponent.
+     * @param effect of the item.
      */
-    public ItemComponent(BiFunction<Entity, List<Class<? extends Component>>, Boolean> effect){
+    public ItemComponent(final BiFunction<Entity, List<Class<? extends Component>>, Boolean> effect) {
         this.effect = effect;
     }
 
-    public boolean applyEffect(Entity entity, List<Class<? extends Component>> component){
-        return this.effect.apply(entity, component);
-    }  
+    /**
+     * Tries to apply the effect on the entity.
+     * @param entity
+     * @param components a list of component to select entitie which can use the effect.
+     * @return true if the effect has been applied.
+     */
+    public boolean applyEffect(final Entity entity, final List<Class<? extends Component>> components) {
+        return this.effect.apply(entity, components);
+    }
 }
