@@ -1,4 +1,4 @@
-package dimhol.logic.AI.bossactions;
+package dimhol.gamelevels.map.bossactions;
 
 import dimhol.events.AddEntityEvent;
 import dimhol.events.WorldEvent;
