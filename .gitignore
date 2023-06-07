@@ -31,4 +31,4 @@ bin/
 *.fls
 
 # temporary
-*.pdf
+latex/report.pdf

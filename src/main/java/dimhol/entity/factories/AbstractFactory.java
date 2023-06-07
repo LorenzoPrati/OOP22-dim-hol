@@ -23,6 +23,7 @@ public abstract class AbstractFactory {
             final Yaml yaml = new Yaml();
             final Map<String, Map<String, ArrayList<Integer>>> mapLoaded = yaml.load(input);
             map.putAll(mapLoaded);
+            assert input != null;
             input.close();
         } catch (Exception e) {
             e.getStackTrace();
