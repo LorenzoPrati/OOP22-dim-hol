@@ -7,6 +7,9 @@ import dimhol.logic.ai.AbstractAction;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The speed boost action performed within a range of life.
+ */
 public class BossSpeedBoostAction extends AbstractAction {
 
     private static final double BOSS_SPEED_BOOST = 3;
