@@ -21,19 +21,20 @@ public class BossFactory extends AbstractFactory {
     /**
      * Boss's width.
      */
-    public static final double BOSS_WIDTH = 4;
+    private static final double BOSS_WIDTH = 4;
     /**
      * Boss's height.
      */
-    public static final double BOSS_HEIGHT = 3;
+    private static final double BOSS_HEIGHT = 3;
     /**
      * Boss's speed.
      */
-    public static final double BOSS_SPEED = 3;
+    private static final double BOSS_SPEED = 2;
     /**
      * Boss's health.
      */
-    public static final int BOSS_HEALTH = 10;
+    private static final int BOSS_HEALTH = 20;
+
     /**
      * Minion's speed.
      */
@@ -82,8 +83,9 @@ public class BossFactory extends AbstractFactory {
                 .add(new PositionComponent(new Vector2D(x, y), 0))
                 .add(new MovementComponent(new Vector2D(0, 1), MINIONS_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), true))
+                .add(new HealthComponent(MINIONS_HEALTH))
                 .add(new AnimationComponent(getAnimationsMap().get("enemy"), "idle"))
-//                .add(new AiComponent(new RoutineFactory().createMinionsRoutine()))
+                .add(new AIComponent(new RoutineFactory().createMinionsRoutine()))
                 .build();
     }
 }
