@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Enemy's AI.
+ * Enemy's AI component contains the AI behaviour.
  */
-public final class AIComponent implements Component {
+public class AIComponent implements Component {
 
     private final List<Action> actions;
     private double currentTime;
