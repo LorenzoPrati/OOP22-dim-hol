@@ -3,6 +3,7 @@ package dimhol.view;
 import dimhol.core.Engine;
 import dimhol.input.Input;
 import dimhol.gamelevels.map.TileMap;
+import dimhol.gamelevels.map.TileMapImpl;
 import dimhol.view.HUD.HUD;
 import dimhol.view.HUD.HUDImpl;
 
@@ -139,7 +140,8 @@ public class SceneImpl implements Scene {
 
     @Override
     public void setMap(TileMap tileMap) {
-        this.tileMap = tileMap;
+        this.tileMap = new TileMapImpl(tileMap.getLayers(), tileMap.getWidth(), 
+            tileMap.getHeight(), tileMap.getTileWidth(), tileMap.getTileHeight());
         this.tileMapWidth = tileMap.getWidth();
         this.tileMapHeight = tileMap.getHeight();
     }
