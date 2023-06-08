@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.function.BiFunction;
 import dimhol.logic.collision.CircleBodyShape;
 import org.locationtech.jts.math.Vector2D;
-import dimhol.logic.collision.RectBodyShape;
 import dimhol.components.AnimationComponent;
 import dimhol.components.BodyComponent;
 import dimhol.components.CoinPocketComponent;

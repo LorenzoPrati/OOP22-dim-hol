@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Tests items' effects.
  */
-class ItemTest {
-    Entity player;
-    Entity heartItem;
-    Entity coinItem;
+final class ItemTest {
+    private Entity player;
+    private Entity heartItem;
+    private Entity coinItem;
 
-    ItemTest(){
+    ItemTest() {
         final var genericFactory = new GenericFactory();
         final var itemFactory = new ItemFactory();
         this.player = genericFactory.createPlayer(0, 0);
@@ -28,7 +28,7 @@ class ItemTest {
     }
 
     @Test
-    void testHeartEffect(){
+    void testHeartEffect() {
         var healthComp = (HealthComponent) player.getComponent(HealthComponent.class);
         var itemComp = (ItemComponent) heartItem.getComponent(ItemComponent.class);
         /*case: effect can't be applied */
@@ -41,7 +41,7 @@ class ItemTest {
     }
 
     @Test
-    void testCoinEffect(){
+    void testCoinEffect() {
         var pocketComp = (CoinPocketComponent) player.getComponent(CoinPocketComponent.class);
         var itemComp = (ItemComponent) coinItem.getComponent(ItemComponent.class);
         var coinAmountBeforeEffect = pocketComp.getCurrentAmount();
