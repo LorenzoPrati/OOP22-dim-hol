@@ -28,6 +28,9 @@ public class GenericFactory extends AbstractFactory {
     private static final double PLAYER_WIDTH = 1;
     private static final double PLAYER_HEIGHT = 1;
 
+    /**
+     * Constructs a generic factory.
+     */
     public GenericFactory() {
         super();
     }
