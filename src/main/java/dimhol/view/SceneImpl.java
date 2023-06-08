@@ -6,6 +6,7 @@ import dimhol.gamelevels.map.TileMap;
 import dimhol.gamelevels.map.TileMapImpl;
 import dimhol.view.HUD.HUD;
 import dimhol.view.HUD.HUDImpl;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,6 +57,7 @@ public class SceneImpl implements Scene {
         public void paintComponent(Graphics g) {
             var tileMapLayers = tileMap.getLayers();
             super.paintComponent(g);
+            @SuppressWarnings({"unchecked"})
             Graphics2D g2 = (Graphics2D) g;
             for (var layer: tileMapLayers) {
                 for (int i = 0; i < tileMapWidth; i++) {
