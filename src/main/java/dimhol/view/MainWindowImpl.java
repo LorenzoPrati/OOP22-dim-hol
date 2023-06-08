@@ -15,6 +15,7 @@ public class MainWindowImpl implements MainWindow {
         this.frame.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
         this.frame.pack();
+        this.frame.setResizable(false);
         this.frame.setVisible(true);
         this.frame.setFocusable(false);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
