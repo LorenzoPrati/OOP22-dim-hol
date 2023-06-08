@@ -113,6 +113,10 @@ public final class RoutineFactory {
         );
     }
 
+    /**
+     * Create shop keeper routine.
+     * @return
+     */
     public List<Action> createShopKeeperRoutine() {
         return List.of(
                 new RandomMovement(SHOP_KEEPER_DIRECTION_TIME)
