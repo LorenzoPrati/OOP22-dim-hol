@@ -6,7 +6,7 @@ import dimhol.logic.ai.boss.BossSpeedBoostAction;
 import java.util.List;
 
 /**
- * Implementation of enemy's behaviour routines.
+ * Implementation of enemy's behavior routines.
  */
 public final class RoutineFactory {
 

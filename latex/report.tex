@@ -486,6 +486,13 @@ Ho realizzato una classe \texttt{EntityTest}, che contiene un metodo di test che
 \paragraph*{Test del player, input e stati}
 Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzare l'entita' che rappresenta il giocatore, tramite relativa factory, poi sono presenti due metodi di test: il primo controlla la corretta inizializzazione del player, il secondo testa il funzionamento degli stati e dell'input. 
 
+\subsubsection*{Elvis Perlika}
+\paragraph*{Test sul comportamento delle AI}
+Ho realizzato una classe \texttt{AITest} che dimostra il corretto funzionamento delle AI in 
+situazioni differenti, la creazione delle AI e lo spawn degli attacchi.
+
+\url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7a557eed3acda9eb23b395d56d63c8e907038863/src/test/java/dimhol/AITest.java#L43}
+
 \subsubsection*{Alessandra Versari}
 
 \paragraph*{Test degli effetti degli items}
@@ -616,6 +623,10 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 			\item interfaccia \texttt{HUD}
 			\item classe \texttt{HUDImpl}
 		\end{itemize}
+	\item package test
+		\begin{itemize}
+			\item classe \texttt{AITest}
+		\end{itemize}
 \end{itemize}
 
 \subsection*{Alessandra Versari}
@@ -673,7 +684,10 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 \subsubsection{Lorenzo Prati}
 
 \begin{itemize}
-	\item uso della libreria jts (Java Topology Suite)  sia per la classe \texttt{Vector2D} che e' usata in tutto il progetto, sia per per creare facilmente forme geometriche di interfaccia \texttt{Polygon} che tra l'altro forniscono anche metodi per controllare le intersezioni tra poligoni. 
+	\item uso della libreria jts (Java Topology Suite)  sia per la classe \texttt{Vector2D} 
+	che e' usata in tutto il progetto, sia per per creare facilmente 
+	forme geometriche di interfaccia \texttt{Polygon} che tra l'altro forniscono anche 
+	metodi per controllare le intersezioni tra poligoni. 
 	
 	Esempio: \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/587a03e4db001028dbcf5649ed6af5807a3ef155/src/main/java/dimhol/logic/collision/RectBodyShape.java#L51-L62}
 
@@ -689,8 +703,11 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 
 \subsubsection{Elvis Perlika}
 \begin{itemize}
-	\item uso di Optional per la creazione di nuove entità create dalle Action delle AI \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/2e16e10f3be14f1267b82342076954256f6c2a2d/src/main/java/dimhol/logic/ai/Action.java#L27}
+	\item Uso di Optional per la creazione di nuove entità create dalle Action delle AI \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/2e16e10f3be14f1267b82342076954256f6c2a2d/src/main/java/dimhol/logic/ai/Action.java#L27}
 	
+	\item Uso della libreria jts per la classe Vector2D, esempio: \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7a557eed3acda9eb23b395d56d63c8e907038863/src/main/java/dimhol/logic/ai/BehaviourUtil.java#LL32C22-L32C22}
+	
+	\item Uso della libreria concurrent \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7a557eed3acda9eb23b395d56d63c8e907038863/src/main/java/dimhol/logic/ai/RandomMovement.java#LL33C32-L33C32}
 	
 \end{itemize}
 
@@ -717,16 +734,16 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 Mi ritengo complessivamente soddisfatto del lavoro svolto insieme ai miei compagni di gruppo, anche se ammetto che il percorso che ci ha portati ad arrivare a questo punto del progetto non e' stato facile. Inizialmente si era scelto di utilizzare il pattern architetturale MVC, ma a causa piu' che altro di una nostra mal comprensione delle dinamiche e caratteristiche del pattern, era risultato molto difficile pensare a una struttura adeguata tanto che si e' deciso di passare alla deadline successiva ricominciando quasi da capo. Infine siamo passati al \textit{pattern ecs} per gestire la logica del gioco, di cui mi sono molto informato personalmente tramite ricerche online. Visto che mi sono occupato di realizzare la base dell'architettura dell'\textit{ecs}, devo dire che il cercare di realizzare un'implementazione personale e sicuramente molto semplice di un pattern noto ma praticamente mai implementato a un livello \textit{semplice} e adatto al progetto o addirittura non molto usato con il linguaggio Java (infatti spesso versioni dell'\textit{ecs} che si trovano online sono realizzate in C++ o altri linguaggi), e' stata una bella sfida. La discussione con i docenti anche e' stata importante per chiarirci le idee su a cosa dovessimo effettivamente dare priorita'. Non escludo in futuro di tornare a lavorare a questo progetto, anche se per il momento ritengo essere state realizzate tutte le feature piu' importanti che ci eravamo prefissati.
 
 \subsubsection*{Elvis Perlika}
-Ritengo di aver fatto un lavoro soddisfacente nella consapevole che ci sia sempre spazio 
+Ritengo di aver fatto un lavoro soddisfacente nella consapevoleza che ci sia sempre spazio 
 al miglioramento.
 In generale mi sento di aver avuto un buon equilibrio tra progetto di OOP, lo studio delle
 altre materie ed impegni personali.
 Comprendo un po' meglio le difficoltà nel rilascaire un software entro una certa 
-data con una squadra che a livello "lavorativo" non avevo modo di conoscere, esattamente come 
+data con una squadra, che a livello "lavorativo" non avevo modo di conoscere, esattamente come 
 in un classico ambiente lavorativo. 
 Mi sono sinceramente divertito nel ideare e creare da zero questo videogame e mi piacerebbe 
 in futuro migliorarne il codice, in particolar modo mi piacerebbe creare AI sempre più intelligenti. 
-In generale mi ritengo soddisfatto del risultato.  
+Nel complesso, sono soddisfatto del risultato che abbiamo ottenuto.
 
 \subsubsection*{Alessandra Versari}
 Sono abbastanza soddisfatta del risultato raggiunto insieme al gruppo soprattutto considerando le varie difficoltà iniziali. Credo ci abbia insegnato molto soprattutto su come affrontare progetti di gruppo in futuro. Ammetto di aver avuto molte difficoltà all'inizio sia perchè era un progetto diverso dal solito (molto più lungo e complesso), sia perchè bisogna svilupparlo nel secondo periodo, mentre ci sono lezioni di altri corsi che portano via molto tempo e per quanto mi riguarda è stato parecchio complicato riuscire a incastrare tutto. Al momento non credo che continuerò a lavorarci per mancanza di tempo e per dare spazio alle altre materie, ma non escludo di farlo in futuro. 
@@ -739,7 +756,7 @@ Le difficolta' maggiori che ho incontrato sono personali: il lavoro di gruppo, l
 \subsubsection{Elvis Perlika}
 Il lavoro di squadra è probabilmete lo scoglio più grande ma non insommortabile.
 Non saprei ben descrivere altre difficoltà incontrate se non quelle legate 
-alle mie personali competenze, le quali sono andate ampliandosi durante il progetto stesso.
+alle mie personali competenze, le quali sono andate ampliandosi durante il compimento del progetto.
 
 \subsubsection*{Alessandra Versari}
 Essendo un progetto abbastanza grande rispetto a ciò a cui siamo abituati mi sono trovata un po' spaesata soprattutto all'inizio e la collaborazione con i miei compagni è stata fondamentale. Sicuramente ciò che ho ritenuto più difficile è la scelta di un'architettura adeguata a ciò che avevamo in mente di sviluppare.
@@ -753,6 +770,11 @@ Inoltre, e' possibile attivare una \textbf{Modalita' DEBUG}. Per farlo, andare i
 
 \chapter{Esercitazioni di laboratorio}
 
+\subsubsection*{Elvis Perlika}
+
+\begin{itemize}
+	\item 
+\end{itemize}
 
 
 \bibliographystyle{alpha}
