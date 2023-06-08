@@ -1,10 +1,6 @@
 # Dimension Holiday
 
-This is a repository that can be used as a base to develop an OOP project. 
-
-The tools seen in the lab are pre-integrated in the build file.
-
-Rogue like game developed in Java.
+Roguelike game developed in Java using *entity-component-system* (*ecs*) architecture and Java Swing.
 
 ## Members
 - Lorenzo Prati - lorenzo.prati3@studio.unibo.it
