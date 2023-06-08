@@ -43,7 +43,7 @@ public abstract class AbstractScreen extends JPanel{
 
     public void setBackground(String path){
         try{
-            this.background = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(path)));
+            this.background = new ImageIcon(ImageIO.read(AbstractScreen.class.getResourceAsStream(path)));
         } catch(IOException e){
             System.out.print("Error loading background menu images");
         }
@@ -60,7 +60,7 @@ public abstract class AbstractScreen extends JPanel{
     public JLabel createLabel (String path){
         JLabel label = new JLabel();
         try{
-            label = new JLabel(((new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(path))))));
+            label = new JLabel(((new ImageIcon(ImageIO.read(AbstractScreen.class.getResourceAsStream(path))))));
         } catch(IOException e){
             System.out.print("Error title menu images");
         }

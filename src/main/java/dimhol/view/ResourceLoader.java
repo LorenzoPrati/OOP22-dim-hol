@@ -1,6 +1,7 @@
 package dimhol.view;
 
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -20,16 +21,18 @@ public final class ResourceLoader {
     private Map<String, ArrayList<Integer>> dimensions = new HashMap<>();
 
     public ResourceLoader() {
-        try {
-            InputStream input = getClass().getResourceAsStream("/config/spritesDimensions.yaml");
-            Yaml yaml = new Yaml();
-            Map<String, ArrayList<Integer>> mapLoaded = yaml.load(input);
-            dimensions.putAll(mapLoaded);
-        } catch (Exception e) {
-            System.out.println("File not found. ");
-        }
+        InputStream input = ResourceLoader.class.getResourceAsStream("/config/spritesDimensions.yaml");
+        Yaml yaml = new Yaml();
+        Map<String, ArrayList<Integer>> mapLoaded = yaml.load(input);
+        dimensions.putAll(mapLoaded);
         load();
         loadTileSetImages(TILE_WIDTH,TILE_HEIGHT);
+        try{
+            input.close();
+        } catch(IOException e){
+            System.out.println("Failed to close stream");
+        }
+       
     } 
     
     private void load() {

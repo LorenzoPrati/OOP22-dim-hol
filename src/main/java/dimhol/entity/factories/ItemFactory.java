@@ -78,7 +78,7 @@ public class ItemFactory extends AbstractFactory {
     public Entity createCoin(final double x, final double y) {
         return new EntityBuilder()
         .add(new PositionComponent(new Vector2D(x, y), 0))
-        .add(new BodyComponent(new RectBodyShape(W, H), false))
+        .add(new BodyComponent(new CircleBodyShape(W / 2), false))
         .add(new ItemComponent(increaseCurrentCoinsAmount))
         .add(new AnimationComponent(getAnimationsMap().get("coin"), "idle"))
         .build();

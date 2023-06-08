@@ -53,6 +53,7 @@ public class InteractableObjectFactory extends AbstractFactory {
     private Predicate<World> checkAllEnemyAreDead = (w) -> w.getEntities()
         .stream()
         .noneMatch(e -> e.hasComponent(AIComponent.class));
+    
 
     private BiFunction<Entity, World, Boolean> powerUpMaxHealth = (e, w) -> {
         if (checkCoins.test(e, MAX_HEALTH_PRICE)) {
