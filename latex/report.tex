@@ -94,7 +94,7 @@ Di seguito spieghiamo le varie parti della nostra architettura:
 \begin{itemize}
 	\item \texttt{Component}: sono oggetti utili a mantenere i dati che descrivono un certo aspetto del modello di gioco (ad esempio la posizione, il movimento, il corpo ecc.) e in teoria non hanno una loro logica di comportamento.
 	\item \texttt{Entity}: sono dei raccoglitori di \texttt{Component}. Ogni entita' e' descritta dai suoi componenti che permettono alla stessa di distinguerla dalle altre entita'. Ad esempio, diverse entita' presenti in gioco nello stesso momento potrebbero contenere un PositionComponent, un MovementComponent, un BodyComponent, un HealthComponent e altri, che ne descrivono le proprieta'.
-	\item \texttt{GameSystem}: sono la parte dell'architettura che si occupa di operare sulle entita', modificandone i componenti e quindi svolgendo la maggior parte della logica del gioco. L'esecuzione sequenziale di vari sistemi, ciascuno che processa le entita' operando su un determinato insieme di componenti, permette il funzionamento del gioco. Ad esempio, il MovementSystem opera esclusivamente sulle entita' che contengono il MovementComponent e si occupa di muovere tutte le entita'; invece, il CheckHealthSystem si occupa di prendere tutte le entita' che hanno un HealthComponent e di rimuovere quelle che hanno esaurito le vite. 
+	\item \texttt{GameSystem}: sono la parte dell'architettura che si occupa di operare sulle entita', modificandone i componenti e quindi svolgendo la maggior parte della logica del gioco. L'esecuzione sequenziale di vari sistemi, ciascuno che processa le entita' operando su un determinato insieme di componenti, permette il funzionamento del gioco. Ad esempio, il MovementSystem opera esclusivamente sulle entita' che contengono il MovementComponent e si occupa di muovere tutte le entita'; invece, il CheckHealthSystem si occupa di prendere tutte le entita' che hanno un HealthComponent e di rimuovere quelle che hanno esaurito le vite.
 	\item \texttt{Engine} e \texttt{World}: queste sono le classi che controllano effettivamente lo svolgersi del gioco. \texttt{Engine} si occupa di gestire il \textit{game loop}, mentre il \texttt{World} contiene al suo interno le entita', esegue i \textit{system} e passa alla View le informazioni necessarie per disegnare su schermo.
 	\item \texttt{LevelManager}: manager dei livelli contenuto nel \texttt{World}, che si occupa della generazione e del caricamento degli stessi.
 	\item \texttt{View}: e' gestita in modo indipendente dal \textit{pattern ecs}. \texttt{Scene} si occupa solamente di disegnare lo stato del modello di gioco, mentre \texttt{MainWindow} gestisce diverse schermate di menu (home, opzioni, pausa ecc.). Inoltre sono presenti classi che si occupano di disegnare l'interfaccia grafica e di registrare gli input da mouse e tastiera.
@@ -486,6 +486,13 @@ Ho realizzato una classe \texttt{EntityTest}, che contiene un metodo di test che
 \paragraph*{Test del player, input e stati}
 Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzare l'entita' che rappresenta il giocatore, tramite relativa factory, poi sono presenti due metodi di test: il primo controlla la corretta inizializzazione del player, il secondo testa il funzionamento degli stati e dell'input. 
 
+\subsubsection*{Elvis Perlika}
+\paragraph*{Test sul comportamento delle AI}
+Ho realizzato una classe \texttt{AITest} che dimostra il corretto funzionamento delle AI in
+situazioni differenti, la creazione delle AI e lo spawn degli attacchi.
+
+\url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7a557eed3acda9eb23b395d56d63c8e907038863/src/test/java/dimhol/AITest.java#L43}
+
 \subsubsection*{Alessandra Versari}
 
 \paragraph*{Test degli effetti degli items}
@@ -497,7 +504,7 @@ Per l'intera durata del progetto abbiamo cercato di rispettare i ruoli dichiarat
 L'intero progetto è stato svolto con l'utilizzo di GitHub: abbiamo lavorato su un'unica repository proteggendo il branch master tramite apposita feature di GitHub.
 Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feature), per poi unire il proprio lavoro grazie a Pull Request che necessivano dell'approvazione di un altro membro (anche per mantenerci aggiornati sullo stato del progetto).
 
-\subsubsection*{Lorenzo Prati}
+\subsubsection{Lorenzo Prati}
 
 	\begin{itemize}
 		\item package entity
@@ -571,7 +578,7 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 			\end{itemize}
 	\end{itemize}
 
-\subsubsection*{Elvis Perlika}
+\subsubsection{Elvis Perlika}
 
 \begin{itemize}
 	\item package entity
@@ -616,9 +623,13 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 			\item interfaccia \texttt{HUD}
 			\item classe \texttt{HUDImpl}
 		\end{itemize}
+	\item package test
+		\begin{itemize}
+			\item classe \texttt{AITest}
+		\end{itemize}
 \end{itemize}
 
-\subsection*{Alessandra Versari}
+\subsubsection{Alessandra Versari}
 \begin{itemize}
 	\item Package components
 		\begin{itemize}
@@ -657,7 +668,7 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 	\end{itemize}
 
 
-\subsubsection*{Parti sviluppate in collaborazione}
+\subsubsection{Parti sviluppate in collaborazione}
 \begin{itemize}
 	\item classe \texttt{SceneImpl}
 	\item interfaccia \texttt{MainWindow}
@@ -673,8 +684,11 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 \subsubsection{Lorenzo Prati}
 
 \begin{itemize}
-	\item uso della libreria jts (Java Topology Suite)  sia per la classe \texttt{Vector2D} che e' usata in tutto il progetto, sia per per creare facilmente forme geometriche di tipo \texttt{Polygon} che tra l'altro forniscono anche metodi per controllare le intersezioni tra poligoni. 
-	
+	\item uso della libreria jts (Java Topology Suite)  sia per la classe \texttt{Vector2D}
+	che e' usata in tutto il progetto, sia per per creare facilmente
+	forme geometriche di tipo \texttt{Polygon} che tra l'altro forniscono anche
+	metodi per controllare le intersezioni tra poligoni.
+
 	Esempio: \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/587a03e4db001028dbcf5649ed6af5807a3ef155/src/main/java/dimhol/logic/collision/RectBodyShape.java#L51-L62}
 
 	(\href[]{https://github.com/locationtech/jts}{link alla pagina github della libreria})
@@ -689,9 +703,12 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 
 \subsubsection{Elvis Perlika}
 \begin{itemize}
-	\item uso di Optional per la creazione di nuove entità create dalle Action delle AI \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/2e16e10f3be14f1267b82342076954256f6c2a2d/src/main/java/dimhol/logic/ai/Action.java#L27}
+	\item Uso di Optional per la creazione di nuove entità create dalle Action delle AI \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/2e16e10f3be14f1267b82342076954256f6c2a2d/src/main/java/dimhol/logic/ai/Action.java#L27}
 	
-	
+	\item Uso della libreria jts per la classe Vector2D, esempio: \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7a557eed3acda9eb23b395d56d63c8e907038863/src/main/java/dimhol/logic/ai/BehaviourUtil.java#LL32C22-L32C22}
+
+	\item Uso della libreria concurrent \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7a557eed3acda9eb23b395d56d63c8e907038863/src/main/java/dimhol/logic/ai/RandomMovement.java#LL33C32-L33C32}
+
 \end{itemize}
 
 \subsubsection*{Alessandra Versari}
@@ -716,19 +733,19 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 
 Mi ritengo complessivamente soddisfatto del lavoro svolto insieme ai miei compagni di gruppo, anche se ammetto che il percorso che ci ha portati ad arrivare a questo punto del progetto non e' stato facile. Inizialmente si era scelto di utilizzare il pattern architetturale MVC, ma a causa piu' che altro di una nostra mal comprensione delle dinamiche e caratteristiche del pattern, era risultato molto difficile pensare a una struttura adeguata tanto che si e' deciso di passare alla deadline successiva ricominciando quasi da capo. Infine siamo passati al \textit{pattern ecs} per gestire la logica del gioco, di cui mi sono molto informato personalmente tramite ricerche online. Visto che mi sono occupato di realizzare la base dell'architettura dell'\textit{ecs}, devo dire che il cercare di realizzare un'implementazione personale e sicuramente molto semplice di un pattern noto ma praticamente mai implementato a un livello \textit{semplice} e adatto al progetto o addirittura non molto usato con il linguaggio Java (infatti spesso versioni dell'\textit{ecs} che si trovano online sono realizzate in C++ o altri linguaggi), e' stata una bella sfida. La discussione con i docenti anche e' stata importante per chiarirci le idee su a cosa dovessimo effettivamente dare priorita'. Non escludo in futuro di tornare a lavorare a questo progetto, anche se per il momento ritengo essere state realizzate tutte le feature piu' importanti che ci eravamo prefissati.
 
-\subsubsection*{Elvis Perlika}
-Ritengo di aver fatto un lavoro soddisfacente nella consapevole che ci sia sempre spazio 
+\subsubsection{Elvis Perlika}
+Ritengo di aver fatto un lavoro soddisfacente nella consapevoleza che ci sia sempre spazio
 al miglioramento.
 In generale mi sento di aver avuto un buon equilibrio tra progetto di OOP, lo studio delle
 altre materie ed impegni personali.
 Comprendo un po' meglio le difficoltà nel rilascaire un software entro una certa 
-data con una squadra che a livello "lavorativo" non avevo modo di conoscere, esattamente come 
+data con una squadra, che a livello "lavorativo" non avevo modo di conoscere, esattamente come
 in un classico ambiente lavorativo. 
 Mi sono sinceramente divertito nel ideare e creare da zero questo videogame e mi piacerebbe 
 in futuro migliorarne il codice, in particolar modo mi piacerebbe creare AI sempre più intelligenti. 
-In generale mi ritengo soddisfatto del risultato.  
+Nel complesso, sono soddisfatto del risultato che abbiamo ottenuto.
 
-\subsubsection*{Alessandra Versari}
+\subsubsection{Alessandra Versari}
 Sono abbastanza soddisfatta del risultato raggiunto insieme al gruppo soprattutto considerando le varie difficoltà iniziali. Credo ci abbia insegnato molto soprattutto su come affrontare progetti di gruppo in futuro. Ammetto di aver avuto molte difficoltà all'inizio sia perchè era un progetto diverso dal solito (molto più lungo e complesso), sia perchè bisogna svilupparlo nel secondo periodo, mentre ci sono lezioni di altri corsi che portano via molto tempo e per quanto mi riguarda è stato parecchio complicato riuscire a incastrare tutto. Al momento non credo che continuerò a lavorarci per mancanza di tempo e per dare spazio alle altre materie, ma non escludo di farlo in futuro. 
 
 \section{Difficoltà incontrate e commenti per i docenti}
@@ -739,15 +756,15 @@ Le difficolta' maggiori che ho incontrato sono personali: il lavoro di gruppo, l
 \subsubsection{Elvis Perlika}
 Il lavoro di squadra è probabilmete lo scoglio più grande ma non insommortabile.
 Non saprei ben descrivere altre difficoltà incontrate se non quelle legate 
-alle mie personali competenze, le quali sono andate ampliandosi durante il progetto stesso.
+alle mie personali competenze, le quali sono andate ampliandosi durante il compimento del progetto.
 
-\subsubsection*{Alessandra Versari}
+\subsubsection{Alessandra Versari}
 Essendo un progetto abbastanza grande rispetto a ciò a cui siamo abituati mi sono trovata un po' spaesata soprattutto all'inizio e la collaborazione con i miei compagni è stata fondamentale. Sicuramente ciò che ho ritenuto più difficile è la scelta di un'architettura adeguata a ciò che avevamo in mente di sviluppare.
 Inoltre il fatto di aver dovuto ricominciare il progetto quasi a ridosso della scadenza scelta (a causa di nostre scelte errate) e aver dovuto lavorarci per più mesi del previsto, facendo sempre fatica a trovare il tempo per le altre materie e altri impegni mi ha un po' buttato giù.
 Mi sarebbe piaciuto vedere qualche progetto degli anni precedenti a lezione, così da sentirmi magari più pronta all'inizio del progetto, ma complessivamente ritengo che le competenze acquisite siano sufficienti.
 
 \chapter{Guida utente}
-Tutti i comandi di gioco e le regole di base sono spiegate in una schermata tutorial che compare alla prima partita ad ogni apertura dell'applicazione. 
+Tutti i comandi di gioco e le regole di base sono spiegate in una schermata tutorial che compare alla prima partita ad ogni apertura dell'applicazione.
 
 Inoltre, e' possibile attivare una \textbf{DEBUG MODE}. Per farlo, andare in \textit{HOME} $\rightarrow$ \textit{OPTIONS} $\rightarrow$ clickare il pulsante \textit{ENABLE DEBUG MODE}. Questa modalita' puo' essere utile, ad esempio ai docenti per motivi di testing, per visitare facilmente tutti i tipi le stanze e arrivare molto velocemente al boss.
 
@@ -767,6 +784,12 @@ Inoltre, e' possibile attivare una \textbf{DEBUG MODE}. Per farlo, andare in \te
 	\item Laboratorio 11: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=121130#p177432}
 \end{itemize}
 
+
+\subsection*{B.0.2 elvis.perlika@studio.unibo.it}
+
+\begin{itemize}
+	\item Laboratorio 04: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=113869#p169301}
+\end{itemize}
 
 \bibliographystyle{alpha}
 \bibliography{13-template}
