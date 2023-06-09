@@ -2,7 +2,6 @@ package dimhol.view.screens;
 
 import dimhol.core.Engine;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 /**
@@ -30,15 +29,15 @@ public class HomeScreen extends AbstractScreen {
         super(engine);
         super.setBackground("/asset/bg/Fortress 1.png");
         Color color = new Color(R, G, B);
-        this.add(super.createLabel("/asset/bg/HomeScreenTitle.png"), gbc);
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(super.createLabel("/asset/bg/HomeScreenTitle.png"), super.getGbc());
+        super.setGbcAnchorCenter();
+        super.setGbcFillHorizontal();
         super.getCenterPanel().setLayout(new GridBagLayout());
-        super.getCenterPanel().add(super.createButton((e -> engine.newGame()), "PLAY", color), gbc);
+        super.getCenterPanel().add(super.createButton((e -> engine.newGame()), "PLAY", color), super.getGbc());
         super.getCenterPanel().add(super.createButton((e -> engine.getMainWindow().changePanel(new OptionScreen(engine))), "OPTIONS",
-            color), gbc);
-            super.getCenterPanel().add(super.createButton((e -> Runtime.getRuntime().exit(0)), "QUIT", color), gbc);
-        gbc.weighty = 1;
+            color), super.getGbc());
+            super.getCenterPanel().add(super.createButton((e -> Runtime.getRuntime().exit(0)), "QUIT", color), super.getGbc());
+            super.getGbc().weighty = 1;
         this.add(super.getCenterPanel());
     }
 }

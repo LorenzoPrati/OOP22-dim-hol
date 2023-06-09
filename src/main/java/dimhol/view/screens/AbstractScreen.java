@@ -26,7 +26,7 @@ public abstract class AbstractScreen extends JPanel {
     private ImageIcon background;
     private Font font;
     private JPanel centerPanel; 
-    protected GridBagConstraints gbc;
+    private GridBagConstraints gbc;
 
     /**
      * Creates an AbstractScreen.
@@ -59,8 +59,12 @@ public abstract class AbstractScreen extends JPanel {
         return gbc;
     }
 
-    public void setGbc(GridBagConstraints gbc) {
-        this.gbc = gbc;
+    public void setGbcAnchorCenter() {
+        this.gbc.anchor = GridBagConstraints.CENTER;
+    }
+
+    public void setGbcFillHorizontal() {
+        this.gbc.fill = GridBagConstraints.HORIZONTAL;
     }
 
     /**
