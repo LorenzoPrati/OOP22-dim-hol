@@ -30,12 +30,10 @@ public class PhysicsSystem extends AbstractSystem {
         final var cc = (CollisionComponent) entity.getComponent(CollisionComponent.class);
         final var b1 = (BodyComponent) entity.getComponent(BodyComponent.class);
         final var p1 = (PositionComponent) entity.getComponent(PositionComponent.class);
-        for (final var collided : cc.getCollided()) {
-            var b2 = (BodyComponent) collided.getComponent(BodyComponent.class);
-            if (b1.isSolid() && b2.isSolid()) {
-                p1.resetToLastPos();
-                break;
-            }
+        if (b1.isSolid() && cc.getCollided().stream()
+                .map(collided -> (BodyComponent) collided.getComponent(BodyComponent.class))
+                .anyMatch(BodyComponent::isSolid)) {
+            p1.resetToLastPos();
         }
     }
 }
