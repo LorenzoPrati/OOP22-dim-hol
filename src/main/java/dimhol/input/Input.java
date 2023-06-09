@@ -3,6 +3,7 @@ package dimhol.input;
 /**
  * An interface to model user input.
  */
+@SuppressWarnings("PMD.JUnit4TestShouldUseBeforeAnnotation") // setUp method name should be avoided
 public interface Input extends Cloneable {
 
     /**
