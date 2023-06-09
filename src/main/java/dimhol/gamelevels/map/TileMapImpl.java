@@ -50,17 +50,6 @@ public final class TileMapImpl implements TileMap {
      * {@inheritDoc}
      */
     @Override
-    public void setTile(final int x, final int y, final Tile tile) {
-        if (!isValidCoordinate(x, y)) {
-            throw new IllegalArgumentException("Invalid coordinates: (" + x + ", " + y + ")");
-        }
-        tilemap[x][y] = tile;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int getWidth() {
         return width;
     }

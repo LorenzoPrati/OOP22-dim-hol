@@ -17,15 +17,6 @@ public interface TileMap {
     Tile getTile(int x, int y);
 
     /**
-     * Sets the tile at the specified coordinates.
-     *
-     * @param x    the x-coordinate of the tile
-     * @param y    the y-coordinate of the tile
-     * @param tile the tile to be set at the specified coordinates
-     */
-    void setTile(int x, int y, Tile tile);
-
-    /**
      * Returns the width of the tile map.
      *
      * @return the width of the tile map.
