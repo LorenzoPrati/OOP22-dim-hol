@@ -78,8 +78,8 @@ public class SceneImpl implements Scene {
                                 newTileWidth = this.getHeight() / tileMapWidth;
                             }
                             newTileHeight = newTileWidth;
-                            offsetX = this.getWidth() - tileMapHeight * newTileWidth / 2;
-                            offsetY = this.getHeight() - tileMapWidth * newTileHeight / 2;
+                            offsetX = (this.getWidth() - tileMapHeight * newTileWidth) / 2;
+                            offsetY = (this.getHeight() - tileMapWidth * newTileHeight) / 2;
                             final var drawX = newTileHeight * j + offsetX;
                             final var drawY = newTileWidth * i + offsetY;
                             g2.drawImage(loader.getTileImage(id), drawX, drawY, newTileWidth, newTileHeight, null);
