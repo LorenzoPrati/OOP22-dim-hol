@@ -52,8 +52,11 @@ public class OptionScreen extends AbstractScreen {
         Font font2 = new Font("Helvetica", Font.BOLD, FONT2_SIZE);
         JPanel optionListPanel = new JPanel();
         JComboBox<String> comboBox = new JComboBox<>();
-        for (var resolution: mapResolutions.keySet()) {
-            comboBox.addItem(resolution);
+        for (var resolution : mapResolutions.entrySet()) {
+            if (resolution.getValue().getWidth() <= engine.getMainWindow().getScreenSize().getWidth() ||
+                    resolution.getValue().getHeight() <= engine.getMainWindow().getScreenSize().getHeight()) {
+                comboBox.addItem(resolution.getKey());
+            }
         }
         optionListPanel.setLayout(new GridBagLayout());
         comboBox.setFont(font2);
