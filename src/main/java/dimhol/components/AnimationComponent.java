@@ -131,13 +131,12 @@ public class AnimationComponent implements Component {
      * @return true if the animation is blocking.
      */
     public boolean isBlocking() {
-        var flag = map.entrySet().stream()
+        return map.entrySet().stream()
             .filter(e -> e.getKey().equals(state))
             .map(e -> e.getValue())
             .findAny()
             .get()
             .get(2)
             .equals(1);
-        return flag;
     }
 }

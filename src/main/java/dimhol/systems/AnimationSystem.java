@@ -19,8 +19,8 @@ public final class AnimationSystem extends AbstractSystem {
 
     @Override
     protected void process(final Entity entity, final double deltaTime, final World world) {
-        var animationComp = (AnimationComponent) entity.getComponent(AnimationComponent.class);
-        var currentState = animationComp.getState();
+        final var animationComp = (AnimationComponent) entity.getComponent(AnimationComponent.class);
+        final var currentState = animationComp.getState();
         if (animationComp.isBlocking()) {
             animationComp.setCompleted(false);
         }

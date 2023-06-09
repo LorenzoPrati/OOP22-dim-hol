@@ -19,21 +19,13 @@ import dimhol.components.PositionComponent;
  */
 public class ItemFactory extends AbstractFactory {
     private static final double W = 0.5;
-    private static final double H = 0.5;
     private static final int INCREASE_CURRENT_HEALTH = 1;
     private static final int INCREASE_CURRENT_COINS = 1;
 
-    /**
-     * Constructs a factory of items.
-     */
-    public ItemFactory() {
-        super();
-    }
-
-    private BiFunction<Entity, List<Class<? extends Component>>, Boolean> increaseCurrentHealth = (e, c) -> {
-        var hasComponentNeeded = c.stream().anyMatch(comp -> e.hasComponent(comp));
+    private final BiFunction<Entity, List<Class<? extends Component>>, Boolean> increaseCurrentHealth = (e, c) -> {
+        final var hasComponentNeeded = c.stream().anyMatch(comp -> e.hasComponent(comp));
         if (hasComponentNeeded) {
-            var healthComp = (HealthComponent) e.getComponent(HealthComponent.class);
+            final var healthComp = (HealthComponent) e.getComponent(HealthComponent.class);
             if (healthComp.getCurrentHealth() < healthComp.getMaxHealth()) {
                 healthComp.setCurrentHealth(healthComp.getCurrentHealth() + INCREASE_CURRENT_HEALTH);
                 return true;
@@ -43,10 +35,10 @@ public class ItemFactory extends AbstractFactory {
         return false;
     };
 
-    private BiFunction<Entity, List<Class<? extends Component>>, Boolean> increaseCurrentCoinsAmount = (e, c) -> {
-        var hasComponentNeeded = c.stream().anyMatch(comp -> e.hasComponent(comp));
+    private final BiFunction<Entity, List<Class<? extends Component>>, Boolean> increaseCurrentCoinsAmount = (e, c) -> {
+        final var hasComponentNeeded = c.stream().anyMatch(comp -> e.hasComponent(comp));
         if (hasComponentNeeded) {
-            var coinPocketComp = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
+            final var coinPocketComp = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
             coinPocketComp.setAmount(coinPocketComp.getCurrentAmount() + INCREASE_CURRENT_COINS);
             return true;
         }

@@ -69,8 +69,8 @@ public class OptionScreen extends AbstractScreen {
             button.setText(engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE");
             }), (engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE"), Color.BLACK), super.getGbc());
         optionListPanel.add(super.createButton(l -> {
-            var selectetResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
-            var res = mapResolutions.get(selectetResolution);
+            var selectedResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
+            var res = mapResolutions.get(selectedResolution);
             engine.getMainWindow().changeResolution(new Dimension(res));
             }, "DONE", Color.BLACK), super.getGbc());
         super.setGbcAnchorCenter();

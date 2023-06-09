@@ -22,10 +22,10 @@ public final class ItemSystem extends AbstractSystem {
 
     @Override
     protected void process(final Entity entity, final double deltaTime, final World world) {
-        var collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
-        var itemComp = (ItemComponent) entity.getComponent(ItemComponent.class);
-        for (var c: collisionComp.getCollided()) {
-            var picked = itemComp.applyEffect(c, List.of(PlayerComponent.class));
+        final var collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
+        final var itemComp = (ItemComponent) entity.getComponent(ItemComponent.class);
+        for (final var c: collisionComp.getCollided()) {
+            final var picked = itemComp.applyEffect(c, List.of(PlayerComponent.class));
             if (picked) {
                 world.notifyEvent(new RemoveEntityEvent(entity));
             }

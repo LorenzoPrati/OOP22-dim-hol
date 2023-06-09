@@ -56,6 +56,6 @@ public class MainWindowImpl implements MainWindow {
      */
     @Override
     public Dimension getScreenSize() {
-        return this.screenSize;
+        return new Dimension(this.screenSize);
     }
 }
