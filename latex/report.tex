@@ -327,7 +327,6 @@ rimanere quello di eliminare il giocatore.
 	\centering
 	\includegraphics[width=\textwidth]{uml/UML_AI.png}
 	\caption{Diagramma UML delle Action.}
-	\label{img:badarch}
 \end{figure}
 
 \paragraph{Problema}
@@ -387,14 +386,29 @@ Nelle sezione precedenti ho trattato soltanto di AI nemiche ma questo sistema
 permette anche la creazione di AI assegnabili ad NPC.
 
 \subsubsection{Combat System}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{uml/UML_CombatSystem.png}
+	\caption{Diagramma UML del CombatSystem.}
+\end{figure}
 
 \paragraph{Problema}
 Evitare che le AI nemiche causino danno a loro AI alleate.
 \paragraph{Soluzione}
-Ho sfruttato lo stesso sistema ideato dalla collega Alessandra Versari 
+Ho sfruttato un sistema simile a quello ideato dalla collega Alessandra Versari 
 per la creazione degli Item.\\
-Per dettagli referenzio alla sezione di Design Dettagliato 
-della collega.
+Gli attacchi sono un entità composta, tra le altri componenti, del AttackComponent che 
+si occupa di memorizzare il danno del arma, chi ha processato l'attacco e quali entità
+devono ricevere il danno (così da evitare che le entità nemiche del player si 
+uccidano tra di loro).
+
+\paragraph{Problema}
+Eliminare gli attacchi ravvicinati processati.
+\paragraph{Soluzione}
+Ho ideato il \texttt{ClearAttackSystem} il quale si occupa di eliminare gli attacchi
+ravvicinati (di durata istantanea) nonostante non abbiano colpito l'entità puntata.
+Per distinguere gli attacchi ho creato due \textit{"Tag Component"}: \texttt{MeleeComponent}
+ed \texttt{BulletComponent}.
 
 \subsubsection{HUD}
 
@@ -603,6 +617,7 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 		\begin{itemize}
 			\item classe \texttt{AISystem}
 			\item classe \texttt{CombatSystem}
+			\item classe \texttt{ClearAttackSystem}
 		\end{itemize}
 	\item package logic
 		\begin{itemize}
@@ -681,7 +696,7 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 
 \section{Note di sviluppo}
 
-\subsubsection{Lorenzo Prati}
+\subsubsection*{Lorenzo Prati}
 
 \begin{itemize}
 	\item uso della libreria jts (Java Topology Suite)  sia per la classe \texttt{Vector2D}
@@ -701,7 +716,7 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 	\item Optional utilizzati sia in \texttt{PositionComponent} che nei vari stati del player
 \end{itemize}
 
-\subsubsection{Elvis Perlika}
+\subsubsection*{Elvis Perlika}
 \begin{itemize}
 	\item Uso di Optional per la creazione di nuove entità create dalle Action delle AI \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/2e16e10f3be14f1267b82342076954256f6c2a2d/src/main/java/dimhol/logic/ai/Action.java#L27}
 	
@@ -770,7 +785,7 @@ Inoltre, e' possibile attivare una \textbf{DEBUG MODE}. Per farlo, andare in \te
 
 \chapter{Esercitazioni di laboratorio}
 
-\subsection*{B.0.1 lorenzo.prati3@studio.unibo.it}
+\subsection{lorenzo.prati3@studio.unibo.it}
 
 \begin{itemize}
 	\item Laboratorio 03: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=112846#p168119}
@@ -785,7 +800,7 @@ Inoltre, e' possibile attivare una \textbf{DEBUG MODE}. Per farlo, andare in \te
 \end{itemize}
 
 
-\subsection*{B.0.2 elvis.perlika@studio.unibo.it}
+\subsection{elvis.perlika@studio.unibo.it}
 
 \begin{itemize}
 	\item Laboratorio 04: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=113869#p169301}

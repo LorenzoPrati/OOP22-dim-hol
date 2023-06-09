@@ -114,8 +114,8 @@ public final class RoutineFactory {
     }
 
     /**
-     * Create shop keeper routine.
-     * @return
+     * Create shopkeeper routine.
+     * @return a shopkeeper
      */
     public List<Action> createShopKeeperRoutine() {
         return List.of(
