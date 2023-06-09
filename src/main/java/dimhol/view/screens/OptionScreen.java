@@ -18,22 +18,32 @@ import dimhol.core.Engine;
  */
 public class OptionScreen extends AbstractScreen {
     private static final int FONT2_SIZE = 17;
-    private static final int W1 = 800;
-    private static final int H1 = 600;
-    private static final int W2 = 800;
-    private static final int H2 = 1280;
+    private static final int W1 = 1280;
+    private static final int H1 = 720;
+    private static final int W2 = 1080;
+    private static final int H2 = 1080;
     private static final int W3 = 1920;
-    private static final int H3 = 1080;
+    private static final int H3 = 1200;
+    private static final int W4 = 3300;
+    private static final int H4 = 2000;
+    private static final int W5 = 800;
+    private static final int H5 = 600;
+    private static final int W6 = 720;
+    private static final int H6 = 720;
     private final Map<String, Dimension> mapResolutions =  new HashMap<>() {
         {
-            put("800x600", new Dimension(W1, H1));
-            put("800x1280", new Dimension(W2, H2));
-            put("1920x1080 (recommended)", new Dimension(W3, H3));
+            put(W1 + "x" + H1, new Dimension(W1, H1));
+            put(W2 + "x" + H2, new Dimension(W2, H2));
+            put(W3 + "x" + H3, new Dimension(W3, H3));
+            put(W4 + "x" + H4, new Dimension(W4, H4));
+            put(W5 + "x" + H5, new Dimension(W4, H4));
+            put(W6 + "x" + H6, new Dimension(W4, H4));
         }
     };
 
     /**
      * Creates an options menu.
+     * The resolution box shows only resolutions your monitor support.
      * @param engine
      */
     public OptionScreen(final Engine engine) {
@@ -59,8 +69,8 @@ public class OptionScreen extends AbstractScreen {
             button.setText(engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE");
             }), (engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE"), Color.BLACK), super.getGbc());
         optionListPanel.add(super.createButton(l -> {
-            var selecteResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
-            var res = mapResolutions.get(selecteResolution);
+            var selectetResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
+            var res = mapResolutions.get(selectetResolution);
             engine.getMainWindow().changeResolution(new Dimension(res));
             }, "DONE", Color.BLACK), super.getGbc());
         super.setGbcAnchorCenter();

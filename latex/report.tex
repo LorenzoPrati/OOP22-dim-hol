@@ -679,37 +679,36 @@ gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per
 \subsection{Alessandra Versari}
 \subsubsection*{Items}
 \paragraph*{Problema}
-	Con item si intende un oggetto di gioco che verrà raccolto a seguito del passaggio del player sopra ad esso. Gli item presenti nel nostro gioco sono cuori e monete.
-	Ciascun item una volta entrato in contatto con un'entità deve prima verificare che si tratti del player ed effettuare i controlli necessari prima di applicare il proprio “effetto” (cioè la conseguenza/reazione che l'item avrà sull'entità che ha colliso con esso).
-	Di seguito le principali caratteristiche degli items presenti nel nostro gioco:
+	Ciascun item una volta entrato in contatto con un'entità dovrà prima verificare che si tratti del player ed effettuare i controlli necessari prima di applicare il proprio “effetto” (cioè la conseguenza/reazione che l'item avrà sull'entità che ha colliso con esso).
+	Di seguito l’effetto specifico degli items presenti nel nostro gioco:
 	\begin{itemize}
-		\item Gli items “cuore” permetteranno di aumentare la vita corrente del player, ma ciò verrà fatto solo a seguito del controllo sulla vita corrente: l'item verrà raccolto se e solo se la vita corrente è minore della vita massima che il player può avere. Questo tipo di item è disponibile in ogni stanza, escludendo lo Shop.
-		\item Gli items “moneta”, anch'essi presenti in ciascun livello (shop escluso), permetteranno di aumentare l'ammontare delle monete raccolte dal player. Questo tipo di item, oltre a verificare che l'entità che ha colliso con esso sia il player, non farà ulteriori controlli. Lo scopo degli items “moneta” è quello di consentire al player, l'acquisto di power up (che tratterò in seguito) all'interno della stanza Shop.
+		\item Gli items “cuore” dovranno aumentare la vita corrente del player, ma ciò verrà fatto solo a seguito del controllo sulla vita corrente: l'item verrà raccolto se e solo se la vita corrente è minore della vita massima che il player può avere. 
+		\item Gli items “moneta” dovranno aumentare l'ammontare delle monete raccolte dal player. Questo tipo di item, oltre a verificare che l'entità che ha colliso con esso sia il player, non farà ulteriori controlli.
 	\end{itemize}
+
 \paragraph*{Soluzione}
-	Per realizzare quanto descritto ho deciso di creare due componenti principali: HealthComponent e CoinPocketComponent, appartenenti alla lista di componenti del player, che permettono di consultare e modificare vita corrente, vita massima e monete raccolte. Tramite i getter e i setter, in questo modo, posso creare gli “effetti” degli item, all'interno dell'ItemFactory. 
-	Ogni item è dotato di un componente detto ItemComponent che oltre a rendere riconoscibili gli item, memorizza una Bifunction che corrisponde a quello che fin'ora ho definito “effetto”. La Bifunction in questo caso prende come argomento l'entità che ha colliso con l'item e una lista di component. Nel nostro gioco, al momento, solo il player ha la possibilità di raccogliere items, ma nel caso in cui volessimo rendere questi items raccoglibili anche ai nemici, sarebbe possibile farlo, passando come argomento alla Bifuntion una lista contenente i componenti identificativi di player e nemici (ossia PlayerComponent e AIComponent).
+	Per realizzare quanto descritto ho deciso di creare due componenti principali: HealthComponent e CoinPocketComponent, appartenenti alla lista di componenti del player, che permettono di consultare e modificare vita corrente, vita massima e monete raccolte. Tramite i getter e i setter, in questo modo, posso creare gli “effetti” degli item, all'interno dell'ItemFactory.  Ogni item è dotato di un componente detto ItemComponent che oltre a rendere riconoscibili gli item, memorizza una Bifunction che corrisponde a quello che fin'ora ho definito “effetto”. La Bifunction in questo caso prende come argomento l'entità che ha colliso con l'item e una lista di component. Nel nostro gioco, al momento, solo il player ha la possibilità di raccogliere items, ma nel caso in cui volessimo rendere questi items raccoglibili anche ai nemici, sarebbe possibile farlo, passando come argomento alla Bifuntion una lista contenente i componenti identificativi di player e nemici (ossia PlayerComponent e AIComponent).
 	Inizialmente avevo scelto di creare gli effetti utilizzando il Factory Method perché pensavo potesse rendere più riutilizzabili gli effetti e velocizzarne la creazione, ma il risultato era un insieme di classi Factory, molto simili tra loro e la cui unica differenza era operare su componenti diversi (una factory per gli effetti che modificavano la vita, un'altra per quelli che modificavano l'ammontare delle monete e così via).
 	Inoltre siccome gli effetti alla fine sono praticamente solo incrementi e decrementi, mi è sembrato più sensato utilizzare interfacce funzionali e lamba per crearli all'interno della factory. 
 	Per quanto riguarda le interfacce funzionali, ho deciso di utilizzare le Bifuction così da poter restituire un boolean che permette di capire se l'effetto è stato applicato o meno e se quindi è necessario rimuovere l'item.
+
 
 \paragraph*{Pattern utilizzati}
 	Nella classe ItemFactory è stato utilizzato il Factory Method.
 
 \subsubsection*{InteractableObjects}
 \paragraph*{Problema}
-	Con interactable objects si intende tutti gli oggetti di gioco che per essere utilizzati necessitano dell'interazione del giocatore. A differenza degli items infatti, la collisione con l'oggetto in questo caso non è sufficiente, è necessario premere in tasto E una volta posizionato il player sull'oggetto.
-	Gli oggetti interactable presenti nel nostro gioco sono i power-up e il gate. 
-	I power-up sono potenziamenti che il player può acquistare nella stanza shop pagando il loro prezzo. Essi si suddividono in:
+	A differenza degli items, la collisione con l'oggetto in questo caso non è sufficiente, è necessario premere in tasto E una volta posizionato il player sull'oggetto.
+	Gli oggetti interactable presenti nel nostro gioco sono i power-up e il gate:
 	\begin{itemize} 
-		\item Power-up vita: permette di aumentare la vita massima del giocare.
-		\item Power-up velocità: permette di aumentare la velocità del giocatore.
+		\item I power up prima di applicare il loro effetto (che comprenderà anche il decremento delle monete totali del giocatore) dovranno controllare che il player abbia sufficienti monete per effettuare l'acquisto.
+		\item Il gate invece dovrà fare un controllo sulle entità presenti in gioco e applicare il proprio effetto solo nel caso i nemici siano stati eliminati, avrà quindi bisogno del World.
 	\end{itemize}
-	Il gate invece è semplicemente il portale che permette di accedere al livello successivo. 
+	Se e solo se l'effetto verrà applicato, l'interactable object dovrà essere rimosso. 
 
 \paragraph*{Soluzione}
-	Per realizzare tutto ciò ho creato i vari InteractableObjects all'interno dell'interactableObjectsFactory assegnando a ciascuno di essi i propri componenti. Ognuno di questi oggetti è distinguibile grazie all'InteractableComponent che memorizza il loro “effetto” mediante un Bifunction che prende come argomenti un'entità e il world (necessario affinchè alcuni di essi possano lanciare WorldEvent, per esempio il gate come effetto lancia l'evento ChangeRoomEvent()) e restituisce un booleano che permette di capire se l'effetto è stato applicato o meno.
-	Sempre all'interno della factory ho implementato anche gli “effetti” tramite Bifunction che poi utilizzano altre interfacce funzionali (BiPredicate,Predicate e BiConsumer) per effettuare i controlli necessari in modo da poterli riutilizzare all'interno di “effetti” diversi se necessario. Ho deciso di implementare tutto questo all'interno della factory (come nel caso degli items) perché anche in questo caso si trattava di qualche incremento o decremento di interi contenuti in Component diversi e qualche controllo in più. Anche in questo caso inizialmente avevo tentato di utilizzare il Factory method per poi rendermi conto che non era la strada migliore perché il risultato erano una serie di classi molto simili e quindi codice ripetitivo, inoltre le factory non erano molto riutilizzabili siccome questo tipo di effetti devono essere applicati sempre e solo sul player.
+	Per realizzare tutto ciò ho creato i vari InteractableObjects all'interno dell'InteractableObjectsFactory assegnando a ciascuno di essi i propri componenti. Ognuno di questi oggetti è distinguibile grazie all'InteractableComponent che memorizza il loro “effetto” mediante un Bifunction che prende come argomenti un'entità e il world (necessario affinchè alcuni di essi possano lanciare WorldEvent, per esempio il gate come effetto lancia l'evento ChangeRoomEvent()) e restituisce un booleano che permette di capire se l'effetto è stato applicato o meno.
+	Sempre all'interno della factory ho implementato anche gli “effetti” tramite Bifunction che poi utilizzano altre interfacce funzionali per effettuare i controlli necessari (es. checkCoin che controlla se le monete solo sufficienti per effettuare l'acquisto) in modo da poterli riutilizzare all'interno di “effetti” diversi se necessario. Ho deciso di implementare tutto questo all'interno della factory (come nel caso degli items) perché anche in questo caso si trattava di qualche incremento o decremento di interi contenuti in Component diversi e qualche controllo in più. Anche in questo caso inizialmente avevo tentato di utilizzare il Factory method per poi rendermi conto che non era la strada migliore perché il risultato erano una serie di classi molto simili e quindi codice ripetitivo, inoltre le factory non erano molto riutilizzabili siccome questo tipo di effetti devono essere applicati sempre e solo sul player.
 	Ho creato infine l'InteractableSystem che si occupa di tutti gli oggetti che hanno l'InteractableComponent e controlla se alcune entità hanno colliso con essi. Nel caso affermativo, se tutti i controlli vengono superati (es. l'effetto del gate viene applicato solo se il player sta interagendo con esso, se tutti i nemici sono stati eliminati e quindi la Bifunction ritorna true) l'oggetto viene rimosso tramite il WorldEvent RemoveEntityEvent(). 
 	
 \paragraph*{Pattern utilizzati}
@@ -732,7 +731,6 @@ gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per
 	Per fare ciò ho deciso di creare una classe AbstractScreen così da ridurre il più possibile la ripetizione di codice. Questo è stato possibile perché tutte queste schermate utilizzano il GridBagLayout come layout più esterno.
 	In questo modo nelle classi che implementano i vari menù e schermate compaiono solo gli elementi differenti e non utilizzati negli altri menù o schermate.
 
-
 \chapter{Sviluppo}
 
 \section{Testing automatizzato}
@@ -753,13 +751,9 @@ Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzar
 Ho realizzato una classe \texttt{AITest} che dimostra il corretto funzionamento delle AI in
 situazioni differenti, la creazione delle AI e lo spawn degli attacchi.
 
-\url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7a557eed3acda9eb23b395d56d63c8e907038863/src/test/java/dimhol/AITest.java#L43}
-
 \subsubsection*{Alessandra Versari}
-
 \paragraph*{Test degli effetti degli items}
-Ho realizzato la classe \texttt{ItemTest}, che contiene due metodi, uno per testare l'effetto dell'item cuore e l'effetto dell'item moneta, confrontando i valori contenuti nei component dei player dopo che l'effetto è stato applicato
-
+Ho realizzato la classe \texttt{ItemTest}, che contiene due metodi, uno per testare l'effetto dell'item cuore e uno per l'effetto dell'item moneta, confrontando i valori contenuti nei component dei player dopo che l'effetto è stato applicato.
 
 \section{Metodologia di lavoro}
 Per l'intera durata del progetto abbiamo cercato di rispettare i ruoli dichiarati al momento della proposta e di limitare il lavoro svolto collettivamente. 
@@ -995,9 +989,6 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 \end{itemize}
 
 
-
-
-
 \section{Note di sviluppo}
 
 \subsubsection*{Lorenzo Prati}
@@ -1061,7 +1052,6 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 \chapter{Commenti finali}
 
 
-
 \section{Autovalutazione e lavori futuri}
 
 \subsubsection{Lorenzo Prati}
@@ -1115,7 +1105,7 @@ In conclusione, il lavoro di squadra può essere impegnativo, ma rappresenta un'
 Le difficoltà personali incontrate nel corso del progetto mi hanno spinto a sviluppare nuove competenze e a migliorare le mie abilità.
 
 \subsubsection{Alessandra Versari}
-Essendo un progetto abbastanza grande rispetto a ciò a cui siamo abituati mi sono trovata un po' spaesata soprattutto all'inizio e la collaborazione con i miei compagni è stata fondamentale. Sicuramente ciò che ho ritenuto più difficile è la scelta di un'architettura adeguata a ciò che avevamo in mente di sviluppare.
+Essendo un progetto abbastanza ampio rispetto a ciò a cui siamo abituati mi sono trovata un po' spaesata soprattutto inizialmente e la collaborazione con i miei compagni è stata fondamentale. Sicuramente ciò che ho ritenuto più difficile è stato la scelta di un'architettura adeguata a ciò che avevamo in mente di sviluppare.
 Inoltre il fatto di aver dovuto ricominciare il progetto quasi a ridosso della scadenza scelta (a causa di nostre scelte errate) e aver dovuto lavorarci per più mesi del previsto, facendo sempre fatica a trovare il tempo per le altre materie e altri impegni mi ha un po' buttato giù.
 Mi sarebbe piaciuto vedere qualche progetto degli anni precedenti a lezione, così da sentirmi magari più pronta all'inizio del progetto, ma complessivamente ritengo che le competenze acquisite siano sufficienti.
 
@@ -1150,4 +1140,14 @@ Inoltre, e' possibile attivare una \textbf{DEBUG MODE}. Per farlo, andare in \te
 \bibliographystyle{alpha}
 \bibliography{13-template}
 
+
+\subsection{alessandra.versari2@studio.unibo.it}
+\begin{itemize}
+	\item Laboratorio 04: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=113869#p169345}
+	\item Laboratorio 05: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=114647#p169707}
+	\item Laboratorio 07: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=117044#p173080}
+	\item Laboratorio 08: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=117852#p174325}
+	\item Laboratorio 09: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=118995#p174729}
+	\item Laboratorio 10: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=119938#p176115}
+\end{itemize}
 \end{document}
