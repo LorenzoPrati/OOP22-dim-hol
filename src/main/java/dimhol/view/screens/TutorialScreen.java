@@ -39,10 +39,10 @@ public class TutorialScreen extends AbstractScreen {
         COMMANDS_MAP.put("Interaction", "Interaction: 'E'");
         COMMANDS_MAP.put("Lore", "You must defeat all the enemies, "
                 + "then press 'E' on the Gate to pass to the next room");
-        COMMANDS_MAP.put("Lore1", "Collect coins that can be used in the shop and pick up hearts to heal");
+        COMMANDS_MAP.put("Lore1", "Press 'ESC' to pause the game in any moment");
         COMMANDS_MAP.put("Lore2", "Press 'E' on the power-ups available in the shop "
-                + "to buy them if you have enough coins");
-        COMMANDS_MAP.put("Lore3", "To win the game, you must defeat the boss that spawns in the last room. "
+                + "to buy them if you have collected enough coins");
+        COMMANDS_MAP.put("Lore3", "To win the game, you must defeat the boss that spawn in the last room. "
                 + "Let's start the journey!");
     }
 

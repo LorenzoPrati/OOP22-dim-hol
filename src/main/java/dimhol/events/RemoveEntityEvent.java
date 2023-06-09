@@ -31,18 +31,17 @@ public class RemoveEntityEvent implements WorldEvent {
      */
     @Override
     public void execute(final World world) {
-        final var toRemove = world.getEntities().stream()
+        world.getEntities().stream()
                 .filter(e -> e.getId().equals(this.id))
-                .findAny();
-
-        toRemove.ifPresent(entity -> {
-            if (entity.hasComponent(PlayerComponent.class)) {
-                world.setWin(false);
-            }
-            if (entity.hasComponent(BossComponent.class)) {
-                world.setWin(true);
-            }
-            world.removeEntity(entity);
-        });
+                .findFirst()
+                .ifPresent(e -> {
+                    if (e.hasComponent(PlayerComponent.class)) {
+                        world.setWin(false);
+                    }
+                    if (e.hasComponent(BossComponent.class)) {
+                        world.setWin(true);
+                    }
+                    world.removeEntity(e);
+                });
     }
 }
