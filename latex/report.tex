@@ -391,10 +391,23 @@ permette anche la creazione di AI assegnabili ad NPC.
 \paragraph{Problema}
 Evitare che le AI nemiche causino danno a loro AI alleate.
 \paragraph{Soluzione}
-Ho sfruttato lo stesso sistema ideato dalla collega Alessandra Versari 
+Ho sfruttato un sistema simile a quello ideato dalla collega Alessandra Versari 
 per la creazione degli Item.\\
-Per dettagli referenzio alla sezione di Design Dettagliato 
-della collega.
+Gli attacchi sono un entità composta, tra le altri componenti, del AttackComponent che 
+si occupa di memorizzare il danno del arma, chi ha processato l'attacco e quali entità
+devono ricevere il danno (così da evitare che le entità nemiche del player si 
+uccidano tra di loro).
+
+\paragraph{Problema}
+Eliminare gli attacchi processati.
+\paragraph{Soluzione}
+Ho ideato il \texttt{ClearAttackSystem} il quale si occupa di eliminare gli attacchi
+che hanno colliso con le entità nemiche.
+Questo sistema distungue gli attachi da distanza da quelli ravvicinati sfruttando 
+due \textit{"Tag Component"}: \texttt{MeleeComponent}
+ed \texttt{BulletComponent}, distinzione utile ad eliminare gli soltanto gli attachi 
+ravvicinati (di durata istantanea) anche se non hanno colpito l'entiyà puntata. 
+
 
 \subsubsection{HUD}
 
@@ -603,6 +616,7 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 		\begin{itemize}
 			\item classe \texttt{AISystem}
 			\item classe \texttt{CombatSystem}
+			\item classe \texttt{ClearAttackSystem}
 		\end{itemize}
 	\item package logic
 		\begin{itemize}
