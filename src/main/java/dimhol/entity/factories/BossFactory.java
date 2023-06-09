@@ -85,7 +85,7 @@ public class BossFactory extends AbstractFactory {
                 .add(new BodyComponent(new RectBodyShape(MINIONS_WIDTH, MINIONS_HEIGHT), true))
                 .add(new HealthComponent(MINIONS_HEALTH))
                 .add(new AnimationComponent(getAnimationsMap().get("enemy"), "idle"))
-                .add(new AIComponent(new RoutineFactory().createMinionsRoutine()))
+                .add(new AIComponent(new RoutineFactory().createMinionRoutine()))
                 .build();
     }
 }

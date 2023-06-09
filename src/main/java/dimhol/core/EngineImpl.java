@@ -68,6 +68,9 @@ public final class EngineImpl implements Engine {
         }
     }
 
+    /**
+     * Initializes a new world, setup variables and launches game loop.
+     */
     private void runGame() {
         this.world = new WorldImpl(this);
         this.world.changeLevel();
@@ -106,7 +109,7 @@ public final class EngineImpl implements Engine {
     }
 
     /**
-     *
+     * Game loop implementation.
      */
     private void gameLoop() {
         long prev = System.currentTimeMillis(); //time since previous loop
@@ -150,8 +153,8 @@ public final class EngineImpl implements Engine {
      * {@inheritDoc}
      */
     @Override
-    public void setDebugMode(final boolean debug) {
-        this.debug = debug;
+    public void switchDebugMode() {
+        this.debug = !this.debug;
     }
 
     /**

@@ -90,7 +90,7 @@ public class WorldImpl implements World {
     }
 
     /**
-     * Find entities that need to be rendered on screen and update scene.
+     * Find entities that need to be rendered on screen and update scene with necessary information.
      */
     private void prepareRender() {
         final var renderList = new ArrayList<Pair<Integer, GraphicInfo>>();
@@ -105,7 +105,7 @@ public class WorldImpl implements World {
                     final var anim = (AnimationComponent) e.getComponent(AnimationComponent.class);
                     renderList.add(new ImmutablePair<>(pos.getZ(),
                             new GraphicInfo(anim.getIndex(),
-                                    anim.getImage(),
+                                    anim.getImageNumber(),
                                     pos.getPos(),
                                     body.getBodyShape().getBoundingWidth(),
                                     body.getBodyShape().getBoundingHeight())));
@@ -115,7 +115,7 @@ public class WorldImpl implements World {
                     if (e.hasComponent(PlayerComponent.class)) {
                         final var health = (HealthComponent) e.getComponent(HealthComponent.class);
                         final var coins = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
-                        this.scene.getHUD().updateHUD(health.getCurrentHealth(),
+                        this.scene.updateHUD(health.getCurrentHealth(),
                                 health.getMaxHealth(),
                                 coins.getCurrentAmount());
                     }

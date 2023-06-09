@@ -2,12 +2,7 @@ package dimhol.view.screens;
 
 import dimhol.core.Engine;
 
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,15 +13,15 @@ public class TutorialScreen extends AbstractScreen {
     private static final Map<String, String> COMMANDS_MAP = new HashMap<>();
 
     static {
-        COMMANDS_MAP.put("Sword", "Left click: Sword");
-        COMMANDS_MAP.put("Bullet", "Right click: Bullet");
-        COMMANDS_MAP.put("Fireball", "Keep pressed 'Z' for 3 seconds: Fireball");
+        COMMANDS_MAP.put("Sword", "Click/Hold Left Mouse Button: Sword");
+        COMMANDS_MAP.put("Bullet", "Click/Hold Right Mouse Button: Bullet");
+        COMMANDS_MAP.put("Fireball", "Hold 'Z' for 3 seconds and then release: Fireball");
         COMMANDS_MAP.put("WASD", "Movement: 'W-A-S-D'");
         COMMANDS_MAP.put("Interaction", "Interaction: 'E'");
-        COMMANDS_MAP.put("Lore", "In order to change room, you have to interact with the gate.");
-        COMMANDS_MAP.put("Lore1", "To interact with the gate, you must defeat all the enemies inside the room.");
-        COMMANDS_MAP.put("Lore2", "You can interact with the Power-up available in the shop-room.");
-        COMMANDS_MAP.put("Lore3", "To win the game, you must defeat the boss. Let's start the journey!");
+        COMMANDS_MAP.put("Lore", "You must defeat all the enemies, then press 'E' on the Gate to pass to the next room");
+        COMMANDS_MAP.put("Lore1", "Collect coins that can be used in the shop and pick up hearts to heal");
+        COMMANDS_MAP.put("Lore2", "Press 'E' on the power-ups available in the shop to buy them if you have enough coins");
+        COMMANDS_MAP.put("Lore3", "To win the game, you must defeat the boss that spawn in the last room. Let's start the journey!");
     }
 
     public TutorialScreen(Engine engine) {

@@ -1,12 +1,11 @@
 package dimhol.view.HUD;
 
-import dimhol.view.HUD.HUD;
 import dimhol.view.ResourceLoader;
 
-import java.awt.Graphics2D;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Color;
+import java.awt.Graphics2D;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -110,7 +109,7 @@ public final class HUDImpl implements HUD {
     }
 
     @Override
-    public void updateHUD(final int currentHealth, final int maxHealth, final int currentAmount) {
+    public void setHUDInfo(final int currentHealth, final int maxHealth, final int currentAmount) {
         this.playerCurrentHealth = currentHealth;
         this.playerMaxHealth = maxHealth;
         this.coins = currentAmount;

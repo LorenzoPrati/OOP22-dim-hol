@@ -12,6 +12,10 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public final class RandomMovement extends AbstractAction {
 
+    /**
+     * Construct a Random Movement Action and set the change direction time.
+     * @param changeDirectionTime to set
+     */
     public RandomMovement(final double changeDirectionTime) {
         setWaitingTime(changeDirectionTime);
     }
@@ -24,7 +28,8 @@ public final class RandomMovement extends AbstractAction {
     @Override
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(true);
-        final Vector2D[] directions = {new Vector2D(0, 1), new Vector2D(0, -1), new Vector2D(1, 0), new Vector2D(-1, 0)};
+        final Vector2D[] directions = {new Vector2D(0, 1), new Vector2D(0, -1),
+                new Vector2D(1, 0), new Vector2D(-1, 0)};
         if (reloadTimePassed()) {
             getMovComp().setDir(directions[ThreadLocalRandom.current().nextInt(directions.length)]);
         }

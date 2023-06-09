@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 /**
  * This class contains the weapon damage and the predicate that define who can receive the damage.
  */
-public final class AttackComponent implements Component {
+public class AttackComponent implements Component {
 
     private final int damage;
     private final Predicate<Entity> predicate;

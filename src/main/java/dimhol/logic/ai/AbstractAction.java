@@ -33,6 +33,10 @@ public abstract class AbstractAction implements Action {
     private AIComponent ai;
     private MovementComponent movComp;
 
+    /**
+     * This method is a precondition to execute the action.
+     * @return
+     */
     @Override
     public boolean canExecute() {
         return getPlayerCentralPos().distance(getEnemyCentralPos()) <= aggroRay;

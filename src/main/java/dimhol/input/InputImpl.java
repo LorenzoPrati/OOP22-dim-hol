@@ -1,8 +1,9 @@
 package dimhol.input;
 
 /**
- * Stores user input.
+ * Implementation of Input interface.
  */
+@SuppressWarnings("PMD.JUnit4TestShouldUseBeforeAnnotation") // setUp method name should be avoided
 public class InputImpl implements Input {
 
     private boolean up;

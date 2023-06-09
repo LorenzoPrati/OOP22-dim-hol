@@ -2,8 +2,10 @@ package dimhol.entity.factories;
 
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,14 +20,16 @@ public abstract class AbstractFactory {
      * Abstract Factory contains a map of game entity graphics.
      */
     public AbstractFactory() {
-        try {
-            final InputStream input = getClass().getResourceAsStream("/config/animations.yaml");
-            final Yaml yaml = new Yaml();
-            final Map<String, Map<String, ArrayList<Integer>>> mapLoaded = yaml.load(input);
-            map.putAll(mapLoaded);
+        
+        final InputStream input = AbstractFactory.class.getResourceAsStream("/config/animations.yaml");
+        final Yaml yaml = new Yaml();
+        final Map<String, Map<String, ArrayList<Integer>>> mapLoaded = yaml.load(input);
+        map.putAll(mapLoaded);
+        assert input != null;
+        try{
             input.close();
-        } catch (Exception e) {
-            e.getStackTrace();
+        } catch (IOException e) {
+            System.out.println("Failed to close stream.");
         }
     }
 
@@ -34,6 +38,6 @@ public abstract class AbstractFactory {
      * @return the animation's map
      */
     public Map<String, Map<String, ArrayList<Integer>>> getAnimationsMap() {
-        return map;
+        return Collections.unmodifiableMap(map);
     }
 }

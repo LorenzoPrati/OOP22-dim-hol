@@ -5,7 +5,6 @@ import dimhol.components.AnimationComponent;
 import dimhol.components.AttackComponent;
 import dimhol.components.BodyComponent;
 import dimhol.components.BulletComponent;
-import dimhol.components.CollisionComponent;
 import dimhol.components.MeleeComponent;
 import dimhol.components.MovementComponent;
 import dimhol.components.PlayerComponent;
@@ -93,7 +92,8 @@ public final class EnemyAttackFactory extends AbstractAttackFactory {
                 .add(new PositionComponent(getAttackPos(entity, ENEMY_BULLET_WIDTH, ENEMY_BULLET_HEIGHT), 0))
                 .add(new MovementComponent(getDirection(entity), ENEMY_BULLET_SPEED, true))
                 .add(new BodyComponent(new RectBodyShape(ENEMY_BULLET_WIDTH, ENEMY_BULLET_HEIGHT), false))
-                .add(new AnimationComponent(getAnimationsMap().get("bullet"), DirectionUtil.getStringFromVec(getDirection(entity))))
+                .add(new AnimationComponent(getAnimationsMap().get("bullet"),
+                        DirectionUtil.getStringFromVec(getDirection(entity))))
                 .add(new AttackComponent(ENEMY_BULLET_DAMAGE, checkPlayer))
                 .add(new BulletComponent())
                 .build();

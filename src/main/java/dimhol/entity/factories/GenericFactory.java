@@ -28,6 +28,9 @@ public class GenericFactory extends AbstractFactory {
     private static final double PLAYER_WIDTH = 1;
     private static final double PLAYER_HEIGHT = 1;
 
+    /**
+     * Constructs a generic factory.
+     */
     public GenericFactory() {
         super();
     }
@@ -41,23 +44,29 @@ public class GenericFactory extends AbstractFactory {
      */
     public Entity createPlayer(final double x, final double y) {
         return new EntityBuilder().add(new PlayerComponent())
-                .add(new PositionComponent(new Vector2D(x,y), 1))
-                .add(new MovementComponent(new Vector2D(0,1), PLAYER_BASE_SPEED, false))
+                .add(new PositionComponent(new Vector2D(x, y), 1))
+                .add(new MovementComponent(new Vector2D(0, 1), PLAYER_BASE_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(PLAYER_WIDTH, PLAYER_HEIGHT), true))
                 .add(new CoinPocketComponent(PLAYER_BASE_COINS))
                 .add(new HealthComponent(PLAYER_BASE_HEALTH))
                 .add(new InteractorComponent())
-                .add(new AnimationComponent(getAnimationsMap().get("player"),"idle down"))
+                .add(new AnimationComponent(getAnimationsMap().get("player"), "idle down"))
                 .build();
     }
 
-    public Entity createShopkeeper(final double x, final double y) {
+    /**
+     * Create shopkeeper.
+     * @param x
+     * @param y
+     * @return
+     */
+    public final Entity createShopkeeper(final double x, final double y) {
         return new EntityBuilder().add(new ShopKeeperComponent())
-                .add(new PositionComponent(new Vector2D(x,y), 0))
+                .add(new PositionComponent(new Vector2D(x, y), 0))
                 .add(new MovementComponent(new Vector2D(0, 1), SHOP_KEEPER_SPEED, false))
                 .add(new BodyComponent(new RectBodyShape(PLAYER_WIDTH, PLAYER_HEIGHT), true))
                 .add(new HealthComponent(PLAYER_BASE_HEALTH))
-                .add(new AnimationComponent(getAnimationsMap().get("shopkeeper"),"idle"))
+                .add(new AnimationComponent(getAnimationsMap().get("shopkeeper"), "idle"))
                 .add(new AIComponent(new RoutineFactory().createShopKeeperRoutine()))
                 .build();
     }

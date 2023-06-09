@@ -32,7 +32,7 @@ public final class AnimationSystem extends AbstractSystem {
                 animationComp.setIndex(0);
                 animationComp.setCounter(0);
             } else {
-                if (animationComp.getCounter() >= ANIMATION_SPEED) { //REMOVE MAGIC NUMBER
+                if (animationComp.getCounter() >= ANIMATION_SPEED) { 
                     animationComp.setIndex(animationComp.getIndex() + 1);
                     animationComp.setCounter(0);
                 }
