@@ -2,23 +2,23 @@ package dimhol.view.screens;
 
 import dimhol.core.Engine;
 
-import javax.swing.Box;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The game tutorial screen, that shows commands and the rules of the game.
+ * The game tutorial screen, which shows commands and the rules of the game.
  */
 public class TutorialScreen extends AbstractScreen {
-    private static final String ASSET_FOLDER = "src/main/resources/asset/commands/";
+    private static final String ASSET_FOLDER = "/asset/commands/";
 
     private static final Map<String, String> COMMANDS_MAP = new HashMap<>();
 
@@ -33,76 +33,156 @@ public class TutorialScreen extends AbstractScreen {
         COMMANDS_MAP.put("Lore1", "Collect coins that can be used in the shop and pick up hearts to heal");
         COMMANDS_MAP.put("Lore2", "Press 'E' on the power-ups available in the shop "
                 + "to buy them if you have enough coins");
-        COMMANDS_MAP.put("Lore3", "To win the game, you must defeat the boss that spawn in the last room. "
+        COMMANDS_MAP.put("Lore3", "To win the game, you must defeat the boss that spawns in the last room. "
                 + "Let's start the journey!");
     }
 
+    private static final int PANEL_COLUMN_INDEX = 0;
+    private static final int DESCRIPTION_COLUMN_INDEX = 1;
+    private static final int LORE_LABEL_COLUMN_SPAN = 2;
+    private static final int SPACE_PANEL_HEIGHT = 10;
+
     /**
+     * Creates a new instance of the TutorialScreen.
      *
-     * @param engine
+     * @param engine the game engine
      */
     public TutorialScreen(final Engine engine) {
         initializeComponents();
-        loadImages(engine);
+        loadScreen(engine);
         add(super.getCenterPanel());
     }
 
     /**
-     *
+     * Initializes the components of the tutorial screen.
      */
     private void initializeComponents() {
         super.getCenterPanel().setLayout(new GridBagLayout());
-        super.setBackground("src/main/resources/asset/bg/Tunnel 12.png");
+        super.setBackground("/asset/bg/tutorialScreen.png");
         super.setGbcAnchorCenter();
         super.setGbcFillHorizontal();
     }
 
-    private void loadImages(final Engine engine) {
-        String[] imageNames = {"Sword", "Bullet", "Fireball", "WASD", "Interaction", "Lore", "Lore1", "Lore2", "Lore3"};
+    /**
+     * Loads the content of the tutorial screen.
+     *
+     * @param engine the game engine
+     */
+    private void loadScreen(final Engine engine) {
+        createImagePanel();
+        createLoreLabels();
+        addStartButton(engine);
+    }
+
+    /**
+     * Creates the image panel that displays the command images and descriptions.
+     */
+    private void createImagePanel() {
+        String[] imageNames = {"Sword", "Bullet", "Fireball", "WASD", "Interaction"};
+        JPanel imagePanel = new JPanel(new GridBagLayout());
+        imagePanel.setBackground(Color.lightGray);
+
+        int gridY = 0;
 
         for (String imageName : imageNames) {
-            ImageIcon imageIcon = new ImageIcon(ASSET_FOLDER + imageName + ".png");
-            JLabel imageLabel = new JLabel(imageIcon);
-
-            JPanel imagePanel = new JPanel(new GridBagLayout());
-            imagePanel.setBackground(Color.lightGray); // Set the background color of the image panel
-            imagePanel.add(imageLabel);
-
+            imagePanel.add(super.createLabel(ASSET_FOLDER + imageName + ".png"), createGbc(PANEL_COLUMN_INDEX, gridY));
             String description = COMMANDS_MAP.get(imageName);
-            JLabel descriptionLabel = new JLabel(description);
-            descriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            descriptionLabel.setOpaque(true);
-            descriptionLabel.setBackground(Color.white); // Set the background color of the description label
-
-            super.getGbc().gridy++;
-            getCenterPanel().add(createVerticalSpacePanel(10, Color.lightGray), getGbc());
-            super.getGbc().gridy++;
-            imagePanel.add(descriptionLabel, getGbc());
-            super.getCenterPanel().add(imagePanel, getGbc());
-
-            addVerticalSpace(10); // Add additional vertical space after each image and description
+            JLabel descriptionLabel = createDescriptionLabel(description);
+            imagePanel.add(descriptionLabel, createGbc(DESCRIPTION_COLUMN_INDEX, gridY));
+            gridY++;
         }
 
-        // Create the button
+        super.getCenterPanel().add(imagePanel, getGbc());
+    }
+
+    /**
+     * Creates a description label with the given text.
+     *
+     * @param description the text of the description label
+     * @return the created description label
+     */
+    private JLabel createDescriptionLabel(final String description) {
+        JLabel descriptionLabel = new JLabel(description);
+        descriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        descriptionLabel.setOpaque(true);
+        descriptionLabel.setBackground(Color.white);
+        return descriptionLabel;
+    }
+
+    /**
+     * Creates the lore labels that provide additional information about the game.
+     */
+    private void createLoreLabels() {
+        String[] loreList = {"Lore", "Lore1", "Lore2", "Lore3"};
+        JPanel imagePanel = (JPanel) super.getCenterPanel().getComponent(0);
+        int gridY = imagePanel.getComponentCount();
+
+        for (String string : loreList) {
+            String description = COMMANDS_MAP.get(string);
+            JLabel descriptionLabel = createDescriptionLabel(description);
+            imagePanel.add(descriptionLabel, createGbc(PANEL_COLUMN_INDEX, gridY, LORE_LABEL_COLUMN_SPAN));
+            gridY++;
+        }
+    }
+
+    /**
+     * Adds the start button to the tutorial screen.
+     *
+     * @param engine the game engine
+     */
+    private void addStartButton(final Engine engine) {
         JButton startButton = super.createButton(e -> engine.newGame(), "START MATCH", Color.GREEN);
-        getGbc().gridy++; // Increment the grid y position for the button
-        setGbcAnchorCenter(); // Set the anchor to center for the button
-        getCenterPanel().add(createVerticalSpacePanel(10, Color.lightGray), getGbc()); // Add colored vertical space
+        getGbc().gridy++;
+        setGbcAnchorCenter();
+        getCenterPanel().add(createVerticalSpacePanel(SPACE_PANEL_HEIGHT, Color.lightGray), getGbc());
         getGbc().gridy++;
         getCenterPanel().add(startButton, getGbc());
     }
 
+    /**
+     * Creates GridBagConstraints with the specified grid x and y positions.
+     *
+     * @param gridX the grid x position
+     * @param gridY the grid y position
+     * @return the created GridBagConstraints
+     */
+    private GridBagConstraints createGbc(final int gridX, final int gridY) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = gridX;
+        gbc.gridy = gridY;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.0;
+        return gbc;
+    }
+
+    /**
+     * Creates GridBagConstraints with the specified grid x and y positions and column span.
+     *
+     * @param gridx     the grid x position
+     * @param gridy     the grid y position
+     * @param gridwidth the column span
+     * @return the created GridBagConstraints
+     */
+    private GridBagConstraints createGbc(final int gridx, final int gridy, final int gridwidth) {
+        GridBagConstraints gbc = createGbc(gridx, gridy);
+        gbc.gridwidth = gridwidth;
+        return gbc;
+    }
+
+    /**
+     * Creates a JPanel that represents vertical space with the specified height and color.
+     *
+     * @param height the height of the space panel
+     * @param color  the color of the space panel
+     * @return the created space panel
+     */
     private JPanel createVerticalSpacePanel(final int height, final Color color) {
         JPanel spacePanel = new JPanel();
         spacePanel.setPreferredSize(new Dimension(1, height));
         spacePanel.setBackground(color);
         return spacePanel;
-    }
-
-    private void addVerticalSpace(final int height) {
-        getGbc().gridy++;
-        getGbc().weighty = height;
-        getCenterPanel().add(Box.createVerticalStrut(height), getGbc());
-        getGbc().weighty = 0;
     }
 }
