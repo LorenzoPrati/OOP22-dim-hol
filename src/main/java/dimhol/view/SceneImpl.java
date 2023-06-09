@@ -7,7 +7,6 @@ import dimhol.gamelevels.map.TileMapImpl;
 import dimhol.view.HUD.HUD;
 import dimhol.view.HUD.HUDImpl;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -152,6 +151,7 @@ public class SceneImpl implements Scene {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings("EI_EXPOSED_REP")
     public JPanel getPanel() {
         return this.scenePanel;
     }
@@ -175,6 +175,9 @@ public class SceneImpl implements Scene {
         return this.inputListener.getInput();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void updateHUD(final int currentHealth, final int maxHealth, final int currentAmount) {
         this.hud.setHUDInfo(currentHealth, maxHealth, currentAmount);

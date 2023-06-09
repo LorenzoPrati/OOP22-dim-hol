@@ -19,5 +19,11 @@ public interface MainWindow {
      * @param dimension
      */
     void changeResolution(Dimension dimension);
+
+    /**
+     * Screen size getter.
+     * @return screen size of the monitor
+     */
+    Dimension getScreenSize();
 }
 
