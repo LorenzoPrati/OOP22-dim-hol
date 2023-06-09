@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * This class test AI behavior.
  */
-public final class AITest {
+final class AITest {
 
     /**
      * Melee reload time.
@@ -42,7 +42,7 @@ public final class AITest {
     /**
      * AITest constructor.
      */
-    public AITest() {
+    AITest() {
         final GenericFactory genericFactory = new GenericFactory();
         final EnemyFactory enemyFactory = new EnemyFactory();
         this.zombie = enemyFactory.createZombie(PLAYER_POS_X, PLAYER_POS_Y);

@@ -1,4 +1,4 @@
-package dimhol.view.HUD;
+package dimhol.view.hud;
 
 import java.awt.Graphics2D;
 

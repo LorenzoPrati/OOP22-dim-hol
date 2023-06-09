@@ -10,26 +10,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Abstract Factory.
+ * AbstractFactory open the graphic configuration file.
  */
-public abstract class AbstractFactory {
+public class BaseFactory {
 
     private final Map<String, Map<String, ArrayList<Integer>>> map = new HashMap<>();
 
     /**
      * Abstract Factory contains a map of game entity graphics.
      */
-    public AbstractFactory() {
-        
-        final InputStream input = AbstractFactory.class.getResourceAsStream("/config/animations.yaml");
+    BaseFactory() {
+        final InputStream input = BaseFactory.class.getResourceAsStream("/config/animations.yaml");
         final Yaml yaml = new Yaml();
         final Map<String, Map<String, ArrayList<Integer>>> mapLoaded = yaml.load(input);
         map.putAll(mapLoaded);
-        assert input != null;
-        try{
+        try {
             input.close();
         } catch (IOException e) {
-            System.out.println("Failed to close stream.");
+            throw (IllegalStateException) new IllegalStateException().initCause(e);
         }
     }
 
