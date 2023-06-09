@@ -1,19 +1,36 @@
 package dimhol.view.screens;
 
 import dimhol.core.Engine;
-
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
+/**
+ * A class which create the home menu.
+ */
 public class HomeScreen extends AbstractScreen {
-    public static final int INSETS = 10;
+    /**
+     * Value of red colour needed to create the new color.
+     */
+    private static final int R = 102;
+    /**
+     * Value of green colour needed to create the new color.
+     */
+    private static final int G = 0;
+    /**
+     * Value of blue colour needed to create the new color.
+     */
+    private static final int B = 153;
 
-    public HomeScreen(Engine engine) {
+    /**
+     * Creates a home screen.
+     * @param engine
+     */
+    public HomeScreen(final Engine engine) {
         super(engine);
         super.setBackground("/asset/bg/Fortress 1.png");
-        Color color = new Color(102,0,153);
-        this.add(super.createLabel("/asset/bg/HomeScreenTitle.png"),gbc);
+        Color color = new Color(R, G, B);
+        this.add(super.createLabel("/asset/bg/HomeScreenTitle.png"), gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         centerPanel.setLayout(new GridBagLayout());

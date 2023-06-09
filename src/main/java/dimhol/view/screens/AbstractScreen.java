@@ -16,8 +16,12 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public abstract class AbstractScreen extends JPanel{
-    public static final int INSETS = 10;
+/**
+ * An abstract class to create similar  menus and screens.
+ */
+public abstract class AbstractScreen extends JPanel {
+    protected static final int INSETS = 10;
+    protected static final int FONT_SIZE = 20;
     protected final Engine engine;
     protected ImageIcon background;
     protected Font font;
@@ -25,10 +29,14 @@ public abstract class AbstractScreen extends JPanel{
     protected JLabel title;
     protected GridBagConstraints gbc;
 
+    /**
+     * Creates an AbstractScreen.
+     * @param engine
+     */
     public AbstractScreen(final Engine engine) {
         this.engine = engine;
         this.centerPanel = new JPanel();
-        this.font = new Font("Helvetica", Font.BOLD, 20);
+        this.font = new Font("Helvetica", Font.BOLD, FONT_SIZE);
         this.gbc = new GridBagConstraints();
         setBorder(new EmptyBorder(10, 10, 10, 10));
         this.setLayout(new GridBagLayout());
@@ -36,20 +44,34 @@ public abstract class AbstractScreen extends JPanel{
         gbc.anchor = GridBagConstraints.NORTH;
     }
 
-    protected void paintComponent(Graphics g) {
+    /**
+     * {@inheritDoc}}
+     */
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
-    public void setBackground(String path){
-        try{
-            this.background = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(path)));
-        } catch(IOException e){
+    /**
+     * Method used to set the background image of the screen.
+     * @param path
+     */
+    public void setBackground(final String path) {
+        try {
+            this.background = new ImageIcon(ImageIO.read(AbstractScreen.class.getResourceAsStream(path)));
+        } catch (IOException e) {
             System.out.print("Error loading background menu images");
         }
     }
 
-    public JButton createButton(ActionListener actionListener, String title, Color color) {
+    /**
+     * A method to create a button.
+     * @param actionListener action to perform after the button has been clicked.
+     * @param title string to write on the button.
+     * @param color color of the string written on the button.
+     * @return a JButton.
+     */
+    public JButton createButton(final ActionListener actionListener, final String title, final Color color) {
         var button = new JButton(title);
         button.addActionListener(actionListener);
         button.setFont(this.font);
@@ -57,11 +79,16 @@ public abstract class AbstractScreen extends JPanel{
         return button;
     }
 
-    public JLabel createLabel (String path){
+    /**
+     * A method to create a Jlabel using an image.
+     * @param path of the image.
+     * @return a JLabel.
+     */
+    public JLabel createLabel(final String path) {
         JLabel label = new JLabel();
-        try{
-            label = new JLabel(((new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(path))))));
-        } catch(IOException e){
+        try {
+            label = new JLabel(((new ImageIcon(ImageIO.read(AbstractScreen.class.getResourceAsStream(path))))));
+        } catch (IOException e) {
             System.out.print("Error title menu images");
         }
         return label;
