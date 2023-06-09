@@ -2,9 +2,7 @@ package dimhol.view.screens;
 
 import dimhol.core.Engine;
 
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 
 /**
  * Result screen.
@@ -25,13 +23,13 @@ public class ResultScreen extends AbstractScreen {
     public ResultScreen(final Engine engine, final boolean result) {
         super(engine);
         super.setBackground(result ? WIN_BACKGROUND_PATH : LOSE_BACKGROUND_PATH);
-        this.add(super.createLabel(result ? WIN_MESSAGE : LOSE_MESSAGE), gbc);
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        centerPanel.setLayout(new GridBagLayout());
-        centerPanel.add(super.createButton(e -> engine.getMainWindow().changePanel(new HomeScreen(engine)),
-                "RETURN HOME", result ? Color.GREEN : Color.RED), gbc);
-        gbc.weighty = 1;
-        this.add(centerPanel);
+        this.add(super.createLabel(result ? WIN_MESSAGE : LOSE_MESSAGE), super.getGbc());
+        super.setGbcAnchorCenter();
+        super.setGbcFillHorizontal();
+        super.getCenterPanel().setLayout(new GridBagLayout());
+        super.getCenterPanel().add(super.createButton(e -> engine.getMainWindow().changePanel(new HomeScreen(engine)),
+                "RETURN HOME", result ? Color.GREEN : Color.RED), super.getGbc());
+        super.getGbc().weighty = 1;
+        this.add(super.getCenterPanel());
     }
 }

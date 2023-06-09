@@ -120,7 +120,6 @@ Seguendo un approccio bottom-up, di seguito spiego prima il funzionamento della 
 	\centering
 	\includegraphics[width=\textwidth]{uml/uml_entity_component.png}
 	\caption{Diagramma UML della relazione tra Entity e Component}
-	\label{img:badarch}
 \end{figure}
 
 \paragraph{Problema}
@@ -163,7 +162,6 @@ In teoria e' quindi sufficiente, per inserire nel gioco una nuova meccanica, cos
 	\centering
 	\includegraphics[width=\textwidth]{uml/uml_engine.png}
 	\caption{Diagramma UML dell'Engine}
-	\label{img:badarch}
 \end{figure}
 
 \paragraph*{Problema}
@@ -177,7 +175,6 @@ Realizzare una classe che permetta lo svolgimento effettivo del main loop del gi
 	\centering
 	\includegraphics[width=\textwidth]{uml/uml_world.png}
 	\caption{Diagramma UML del World}
-	\label{img:badarch}
 \end{figure}
 
 \paragraph*{Problema}
@@ -249,7 +246,7 @@ Un \texttt{PhysicsSystem}, che esegue subito dopo il \texttt{CollisionSystem}, p
 
 Menziono qui anche la presenza di un \texttt{ClearCollisionSystem}, un semplice sistema che esegue dopo che hanno eseguito tutti i sistemi che dovevano in qualche modo gestire la reazione a una collisione (filtrando anche per \texttt{CollisionComponent}), rimuovendo tutti i \texttt{CollisionComponent} dalle entita' che ne hanno uno. In questo modo, al successivo loop di update dei system, non vengono lasciate collisioni non gestite.
 
-Per quanto riguarda infine l'interfaccia \texttt{BodyShape}, essa puo' essere implementata potenzialmente da classi che rappresentano varie forme geometriche. Io ho realizzato una \texttt{RectBodyShape}, che rappresenta la forma geometrica del rettangolo, e una \texttt{CircleBodyShape}, che rappresenta il cerchio. L'interfaccia espone il metodo \texttt{computeShape(Vector2D)} che permette di ricevere il poligono calcolato in base alle coordinate fornite, utile poi al calcolo dell'intersezione con un altro poligono. Qui ho fatto uso di libreria come spiegato meglio nel paragrafo dedicato (riferimento). Inoltre, sono presenti i metodi \texttt{getBoundingWidth()} e \texttt{getBoundingHeight()} per conoscere il rettangolo che limita il poligono, utili sia alla View che in altri punti del progetto.
+Per quanto riguarda infine l'interfaccia \texttt{BodyShape}, essa puo' essere implementata potenzialmente da classi che rappresentano varie forme geometriche. Io ho realizzato una \texttt{RectBodyShape}, che rappresenta la forma geometrica del rettangolo, e una \texttt{CircleBodyShape}, che rappresenta il cerchio. L'interfaccia espone il metodo \texttt{computeShape} che permette di ricevere il poligono calcolato in base alle coordinate fornite, utile poi al calcolo dell'intersezione con un altro poligono. Qui ho fatto uso di libreria come spiegato meglio nelle note di sviluppo Inoltre, sono presenti i metodi \texttt{getBoundingWidth()} e \texttt{getBoundingHeight()} per conoscere il rettangolo che limita il poligono, utili sia alla View che in altri punti del progetto.
 
 \newpage
 
@@ -272,7 +269,7 @@ L'utente controlla un personaggio in grado di:
 	\item interagire con oggetti
 \end{itemize}
 
-Ognuna di queste azioni e' rappresentata a schermo da un'animazione differente. Alcune di queste azioni hanno condizioni per poter essere eseguite, oppure possono essere eseguite solo dopo aver compiuto altre azioni; ma in ogni momento il giocatore esegue solo una di queste azioni.
+Ognuna di queste azioni e' rappresentata a schermo da un'animazione differente; in ogni momento il giocatore esegue solo una di queste azioni.
 
 \paragraph{Soluzione}
 Ho risolto il problema utilizzando lo \textit{state pattern} in combinazione con un \texttt{PlayerInputSystem}. Infatti, se abbiamo cercato di rispettare il pattern \textit{ecs} il piu' possibile, specialmente cercando di gestire la logica di comportamento delle entita' interamente nei \textit{system} quando possibile, si e' convenuto che non abbia senso forzarlo su ogni aspetto, percio' in questo e in altri casi parte della logica e' stata spostata fuori dai system cercando di semplificare l'aspetto del \textit{behaviour} presente in alcune implementazioni dell'\textit{ecs}. 
@@ -287,9 +284,9 @@ Il \texttt{PlayerInputSystem}, che e' il primo \textit{system} a eseguire nel gi
 	\caption{Diagramma degli stati del player. LC ed RC indicano rispettivamente il tasto sinistro e destro del mouse. Il player puo' trovarsi solo in uno di questi stati alla volta} 
 \end{figure}
 
-Il \texttt{PlayerComponent} contiene lo \textit{stato} corrente in ogni momento, quindi viene estratto tale \texttt{PlayerState} e interrogato sulla possibilita' di poter effettuare un cambio di stato in base all'\texttt{Input}; se possibile, quindi, il \texttt{PlayerState} corrente restituisce il prossimo stato calcolato sempre sulla base dell'input e il system procede con la transizione di stato, sostituendo lo stato corrente nel \texttt{PlayerComponent} con il nuovo stato calcolato. Se lo stato corrente puo' transitare, allora viene anche chiamato il metodo \texttt{execute}, che potrebbe generare nuove entita', ad esempio proiettili o attacchi, e queste vengono poi aggiunte al \texttt{World} tramite evento. Il cambio di stato piu' nel dettaglio e' gestito dai metodi \texttt{entry} ed \texttt{exit} che gestiscono rispettivamente le operazioni da effettuare nei due momenti per quello stato. Infine, il system aggiorna l'animazione (vedi spiegazione animazioni). 
+Il \texttt{PlayerComponent} contiene lo \textit{stato} corrente in ogni momento, quindi viene estratto tale \texttt{PlayerState} e interrogato sulla possibilita' di poter effettuare un cambio di stato in base all'\texttt{Input}; se possibile, quindi, il \texttt{PlayerState} corrente restituisce il prossimo stato calcolato sempre sulla base dell'input e il system procede con la transizione di stato, sostituendo lo stato corrente nel \texttt{PlayerComponent} con il nuovo stato calcolato. Se lo stato corrente puo' transitare (cioe' non e' bloccato nel mezzo di un'animazione non cancellabile), allora viene anche chiamato il metodo \texttt{execute}, che potrebbe generare nuove entita', ad esempio proiettili o attacchi, e queste vengono poi aggiunte al \texttt{World} tramite evento. Il cambio di stato piu' nel dettaglio e' gestito dai metodi \texttt{entry} ed \texttt{exit} che gestiscono rispettivamente le operazioni da effettuare nei due momenti per quello stato. Infine, il system aggiorna l'animazione (vedi spiegazione animazioni). 
 
-Ciascuno stato estende una classe \texttt{AbstractState} che fattorizza alcuni metodi dell'interfaccia \texttt{PlayerState} come \texttt{canTransition()} (che si occupa di controllare che lo stato non sia bloccato in un animazione non cancellabile), \texttt{update(double, Entity)} (che si occupa soprattutto di aggiornare il tempo passato nello stato) e altri che sono utili alle sottoclassi come \texttt{setAnimationState(String)}. Inoltre, vengono fornite delle implementazioni di default dei metodi d'interfaccia \texttt{entry(Entity), \texttt{exit()}} e \texttt{execute(Input)}, overridabili a piacimento dalle sottoclassi per definire comportamenti piu' complessi. Invece, il metodo \texttt{transition(Input)} e' lasciato astratto da implementare per ogni singolo stato poiche' ognuno definisce logiche proprie di transizione verso altri stati, che non descrivo nei dettagli poiche' credo gia' sufficiente esplicate nel diagramma sopra. Infine, ogni stato implementa il metodo \texttt{updateAnimation()} settando una specifica animazione.
+Ciascuno stato estende una classe \texttt{AbstractState} che implementa alcuni metodi dell'interfaccia \texttt{PlayerState}; alcuni di questi sono overridabili a piacimento dalle sottoclassi per definire comportamenti piu' complessi. Il metodo \texttt{transition} e' lasciato astratto da implementare per ogni singolo stato poiche' ognuno definisce logiche proprie di transizione verso altri stati, che non descrivo nei dettagli poiche' credo gia' sufficiente esplicate nel diagramma sopra.
 
 Di seguito gli stati:
 \begin{itemize}
@@ -1030,6 +1027,8 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 	\item Uso della libreria jts per la classe Vector2D, esempio: \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7a557eed3acda9eb23b395d56d63c8e907038863/src/main/java/dimhol/logic/ai/BehaviourUtil.java#LL32C22-L32C22}
 
 	\item Uso della libreria concurrent \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/7a557eed3acda9eb23b395d56d63c8e907038863/src/main/java/dimhol/logic/ai/RandomMovement.java#LL33C32-L33C32}
+
+	\item Stream: \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/66486acfa1073f017b9ec6f576d9633c0191b5e9/src/main/java/dimhol/systems/AISystem.java#LL26C30-L26C30}
 
 \end{itemize}
 

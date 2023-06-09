@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.HashMap;
@@ -39,7 +38,7 @@ public class OptionScreen extends AbstractScreen {
      */
     public OptionScreen(final Engine engine) {
         super(engine);
-        super.setBackground("/asset/bg/Interior 3.png");
+        super.setBackground("/asset/bg/optionScreen.png");
         JLabel labelResolution = new JLabel("CHOOSE RESOLUTION: ");
         Font font2 = new Font("Helvetica", Font.BOLD, FONT2_SIZE);
         JPanel optionListPanel = new JPanel();
@@ -50,30 +49,30 @@ public class OptionScreen extends AbstractScreen {
         optionListPanel.setLayout(new GridBagLayout());
         comboBox.setFont(font2);
         comboBox.setForeground(Color.BLACK);
-        labelResolution.setFont(font);
+        labelResolution.setFont(super.getFont());
         labelResolution.setForeground(Color.BLACK);
-        this.add(super.createLabel("/asset/bg/options.png"), gbc);
-        optionListPanel.add(labelResolution, gbc);
-        optionListPanel.add(comboBox, gbc);
+        this.add(super.createLabel("/asset/bg/options.png"), super.getGbc());
+        optionListPanel.add(labelResolution, super.getGbc());
+        optionListPanel.add(comboBox, super.getGbc());
         optionListPanel.add(super.createButton((e -> {
             engine.switchDebugMode();
             var button = (JButton) e.getSource();
             button.setText(engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE");
-            }), (engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE"), Color.BLACK), gbc);
+            }), (engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE"), Color.BLACK), super.getGbc());
         optionListPanel.add(super.createButton(l -> {
             var selecteResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
             var res = mapResolutions.get(selecteResolution);
             engine.getMainWindow().changeResolution(new Dimension(res));
-            }, "DONE", Color.BLACK), gbc);
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
-        centerPanel.setLayout(new GridBagLayout());
-        centerPanel.add(optionListPanel, gbc);
-        centerPanel.add(super.createButton(l -> engine.getMainWindow().changePanel(new HomeScreen(engine)), 
-            "HOME", Color.BLACK), gbc);
-        gbc.weighty = 1;
-        this.add(centerPanel); 
+            }, "DONE", Color.BLACK), super.getGbc());
+        super.setGbcAnchorCenter();
+        super.setGbcFillHorizontal();
+        super.getGbc().insets = new Insets(INSETS, INSETS, INSETS, INSETS);
+        super.getCenterPanel().setLayout(new GridBagLayout());
+        super.getCenterPanel().add(optionListPanel, super.getGbc());
+        super.getCenterPanel().add(super.createButton(l -> engine.getMainWindow().changePanel(new HomeScreen(engine)), 
+            "HOME", Color.BLACK), super.getGbc());
+        super.getGbc().weighty = 1;
+        this.add(super.getCenterPanel()); 
     } 
 }
 
