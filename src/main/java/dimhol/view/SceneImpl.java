@@ -29,7 +29,7 @@ public class SceneImpl implements Scene {
     private int tileMapHeight;
     private ResourceLoader loader;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private HUD hud;
+    private final HUD hud;
     private int newTileWidth;
     private int newTileHeight;
     private int offsetX;
