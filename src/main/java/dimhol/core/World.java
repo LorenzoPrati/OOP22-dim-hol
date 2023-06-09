@@ -8,7 +8,7 @@ import dimhol.input.Input;
 import java.util.List;
 
 /**
- * Models the world where the entities exist.
+ * Models the world where the entities exist. Controls systems and the view representation.
  */
 public interface World {
 
@@ -83,9 +83,9 @@ public interface World {
     boolean isGameOver();
 
     /**
-     * Gets the input.
+     * Gets the user input.
      *
-     * @return the world input
+     * @return the user input associated with the world
      */
     Input getInput();
 }
