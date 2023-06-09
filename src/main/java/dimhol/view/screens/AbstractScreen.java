@@ -14,11 +14,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.Serial;
 
 /**
  * An abstract class to create similar menus and screens.
  */
 public abstract class AbstractScreen extends JPanel {
+    @Serial
+    private static final long serialVersionUID = -8156943716103350031L;
     public static final int INSETS = 10;
     public static final int FONT_SIZE = 20;
     private ImageIcon background;
