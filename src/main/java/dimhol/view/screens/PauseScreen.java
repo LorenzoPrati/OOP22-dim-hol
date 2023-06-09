@@ -11,7 +11,7 @@ import java.io.Serial;
  */
 public class PauseScreen extends AbstractScreen {
     @Serial
-    private static final long serialVersionUID = 0;
+    private static final long serialVersionUID = 7176530655046702983L;
     /**
      * Value of red colour needed to create the new color.
      */

@@ -15,9 +15,11 @@ import java.util.Map;
 import dimhol.core.Engine;
 
 /**
- * A class to create an options menu.
+ * A class to create an options' menu.
  */
 public class OptionScreen extends AbstractScreen {
+    @Serial
+    private static final long serialVersionUID = 6804998933667647196L;
     private static final int FONT2_SIZE = 17;
     private static final int W1 = 1280;
     private static final int H1 = 720;
@@ -31,8 +33,7 @@ public class OptionScreen extends AbstractScreen {
     private static final int H5 = 600;
     private static final int W6 = 720;
     private static final int H6 = 720;
-    @Serial
-    private static final long serialVersionUID = 0;
+
     private final Map<String, Dimension> mapResolutions =  new HashMap<>() {
         {
             put(W1 + "x" + H1, new Dimension(W1, H1));

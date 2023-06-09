@@ -15,6 +15,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsConfiguration;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -24,6 +25,8 @@ import java.awt.Point;
  * Implements the scene where all the entities will be drawn.
  */
 public class SceneImpl implements Scene {
+    @Serial
+    private static final long serialVersionUID = -5780101342803153304L;
     private final List<GraphicInfo> renderList = new ArrayList<>();
     private int tileMapWidth;
     private int tileMapHeight;
@@ -54,6 +57,8 @@ public class SceneImpl implements Scene {
      * Creates a GamePanel.
      */
     class GamePanel extends JPanel {
+        @Serial
+        private static final long serialVersionUID = -2493205788678484540L;
         GamePanel(final double width, final double height) {
             this.setPreferredSize(new Dimension((int) width, (int) height));
             this.setDoubleBuffered(true);
