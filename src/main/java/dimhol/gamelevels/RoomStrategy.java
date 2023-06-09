@@ -19,9 +19,9 @@ public interface RoomStrategy {
      * and position them into the room according to the specific strategy of the room.
      *
      * @param entity    The main entity is the player of the game room.
-     * @param freeTiles The set of available tiles within the room, where entities can be placed.
+     * @param availableTiles The set of available tiles within the room, where entities can be placed.
      * @param entities  The
      * @return A List of entities generated for the game room.
      */
-    List<Entity> generate(Optional<Entity> entity, Set<Pair<Integer, Integer>> freeTiles, List<Entity> entities);
+    List<Entity> generate(Optional<Entity> entity, Set<Pair<Integer, Integer>> availableTiles, List<Entity> entities);
 }
