@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,10 @@ import java.util.Map;
  * The game tutorial screen, which shows commands and the rules of the game.
  */
 public class TutorialScreen extends AbstractScreen {
+
+    @Serial
+    private static final long serialVersionUID = 2370387720425495860L;
+
     private static final String ASSET_FOLDER = "/asset/commands/";
 
     private static final Map<String, String> COMMANDS_MAP = new HashMap<>();
@@ -78,16 +83,16 @@ public class TutorialScreen extends AbstractScreen {
      * Creates the image panel that displays the command images and descriptions.
      */
     private void createImagePanel() {
-        String[] imageNames = {"Sword", "Bullet", "Fireball", "WASD", "Interaction"};
-        JPanel imagePanel = new JPanel(new GridBagLayout());
+        final String[] imageNames = {"Sword", "Bullet", "Fireball", "WASD", "Interaction"};
+        final JPanel imagePanel = new JPanel(new GridBagLayout());
         imagePanel.setBackground(Color.lightGray);
 
         int gridY = 0;
 
-        for (String imageName : imageNames) {
+        for (final String imageName : imageNames) {
             imagePanel.add(super.createLabel(ASSET_FOLDER + imageName + ".png"), createGbc(PANEL_COLUMN_INDEX, gridY));
-            String description = COMMANDS_MAP.get(imageName);
-            JLabel descriptionLabel = createDescriptionLabel(description);
+            final String description = COMMANDS_MAP.get(imageName);
+            final JLabel descriptionLabel = createDescriptionLabel(description);
             imagePanel.add(descriptionLabel, createGbc(DESCRIPTION_COLUMN_INDEX, gridY));
             gridY++;
         }
@@ -102,7 +107,7 @@ public class TutorialScreen extends AbstractScreen {
      * @return the created description label
      */
     private JLabel createDescriptionLabel(final String description) {
-        JLabel descriptionLabel = new JLabel(description);
+        final JLabel descriptionLabel = new JLabel(description);
         descriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
         descriptionLabel.setOpaque(true);
         descriptionLabel.setBackground(Color.white);
@@ -113,13 +118,13 @@ public class TutorialScreen extends AbstractScreen {
      * Creates the lore labels that provide additional information about the game.
      */
     private void createLoreLabels() {
-        String[] loreList = {"Lore", "Lore1", "Lore2", "Lore3"};
-        JPanel imagePanel = (JPanel) super.getCenterPanel().getComponent(0);
+        final String[] loreList = {"Lore", "Lore1", "Lore2", "Lore3"};
+        final JPanel imagePanel = (JPanel) super.getCenterPanel().getComponent(0);
         int gridY = imagePanel.getComponentCount();
 
-        for (String string : loreList) {
-            String description = COMMANDS_MAP.get(string);
-            JLabel descriptionLabel = createDescriptionLabel(description);
+        for (final String string : loreList) {
+            final String description = COMMANDS_MAP.get(string);
+            final JLabel descriptionLabel = createDescriptionLabel(description);
             imagePanel.add(descriptionLabel, createGbc(PANEL_COLUMN_INDEX, gridY, LORE_LABEL_COLUMN_SPAN));
             gridY++;
         }
@@ -131,7 +136,7 @@ public class TutorialScreen extends AbstractScreen {
      * @param engine the game engine
      */
     private void addStartButton(final Engine engine) {
-        JButton startButton = super.createButton(e -> engine.newGame(), "START MATCH", Color.GREEN);
+        final JButton startButton = super.createButton(e -> engine.newGame(), "START MATCH", Color.GREEN);
         getGbc().gridy++;
         setGbcAnchorCenter();
         getCenterPanel().add(createVerticalSpacePanel(SPACE_PANEL_HEIGHT, Color.lightGray), getGbc());
@@ -147,7 +152,7 @@ public class TutorialScreen extends AbstractScreen {
      * @return the created GridBagConstraints
      */
     private GridBagConstraints createGbc(final int gridX, final int gridY) {
-        GridBagConstraints gbc = new GridBagConstraints();
+        final GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = gridX;
         gbc.gridy = gridY;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -167,7 +172,7 @@ public class TutorialScreen extends AbstractScreen {
      * @return the created GridBagConstraints
      */
     private GridBagConstraints createGbc(final int gridx, final int gridy, final int gridwidth) {
-        GridBagConstraints gbc = createGbc(gridx, gridy);
+        final GridBagConstraints gbc = createGbc(gridx, gridy);
         gbc.gridwidth = gridwidth;
         return gbc;
     }
@@ -180,7 +185,7 @@ public class TutorialScreen extends AbstractScreen {
      * @return the created space panel
      */
     private JPanel createVerticalSpacePanel(final int height, final Color color) {
-        JPanel spacePanel = new JPanel();
+        final JPanel spacePanel = new JPanel();
         spacePanel.setPreferredSize(new Dimension(1, height));
         spacePanel.setBackground(color);
         return spacePanel;
