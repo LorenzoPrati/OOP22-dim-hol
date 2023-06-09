@@ -26,6 +26,10 @@ public class TutorialScreen extends AbstractScreen {
     private static final String ASSET_FOLDER = "/asset/commands/";
 
     private static final Map<String, String> COMMANDS_MAP = new HashMap<>();
+    private static final int PANEL_COLUMN_INDEX = 0;
+    private static final int DESCRIPTION_COLUMN_INDEX = 1;
+    private static final int LORE_LABEL_COLUMN_SPAN = 2;
+    private static final int SPACE_PANEL_HEIGHT = 10;
 
     static {
         COMMANDS_MAP.put("Sword", "Click/Hold Left Mouse Button: Sword");
@@ -41,11 +45,6 @@ public class TutorialScreen extends AbstractScreen {
         COMMANDS_MAP.put("Lore3", "To win the game, you must defeat the boss that spawns in the last room. "
                 + "Let's start the journey!");
     }
-
-    private static final int PANEL_COLUMN_INDEX = 0;
-    private static final int DESCRIPTION_COLUMN_INDEX = 1;
-    private static final int LORE_LABEL_COLUMN_SPAN = 2;
-    private static final int SPACE_PANEL_HEIGHT = 10;
 
     /**
      * Creates a new instance of the TutorialScreen.

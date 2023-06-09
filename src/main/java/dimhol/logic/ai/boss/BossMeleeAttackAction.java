@@ -20,8 +20,8 @@ public final class BossMeleeAttackAction extends AbstractAction {
     /**
      * Constructs an BossMeleeAttackAction.
      *
-     * @param areaAttackAggro     the radius of the area in which the presence
-     *                            of an enemy (the player) activates this strategy
+     * @param areaAttackAggro      the radius of the area in which the presence
+     *                             of an enemy (the player) activates this strategy
      * @param areaAttackReloadTime the time to reload the area attack
      */
     public BossMeleeAttackAction(final double areaAttackAggro, final double areaAttackReloadTime) {
