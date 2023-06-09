@@ -20,7 +20,7 @@ public final class ResourceLoader {
     private final Map<Integer, ImmutableTriple<BufferedImage, Integer, Integer>> imagesMap = new HashMap<>();
     private BufferedImage tileSet;
     private final ArrayList<BufferedImage> tileImages = new ArrayList<>();
-    private Map<String, ArrayList<Integer>> dimensions = new HashMap<>();
+    private final Map<String, ArrayList<Integer>> dimensions = new HashMap<>();
 
     /**
      * Constructs a map containing images and gets sprite dimensions from a yaml file.

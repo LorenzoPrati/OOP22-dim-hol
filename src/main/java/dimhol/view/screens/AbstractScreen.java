@@ -79,6 +79,7 @@ public abstract class AbstractScreen extends JPanel {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);

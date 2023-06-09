@@ -35,7 +35,7 @@ public class InteractableObjectFactory extends BaseFactory {
     private static final int VELOCITY_PRICE = 15;
 
     private final BiPredicate<Entity, Integer> checkCoins = (e, i) -> {
-        var currentCoins = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
+        final var currentCoins = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
         return currentCoins.getCurrentAmount() >= i;
     };
 

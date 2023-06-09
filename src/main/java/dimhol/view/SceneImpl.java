@@ -64,7 +64,7 @@ public class SceneImpl implements Scene {
 
         @Override
         public void paintComponent(final Graphics g) {
-            var tileMapLayers = tileMap.getLayers();
+            final var tileMapLayers = tileMap.getLayers();
             super.paintComponent(g);
             if (g instanceof Graphics2D) {
                 final Graphics2D g2 = (Graphics2D) g;
@@ -78,8 +78,8 @@ public class SceneImpl implements Scene {
                                 newTileWidth = this.getHeight() / tileMapWidth;
                             }
                             newTileHeight = newTileWidth;
-                            offsetX = (this.getWidth() - tileMapHeight * newTileWidth / 2);
-                            offsetY = (this.getHeight() - tileMapWidth * newTileHeight / 2);
+                            offsetX = this.getWidth() - tileMapHeight * newTileWidth / 2;
+                            offsetY = this.getHeight() - tileMapWidth * newTileHeight / 2;
                             final var drawX = newTileHeight * j + offsetX;
                             final var drawY = newTileWidth * i + offsetY;
                             g2.drawImage(loader.getTileImage(id), drawX, drawY, newTileWidth, newTileHeight, null);
@@ -106,14 +106,14 @@ public class SceneImpl implements Scene {
     }
 
     private BufferedImage createCompatibleImage(final BufferedImage image) {
-        GraphicsConfiguration graphicsConfiguration = GraphicsEnvironment.getLocalGraphicsEnvironment()
+        final GraphicsConfiguration graphicsConfiguration = GraphicsEnvironment.getLocalGraphicsEnvironment()
             .getDefaultScreenDevice().getDefaultConfiguration();
         if (image.getColorModel().equals(graphicsConfiguration.getColorModel())) {
             return image;
         } else {
-            BufferedImage newImage = graphicsConfiguration.createCompatibleImage(
+            final BufferedImage newImage = graphicsConfiguration.createCompatibleImage(
                 image.getWidth(), image.getHeight(), image.getTransparency());
-            Graphics2D g2d = newImage.createGraphics();
+            final Graphics2D g2d = newImage.createGraphics();
             g2d.drawImage(image, 0, 0, null);
             g2d.dispose();
             return newImage;

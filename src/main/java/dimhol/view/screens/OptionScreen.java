@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 import dimhol.core.Engine;
@@ -30,6 +31,8 @@ public class OptionScreen extends AbstractScreen {
     private static final int H5 = 600;
     private static final int W6 = 720;
     private static final int H6 = 720;
+    @Serial
+    private static final long serialVersionUID = 0;
     private final Map<String, Dimension> mapResolutions =  new HashMap<>() {
         {
             put(W1 + "x" + H1, new Dimension(W1, H1));
@@ -48,11 +51,11 @@ public class OptionScreen extends AbstractScreen {
      */
     public OptionScreen(final Engine engine) {
         super.setBackground("/asset/bg/optionScreen.png");
-        JLabel labelResolution = new JLabel("CHOOSE RESOLUTION: ");
-        Font font2 = new Font("Helvetica", Font.BOLD, FONT2_SIZE);
-        JPanel optionListPanel = new JPanel();
-        JComboBox<String> comboBox = new JComboBox<>();
-        for (var resolution: mapResolutions.keySet()) {
+        final JLabel labelResolution = new JLabel("CHOOSE RESOLUTION: ");
+        final Font font2 = new Font("Helvetica", Font.BOLD, FONT2_SIZE);
+        final JPanel optionListPanel = new JPanel();
+        final JComboBox<String> comboBox = new JComboBox<>();
+        for (final var resolution: mapResolutions.keySet()) {
             comboBox.addItem(resolution);
         }
         optionListPanel.setLayout(new GridBagLayout());
@@ -65,12 +68,12 @@ public class OptionScreen extends AbstractScreen {
         optionListPanel.add(comboBox, super.getGbc());
         optionListPanel.add(super.createButton((e -> {
             engine.switchDebugMode();
-            var button = (JButton) e.getSource();
+            final var button = (JButton) e.getSource();
             button.setText(engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE");
-            }), (engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE"), Color.BLACK), super.getGbc());
+            }), engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE", Color.BLACK), super.getGbc());
         optionListPanel.add(super.createButton(l -> {
-            var selectedResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
-            var res = mapResolutions.get(selectedResolution);
+            final var selectedResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
+            final var res = mapResolutions.get(selectedResolution);
             engine.getMainWindow().changeResolution(new Dimension(res));
             }, "DONE", Color.BLACK), super.getGbc());
         super.setGbcAnchorCenter();

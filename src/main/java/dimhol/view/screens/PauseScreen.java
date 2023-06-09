@@ -4,11 +4,14 @@ import dimhol.core.Engine;
 import dimhol.view.Scene;
 import java.awt.Color;
 import java.awt.GridBagLayout;
+import java.io.Serial;
 
 /**
  * A class for creating a pause screen.
  */
 public class PauseScreen extends AbstractScreen {
+    @Serial
+    private static final long serialVersionUID = 0;
     /**
      * Value of red colour needed to create the new color.
      */
@@ -29,7 +32,7 @@ public class PauseScreen extends AbstractScreen {
      */
     public PauseScreen(final Engine engine, final Scene scene) {
         super.setBackground("/asset/bg/pauseScreen.png");
-        Color color = new Color(R, G, B);
+        final Color color = new Color(R, G, B);
         this.add(super.createLabel("/asset/bg/pauseTitle.png"), super.getGbc());
         super.setGbcAnchorCenter();
         super.setGbcFillHorizontal();
