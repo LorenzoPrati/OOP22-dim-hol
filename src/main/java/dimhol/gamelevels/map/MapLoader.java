@@ -43,7 +43,7 @@ public interface MapLoader {
      * @return The loaded room map.
      * @throws MapLoadingException If an error occurs while loading the room map.
      */
-    TileMap loadRoomMap(InputStream inputStream) throws MapLoadingException;
+    TileMap loadRoomMap(InputStream inputStream);
 
     /**
      * Returns the tile map data as a {@link TileMapImpl} object.

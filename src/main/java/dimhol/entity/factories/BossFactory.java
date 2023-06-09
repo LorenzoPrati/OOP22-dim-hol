@@ -16,7 +16,7 @@ import org.locationtech.jts.math.Vector2D;
 /**
  * The BossFactory class is responsible for creating Boss entities in the game.
  */
-public class BossFactory extends AbstractFactory {
+public class BossFactory extends BaseFactory {
 
     /**
      * Boss's width.

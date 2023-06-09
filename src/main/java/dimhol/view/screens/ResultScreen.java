@@ -2,12 +2,17 @@ package dimhol.view.screens;
 
 import dimhol.core.Engine;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridBagLayout;
+import java.io.Serial;
 
 /**
  * Result screen.
  */
 public class ResultScreen extends AbstractScreen {
+
+    @Serial
+    private static final long serialVersionUID = 7705218068700224049L;
 
     private static final String WIN_BACKGROUND_PATH = "/asset/bg/winScreen.png";
     private static final String LOSE_BACKGROUND_PATH = "/asset/bg/loseScreen.png";

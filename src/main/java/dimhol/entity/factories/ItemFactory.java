@@ -17,7 +17,7 @@ import dimhol.components.PositionComponent;
 /**
  * A factory of items.
  */
-public class ItemFactory extends AbstractFactory {
+public class ItemFactory extends BaseFactory {
     private static final double W = 0.5;
     private static final int INCREASE_CURRENT_HEALTH = 1;
     private static final int INCREASE_CURRENT_COINS = 1;

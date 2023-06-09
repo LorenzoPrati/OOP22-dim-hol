@@ -24,7 +24,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * A factory of interactable objects.
  */
-public class InteractableObjectFactory extends AbstractFactory {
+public class InteractableObjectFactory extends BaseFactory {
     private static final double W_POWERUP = 1;
     private static final double H_POWERUP = 1;
     private static final double W_GATE = 1;

@@ -10,8 +10,11 @@ import org.locationtech.jts.math.Vector2D;
 /**
  * This class has util to set the attack position.
  */
-public class AbstractAttackFactory extends AbstractFactory {
+public class BaseAttackFactory extends BaseFactory {
 
+    /**
+     * This field is util to get mid of the width or height.
+     */
     private static final double DIVISOR = 2;
 
     /**

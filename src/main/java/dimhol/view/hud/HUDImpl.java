@@ -1,4 +1,4 @@
-package dimhol.view.HUD;
+package dimhol.view.hud;
 
 import dimhol.view.ResourceLoader;
 
@@ -64,8 +64,6 @@ public final class HUDImpl implements HUD {
                      final double newTileHeight, final int offsetX, final int offsetY) {
 
         setFont(g2d, newTileHeight);
-
-
         showHealthInfo(g2d, offsetX, offsetY, newTileWidth, newTileHeight);
         showCoinInfo(g2d, offsetX, offsetY, newTileWidth, newTileHeight);
     }
@@ -77,7 +75,7 @@ public final class HUDImpl implements HUD {
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Math.round(fontSize));
         } catch (FontFormatException | IOException e) {
-            throw new RuntimeException(e);
+            throw (IllegalStateException) new IllegalStateException().initCause(e);
         }
         g2d.setFont(font);
     }
