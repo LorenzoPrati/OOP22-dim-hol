@@ -26,8 +26,8 @@ import dimhol.logic.collision.RectBodyShape;
 public class InteractableObjectFactory extends AbstractFactory {
     private static final double W_POWERUP = 1;
     private static final double H_POWERUP = 1;
-    private static final double W_GATE = 2;
-    private static final double H_GATE = 2;
+    private static final double W_GATE = 1;
+    private static final double H_GATE = 1;
     private static final int MAX_HEALTH_INCREASE = 10;
     private static final double VELOCITY_INCREASE = 0.8;
     private static final int MAX_HEALTH_PRICE = 10;
