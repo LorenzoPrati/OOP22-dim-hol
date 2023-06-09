@@ -406,6 +406,265 @@ gioco semplice ho valutato che bastassero pochi semplici metodi per la
 visualizzazione del HUD. 
 
 \subsection{Emanuele Dajko}
+\subsubsection*{Introduzione al concetto di TileMap e il suo ruolo nel gioco}
+In questa sezione, fornirò una panoramica del concetto di TileMap e del suo ruolo fondamentale nel nostro gioco. 
+La TileMap rappresenta una matrice 2D composta da diverse Tile che, unite insieme, costituiscono la struttura di gioco. 
+Si può pensare alla TileMap come un vero e proprio "puzzle" in cui le Tile sono i pezzi che compongono l'intero quadro del gioco. 
+Ora condividerò le sfide affrontate durante lo sviluppo della TileMap e le soluzioni adottate per superarle.
+\\\\\\\
+\paragraph*{Parsing delle configurazioni della TileMap}
+\paragraph{Problema}
+Durante lo sviluppo del nostro gioco, una delle sfide principali che ho affrontato riguardava il parsing delle diverse configurazioni della TileMap per i vari livelli. 
+Era necessario leggere le informazioni specifiche relative a ciascuna TileMap e utilizzarle per creare la corrispondente mappa di gioco.
+\paragraph{Soluzione}
+Per ottenere maggiore flessibilità nel design del gioco, ho deciso di adottare una TileMap dedicata per ogni livello. 
+Questa scelta mi ha permesso, anche grazie all'aiuto del collega Elvis Perlika, di definire configurazioni personalizzate per ciascun livello e gestire in modo più efficace le diverse proprietà delle Tile.
+Ad esempio, ho utilizzato la proprietà "TileMapIdInt" associata a un booleano "WalkableBool", per distinguere le aree camminabili (true) da quelle bloccate (false).
+\\
+Per affrontare questa sfida, ho sviluppato un parser utilizzando la libreria JDOM (Java DOM parser) per leggere i file XML generati dal programma "Tiled" e gestire il caricamento delle TileMap.
+Il parser ci ha consentito di estrarre le informazioni necessarie da ciascun file XML e creare la corrispondente TileMap nel nostro gioco.
+Durante lo sviluppo del parser, ho preso decisioni di design specifiche per garantire un'adeguata gestione delle configurazioni delle TileMap e un corretto caricamento delle informazioni nel nostro gioco.
+Inoltre, grazie al fatto che rispettando le proprietà definite si può garantire il parsing di diversi tipi di TileMap, sono riuscito a ottenere un riuso parziale del parser stesso.
+\paragraph*{Note:}
+Durante lo sviluppo del parser per le TileMap, ho affrontato alcune sfide legate alle configurazioni dei file XML attualmente utilizzati.
+È importante sottolineare che il nostro sistema è stato progettato per gestire le configurazioni delle TileMap conformi alle regole definite. 
+Tuttavia, sono consapevole che il parsing abbia dei limiti derivanti dalla natura dei file XML.
+Pertanto, per migliorare la flessibilità nella gestione delle configurazioni, prevediamo di estendere il supporto anche ai file JSON in futuro.
+Durante il processo di sviluppo del parser, ho preso alcune decisioni specifiche per garantire un'adeguata gestione delle configurazioni delle TileMap e un corretto caricamento delle informazioni nel nostro gioco. 
+Ad esempio, ho affrontato il problema della distinzione tra aree camminabili e bloccate utilizzando la proprietà "TileMapIdInt" associata a un booleano "WalkableBool".
+Questo approccio ci ha consentito di definire chiaramente le diverse proprietà delle TileMap e di gestirle efficacemente durante il parsing.
+L'approccio di parsing attuale ha dimostrato di essere vantaggioso nel nostro progetto grazie al riuso del codice esistente per l'analisi e il caricamento delle informazioni.
+Questo ha comportato un notevole risparmio di tempo nello sviluppo e nella manutenzione del codice. Tuttavia, ho prestato attenzione a mantenere il parser sufficientemente modulare e flessibile per consentire futuri miglioramenti e l'integrazione di nuove tipologie di file come i JSON.
+Riconosciamo l'importanza di mantenere un equilibrio tra il riuso del codice e la complessità. 
+Ho lavorato diligentemente per evitare di rendere il parser eccessivamente complesso, garantendo al contempo un'adeguata gestione delle configurazioni delle TileMap. 
+Questo equilibrio è fondamentale per garantire l'efficienza e la manutenibilità del sistema nel lungo termine.
+\\
+\subsubsection*{Gestione dei layer della TileMap}
+In questa sezione, introdurrò il concetto di layer nella gestione della TileMap e le migliorie apportate per garantire mappe più complesse ed esteticamente accattivanti.
+\\
+Introduzione al concetto di layer:
+Nel contesto della nostra TileMap, per layer si intende uno strato della mappa che rappresenta diversi elementi sovrapposti. 
+Possiamo immaginare la mappa come un sandwich, dove ogni strato corrisponde a una fetta. 
+Ad esempio, il primo layer potrebbe rappresentare la zona percorribile (pavimento), il secondo layer potrebbe essere associato a un blocco di prato (ancora camminabile o meno), e così via, fino all'ultimo strato che costituisce la parte superiore del sandwich.
+\paragraph*{Problema}
+Tuttavia, l'utilizzo di un solo layer limita le possibilità di creare un design più ricercato e dettagliato nella parte grafica della mappa. 
+Questa limitazione può influire negativamente sull'estetica complessiva del gioco e sulla varietà delle strutture presenti nella mappa.
+\paragraph*{Soluzione}
+Per superare questa limitazione, ho apportato delle migliorie nella gestione dei layer della TileMap.
+Ora il sistema è in grado di leggere e gestire ogni singolo layer presente nella mappa corrente, consentendo la creazione di mappe maggiormente estetiche.
+Uno dei vantaggi dell'approccio è quello di poter cambiare la struttura della mappa senza troppi compromessi.
+Le migliorie implementate permettono di sovrapporre diversi strati nella mappa, consentendo di aggiungere dettagli e varietà nella struttura complessiva. 
+Ad esempio, posso creare layer separati per rappresentare il terreno, gli elementi di arredamento, gli ostacoli, l'acqua e molti altri. 
+Ogni strato può essere progettato e personalizzato in modo indipendente, offrendo una maggiore flessibilità e libertà creativa nella creazione delle mappe.
+Questo nuovo approccio consente di ottenere mappe più dettagliate e realistiche, migliorando significativamente l'aspetto visivo del gioco. 
+Inoltre, grazie alla gestione avanzata dei layer, è possibile modificare la struttura della mappa in modo più flessibile senza compromettere la funzionalità del gioco.
+\subsubsection*{Gestione delle transizioni tra i livelli}
+\paragraph{Problema}
+La seconda sfida che ho affrontato riguardava la transizione fluida tra i diversi livelli all'interno del gioco. 
+Era fondamentale garantire che il giocatore potesse passare da una stanza all'altra in modo corretto e coerente, mantenendo eventuali statische acquisite durante il corso della partita (come vita, monete e power-up).
+\paragraph{Soluzione}
+Per affrontare questa sfida, ho introdotto un meccasimo chiave chiamato "LevelManager".
+Il LevelManager ha assunto la responsabilità di gestire l'intercambio tra i diversi livelli e coordinare l'avanzamento tra le stanze di gioco. 
+Nel nostro gioco, ho definito diverse tipologie di stanze, tra cui stanze normali, stanze del negozio e stanza del boss.
+Il LevelManager assicura che il giocatore si sposti correttamente attraverso le diverse stanze, gestendo la transizione e il posizionamento corretto da una stanza all'altra.
+\subsubsection{Introduzione al concetto di gestione delle stanze all'interno del gioco}
+In questa sezione, introdurrò il concetto di gestione delle stanze all'interno del gioco, utilizzando il pattern di progettazione chiamato "Strategy".
+\paragraph*{Problema}
+Durante lo sviluppo del gioco, mi sono trovato di fronte alla sfida di gestire in modo flessibile le diverse strategie delle stanze, al fine di garantire un'esperienza di gioco diversificata e coinvolgente.
+\paragraph*{Soluzione}
+Per affrontare questa sfida, ho adottato il pattern "Strategy", che mi ha permesso di definire una strategia personalizzata per la generazione e la gestione delle entità all'interno di ciascuna stanza.
+Questo approccio ha favorito un design modulare e manutenibile, consentendomi di separare le logiche specifiche delle stanze e riutilizzare il codice in modo efficiente.
+Ho iniziato creando un'interfaccia chiamata "RoomStrategy" per rappresentare la strategia generale delle stanze. 
+Successivamente, ho implementato diverse strategie specifiche, tra cui "NormalRoomStrategy", "ShopRoomStrategy" e "BossRoomStrategy".
+Ogni strategia ha una logica unica per la generazione e la gestione delle entità in base alle caratteristiche specifiche della stanza.
+Per ridurre la duplicazione di codice e favorire il riutilizzo, ho creato una classe astratta chiamata "AbstractRoomStrategy".
+Questa classe contiene i metodi comuni a tutte le strategie di stanza, ad esempio, il posizionamento del giocatore.
+Le strategie specifiche, come "NormalRoomStrategy", "ShopRoomStrategy" e "BossRoomStrategy", estendono questa classe astratta e implementano i metodi unici alle loro caratteristiche specifiche.
+L'utilizzo del pattern "Strategy" mi ha consentito di modellare in modo flessibile le diverse strategie per le stanze del gioco. 
+Ad esempio, la stanza del boss ospita un'entità boss, a differenza delle altre stanze, mentre la stanza del negozio contiene power-up.
+Ogni strategia di stanza può personalizzare la generazione e la gestione delle entità in base alle sue caratteristiche specifiche.
+È importante notare che, grazie al pattern "Strategy", ho potuto gestire in modo efficace le diverse strategie delle stanze, semplificando l'aggiornamento delle logiche di generazione e gestione delle entità in base alle caratteristiche specifiche di ciascuna stanza.
+Questa soluzione ha favorito un alto livello di modularità e facilitato la gestione e l'espansione delle diverse stanze nel mio gioco.
+\paragraph*{Note:}
+È importante notare che ho cercato di bilanciare la complessità delle strategie delle stanze nel mio gioco. 
+Tuttavia, sono consapevole che potrebbe esserci spazio per miglioramenti futuri, come l'aggiunta di interazioni più complesse tra le entità o meccanismi avanzati.
+Si tenga presente che la classe astratta "AbstractRoomStrategy" sarà sicuramente soggetta a miglioramenti futuri per ridurre la complessità e migliorare l'organizzazione del codice.
+In quanto ad ora non è ben organizzata e contiene troppe righe di codice, infatti sarà mio obbiettivo in futuro gestire meglio il tutto.
+Infatti punto a lavorare sulle mie implementazioni e adattarle man mano all'evoluzione del gioco.
+
+\paragraph*{Design Pattern}
+Per gestire le stanze in modo flessibile, ho adottato il pattern di progettazione chiamato "Strategy". 
+Questo pattern mi ha permesso di definire una strategia personalizzata per la generazione e la gestione delle entità all'interno di ciascuna stanza, compreso il posizionamento corretto.
+Ho creato un'interfaccia chiamata "RoomStrategy" per rappresentare la strategia generale delle stanze e ho implementato diverse strategie specifiche, come "NormalRoomStrategy", "ShopRoomStrategy" e "BossRoomStrategy".
+In seguito, ho cercato di prendere quanto comune delle tre strategie realizzate, creando una classe "AbstractRoomStrategy", un esempio ne è la generazione del player che è uguale per ogni stanza.
+Questo ha ridotto di molto la duplicazione di codice all'interno delle tre strategie di stanza, riutilizzando i metodi senza doverli implementare direttamente.
+Ogni implementazione delle strategie dettaglia le logiche di generazione e gestione delle entità in base alle caratteristiche specifiche di ciascuna stanza. 
+Ad esempio, la stanza del boss ospita un'entità boss, a differenza delle altre stanze, mentre la stanza del negozio contiene power-up.
+Utilizzando il pattern "Strategy", sono stato in grado di modellare in modo flessibile le diverse strategie per le stanze, semplificando l'aggiornamento delle logiche di generazione e gestione delle entità in base alle caratteristiche specifiche di ciascuna stanza. 
+Questo ci consente di mantenere un alto livello di modularità e facilita la gestione e l'espansione delle diverse stanze nel nostro gioco.
+\paragraph*{Note:}
+Ho cercato di bilanciare la complessità delle strategie delle stanze nel mio gioco, cercando di trovare un punto di equilibrio tra la semplicità e la complessità. 
+Sebbene strategie più complesse potrebbero offrire un'esperienza di gioco più sofisticata, ho considerato le caratteristiche specifiche del mio dominio di gioco e ho optato per strategie che soddisfano le esigenze senza aggiungere un'eccessiva complessità.
+Tuttavia, comprendo che potrebbe esserci spazio per miglioramenti futuri.
+Sono consapevole che potrei aggiungere ulteriori funzionalità alle stanze, ad esempio, per gestire interazioni più complesse tra le entità o altri meccanismi più avanzati.
+Sono consapevole inoltre che la classe astratta "AbstractRoomStrategy", abbia troppe righe di codice, ma in fase di realizzazione ho pensato che fosse la soluzione per me più pratica, e semplice da realizzare. 
+Nel complesso, ho scelto di mantenere le strategie delle stanze in una fase adeguata al mio attuale stato di sviluppo del gioco, ma sono aperto a esplorare e implementare strategie più sofisticate in futuro.
+\subsubsection*{Introduzione allo generazione delle entità all'interno delle stanze}
+Le stanze menzionate in precedenza, ognuna con la propria strategia, posizionano in modo randomico all'interno delle Tile camminabili tutte le entità presenti.
+La prima delle entità generate, è sempre il player.
+\paragraph*{Problema}
+Tuttavia, ho incontrato una sfida riguardante il posizionamento corretto delle entità all'interno delle stanze.
+\paragraph*{Soluzione}
+Per affrontare questa questione, ho introdotto un processo di spawn delle entità basato su un approccio di posizionamento randomico controllato. 
+Ogni entità viene creata prendendo in considerazione le zone camminabili all'interno della stanza, ottenute tramite il metodo automatizzato \textit{"getRandomTile()"}.
+Per illustrare meglio il processo, prenderemo come esempio il posizionamento del player. 
+Per garantirene un corretto posizionamento, sono stati sviluppati diversi metodi:
+\begin{itemize}
+	\item Il metodo "createPlayer()" crea un'entità player, non tenendo conto delle dimensioni del player stesso.
+	Utilizza un "Set" (insieme) di Tile camminabili e seleziona due coordinate libere per il posizionamento del player.  
+	\item Il metodo "createAndPlacePlayer()" considera anche le dimensioni del player e utilizza il metodo "getRandomTile()" per ottenere una zona camminabile casuale. 
+	Questo metodo viene utilizzato per creare e posizionare il player all'interno della stanza.
+	\item Il metodo "generatePlayer()" è responsabile di controllare se il player esiste già nella lista delle entità del World prima di crearne uno nuovo. 
+	Se il player esiste già, viene utilizzato il player esistente, garantendo così la coerenza delle informazioni, come monete e cuori accumulati durante il gameplay. 
+	Se il player non esiste, viene creato un nuovo player utilizzando il metodo sopra descritto.
+\end{itemize}
+Questo processo di creazione e posizionamento delle entità viene applicato a ciascuna stanza, garantendo imprevedibilità nel posizionamento delle entità all'interno del gioco.
+In conclusione, ho migliorato il sistema di spawn delle entità all'interno delle stanze, introducendo un metodo controllato di posizionamento randomico basato sulle zone camminabili. 
+Questo assicura un'esperienza di gioco più interessante e coerente, evitando la perdita di progressi del player e mantenendo la sfida e l'equilibrio del gameplay.
+\subsubsection*{Introduzione alla generazione delle entità con dimensioni maggiori}
+Nella sotto-sezione precedente ho affrontato la questione della gestione della generazione delle entità di dimensioni "grandi", un nuovo aspetto che ha richiesto \textit{particolare} attenzione durante la fase di progettazione e implementazione.
+\paragraph*{Problema}
+Uno dei principali ostacoli affrontati è stata la gestione della generazione di entità che occupano più di una singola tile. 
+Fino a questo punto, tutte le entità nel gioco erano di dimensione 1x1 tile, rappresentando un'area quadrata corrispondente a una singola tile. 
+Tuttavia, mi sono trovato nella situazione di dover gestire l'introduzione di entità come "Gate" e "Boss" che possono occupare una superficie maggiore.
+\paragraph*{Soluzione}
+Per risolvere questo problema, ho introdotto un processo di controllo che verificasse se l'entità in questione, data la sua dimensione, potesse essere posizionata all'interno dell'area designata senza sovrapporsi alle tile occupate da altre entità.
+Il processo di generazione e posizionamento di entità di dimensioni maggiori ha richiesto lo sviluppo di diversi metodi specifici.
+Il primo metodo, chiamato "isTileOccupied()", controlla se la tile specificata è occupata da un'altra entità presente nella mappa di gioco.
+Questo metodo è utilizzato all'interno di un altro metodo chiamato "canAccommodate()", che verifica se l'entità può essere posizionata senza sovrapporsi ad altre entità già presenti.
+\\
+Per affrontare il posizionamento specifico dell'entità boss, sono stati sviluppati ulteriori metodi:
+\begin{itemize}
+	\item Il metodo "canAccommodateTileForBoss()" utilizza il metodo "canAccommodate()" per controllare se l'entità boss può essere posizionata correttamente all'interno dell'area di tile dedicata alla sua generazione.
+	\item Il metodo "getRandomTileForBoss()" viene utilizzato per selezionare casualmente una tile libera che possa ospitare l'entità boss, tenendo conto delle sue dimensioni specifiche
+	\item Successivamente, il metodo "createBoss()" viene chiamato per creare l'entità boss, assegnandole le coordinate di posizione ottenute dal metodo precedente.
+	\item Ora vi è il meotodo "createBoss()", che appunto si occupa di crare l'entità boss, assegnandogli ora una posizione con rispettive coordinate x e y.
+	\item Infine, il metodo "generateAndPlaceBoss()" utilizza tutti i metodi di supporto descritti in precedenza per generare e posizionare l'entità boss all'interno della mappa di gioco.
+\end{itemize}
+È importante sottolineare che, per garantire la corretta generazione e posizionamento dell'entità boss, è stato necessario adottare un approccio specifico per selezionare le tile libere e assicurarsi che l'entità non si sovrapponesse ad altre entità esistenti.
+\subsubsection*{Introduzione alle collisioni interne alla TileMap}
+In questa sezione, fornirò una panoramica del concetto di collisione interna alla TileMap e del ruolo che assume nel nostro gioco.
+Le collisioni interne alla mappa sono gestite tramite un apposito sistema.
+Come anticipato nella sezione precedente, la mappa è costituita da zone "camminabili" e zone "bloccate", grazie alle quali è stato possibile costruire il sistema "MapCollisionSystem".
+Questo sistema si occupa di rilevare se una zona della mappa è accessibile o attraversabile dalle entità di gioco, come ad esempio il player o i nemici.
+\paragraph*{Problema}
+La terza sfida affrontata era relativa alle collisioni interne alla mappa, in quanto le entità non avevano limiti e potevano uscire dalla mappa di gioco senza restrizioni.
+\paragraph*{Soluzione}
+Ho creato un sistema in grado di rilevare le interazioni tra le zone bloccate e le entità di gioco.
+Ciò ha permesso di definire una sorta di "barriera" che impedisce alle entità di uscire dalle zone predefinite.
+Quando viene rilevata una posizione al di fuori della zona camminabile, il MapCollisionSystem esegue l'azione appropriata.
+Ad esempio, se il player cerca di uscire dalla mappa, viene resettato alla sua ultima posizione valida prima di superare i limiti.
+Allo stesso modo, le entità che rapprestano i proiettili, i quali sono sparati dai nemici o player vengono rimossi quando raggiungono una zona non camminabile.
+\subsubsection*{Introduzione alla vita delle entità di gioco}
+In questa sezione, forniremo una panoramica del concetto di salute delle entità e il ruolo che essa assume nel nostro gioco. 
+La gestione della salute delle entità è un aspetto fondamentale per determinare la loro vitalità e partecipazione attiva nel gameplay.
+La salute di un'entità nel nostro gioco è rappresentata dal componente HealthComponent. 
+Un'entità è considerata "viva" se il valore del suo HealthComponent è superiore a zero, mentre è considerata "morta" se il valore è uguale o inferiore a zero.
+\paragraph*{Problema}
+All'inizio, non era presente un controllo sulla salute delle entità sconfitte, e di conseguenza rimanevano in gioco nonostante fossero state eliminate.
+\paragraph*{Soluzione}
+Per affrontare questo problema e garantire un'esperienza di gioco più realistica, ho introdotto un componente dedicato chiamato \texttt{HealthComponent}. 
+Questo componente viene utilizzato da tutte le entità di gioco, inclusi il player, i nemici e il boss, per gestire la loro salute.
+Ho sviluppato anche un sistema specifico chiamato \texttt{"CheckHealthSystem"} per gestire il controllo della salute delle entità e rimuovere quelle che muoiono durante i combattimenti. 
+Il CheckHealthSystem viene eseguito in sincronia con l'aggiornamento del gioco, controllando costantemente lo stato di salute di ciascuna entità.
+Grazie all'implementazione del CheckHealthSystem e del RemoveEntityEvent, le entità sconfitte vengono correttamente rimosse dal gameplay.
+I sistemi del gioco che gestiscono le entità catturano l'evento di rimozione e intraprendono le azioni necessarie per eliminare l'entità dallo schermo, interrompendo le sue interazioni con gli altri elementi di gioco.
+Questa soluzione ha migliorato notevolmente l'esperienza di gioco, rendendola più realistica. 
+Ora i giocatori possono concentrarsi sulle entità ancora vive e non vengono più disturbati dalla presenza di entità sconfitte che rimangono in gioco.
+\subsubsection*{Introduzione alle nuove entità create}
+Una volta completato quando sopra riportato, mi sono dedicato alla creazione di nuove entità, che ho poi usato per scopi specifici.
+Ne è un esempio il boss per utilizzato per la realizzazione della boss fight.
+\paragraph*{Problema}
+Uno dei nostri obiettivi era ampliare il gioco introducendo nuove entità.
+\paragraph*{Soluzione}
+Per affrontare questa sfida, ho utilizzato il design pattern Factory Method.
+In particolare, ho realizzato la classe "BossFactory" che implementa il metodo "createBoss()" per la creazione dell'entità boss.
+Questo approccio mi ha fornito diversi vantaggi.
+Il pattern Factory Method permette di incapsulare la logica di creazione dell'entità all'interno dei metodi stessi, noti come factory methods.
+In questo modo, possiamo creare diversi tipi di entità senza dover esporre i dettagli della loro costruzione all'esterno.
+Inoltre, il pattern facilita l'estensione futura aggiungendo nuovi metodi di factory per creare tipi aggiuntivi di entità (ad esempio ci sono anche i minions). 
+La classe BossFactory, insieme alla classe "GenericFactory", che adotta lo stesso pattern, mi hanno portato alla creazione delle entità Boss e Minion (nella prima), così come dello shop-keeper (nella seconda), in modo flessibile ed estensibile.
+\subsubsection*{Introduzione alla boss fight}
+Alla proposta di progetto, avevamo messo tra le scelte opzionali, quella della realizzazione della boss fight, ho dunque deciso di occuparmene, per rendere il gioco più completo e giocabile.
+Introuduciamo ora la Boss entity, la quale è presente nell'ultima delle stanze, con stanza dedicata, essa è l'entità nemica più potente (da qui si ha anche l'introduzione degli item e power-up). 
+\paragraph*{Problema}
+Il problema da affrontare era la realizzazione di un combattimento coinvolgente tra l'entità player e il boss.
+\paragraph*{Soluzione}
+Per consentire il combattimento nel nostro gioco, abbiamo bisogno di definire delle azioni specifiche per le entità coinvolte. 
+Nel caso del boss, ho adottato nuovamente il design pattern Factory Method per gestire la creazione delle sue azioni.
+\\
+Le azioni che il boss può compiere sono le seguenti:
+\begin{itemize}
+	\item Attacco corpo a corpo speciale: un attacco con un'area abbastanza grande, attivabile solo quando il boss raggiunge una soglia di vita specificata.
+	\item Incremento di velocità: l'aumento della velocità del boss, attivato solo quando il boss si avvicina a una soglia di vita specifica. 
+	Questo bilancia lo scontro nel caso in cui il giocatore abbia acquisito numerosi power-up.
+	\item Incremento di vita: l'aumento della vita del boss, attivato quando il boss raggiunge una determinata soglia di vita.
+	Questo permette al boss di recuperare energia quando il giocatore si concentra principalmente sull'attacco a distanza.
+\end{itemize}
+La creazione delle azioni speciali del boss avviene tramite l'utilizzo del design pattern Factory Method. I metodi, come ad esempio "createBossMeleeAttack()", sono responsabili della creazione delle entità di attacco specifiche utilizzate solo dal boss.
+Questo approccio incapsula la logica di creazione e restituisce un'istanza dell'oggetto Entità che rappresenta l'attacco stesso.
+L'utilizzo del Factory Method centralizza la creazione delle entità di attacco, consentendo flessibilità e disaccoppiando il codice "client" dai dettagli specifici dell'implementazione dell'attacco.
+Ciò promuove il principio di incapsulamento e rispetta il principio "Open/Closed", consentendo l'aggiunta di nuovi tipi di attacco senza modificare il codice esistente.
+\\
+Le azioni del boss sono gestite dalla classe "EnemyRoutineFactory", che implementa il design pattern Factory Method. I metodi, come "createBossRoutine()", sono responsabili della creazione delle routine logiche che guidano il comportamento del boss durante la boss fight.
+Questo approccio consente l'incapsulamento della logica di creazione delle azioni comportamentali e fornisce flessibilità ed estensibilità senza modificare il codice esistente.
+\\
+Ritengo che l'implementazione sopra descritta sia sufficiente per garantire uno scontro divertente ma non troppo impegnativo tra il giocatore e il boss, offrendo un'esperienza di gioco più completa e coinvolgente.
+\paragraph*{Note:}
+Sono consapevole che avrei potuto realizzare delle action più complesse, ma ho ritenuto che delle azioni semplici fossero sufficienti per soddisfare le esigenze del nostro gioco.
+Date le caratteristiche del dominio di gioco, l'implementazione di azioni complesse avrebbe potuto aggiungere una complessità eccessiva senza apportare un valore significativo all'esperienza di gioco complessiva.
+\subsubsection*{Introduzione ai nuovi component realizzati}
+Nella mia implementazione del gioco, ho sviluppato due component specifici: il Boss e lo Shop-Keeper component.
+Per rendere queste entità interattive e funzionali agli eventi, ne ho creato dei component dedicati.
+Il componente del Boss ha una funzione importante nel riconoscere lo stato della partita, questo evento non è però stato realizzato da me.
+Quando il Boss viene sconfitto, viene lanciato l'evento "Win", seguito dalla visualizzazione di una schermata di vittoria e dalla conclusione del gioco.
+Questo componente, che funge da "tag", permette al gioco di rilevare la fine della sfida con il Boss e di fornire una conclusione ai giocatori.
+\\
+Il componente dello Shop-Keeper, invece, ha una funzionalità differente rispetto alle altre entità normali, come i nemici comuni (escludendo il Boss e il giocatore).
+Nelle stanze di gioco, di solito è necessario eliminare tutti i nemici per poter accedere al gate e passare al livello successivo.
+Tuttavia, nello specifico caso dello Shop-Keeper, che appare solo nella stanza del negozio, il gate può essere utilizzato fin da subito, in quanto lo Shop-Keeper è escluso dalle entità che devono essere eliminate.
+Questa eccezione è possibile grazie all'introduzione del componente specifico dello Shop-Keeper (tramite uso del suo "tag").
+I componenti del Boss e dello Shop-Keeper non implementano una logica interna complessa, ma svolgono il ruolo di "tag" o riconoscimento delle entità.
+\paragraph*{Problema}
+Generare l'evento di fine partita.
+\paragraph*{Soluzione}
+Per gestire questo problema, ho creato il componente necessario ad un sistema che, al momento della sconfitta del Boss, genera l'evento "Win".
+Questo evento viene rilevato dal sistema del gioco, che avvia una sequenza di azioni, tra cui la visualizzazione di una schermata di vittoria e la conclusione del gioco.
+Dettagli specifici sulla gestione di questo evento sono stati forniti precedentemente.
+\paragraph*{Problema}
+Gestire il cambio di livello anche con lo Shop-Keeper che precedentemente non era costituito da un componente.
+\paragraph*{Soluzione}
+Per permettere il cambio di livello con la presenza dello Shop-Keeper, ho introdotto un componente dedicato a questa entità.
+Questo componente viene utilizzato per all'interno del predicate BiFunction "useGate", la presenza del suo component, è usata come filtro, quando tutti i nemici oppure lo shop-keeper è presente, allora avviene l'evento "ChangeLevelEvent" non realizzato da me.
+I dettagli specifici sono stati realizzati all'interno della classe \texttt{"InteractableObjectFactory"}.
+Con queste migliorie, i componenti del Boss e dello Shop-Keeper diventano parte integrante del gameplay, offrendo funzionalità specifiche e consentendo una gestione più sofisticata degli eventi e delle transizioni di livello nel gioco.
+\subsubsection*{Menu tutorial}
+\paragraph*{Problema}
+Il mio obiettivo era quello di fornire al giocatore una schermata di tutorial iniziale, pre-game, che spiegasse i tasti e le regole di gioco in modo chiaro e comprensibile. 
+Volevo garantire che il giocatore fosse in grado di godersi appieno il gameplay fin dal primo momento.
+\paragraph*{Soluzione}
+Per affrontare questa sfida, ho creato una schermata di tutorial che si attiva al primo click del pulsante "play" nel menu principale. 
+Ho voluto utilizzare delle immagini catturate dal gameplay stesso, poiché ciò rende le istruzioni più chiare e immediate.
+Ho abbinato a ogni immagine un testo esplicativo che illustra il modo corretto di eseguire le azioni nel gioco.
+Ad esempio, mostriamo i tasti utilizzati per il movimento del giocatore e spieghiamo le regole per cambiare stanza o utilizzare il gate (portale).
+La disposizione delle immagini e del testo è stata organizzata in modo semplice e intuitivo per facilitare la comprensione del giocatore.
+Ho cercato di mantenere il tutorial conciso e diretto al punto, evitando informazioni superflue che potrebbero confondere o annoiare il giocatore.
+In conclusione, la schermata di tutorial che ho implementato nel menu principale fornisce al giocatore un'introduzione semplice ma completa ai tasti e alle regole di gioco.
+Ciò permette al giocatore di immergersi nel gameplay fin dal primo momento, senza troppe difficoltà, sfruttando appieno le meccaniche di gioco e godendo dell'esperienza offerta dal nostro gioco.
+\paragraph*{Note:}
+Sono consapevole che avrei potuto costruire un Menu tutuorial più funzionale, ad esempio un tutorial interattivo, ma dato il nostro dominio di 
+gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per la 
+visualizzazione a schermo dei comandi e delle regole di gioco.
 
 \subsection{Alessandra Versari}
 \subsubsection*{Items}
