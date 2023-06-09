@@ -33,12 +33,12 @@ public class HomeScreen extends AbstractScreen {
         this.add(super.createLabel("/asset/bg/HomeScreenTitle.png"), gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        centerPanel.setLayout(new GridBagLayout());
-        centerPanel.add(super.createButton((e -> engine.newGame()), "PLAY", color), gbc);
-        centerPanel.add(super.createButton((e -> engine.getMainWindow().changePanel(new OptionScreen(engine))), "OPTIONS",
+        super.getCenterPanel().setLayout(new GridBagLayout());
+        super.getCenterPanel().add(super.createButton((e -> engine.newGame()), "PLAY", color), gbc);
+        super.getCenterPanel().add(super.createButton((e -> engine.getMainWindow().changePanel(new OptionScreen(engine))), "OPTIONS",
             color), gbc);
-        centerPanel.add(super.createButton((e -> Runtime.getRuntime().exit(0)), "QUIT", color), gbc);
+            super.getCenterPanel().add(super.createButton((e -> Runtime.getRuntime().exit(0)), "QUIT", color), gbc);
         gbc.weighty = 1;
-        this.add(centerPanel);
+        this.add(super.getCenterPanel());
     }
 }

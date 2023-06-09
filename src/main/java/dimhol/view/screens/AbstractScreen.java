@@ -17,16 +17,15 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
- * An abstract class to create similar  menus and screens.
+ * An abstract class to create similar menus and screens.
  */
 public abstract class AbstractScreen extends JPanel {
     protected static final int INSETS = 10;
     protected static final int FONT_SIZE = 20;
-    protected final Engine engine;
-    protected ImageIcon background;
-    protected Font font;
-    protected JPanel centerPanel; 
-    protected JLabel title;
+    private final Engine engine;
+    private ImageIcon background;
+    private Font font;
+    private JPanel centerPanel; 
     protected GridBagConstraints gbc;
 
     /**
@@ -44,8 +43,28 @@ public abstract class AbstractScreen extends JPanel {
         gbc.anchor = GridBagConstraints.NORTH;
     }
 
+    public Engine getEngine() {
+        return this.engine;
+    }
+
+    public Font getFont() {
+        return this.font;
+    }
+
+    public JPanel getCenterPanel() {
+        return this.centerPanel;
+    }
+
+    public GridBagConstraints getGbc() {
+        return gbc;
+    }
+
+    public void setGbc(GridBagConstraints gbc) {
+        this.gbc = gbc;
+    }
+
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
