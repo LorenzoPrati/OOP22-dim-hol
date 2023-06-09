@@ -35,8 +35,8 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
     private static final int MINIONS_ENTITY_HEIGHT = 1;
     private static final int BOSS_ENTITY_WIDTH = 4;
     private static final int BOSS_ENTITY_HEIGTH = 3;
-    private final BossFactory bossFactory;
     private static final Logger LOGGER = LoggerFactory.getLogger(BossRoomStrategy.class);
+    private final BossFactory bossFactory;
 
 
     /**
@@ -277,10 +277,11 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
 
     /**
      * Generates entities with exception handling.
-     * @param <T> the type of the entity count parameter
-     * @param entityCountSupplier the supplier for obtaining the entity count
+     *
+     * @param <T>                  the type of the entity count parameter
+     * @param entityCountSupplier  the supplier for obtaining the entity count
      * @param entityGenerationFunc the consumer for generating entities based on the entity count
-     * @param errorHandlingFunc the consumer for handling any exceptions that occur during entity generation
+     * @param errorHandlingFunc    the consumer for handling any exceptions that occur during entity generation
      */
     private <T> void generateEntitiesWithExceptionHandling(
             final Supplier<T> entityCountSupplier,
