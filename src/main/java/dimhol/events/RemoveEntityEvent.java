@@ -42,6 +42,6 @@ public class RemoveEntityEvent implements WorldEvent {
                         world.setWin(true);
                     }
                     world.removeEntity(e);
-        });
+                });
     }
 }
