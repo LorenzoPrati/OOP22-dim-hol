@@ -19,6 +19,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import org.locationtech.jts.math.Vector2D;
 import dimhol.logic.collision.RectBodyShape;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * A factory of interactable objects.
@@ -50,6 +51,7 @@ public class InteractableObjectFactory extends AbstractFactory {
         coinPocket.setAmount(coinPocket.getCurrentAmount() - p);
     };
 
+    @SuppressFBWarnings("MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR") 
     private Predicate<World> checkAllEnemyAreDead = (w) -> w.getEntities()
         .stream()
         .noneMatch(e -> e.hasComponent(AIComponent.class));

@@ -2,10 +2,8 @@ package dimhol.view;
 
 import dimhol.core.Engine;
 import dimhol.view.screens.HomeScreen;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -14,6 +12,7 @@ import javax.swing.JPanel;
  */
 public class MainWindowImpl implements MainWindow {
     private final JFrame frame;
+    private final Dimension screenSize;
 
     /**
      * Creates a MainWindowImpl.
@@ -23,8 +22,9 @@ public class MainWindowImpl implements MainWindow {
         this.frame = new JFrame();
         this.frame.getContentPane().add(new HomeScreen(engine));
         this.frame.setUndecorated(false);
-        this.frame.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), 
-            (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
+        this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.frame.setPreferredSize(new Dimension((int) screenSize.getWidth(),
+            (int) screenSize.getHeight()));
         this.frame.pack();
         this.frame.setResizable(false);
         this.frame.setVisible(true);
@@ -49,5 +49,13 @@ public class MainWindowImpl implements MainWindow {
     @Override
     public void changeResolution(final Dimension dimension) {
         this.frame.setSize(new Dimension(dimension));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Dimension getScreenSize() {
+        return this.screenSize;
     }
 }
