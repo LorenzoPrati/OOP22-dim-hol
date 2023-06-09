@@ -46,7 +46,7 @@ public class NormalRoomStrategy extends AbstractRoomStrategy {
      * @return A list of generated entities.
      */
     @Override
-    public final List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> availableTiles,
+    public List<Entity> generate(final Optional<Entity> entity, final Set<Pair<Integer, Integer>> availableTiles,
                                        final List<Entity> entities) {
         final List<Entity> newListOfEntities = new ArrayList<>();
 

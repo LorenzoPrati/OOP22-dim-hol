@@ -22,7 +22,7 @@ public final class MapCollisionSystem extends AbstractSystem {
      * Constructs a MapCollisionSystem with the specified World instance.
      */
     public MapCollisionSystem() {
-        super(PositionComponent.class, BodyComponent.class, MovementComponent.class);
+        super(BodyComponent.class, MovementComponent.class);
     }
 
     /**
