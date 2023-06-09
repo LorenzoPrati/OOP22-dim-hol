@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Strategy that performs an area attack around the boss.
+ * Strategy that performs a boss melee attack within the ranged area of the boss.
  */
 public final class BossMeleeAttackAction extends AbstractAction {
 
