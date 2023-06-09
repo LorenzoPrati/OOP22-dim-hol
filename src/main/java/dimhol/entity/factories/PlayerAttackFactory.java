@@ -45,11 +45,11 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
     /**
      * Player big bullet speed.
      */
-    public static final int PLAYER_BIG_BULLET_SPEED = 3;
+    public static final int PLAYER_BIG_BULLET_SPEED = 4;
     /**
      * Player big bullet damage.
      */
-    private static final int PLAYER_BIG_BULLET_DAMAGE = 2;
+    private static final int PLAYER_BIG_BULLET_DAMAGE = 5;
     /**
      * Fireball ray.
      */
