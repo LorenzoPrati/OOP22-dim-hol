@@ -38,7 +38,7 @@ public class OptionScreen extends AbstractScreen {
      */
     public OptionScreen(final Engine engine) {
         super(engine);
-        super.setBackground("/asset/bg/Interior 3.png");
+        super.setBackground("/asset/bg/optionScreen.png");
         JLabel labelResolution = new JLabel("CHOOSE RESOLUTION: ");
         Font font2 = new Font("Helvetica", Font.BOLD, FONT2_SIZE);
         JPanel optionListPanel = new JPanel();
