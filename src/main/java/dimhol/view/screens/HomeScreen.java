@@ -3,11 +3,15 @@ package dimhol.view.screens;
 import dimhol.core.Engine;
 import java.awt.Color;
 import java.awt.GridBagLayout;
+import java.io.Serial;
 
 /**
  * A class which create the home menu.
  */
 public class HomeScreen extends AbstractScreen {
+
+    @Serial
+    private static final long serialVersionUID = 0;
     /**
      * Value of red colour needed to create the new color.
      */
@@ -32,10 +36,10 @@ public class HomeScreen extends AbstractScreen {
         super.setGbcAnchorCenter();
         super.setGbcFillHorizontal();
         super.getCenterPanel().setLayout(new GridBagLayout());
-        super.getCenterPanel().add(super.createButton((e -> engine.newGame()), "PLAY", color), super.getGbc());
-        super.getCenterPanel().add(super.createButton((e -> engine.getMainWindow().changePanel(new OptionScreen(engine))), "OPTIONS",
+        super.getCenterPanel().add(super.createButton(e -> engine.newGame(), "PLAY", color), super.getGbc());
+        super.getCenterPanel().add(super.createButton(e -> engine.getMainWindow().changePanel(new OptionScreen(engine)), "OPTIONS",
             color), super.getGbc());
-            super.getCenterPanel().add(super.createButton((e -> Runtime.getRuntime().exit(0)), "QUIT", color), super.getGbc());
+            super.getCenterPanel().add(super.createButton(e -> Runtime.getRuntime().exit(0), "QUIT", color), super.getGbc());
             super.getGbc().weighty = 1;
         this.add(super.getCenterPanel());
     }

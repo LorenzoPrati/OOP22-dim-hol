@@ -1,6 +1,6 @@
 package dimhol.view.screens;
 
-import dimhol.core.Engine;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,9 +22,9 @@ public abstract class AbstractScreen extends JPanel {
     public static final int INSETS = 10;
     public static final int FONT_SIZE = 20;
     private ImageIcon background;
-    private Font font;
-    private JPanel centerPanel; 
-    private GridBagConstraints gbc;
+    private final Font font;
+    private final JPanel centerPanel; 
+    private final GridBagConstraints gbc;
 
     /**
      * Creates an AbstractScreen.
@@ -42,6 +42,7 @@ public abstract class AbstractScreen extends JPanel {
     /**
      * @return the main font.
      */
+    @Override
     public Font getFont() {
         return this.font;
     }
@@ -49,6 +50,7 @@ public abstract class AbstractScreen extends JPanel {
     /**
      * @return the centerPanel.
      */
+    @SuppressFBWarnings("EI_EXPOSED_REP")
     public JPanel getCenterPanel() {
         return this.centerPanel;
     }
@@ -77,6 +79,7 @@ public abstract class AbstractScreen extends JPanel {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
@@ -90,7 +93,7 @@ public abstract class AbstractScreen extends JPanel {
         try {
             this.background = new ImageIcon(ImageIO.read(AbstractScreen.class.getResourceAsStream(path)));
         } catch (IOException e) {
-            System.out.print("Error loading background menu images");
+            throw new IllegalStateException();
         }
     }
 
@@ -102,7 +105,7 @@ public abstract class AbstractScreen extends JPanel {
      * @return a JButton.
      */
     public JButton createButton(final ActionListener actionListener, final String title, final Color color) {
-        var button = new JButton(title);
+        final var button = new JButton(title);
         button.addActionListener(actionListener);
         button.setFont(this.font);
         button.setForeground(color);
@@ -117,9 +120,9 @@ public abstract class AbstractScreen extends JPanel {
     public JLabel createLabel(final String path) {
         JLabel label = new JLabel();
         try {
-            label = new JLabel(((new ImageIcon(ImageIO.read(AbstractScreen.class.getResourceAsStream(path))))));
+            label = new JLabel(new ImageIcon(ImageIO.read(AbstractScreen.class.getResourceAsStream(path))));
         } catch (IOException e) {
-            System.out.print("Error title menu images");
+            throw new IllegalStateException();
         }
         return label;
     }
