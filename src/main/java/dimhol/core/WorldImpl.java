@@ -115,7 +115,7 @@ public class WorldImpl implements World {
                     if (e.hasComponent(PlayerComponent.class)) {
                         final var health = (HealthComponent) e.getComponent(HealthComponent.class);
                         final var coins = (CoinPocketComponent) e.getComponent(CoinPocketComponent.class);
-                        this.scene.getHUD().updateHUD(health.getCurrentHealth(),
+                        this.scene.updateHUD(health.getCurrentHealth(),
                                 health.getMaxHealth(),
                                 coins.getCurrentAmount());
                     }

@@ -24,5 +24,5 @@ public interface HUD {
      * @param maxHealth is the max health
      * @param currentAmount is the player's coin amount
      */
-    void updateHUD(int currentHealth, int maxHealth, int currentAmount);
+    void setHUDInfo(int currentHealth, int maxHealth, int currentAmount);
 }
