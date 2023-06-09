@@ -30,12 +30,12 @@ public final class BehaviourUtil {
      * @return the direction
      */
     public static Vector2D getPlayerDirection(final Vector2D playerCentralPos, final Vector2D enemyCentralPos) {
-        double y1 = playerCentralPos.getY();
-        double y2 = enemyCentralPos.getY();
-        double x1 = playerCentralPos.getX();
-        double x2 = enemyCentralPos.getX();
-        double m = (y1 - y2) / (x1 - x2);
-        var angle = (Math.atan(m) * FLAT_CORNER / Math.PI);
+        final double y1 = playerCentralPos.getY();
+        final double y2 = enemyCentralPos.getY();
+        final double x1 = playerCentralPos.getX();
+        final double x2 = enemyCentralPos.getX();
+        final double m = (y1 - y2) / (x1 - x2);
+        final var angle = Math.atan(m) * FLAT_CORNER / Math.PI;
         if (angle > -ANGLE && angle < ANGLE) {
             if (playerCentralPos.getX() > enemyCentralPos.getX()) {
                 // right

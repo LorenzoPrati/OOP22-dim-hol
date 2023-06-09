@@ -1,11 +1,11 @@
 package dimhol.entity.factories;
 
-import dimhol.components.PositionComponent;
-import dimhol.components.BodyComponent;
 import dimhol.components.AIComponent;
-import dimhol.components.MovementComponent;
-import dimhol.components.HealthComponent;
 import dimhol.components.AnimationComponent;
+import dimhol.components.BodyComponent;
+import dimhol.components.HealthComponent;
+import dimhol.components.MovementComponent;
+import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
 import dimhol.entity.EntityBuilder;
 import dimhol.logic.ai.RoutineFactory;
@@ -15,7 +15,7 @@ import org.locationtech.jts.math.Vector2D;
 /**
  * It's an enemy factory.
  */
-public class EnemyFactory extends AbstractFactory {
+public class EnemyFactory extends BaseFactory {
 
     /**
      * Zombie width.

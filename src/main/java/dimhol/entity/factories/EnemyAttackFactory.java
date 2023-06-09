@@ -1,12 +1,12 @@
 package dimhol.entity.factories;
 
 
+import dimhol.components.MeleeComponent;
 import dimhol.components.AnimationComponent;
+import dimhol.components.MovementComponent;
+import dimhol.components.BulletComponent;
 import dimhol.components.AttackComponent;
 import dimhol.components.BodyComponent;
-import dimhol.components.BulletComponent;
-import dimhol.components.MeleeComponent;
-import dimhol.components.MovementComponent;
 import dimhol.components.PlayerComponent;
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 /**
  * This class creates attack.
  */
-public final class EnemyAttackFactory extends AbstractAttackFactory {
+public final class EnemyAttackFactory extends BaseAttackFactory {
 
     /**
      * Bullet Width.
