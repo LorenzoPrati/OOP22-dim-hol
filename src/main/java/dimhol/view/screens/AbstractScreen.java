@@ -1,7 +1,6 @@
 package dimhol.view.screens;
 
 import dimhol.core.Engine;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,9 +19,8 @@ import java.io.IOException;
  * An abstract class to create similar menus and screens.
  */
 public abstract class AbstractScreen extends JPanel {
-    protected static final int INSETS = 10;
-    protected static final int FONT_SIZE = 20;
-    private final Engine engine;
+    public static final int INSETS = 10;
+    public static final int FONT_SIZE = 20;
     private ImageIcon background;
     private Font font;
     private JPanel centerPanel; 
@@ -33,7 +31,6 @@ public abstract class AbstractScreen extends JPanel {
      * @param engine
      */
     public AbstractScreen(final Engine engine) {
-        this.engine = engine;
         this.centerPanel = new JPanel();
         this.font = new Font("Helvetica", Font.BOLD, FONT_SIZE);
         this.gbc = new GridBagConstraints();
@@ -43,26 +40,37 @@ public abstract class AbstractScreen extends JPanel {
         gbc.anchor = GridBagConstraints.NORTH;
     }
 
-    public Engine getEngine() {
-        return this.engine;
-    }
-
+    /**
+     * @return the main font.
+     */
     public Font getFont() {
         return this.font;
     }
 
+    /**
+     * @return the centerPanel.
+     */
     public JPanel getCenterPanel() {
         return this.centerPanel;
     }
 
+    /**
+     * @return the gbc field.
+     */
     public GridBagConstraints getGbc() {
         return gbc;
     }
 
+    /**
+     * Method to set the gbc constants.
+     */
     public void setGbcAnchorCenter() {
         this.gbc.anchor = GridBagConstraints.CENTER;
     }
 
+    /**
+     * Method to set the gbc constants.
+     */
     public void setGbcFillHorizontal() {
         this.gbc.fill = GridBagConstraints.HORIZONTAL;
     }
