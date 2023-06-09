@@ -3,7 +3,6 @@ package dimhol.view.screens;
 import dimhol.core.Engine;
 import dimhol.view.Scene;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 /**
@@ -32,20 +31,20 @@ public class PauseScreen extends AbstractScreen {
         super(engine);
         super.setBackground("/asset/bg/Interior 6.png");
         Color color = new Color(R, G, B);
-        this.add(super.createLabel("/asset/bg/pauseTitle.png"), gbc);
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(super.createLabel("/asset/bg/pauseTitle.png"), super.getGbc());
+        super.setGbcAnchorCenter();
+        super.setGbcFillHorizontal();
         super.getCenterPanel().setLayout(new GridBagLayout());
         super.getCenterPanel().add(super.createButton(e -> {
             engine.getMainWindow().changePanel(scene.getPanel());
             scene.setupInput();
             engine.resumeGame();
-        }, "RESUME", color), gbc);
+        }, "RESUME", color), super.getGbc());
         super.getCenterPanel().add(super.createButton(e -> {
             engine.getMainWindow().changePanel(new HomeScreen(engine));
             engine.endGame();
-        }, "HOME", color), gbc);
-        gbc.weighty = 1;
+        }, "HOME", color), super.getGbc());
+        super.getGbc().weighty = 1;
         this.add(super.getCenterPanel()); 
     }
 }
