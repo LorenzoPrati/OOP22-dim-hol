@@ -6,7 +6,7 @@ Roguelike game developed in Java using *entity-component-system* (*ecs*) archite
 - Lorenzo Prati - lorenzo.prati3@studio.unibo.it
 - Elvis Perlika - elvis.perlika@studio.unibo.it
 - Alessandra Versari - alessandra.versari2@studio.unibo.it
-- Emanele Dajko - emanuele.dajko@studio.unibo.it
+- Emanuele Dajko - emanuele.dajko@studio.unibo.it
 
 ## Images
 <p align="center">
