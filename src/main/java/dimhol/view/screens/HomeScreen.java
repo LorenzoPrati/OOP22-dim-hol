@@ -31,8 +31,8 @@ public class HomeScreen extends AbstractScreen {
      */
     public HomeScreen(final Engine engine) {
         super.setBackground("/asset/bg/homeScreen.png");
-        final Color color = new Color(R, G, B);
-        this.add(super.createLabel("/asset/bg/homeScreenTitle.png"), super.getGbc());
+        Color color = new Color(R, G, B);
+        this.add(super.createLabel("/asset/bg/HomeScreenTitle.png"), super.getGbc());
         super.setGbcAnchorCenter();
         super.setGbcFillHorizontal();
         super.getCenterPanel().setLayout(new GridBagLayout());
