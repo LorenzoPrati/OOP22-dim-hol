@@ -39,18 +39,18 @@ public final class MapLoaderImpl implements MapLoader {
      * @param inputStream The input stream of the XML file.
      * @throws MapLoadingException If an error occurs while loading the map.
      */
-    public void loadMap(final InputStream inputStream) throws MapLoadingException {
+    public void loadMap(final InputStream inputStream) {
         try {
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputStream);
+            final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            final DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            final Document doc = dBuilder.parse(inputStream);
             doc.getDocumentElement().normalize();
 
-            Element rootElement = doc.getDocumentElement();
+            final Element rootElement = doc.getDocumentElement();
             tileWidth = Integer.parseInt(rootElement.getAttribute("tilewidth"));
             tileHeight = Integer.parseInt(rootElement.getAttribute("tileheight"));
 
-            NodeList layerNodeList = doc.getElementsByTagName("layer");
+            final NodeList layerNodeList = doc.getElementsByTagName("layer");
             width = Integer.parseInt(layerNodeList.item(0).getAttributes().getNamedItem("width").getNodeValue());
             height = Integer.parseInt(layerNodeList.item(0).getAttributes().getNamedItem("height").getNodeValue());
 
@@ -69,27 +69,27 @@ public final class MapLoaderImpl implements MapLoader {
      * @return The created tile matrix.
      */
     private Tile[][] createTileMatrix(final Node layerNode) {
-        Element layerElement = (Element) layerNode;
-        NodeList propertyNodes = layerElement.getElementsByTagName("property");
-        Element dataElement = (Element) layerElement.getElementsByTagName("data").item(0);
+        final Element layerElement = (Element) layerNode;
+        final NodeList propertyNodes = layerElement.getElementsByTagName("property");
+        final Element dataElement = (Element) layerElement.getElementsByTagName("data").item(0);
 
-        String[] lines = dataElement.getFirstChild().getTextContent().split("[\n|,]");
-        List<String> nonEmptyLines = Arrays.stream(lines).filter(line -> !line.isEmpty()).toList();
+        final String[] lines = dataElement.getFirstChild().getTextContent().split("[\n|,]");
+        final List<String> nonEmptyLines = Arrays.stream(lines).filter(line -> !line.isEmpty()).toList();
         Tile[][] matrix = new Tile[width][height];
 
         int tileMapIdIndex = 0;
         for (int row = 0; row < width; row++) {
             for (int col = 0; col < height; col++) {
                 for (int propertyIndex = 0; propertyIndex < propertyNodes.getLength(); propertyIndex++) {
-                    Element property = (Element) propertyNodes.item(propertyIndex);
-                    int tileMapId = Integer.parseInt(nonEmptyLines.get(tileMapIdIndex));
-                    if (tileMapId == Integer.parseInt(property.getAttribute("tileMapIdInt"))) {
-                        if (property.hasAttribute("walkableBool") && property.hasAttribute("tileSetIdInt")) {
-                            boolean walkable = Boolean.parseBoolean(property.getAttribute("walkableBool"));
-                            int tileSetId = Integer.parseInt(property.getAttribute("tileSetIdInt"));
-                            matrix[row][col] = new TileImpl(tileSetId, walkable);
-                        }
+                    final Element property = (Element) propertyNodes.item(propertyIndex);
+                    final int tileMapId = Integer.parseInt(nonEmptyLines.get(tileMapIdIndex));
+                    if (tileMapId == Integer.parseInt(property.getAttribute("tileMapIdInt"))
+                            && property.hasAttribute("walkableBool") && property.hasAttribute("tileSetIdInt")) {
+                        final boolean walkable = Boolean.parseBoolean(property.getAttribute("walkableBool"));
+                        final int tileSetId = Integer.parseInt(property.getAttribute("tileSetIdInt"));
+                        matrix[row][col] = new TileImpl(tileSetId, walkable);
                     }
+
                 }
                 tileMapIdIndex++;
             }
@@ -145,7 +145,7 @@ public final class MapLoaderImpl implements MapLoader {
      * {@inheritDoc}
      */
     @Override
-    public TileMap loadRoomMap(final InputStream inputStream) throws MapLoadingException {
+    public TileMap loadRoomMap(final InputStream inputStream) {
         loadMap(inputStream);
         return getTileMap();
     }

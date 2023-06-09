@@ -36,18 +36,18 @@ public final class MapCollisionSystem extends AbstractSystem {
      */
     private boolean checkMapCollision(final PositionComponent pos, final BodyComponent body,
                                       final MovementComponent movement, final TileMap tileMap) {
-        var x1 = pos.getPos().getX();
-        var x2 = x1 + body.getBodyShape().getBoundingWidth();
-        var y1 = pos.getPos().getY();
-        var y2 = y1 + body.getBodyShape().getBoundingHeight();
+        final var x1 = pos.getPos().getX();
+        final var x2 = x1 + body.getBodyShape().getBoundingWidth();
+        final var y1 = pos.getPos().getY();
+        final var y2 = y1 + body.getBodyShape().getBoundingHeight();
 
         //The use of BigDecimal has been found there: https://www.baeldung.com/java-bigdecimal-biginteger
-        int startX = BigDecimal.valueOf(x1).intValue();
-        int startY = BigDecimal.valueOf(y1).intValue();
-        int endX = BigDecimal.valueOf(x2).intValue();
-        int endY = BigDecimal.valueOf(y2).intValue();
+        final int startX = BigDecimal.valueOf(x1).intValue();
+        final int startY = BigDecimal.valueOf(y1).intValue();
+        final int endX = BigDecimal.valueOf(x2).intValue();
+        final int endY = BigDecimal.valueOf(y2).intValue();
 
-        Vector2D vector = movement.getDir();
+        final Vector2D vector = movement.getDir();
         if (vector.getX() == 0) {
             return IntStream.rangeClosed(startX, endX)
                     .anyMatch(i -> isTileWalkable(tileMap, vector.getY() < 0 ? startY : endY, i));
@@ -71,9 +71,9 @@ public final class MapCollisionSystem extends AbstractSystem {
 
     @Override
     protected void process(final Entity entity, final double deltaTime, final World world) {
-        var position = (PositionComponent) entity.getComponent(PositionComponent.class);
-        var body = (BodyComponent) entity.getComponent(BodyComponent.class);
-        var movement = (MovementComponent) entity.getComponent(MovementComponent.class);
+        final var position = (PositionComponent) entity.getComponent(PositionComponent.class);
+        final var body = (BodyComponent) entity.getComponent(BodyComponent.class);
+        final var movement = (MovementComponent) entity.getComponent(MovementComponent.class);
         if (checkMapCollision(position, body, movement, world.getLevelManager().getTileMap())) {
             if (entity.hasComponent(BulletComponent.class)) {
                 world.notifyEvent(new RemoveEntityEvent(entity));
