@@ -56,9 +56,9 @@ public class GenericFactory extends AbstractFactory {
 
     /**
      * Create shopkeeper.
-     * @param x
-     * @param y
-     * @return
+     * @param x the coordinate.
+     * @param y the coordinate.
+     * @return the shop-keeper entity.
      */
     public final Entity createShopkeeper(final double x, final double y) {
         return new EntityBuilder().add(new ShopKeeperComponent())

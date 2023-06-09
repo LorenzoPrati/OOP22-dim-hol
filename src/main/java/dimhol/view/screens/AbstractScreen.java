@@ -28,9 +28,8 @@ public abstract class AbstractScreen extends JPanel {
 
     /**
      * Creates an AbstractScreen.
-     * @param engine
      */
-    public AbstractScreen(final Engine engine) {
+    public AbstractScreen() {
         this.centerPanel = new JPanel();
         this.font = new Font("Helvetica", Font.BOLD, FONT_SIZE);
         this.gbc = new GridBagConstraints();

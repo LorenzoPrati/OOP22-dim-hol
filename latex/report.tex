@@ -886,6 +886,62 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 		\end{itemize}
 \end{itemize}
 
+\subsubsection{Emanuele Dajko}
+\begin{itemize}
+	\item Package components
+	\begin{itemize}
+		\item classe \texttt{BossComponent}
+		\item classe \texttt{ShopKeeperComponent}
+	\end{itemize}
+	\item Package entity
+	\begin{itemize}
+		\item classe \texttt{BossFactory}
+	\end{itemize}
+	\item Package gamelevels
+	\begin{itemize}
+		\item astratta \texttt{AbstractRoomStrategy}
+		\item classe \texttt{BossRoomStrategy}
+		\item classe \texttt{InvalidEntityDimensionsException}
+		\item interfaccia \texttt{LevelManager}
+		\item classe \texttt{LevelManagerImpl}
+		\item classe \texttt{NoAvailableTilesException}
+		\item classe \texttt{NormalRoomStrategy}
+		\item interfaccia \texttt{RoomStrategy}
+		\item classe \texttt{ShopRoomStrategy}
+		\item Package map
+		\begin{itemize}
+			\item interfaccia \texttt{MapLoader}
+			\item classe \texttt{MapLoaderImpl}
+			\item class \texttt{MapLoadingException}
+			\item interfaccia \texttt{Tile}
+			\item classe \texttt{TileImpl}
+			\item interfcaccia \texttt{TileMap}
+			\item classe \texttt{TileMapImpl}
+		\end{itemize}
+	\end{itemize}
+	\item Package logic
+	\begin{itemize}
+		\item Package ai
+		\begin{itemize}
+			\item Package boss
+			\begin{itemize}
+				\item classe \texttt{BossMeleeAttackAction}
+				\item classe \texttt{BossSpeedBoosTAction}
+				\item classe \texttt{HealRegenerationAction}
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	\item Package systems
+	\begin{itemize}
+		\item classe \texttt{CheckHealthSystem}
+		\item classe \texttt{MapCollisionSystem}
+	\end{itemize}
+	\item Package screens
+	\begin{itemize}
+		\item classe \texttt{TutorialScreen}
+	\end{itemize}
+\end{itemize}
+
 \subsubsection{Alessandra Versari}
 \begin{itemize}
 	\item Package components
@@ -967,6 +1023,20 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 
 \end{itemize}
 
+\subsubsection*{Emanuele Dajko}
+\begin{itemize}
+	\item Uso della libreria JDOM (Java DOM) utilizzata per la creazione del parser customizzato. \texttt{MapLoaderImpl}
+	Esempio: \url{://github.com/LorenzoPrati/OOP22-dim-hol/blob/eafcd4ac804e74f393d0eb3f962e2306f07415d3/src/main/java/dimhol/gamelevels/map/MapLoaderImpl.java#L36-L98}
+
+	\item Stream e lambda nella gestione delle startegy delle stanze \texttt{AbstractRoomStartegy}, \texttt{ShopRoomStartegy} e \texttt{BossRoomStrategy}.
+	Esempio: \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/9beb35c39c7ecfa3df357152b57f819126743c9d/src/main/java/dimhol/gamelevels/AbstractRoomStrategy.java#L179-L192}
+
+	\item Stream e lambda nella gestione dei livelli: \texttt{LevelManagerImpl}
+	Esempio: \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/eafcd4ac804e74f393d0eb3f962e2306f07415d3/src/main/java/dimhol/gamelevels/LevelManagerImpl.java#LL111C1-L125C6}
+	
+	\item 
+\end{itemize}
+
 \subsubsection*{Alessandra Versari}
 \begin{itemize}
 	\item uso della libreria SnakeYAML sia per la classe AbstractFactory sia per la classe ResourceLoader.
@@ -1000,6 +1070,19 @@ Mi sono sinceramente divertito nel ideare e creare da zero questo videogame e mi
 in futuro migliorarne il codice, in particolar modo mi piacerebbe creare AI sempre più intelligenti. 
 Nel complesso, sono soddisfatto del risultato che abbiamo ottenuto.
 
+\subsubsection{Emanuele Dajko}
+Sono più che soddisfatto del gioco che abbiamo sviluppato.
+Questa è stata la mia prima esperienza nel mondo del game development, e devo dire che è stata un'avventura affascinante e stimolante, ma anche stressante.
+Non avendo mai affrontato prima il lato implementativo dei giochi, ho dovuto affrontare diverse lacune personali.
+Tuttavia, grazie all'impegno e alla dedizione durante la fase di progettazione e sviluppo, sono riuscito a superarle con successo.
+Un altro aspetto che ho dovuto affrontare era il lavoro di squadra.
+Non essendo mai stato coinvolto in un progetto di squadra in ambito di sviluppo, ho dovuto adattarmi a un nuovo modo di collaborare e comunicare con i miei colleghi.
+È stato un processo di apprendimento prezioso, in cui ho imparato l'importanza della comunicazione chiara, del rispetto reciproco e della condivisione delle responsabilità.
+Sono soddisfatto del modo in cui abbiamo lavorato insieme come team, superando le sfide e raggiungendo gli obiettivi prefissati (quantomeno la maggior parte).
+C'è ancora molto da imparare e da migliorare, e sono consapevole che ho bisogno di dedicare più tempo e preparazione per raggiungere il mio pieno potenziale.
+Inoltre dovrò ridurre la mia costanza lavorativa al progetto, a causa di limiti di tempo e altre responsabilità relative allo studio e al lavoro.
+Continuerò ad approfondire le mie conoscenze e a colmare le lacune identificate durante questo progetto, quindi continuerò sicuramente a lavorarci.
+
 \subsubsection{Alessandra Versari}
 Sono abbastanza soddisfatta del risultato raggiunto insieme al gruppo soprattutto considerando le varie difficoltà iniziali. Credo ci abbia insegnato molto soprattutto su come affrontare progetti di gruppo in futuro. Ammetto di aver avuto molte difficoltà all'inizio sia perchè era un progetto diverso dal solito (molto più lungo e complesso), sia perchè bisogna svilupparlo nel secondo periodo, mentre ci sono lezioni di altri corsi che portano via molto tempo e per quanto mi riguarda è stato parecchio complicato riuscire a incastrare tutto. Al momento non credo che continuerò a lavorarci per mancanza di tempo e per dare spazio alle altre materie, ma non escludo di farlo in futuro. 
 
@@ -1012,6 +1095,14 @@ Le difficolta' maggiori che ho incontrato sono personali: il lavoro di gruppo, l
 Il lavoro di squadra è probabilmete lo scoglio più grande ma non insommortabile.
 Non saprei ben descrivere altre difficoltà incontrate se non quelle legate 
 alle mie personali competenze, le quali sono andate ampliandosi durante il compimento del progetto.
+
+\subsubsection{Emanuele Dajko}
+Il lavoro di squadra inizialmente è stato una bella sfida, inoltre sincoronizzarsi tra impegni e il lavoro è stato complicato.
+Durante il corso dello sviluppo, ho incontrato diverse difficoltà legate alle mie competenze personali.
+Ho dedicato molto tempo ed energie per imparare nuovi concetti e migliorare le mie capacità tecniche, in modo da affrontare le difficoltà presentatesi (non tutte sono state risolte).
+Questo impegno mi ha portato ad un buon sviluppo personale nel corso del progetto.
+In conclusione, il lavoro di squadra può essere impegnativo, ma rappresenta un'opportunità di crescita personale e di raggiungimento di obiettivi più importanti.
+Le difficoltà personali incontrate nel corso del progetto mi hanno spinto a sviluppare nuove competenze e a migliorare le mie abilità.
 
 \subsubsection{Alessandra Versari}
 Essendo un progetto abbastanza ampio rispetto a ciò a cui siamo abituati mi sono trovata un po' spaesata soprattutto inizialmente e la collaborazione con i miei compagni è stata fondamentale. Sicuramente ciò che ho ritenuto più difficile è stato la scelta di un'architettura adeguata a ciò che avevamo in mente di sviluppare.
