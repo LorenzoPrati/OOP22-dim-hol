@@ -21,7 +21,6 @@ public class ResultScreen extends AbstractScreen {
      * @param result the result of the match
      */
     public ResultScreen(final Engine engine, final boolean result) {
-        super(engine);
         super.setBackground(result ? WIN_BACKGROUND_PATH : LOSE_BACKGROUND_PATH);
         this.add(super.createLabel(result ? WIN_MESSAGE : LOSE_MESSAGE), super.getGbc());
         super.setGbcAnchorCenter();

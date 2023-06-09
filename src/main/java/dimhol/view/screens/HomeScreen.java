@@ -26,7 +26,6 @@ public class HomeScreen extends AbstractScreen {
      * @param engine
      */
     public HomeScreen(final Engine engine) {
-        super(engine);
         super.setBackground("/asset/bg/homeScreen.png");
         Color color = new Color(R, G, B);
         this.add(super.createLabel("/asset/bg/homeScreenTitle.png"), super.getGbc());
