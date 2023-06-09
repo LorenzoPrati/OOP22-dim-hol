@@ -29,7 +29,7 @@ public class PauseScreen extends AbstractScreen {
      */
     public PauseScreen(final Engine engine, final Scene scene) {
         super(engine);
-        super.setBackground("/asset/bg/Interior 6.png");
+        super.setBackground("/asset/bg/pauseScreen.png");
         Color color = new Color(R, G, B);
         this.add(super.createLabel("/asset/bg/pauseTitle.png"), super.getGbc());
         super.setGbcAnchorCenter();
