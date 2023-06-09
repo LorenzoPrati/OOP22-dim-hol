@@ -20,8 +20,8 @@ public final class BossMeleeAttackAction extends AbstractAction {
     /**
      * Constructs an BossMeleeAttackAction.
      *
-     * @param areaAttackAggro     the radius of the area in which the presence
-     *                            of an enemy (the player) activates this strategy
+     * @param areaAttackAggro      the radius of the area in which the presence
+     *                             of an enemy (the player) activates this strategy
      * @param areaAttackReloadTime the time to reload the area attack
      */
     public BossMeleeAttackAction(final double areaAttackAggro, final double areaAttackReloadTime) {
@@ -35,7 +35,7 @@ public final class BossMeleeAttackAction extends AbstractAction {
     @Override
     public Optional<List<WorldEvent>> execute() {
         getMovComp().setEnabled(false);
-        var direction = BehaviourUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
+        final var direction = BehaviourUtil.getPlayerDirection(getPlayerCentralPos(), getEnemyCentralPos());
         getMovComp().setDir(direction);
         if (getAi().getCurrentTime() - getAi().getPrevTime() >= getWaitingTime()) {
             getAi().setPrevTime(getAi().getCurrentTime());
@@ -46,12 +46,12 @@ public final class BossMeleeAttackAction extends AbstractAction {
 
     @Override
     public boolean canExecute() {
-        var bossHealth = (HealthComponent) getEnemy().getComponent(HealthComponent.class);
+        final var bossHealth = (HealthComponent) getEnemy().getComponent(HealthComponent.class);
         return bossHealth.getCurrentHealth() <= THRESHOLD_ACTIVATION && super.canExecute();
     }
 
     private Optional<List<WorldEvent>> performBossMeleeAttack() {
-        List<WorldEvent> events = new ArrayList<>();
+        final List<WorldEvent> events = new ArrayList<>();
         events.add(new AddEntityEvent(getAttackFactory().createBossMeleeAttack(getEnemy())));
         return Optional.of(events);
     }

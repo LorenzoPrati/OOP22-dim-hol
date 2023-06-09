@@ -41,6 +41,7 @@ public final class TileMapImpl implements TileMap {
      * @param y The y-coordinate of the Tile.
      * @return The Tile at the specified coordinates.
      */
+    @Override
     public Tile getTile(final int x, final int y) {
         return tilemap[x][y];
     }
@@ -48,6 +49,7 @@ public final class TileMapImpl implements TileMap {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setTile(final int x, final int y, final Tile tile) {
         if (!isValidCoordinate(x, y)) {
             throw new IllegalArgumentException("Invalid coordinates: (" + x + ", " + y + ")");

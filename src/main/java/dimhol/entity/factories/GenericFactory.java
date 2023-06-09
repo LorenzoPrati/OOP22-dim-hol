@@ -29,13 +29,6 @@ public class GenericFactory extends AbstractFactory {
     private static final double PLAYER_HEIGHT = 1;
 
     /**
-     * Constructs a generic factory.
-     */
-    public GenericFactory() {
-        super();
-    }
-
-    /**
      * Creates the player.
      *
      * @param x the x coordinate
@@ -60,6 +53,7 @@ public class GenericFactory extends AbstractFactory {
      * @param y the coordinate.
      * @return the shop-keeper entity.
      */
+
     public final Entity createShopkeeper(final double x, final double y) {
         return new EntityBuilder().add(new ShopKeeperComponent())
                 .add(new PositionComponent(new Vector2D(x, y), 0))

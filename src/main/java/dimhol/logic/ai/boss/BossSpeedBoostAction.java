@@ -14,9 +14,17 @@ public class BossSpeedBoostAction extends AbstractAction {
 
     private static final double BOSS_SPEED_BOOST = 3;
     private static final double THRESHOLD_ACTIVATION = 8;
-    private boolean used = false;
+    private boolean used;
 
     /**
+     * Constructs a new BossSpeedBoostAction.
+     */
+    public BossSpeedBoostAction() {
+        used = false;
+    }
+
+    /**
+     * Executes the speed boost action for the boss.
      * {@inheritDoc}
      */
     @Override
@@ -26,9 +34,13 @@ public class BossSpeedBoostAction extends AbstractAction {
         return Optional.empty();
     }
 
+    /**
+     * Checks if the speed boost can be executed.
+     * {@inheritDoc}
+     */
     @Override
     public final boolean canExecute() {
-        var bossHealth = (HealthComponent) getEnemy().getComponent(HealthComponent.class);
+        final var bossHealth = (HealthComponent) getEnemy().getComponent(HealthComponent.class);
         return bossHealth.getCurrentHealth() <= THRESHOLD_ACTIVATION && !used;
     }
 }
