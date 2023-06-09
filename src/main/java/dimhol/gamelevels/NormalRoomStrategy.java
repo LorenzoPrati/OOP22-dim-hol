@@ -19,7 +19,7 @@ import java.util.Set;
 public class NormalRoomStrategy extends AbstractRoomStrategy {
     private static final int ENTITY_WIDTH = 1;
     private static final int ENTITY_HEIGHT = 1;
-    private static final int NUM_INTERACTABLE = 1;
+    private static final int NUM_INTERACTIVE = 1;
 
     /**
      * Constructs a NormalRoomStrategy.
@@ -60,7 +60,7 @@ public class NormalRoomStrategy extends AbstractRoomStrategy {
         generateItems(availableTiles, newListOfEntities);
 
         //Place gate:
-        generateGate(NUM_INTERACTABLE, availableTiles, newListOfEntities);
+        generateGate(NUM_INTERACTIVE, availableTiles, newListOfEntities);
 
         return newListOfEntities;
     }
