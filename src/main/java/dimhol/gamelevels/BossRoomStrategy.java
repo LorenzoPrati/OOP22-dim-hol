@@ -9,6 +9,9 @@ import dimhol.entity.factories.InteractableObjectFactory;
 import dimhol.entity.factories.ItemFactory;
 import org.apache.commons.lang3.tuple.Pair;
 import org.locationtech.jts.math.Vector2D;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +36,8 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
     private static final int BOSS_ENTITY_WIDTH = 4;
     private static final int BOSS_ENTITY_HEIGTH = 3;
     private final BossFactory bossFactory;
+    private static final Logger LOGGER = LoggerFactory.getLogger(BossRoomStrategy.class);
+
 
     /**
      * Constructs a BossRoomStrategy.
@@ -272,24 +277,20 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
 
     /**
      * Generates entities with exception handling.
-     * The generateEntitiesWithExceptionHandling method takes a supplier (entityCountSupplier) to retrieve the number of entities,
-     * a consumer (entityGenerationConsumer) to generate the entities,
-     * and a consumer (errorConsumer) to handle any exceptions that occur during the process.
-     *
-     * @param <T>                  The type of the number of entities.
-     * @param entityCountSupplier  The supplier to retrieve the number of entities.
-     * @param entityGenerationFunc The consumer to generate the entities.
-     * @param errorHandlingFunc    The consumer to handle any exceptions that occur during generation.
+     * @param <T> the type of the entity count parameter
+     * @param entityCountSupplier the supplier for obtaining the entity count
+     * @param entityGenerationFunc the consumer for generating entities based on the entity count
+     * @param errorHandlingFunc the consumer for handling any exceptions that occur during entity generation
      */
     private <T> void generateEntitiesWithExceptionHandling(
             final Supplier<T> entityCountSupplier,
             final Consumer<T> entityGenerationFunc,
-            final Consumer<Exception> errorHandlingFunc) {
+            final Consumer<EntityGenerationException> errorHandlingFunc) {
         try {
             final T entityCount = entityCountSupplier.get();
             entityGenerationFunc.accept(entityCount);
         } catch (Exception e) {
-            errorHandlingFunc.accept(e);
+            errorHandlingFunc.accept(new EntityGenerationException("Error generating entities", e));
         }
     }
 
@@ -300,6 +301,6 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
      * @param e The exception that occurred.
      */
     private void handleEntityGenerationError(final Exception e) {
-        System.err.println("Error generating entities: " + e.getMessage());
+        LOGGER.error("Error generating entities: " + e.getMessage(), e);
     }
 }
