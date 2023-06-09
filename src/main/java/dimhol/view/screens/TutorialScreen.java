@@ -1,7 +1,6 @@
 package dimhol.view.screens;
 
 import dimhol.core.Engine;
-import dimhol.view.screens.AbstractScreen;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
