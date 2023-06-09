@@ -6,6 +6,8 @@ import dimhol.gamelevels.map.TileMap;
 import dimhol.gamelevels.map.TileMapImpl;
 import dimhol.view.HUD.HUD;
 import dimhol.view.HUD.HUDImpl;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -57,7 +59,7 @@ public class SceneImpl implements Scene {
             this.setPreferredSize(new Dimension((int) width, (int) height));
             this.setDoubleBuffered(true);
             this.setBackground(Color.BLACK);
-            this.setCursor(this.getToolkit().createCustomCursor(
+            this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
                 new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB), new Point(), null));
         }
 
@@ -65,41 +67,42 @@ public class SceneImpl implements Scene {
         public void paintComponent(final Graphics g) {
             var tileMapLayers = tileMap.getLayers();
             super.paintComponent(g);
-            @SuppressWarnings({"unchecked"})
-            Graphics2D g2 = (Graphics2D) g;
-            for (var layer: tileMapLayers) {
-                for (int i = 0; i < tileMapWidth; i++) {
-                    for (int j = 0; j < tileMapHeight; j++) {
-                        var id = layer[i][j].getTileSetId();
-                        if (this.getWidth() / tileMapHeight < this.getHeight() / tileMapWidth) {
-                            newTileWidth = this.getWidth() / tileMapHeight;
-                        } else {
-                            newTileWidth = this.getHeight() / tileMapWidth;
+            if (g instanceof Graphics2D) {
+                Graphics2D g2 = (Graphics2D) g;
+                for (var layer : tileMapLayers) {
+                    for (int i = 0; i < tileMapWidth; i++) {
+                        for (int j = 0; j < tileMapHeight; j++) {
+                            var id = layer[i][j].getTileSetId();
+                            if (this.getWidth() / tileMapHeight < this.getHeight() / tileMapWidth) {
+                                newTileWidth = this.getWidth() / tileMapHeight;
+                            } else {
+                                newTileWidth = this.getHeight() / tileMapWidth;
+                            }
+                            newTileHeight = newTileWidth;
+                            offsetX = ((this.getWidth() - tileMapHeight * newTileWidth) / 2);
+                            offsetY = ((this.getHeight() - tileMapWidth * newTileHeight) / 2);
+                            var drawX = newTileHeight * j + offsetX;
+                            var drawY = newTileWidth * i + offsetY;
+                            g2.drawImage(loader.getTileImage(id), drawX, drawY, newTileWidth, newTileHeight, null);
                         }
-                        newTileHeight = newTileWidth;
-                        offsetX = ((this.getWidth() - tileMapHeight * newTileWidth) / 2);
-                        offsetY = ((this.getHeight() - tileMapWidth * newTileHeight) / 2);
-                        var drawX = newTileHeight * j + offsetX;
-                        var drawY = newTileWidth * i + offsetY;
-                        g2.drawImage(loader.getTileImage(id), drawX, drawY, newTileWidth, newTileHeight, null);
                     }
                 }
+                for (int i = 0; i < renderList.size(); i++) {
+                    var imageToCut = loader.getImage(renderList.get(i).getNumImage());
+                    var img = createCompatibleImage(imageToCut.getSubimage(
+                            renderList.get(i).getIndex() * loader.getWidth(renderList.get(i).getNumImage()),
+                            0, loader.getWidth(renderList.get(i).getNumImage()),
+                            loader.getHeigth(renderList.get(i).getNumImage())));
+                    double newWidth = newTileWidth * renderList.get(i).getW();
+                    double newHeight = newTileHeight * renderList.get(i).getH();
+                    double newX = renderList.get(i).getX() * newTileWidth + offsetX;
+                    double newY = renderList.get(i).getY() * newTileHeight + offsetY;
+                    g2.drawImage(img, (int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
+                }
+                hud.show(g2, newTileWidth, newTileHeight, offsetX, offsetY);
+                g2.dispose();
+                renderList.clear();
             }
-            for (int i = 0; i < renderList.size(); i++) {
-                var imageToCut = loader.getImage(renderList.get(i).getNumImage());
-                var img = createCompatibleImage(imageToCut.getSubimage(
-                    renderList.get(i).getIndex() * loader.getWidth(renderList.get(i).getNumImage()),
-                    0, loader.getWidth(renderList.get(i).getNumImage()), 
-                    loader.getHeigth(renderList.get(i).getNumImage())));
-                double newWidth = newTileWidth * renderList.get(i).getW();
-                double newHeight = newTileHeight * renderList.get(i).getH();
-                double newX = renderList.get(i).getX() * newTileWidth + offsetX;
-                double newY = renderList.get(i).getY() * newTileHeight + offsetY;
-                g2.drawImage(img, (int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
-            }
-            hud.show(g2, newTileWidth, newTileHeight, offsetX, offsetY);
-            g2.dispose();
-            renderList.clear();
         } 
     }
 
@@ -124,14 +127,6 @@ public class SceneImpl implements Scene {
     @Override
     public void render() {
         this.scenePanel.paintImmediately(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public HUD getHUD() {
-        return this.hud;
     }
 
     /**
@@ -178,5 +173,10 @@ public class SceneImpl implements Scene {
     @Override
     public Input getInput() {
         return this.inputListener.getInput();
+    }
+
+    @Override
+    public final void updateHUD(final int currentHealth, final int maxHealth, final int currentAmount) {
+        this.hud.setHUDInfo(currentHealth, maxHealth, currentAmount);
     }
 }

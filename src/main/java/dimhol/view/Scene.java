@@ -1,9 +1,9 @@
 package dimhol.view;
 
-import javax.swing.JPanel;
 import dimhol.gamelevels.map.TileMap;
 import dimhol.input.Input;
-import dimhol.view.HUD.HUD;
+
+import javax.swing.JPanel;
 
 /**
  * Models the scene where all the entities will be drawn. 
@@ -19,11 +19,6 @@ public interface Scene {
      * A method to render the game.
      */
     void render();
-
-    /**
-     * @return the HUD.
-     */
-    HUD getHUD();
 
     /**
      * A method to setup the input.
@@ -45,4 +40,12 @@ public interface Scene {
      * @return the input.
      */
     Input getInput();
+
+    /**
+     * Update the HUD.
+     * @param currentHealth player's current health
+     * @param maxHealth player's max health
+     * @param currentAmount player's coins
+     */
+    void updateHUD(int currentHealth, int maxHealth, int currentAmount);
 }
