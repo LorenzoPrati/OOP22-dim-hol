@@ -50,7 +50,7 @@ public class OptionScreen extends AbstractScreen {
         optionListPanel.setLayout(new GridBagLayout());
         comboBox.setFont(font2);
         comboBox.setForeground(Color.BLACK);
-        labelResolution.setFont(font);
+        labelResolution.setFont(super.getFont());
         labelResolution.setForeground(Color.BLACK);
         this.add(super.createLabel("/asset/bg/options.png"), gbc);
         optionListPanel.add(labelResolution, gbc);
@@ -68,12 +68,12 @@ public class OptionScreen extends AbstractScreen {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
-        centerPanel.setLayout(new GridBagLayout());
-        centerPanel.add(optionListPanel, gbc);
-        centerPanel.add(super.createButton(l -> engine.getMainWindow().changePanel(new HomeScreen(engine)), 
+        super.getCenterPanel().setLayout(new GridBagLayout());
+        super.getCenterPanel().add(optionListPanel, gbc);
+        super.getCenterPanel().add(super.createButton(l -> engine.getMainWindow().changePanel(new HomeScreen(engine)), 
             "HOME", Color.BLACK), gbc);
         gbc.weighty = 1;
-        this.add(centerPanel); 
+        this.add(super.getCenterPanel()); 
     } 
 }
 

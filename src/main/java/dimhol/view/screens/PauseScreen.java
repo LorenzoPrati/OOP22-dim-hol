@@ -35,18 +35,18 @@ public class PauseScreen extends AbstractScreen {
         this.add(super.createLabel("/asset/bg/pauseTitle.png"), gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        centerPanel.setLayout(new GridBagLayout());
-        centerPanel.add(super.createButton(e -> {
+        super.getCenterPanel().setLayout(new GridBagLayout());
+        super.getCenterPanel().add(super.createButton(e -> {
             engine.getMainWindow().changePanel(scene.getPanel());
             scene.setupInput();
             engine.resumeGame();
         }, "RESUME", color), gbc);
-        centerPanel.add(super.createButton(e -> {
+        super.getCenterPanel().add(super.createButton(e -> {
             engine.getMainWindow().changePanel(new HomeScreen(engine));
             engine.endGame();
         }, "HOME", color), gbc);
         gbc.weighty = 1;
-        this.add(centerPanel); 
+        this.add(super.getCenterPanel()); 
     }
 }
 
