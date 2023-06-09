@@ -21,13 +21,13 @@ public final class InteractableSystem extends AbstractSystem {
 
     @Override
     protected void process(final Entity entity, final double deltaTime, final World world) {
-        var collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
-        var interactableComp = (InteractableComponent) entity.getComponent(InteractableComponent.class);
-        for (var c: collisionComp.getCollided()) {
+        final var collisionComp = (CollisionComponent) entity.getComponent(CollisionComponent.class);
+        final var interactableComp = (InteractableComponent) entity.getComponent(InteractableComponent.class);
+        for (final var c: collisionComp.getCollided()) {
             if (c.hasComponent(InteractorComponent.class)) { 
-                var interactComp = (InteractorComponent) c.getComponent(InteractorComponent.class);
+                final var interactComp = (InteractorComponent) c.getComponent(InteractorComponent.class);
                 if (interactComp.isInteracting()) {
-                    var effectApplied = interactableComp.applyEffect(c, world);
+                    final var effectApplied = interactableComp.applyEffect(c, world);
                     if (effectApplied) {
                         world.notifyEvent(new RemoveEntityEvent(entity));
                     }

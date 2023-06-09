@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 import dimhol.core.Engine;
@@ -30,6 +31,8 @@ public class OptionScreen extends AbstractScreen {
     private static final int H5 = 600;
     private static final int W6 = 720;
     private static final int H6 = 720;
+    @Serial
+    private static final long serialVersionUID = 0;
     private final Map<String, Dimension> mapResolutions =  new HashMap<>() {
         {
             put(W1 + "x" + H1, new Dimension(W1, H1));
@@ -52,8 +55,11 @@ public class OptionScreen extends AbstractScreen {
         Font font2 = new Font("Helvetica", Font.BOLD, FONT2_SIZE);
         JPanel optionListPanel = new JPanel();
         JComboBox<String> comboBox = new JComboBox<>();
-        for (var resolution: mapResolutions.keySet()) {
-            comboBox.addItem(resolution);
+        for (var resolution : mapResolutions.entrySet()) {
+            if (resolution.getValue().getWidth() <= engine.getMainWindow().getScreenSize().getWidth() ||
+                    resolution.getValue().getHeight() <= engine.getMainWindow().getScreenSize().getHeight()) {
+                comboBox.addItem(resolution.getKey());
+            }
         }
         optionListPanel.setLayout(new GridBagLayout());
         comboBox.setFont(font2);
@@ -65,12 +71,12 @@ public class OptionScreen extends AbstractScreen {
         optionListPanel.add(comboBox, super.getGbc());
         optionListPanel.add(super.createButton((e -> {
             engine.switchDebugMode();
-            var button = (JButton) e.getSource();
+            final var button = (JButton) e.getSource();
             button.setText(engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE");
-            }), (engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE"), Color.BLACK), super.getGbc());
+            }), engine.isDebug() ? "DISABLE DEBUG MODE" : "ENABLE DEBUG MODE", Color.BLACK), super.getGbc());
         optionListPanel.add(super.createButton(l -> {
-            var selectetResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
-            var res = mapResolutions.get(selectetResolution);
+            final var selectedResolution = comboBox.getItemAt(comboBox.getSelectedIndex());
+            final var res = mapResolutions.get(selectedResolution);
             engine.getMainWindow().changeResolution(new Dimension(res));
             }, "DONE", Color.BLACK), super.getGbc());
         super.setGbcAnchorCenter();

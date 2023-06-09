@@ -24,19 +24,19 @@ import java.awt.Point;
  * Implements the scene where all the entities will be drawn.
  */
 public class SceneImpl implements Scene {
-    private List<GraphicInfo> renderList = new ArrayList<>();
+    private final List<GraphicInfo> renderList = new ArrayList<>();
     private int tileMapWidth;
     private int tileMapHeight;
-    private ResourceLoader loader;
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private HUD hud;
+    private final ResourceLoader loader;
+    private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private final HUD hud;
     private int newTileWidth;
     private int newTileHeight;
     private int offsetX;
     private int offsetY;
     private final GamePanel scenePanel;
     private TileMap tileMap;
-    private InputListener inputListener;
+    private final InputListener inputListener;
 
     /**
      * .
@@ -64,38 +64,38 @@ public class SceneImpl implements Scene {
 
         @Override
         public void paintComponent(final Graphics g) {
-            var tileMapLayers = tileMap.getLayers();
+            final var tileMapLayers = tileMap.getLayers();
             super.paintComponent(g);
             if (g instanceof Graphics2D) {
-                Graphics2D g2 = (Graphics2D) g;
-                for (var layer : tileMapLayers) {
+                final Graphics2D g2 = (Graphics2D) g;
+                for (final var layer : tileMapLayers) {
                     for (int i = 0; i < tileMapWidth; i++) {
                         for (int j = 0; j < tileMapHeight; j++) {
-                            var id = layer[i][j].getTileSetId();
+                            final var id = layer[i][j].getTileSetId();
                             if (this.getWidth() / tileMapHeight < this.getHeight() / tileMapWidth) {
                                 newTileWidth = this.getWidth() / tileMapHeight;
                             } else {
                                 newTileWidth = this.getHeight() / tileMapWidth;
                             }
                             newTileHeight = newTileWidth;
-                            offsetX = ((this.getWidth() - tileMapHeight * newTileWidth) / 2);
-                            offsetY = ((this.getHeight() - tileMapWidth * newTileHeight) / 2);
-                            var drawX = newTileHeight * j + offsetX;
-                            var drawY = newTileWidth * i + offsetY;
+                            offsetX = (this.getWidth() - tileMapHeight * newTileWidth) / 2;
+                            offsetY = (this.getHeight() - tileMapWidth * newTileHeight) / 2;
+                            final var drawX = newTileHeight * j + offsetX;
+                            final var drawY = newTileWidth * i + offsetY;
                             g2.drawImage(loader.getTileImage(id), drawX, drawY, newTileWidth, newTileHeight, null);
                         }
                     }
                 }
                 for (int i = 0; i < renderList.size(); i++) {
-                    var imageToCut = loader.getImage(renderList.get(i).getNumImage());
-                    var img = createCompatibleImage(imageToCut.getSubimage(
+                    final var imageToCut = loader.getImage(renderList.get(i).getNumImage());
+                    final var img = createCompatibleImage(imageToCut.getSubimage(
                             renderList.get(i).getIndex() * loader.getWidth(renderList.get(i).getNumImage()),
                             0, loader.getWidth(renderList.get(i).getNumImage()),
                             loader.getHeigth(renderList.get(i).getNumImage())));
-                    double newWidth = newTileWidth * renderList.get(i).getW();
-                    double newHeight = newTileHeight * renderList.get(i).getH();
-                    double newX = renderList.get(i).getX() * newTileWidth + offsetX;
-                    double newY = renderList.get(i).getY() * newTileHeight + offsetY;
+                    final double newWidth = newTileWidth * renderList.get(i).getW();
+                    final double newHeight = newTileHeight * renderList.get(i).getH();
+                    final double newX = renderList.get(i).getX() * newTileWidth + offsetX;
+                    final double newY = renderList.get(i).getY() * newTileHeight + offsetY;
                     g2.drawImage(img, (int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
                 }
                 hud.show(g2, newTileWidth, newTileHeight, offsetX, offsetY);
@@ -106,14 +106,14 @@ public class SceneImpl implements Scene {
     }
 
     private BufferedImage createCompatibleImage(final BufferedImage image) {
-        GraphicsConfiguration graphicsConfiguration = GraphicsEnvironment.getLocalGraphicsEnvironment()
+        final GraphicsConfiguration graphicsConfiguration = GraphicsEnvironment.getLocalGraphicsEnvironment()
             .getDefaultScreenDevice().getDefaultConfiguration();
         if (image.getColorModel().equals(graphicsConfiguration.getColorModel())) {
             return image;
         } else {
-            BufferedImage newImage = graphicsConfiguration.createCompatibleImage(
+            final BufferedImage newImage = graphicsConfiguration.createCompatibleImage(
                 image.getWidth(), image.getHeight(), image.getTransparency());
-            Graphics2D g2d = newImage.createGraphics();
+            final Graphics2D g2d = newImage.createGraphics();
             g2d.drawImage(image, 0, 0, null);
             g2d.dispose();
             return newImage;
