@@ -20,7 +20,7 @@ public final class CheckHealthSystem extends AbstractSystem {
 
     @Override
     protected void process(final Entity entity, final double deltaTime, final World world) {
-        HealthComponent hp = (HealthComponent) entity.getComponent(HealthComponent.class);
+        final HealthComponent hp = (HealthComponent) entity.getComponent(HealthComponent.class);
         if (hp.getCurrentHealth() <= 0) {
             world.notifyEvent(new RemoveEntityEvent(entity));
         }

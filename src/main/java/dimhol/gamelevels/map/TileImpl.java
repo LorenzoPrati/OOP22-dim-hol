@@ -26,6 +26,7 @@ public class TileImpl implements Tile {
      *
      * @return true if this Tile si collidable, false otherwise.
      */
+    @Override
     public boolean isWalkableTile() {
         return walkable;
     }
@@ -35,6 +36,7 @@ public class TileImpl implements Tile {
      *
      * @return tileSetID the number of the identifier.
      */
+    @Override
     public int getTileSetId() {
         return tileSetId;
     }

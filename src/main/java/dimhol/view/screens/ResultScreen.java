@@ -12,7 +12,7 @@ import java.io.Serial;
 public class ResultScreen extends AbstractScreen {
 
     @Serial
-    private final static long serialVersionUID = 7705218068700224049L;
+    private static final long serialVersionUID = 7705218068700224049L;
 
     private static final String WIN_BACKGROUND_PATH = "/asset/bg/winScreen.png";
     private static final String LOSE_BACKGROUND_PATH = "/asset/bg/loseScreen.png";
