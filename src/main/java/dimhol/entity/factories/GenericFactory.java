@@ -19,7 +19,7 @@ import org.locationtech.jts.math.Vector2D;
 /**
  * A factory to create various entities.
  */
-public class GenericFactory extends AbstractFactory {
+public class GenericFactory extends BaseFactory {
 
     private static final double PLAYER_BASE_SPEED = 3;
     private static final double SHOP_KEEPER_SPEED = 0.2;

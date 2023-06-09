@@ -6,10 +6,13 @@ import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;
 
 /**
- * Remove all attacks.
+ * Remove melee attacks.
  */
-public class ClearAttackSystem extends AbstractSystem {
+public final class ClearAttackSystem extends AbstractSystem {
 
+    /**
+     * Construct a ClearAttackSystem.
+     */
     public ClearAttackSystem() {
         super(MeleeComponent.class);
     }

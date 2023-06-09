@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 /**
  * This class spawn player's attack.
  */
-public class PlayerAttackFactory extends AbstractAttackFactory {
+public class PlayerAttackFactory extends BaseAttackFactory {
 
     /**
      * Player melee width.
@@ -61,6 +61,7 @@ public class PlayerAttackFactory extends AbstractAttackFactory {
 
     private final Predicate<Entity> checkEnemy = entity -> entity.hasComponent(AIComponent.class)
             && !entity.hasComponent(ShopKeeperComponent.class);
+
 
     /**
      * Spawn an attack near the player.
