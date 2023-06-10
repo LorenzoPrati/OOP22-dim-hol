@@ -79,7 +79,7 @@ public class LevelManagerImpl implements LevelManager {
      * @return The room strategy for generating the current room.
      */
     private RoomStrategy determineRoomType() {
-        if (currentLevel == maxRoomNumber) {  // Check the room index to determine the room type
+        if (currentLevel == maxRoomNumber) {
             tileMap = mapLoader.loadBossRoom();
             return bossRoomStrategy;
         }
