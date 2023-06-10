@@ -75,7 +75,7 @@ public final class HUDImpl implements HUD {
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Math.round(fontSize));
         } catch (FontFormatException | IOException e) {
-            throw (IllegalStateException) new IllegalStateException().initCause(e);
+            throw new IllegalStateException(e);
         }
         g2d.setFont(font);
     }

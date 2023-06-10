@@ -27,7 +27,7 @@ public class BaseFactory {
         try {
             input.close();
         } catch (IOException e) {
-            throw (IllegalStateException) new IllegalStateException().initCause(e);
+            throw new IllegalStateException(e);
         }
     }
 
