@@ -21,7 +21,7 @@ public final class RoutineFactory {
     /**
      * Distance attack aggro.
      */
-    public static final double DISTANCE_ATTACK_AGGRO = 8;
+    public static final double DISTANCE_ATTACK_AGGRO = 12;
     /**
      * Distance attack reload time.
      */
@@ -46,7 +46,7 @@ public final class RoutineFactory {
     /**
      * Follow boss movement aggro.
      */
-    public static final double BOSS_FOLLOW_MOVEMENT_AGGRO = 7;
+    public static final double BOSS_FOLLOW_MOVEMENT_AGGRO = 6;
     /**
      * Minions melee reload time.
      */
@@ -95,8 +95,8 @@ public final class RoutineFactory {
         return List.of(
                 new BossSpeedBoostAction(),
                 new BossMeleeAttackAction(BOSS_MELEE_ATTACK_AGGRO, BOSS_MELEE_ATTACK_RELOAD_TIME),
-                new DistanceAttack(DISTANCE_ATTACK_AGGRO, BOSS_DISTANCE_ATTACK_RELOAD_TIME),
                 new FollowMovement(BOSS_FOLLOW_MOVEMENT_AGGRO),
+                new DistanceAttack(DISTANCE_ATTACK_AGGRO, BOSS_DISTANCE_ATTACK_RELOAD_TIME),
                 new RandomMovement(BOSS_CHANGE_DIRECTION_TIME)
         );
     }
