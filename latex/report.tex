@@ -778,16 +778,25 @@ gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per
 
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=\textwidth]{uml/uml_scene.png}
+		\includegraphics[width=3cm]{uml/uml_scene.png}
 		\caption{Diagramma UML riguardante la rappresentazione grafica del gioco}
 	\end{figure}
 
 \subsubsection{Menù di gioco}
 \paragraph*{Problema}
-	L'obiettivo era creare varie schermate, più nello specifico una schermata iniziale contente il menù, una schermata Options che permette di modificare la risoluzione, una schermata che permette di interrompere la partita e riprendere dal punto in cui è stata interrotta e una schermata finale che semplicemente mostra il risultato della partita.
+	L'obiettivo era creare varie schermate, più nello specifico una schermata iniziale contente il menù, 
+	una schermata Options che permette di modificare la risoluzione, 
+	una schermata che permette di interrompere la partita e riprendere 
+	dal punto in cui è stata interrotta e una schermata finale che semplicemente mostra il risultato della partita.
 \paragraph*{Soluzione}
-	Per fare ciò ho deciso di creare una classe \texttt{AbstractScreen} così da ridurre il più possibile la ripetizione di codice. Questo è stato possibile perché tutte queste schermate utilizzano il GridBagLayout come layout più esterno.
-	In questo modo nelle classi che implementano i vari menù e schermate compaiono solo gli elementi differenti e non utilizzati negli altri menù o schermate.
+	Per fare ciò ho deciso di creare una classe \texttt{AbstractScreen} così 
+	da ridurre il più possibile la ripetizione di codice. 
+	Questo è stato possibile perché tutte queste schermate utilizzano il GridBagLayout come layout più esterno.
+	In questo modo nelle classi che implementano i vari menù e schermate compaiono 
+	solo gli elementi differenti e non utilizzati negli altri menù o schermate.
+
+	La schermata \texttt{OptionScreen} permette di cambiare la grandezza del frame
+	tenendo in considerazione anche la grandezza del monitor in cui viene lanciato il gioco.
 
 	\begin{figure}[h]
 		\centering
