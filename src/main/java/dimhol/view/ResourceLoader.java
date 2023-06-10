@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
@@ -14,12 +15,13 @@ import org.yaml.snakeyaml.Yaml;
  * A class for loading all the images necessary for animation.
  */
 public final class ResourceLoader {
-    private static final int NUM_PLAYER_SPRITES = 32; 
+    private static final int NUM_PLAYER_SPRITES = 32;
+    private static final String STRING_BULLET = "bullet";
+     private static final String STRING_BOSS = "boss";
     private static final int TILE_WIDTH = 32;
     private static final int TILE_HEIGHT = 32;
     private final Map<Integer, ImmutableTriple<BufferedImage, Integer, Integer>> imagesMap = new HashMap<>();
-    private BufferedImage tileSet;
-    private final ArrayList<BufferedImage> tileImages = new ArrayList<>();
+    private final List<BufferedImage> tileImages = new ArrayList<>();
     private final Map<String, ArrayList<Integer>> dimensions = new HashMap<>();
 
     /**
@@ -41,14 +43,13 @@ public final class ResourceLoader {
     } 
 
     private void updateMap(final int i, final String path, final String string) {
-        try{
+        try {
             this.imagesMap.put(i, new ImmutableTriple<>(ImageIO.read(this.getClass()
             .getResourceAsStream(path)), dimensions.get(string).get(0),
             dimensions.get(string).get(1)));
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new IllegalStateException(e);
         }
-        
     }
 
     private void load() {
@@ -61,32 +62,33 @@ public final class ResourceLoader {
             updateMap(i++, "/asset/enemies/enemiesAttack/enemyAttack.png", "enemyMeleeAttack");
             updateMap(i++, "/asset/items/coin2.png", "coin");
             updateMap(i++, "/asset/items/heart.png", "heart");
-            updateMap(i++, "/asset/bullet/up.png", "bullet");
-            updateMap(i++, "/asset/bullet/down.png", "bullet");
-            updateMap(i++, "/asset/bullet/left.png", "bullet");
-            updateMap(i++, "/asset/bullet/right.png", "bullet");
+            updateMap(i++, "/asset/bullet/up.png", STRING_BULLET);
+            updateMap(i++, "/asset/bullet/down.png", STRING_BULLET);
+            updateMap(i++, "/asset/bullet/left.png", STRING_BULLET);
+            updateMap(i++, "/asset/bullet/right.png", STRING_BULLET);
             updateMap(i++, "/asset/GateRing.png", "gate");
             updateMap(i++, "/asset/shop/healthPotion.png", "shopHeart");
             updateMap(i++, "/asset/shop/thunder.png", "shopSpeed");
             updateMap(i++, "/asset/hud/font/logo/hudCoin.png", "hudCoin");
             updateMap(i++, "/asset/hud/font/logo/hudHeart.png", "hudHeart");
-            updateMap(i++, "/asset/boss/walk.png", "boss");
-            updateMap(i++, "/asset/boss/attack.png", "boss");
-            updateMap(i++, "/asset/boss/damage.png", "boss");
-            updateMap(i++, "/asset/boss/death.png", "boss");
-            updateMap(i++, "/asset/boss/idle.png", "boss");
+            updateMap(i++, "/asset/boss/walk.png", STRING_BOSS);
+            updateMap(i++, "/asset/boss/attack.png", STRING_BOSS);
+            updateMap(i++, "/asset/boss/damage.png", STRING_BOSS);
+            updateMap(i++, "/asset/boss/death.png", STRING_BOSS);
+            updateMap(i++, "/asset/boss/idle.png", STRING_BOSS);
             updateMap(i++, "/asset/bullet/fireball.png", "fireball");
-            updateMap(i++, "/asset/shopkeeper/DownIdle.png", "shopkeeper");
+            updateMap(i, "/asset/shopkeeper/DownIdle.png", "shopkeeper");
         } catch (IllegalStateException e) {
-           throw new IllegalStateException(e);
+           throw (IllegalStateException) new IllegalStateException().initCause(e);
         }
     }
 
     private void loadTileSetImages(final int tileWidth, final int tileHeight) {
+        BufferedImage tileSet;
         try {
-            this.tileSet = ImageIO.read(this.getClass().getResourceAsStream("/asset/map/tileset_complet.png"));
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
+            tileSet = ImageIO.read(this.getClass().getResourceAsStream("/asset/map/tileset_complet.png"));
+        } catch (IOException e) {
+           throw new IllegalStateException(e);
         }
         final var cols = tileSet.getWidth() / tileWidth;
         final var rows = tileSet.getHeight() / tileHeight;
