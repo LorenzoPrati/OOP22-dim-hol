@@ -419,11 +419,13 @@ gioco semplice ho valutato che bastassero pochi semplici metodi per la
 visualizzazione del HUD.
 
 \subsection{Emanuele Dajko}
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{uml/TileMap.png}
+	\includegraphics[width=\textwidth]{uml/TileMap1.png}
 	\caption{Diagramma UML della TileMap}
 \end{figure}
+
 \subsubsection*{Introduzione al concetto di TileMap e il suo ruolo nel gioco}
 In questa sezione, fornirò una panoramica del concetto di TileMap e del suo ruolo fondamentale nel nostro gioco. 
 La TileMap rappresenta una matrice 2D composta da diverse Tile che, unite insieme, costituiscono la struttura di gioco. 
@@ -476,11 +478,13 @@ Ogni strato può essere progettato e personalizzato in modo indipendente, offren
 Questo nuovo approccio consente di ottenere mappe più dettagliate e realistiche, migliorando significativamente l'aspetto visivo del gioco. 
 Inoltre, grazie alla gestione avanzata dei layer, è possibile modificare la struttura della mappa in modo più flessibile senza compromettere la funzionalità del gioco.
 \subsubsection*{Gestione delle transizioni tra i livelli}
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{uml/LevelManager.png}
 	\caption{Diagramma UML del level manager}
 \end{figure}
+
 \paragraph{Problema}
 La seconda sfida che ho affrontato riguardava la transizione fluida tra i diversi livelli all'interno del gioco. 
 Era fondamentale garantire che il giocatore potesse passare da una stanza all'altra in modo corretto e coerente, mantenendo eventuali statische acquisite durante il corso della partita (come vita, monete e power-up).
@@ -490,11 +494,13 @@ Il LevelManager ha assunto la responsabilità di gestire l'intercambio tra i div
 Nel nostro gioco, ho definito diverse tipologie di stanze, tra cui stanze normali, stanze del negozio e stanza del boss.
 Il LevelManager assicura che il giocatore si sposti correttamente attraverso le diverse stanze, gestendo la transizione e il posizionamento corretto da una stanza all'altra.
 \subsubsection{Introduzione al concetto di gestione delle stanze all'interno del gioco}
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{uml/RoomStrategy.png}
-	\caption{Diagramma UML sulla gestione delle startegie nelle stanze}
+	\includegraphics[width=\textwidth]{uml/RoomStrategy1}
+	\caption{Diagramma UML del level manager}
 \end{figure}
+
 In questa sezione, introdurrò il concetto di gestione delle stanze all'interno del gioco, utilizzando il pattern di progettazione chiamato "Strategy".
 \paragraph*{Problema}
 Durante lo sviluppo del gioco, mi sono trovato di fronte alla sfida di gestire in modo flessibile le diverse strategie delle stanze, al fine di garantire un'esperienza di gioco diversificata e coinvolgente.
@@ -622,11 +628,13 @@ In questo modo, possiamo creare diversi tipi di entità senza dover esporre i de
 Inoltre, il pattern facilita l'estensione futura aggiungendo nuovi metodi di factory per creare tipi aggiuntivi di entità (ad esempio ci sono anche i minions). 
 La classe BossFactory, insieme alla classe "GenericFactory", che adotta lo stesso pattern, mi hanno portato alla creazione delle entità Boss e Minion (nella prima), così come dello shop-keeper (nella seconda), in modo flessibile ed estensibile.
 \subsubsection*{Introduzione alla boss fight}
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{uml/Boss.png}
-	\caption{Diagramma UML della Boss entity}
+	\includegraphics[width=\textwidth]{uml/BossEntity.png}
+	\caption{Diagramma UML del level manager}
 \end{figure}
+
 Alla proposta di progetto, avevamo messo tra le scelte opzionali, quella della realizzazione della boss fight, ho dunque deciso di occuparmene, per rendere il gioco più completo e giocabile.
 Introuduciamo ora la Boss entity, la quale è presente nell'ultima delle stanze, con stanza dedicata, essa è l'entità nemica più potente (da qui si ha anche l'introduzione degli item e power-up). 
 \paragraph*{Problema}
@@ -922,10 +930,8 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 	\begin{itemize}
 		\item astratta \texttt{AbstractRoomStrategy}
 		\item classe \texttt{BossRoomStrategy}
-		\item classe \texttt{InvalidEntityDimensionsException}
 		\item interfaccia \texttt{LevelManager}
 		\item classe \texttt{LevelManagerImpl}
-		\item classe \texttt{NoAvailableTilesException}
 		\item classe \texttt{NormalRoomStrategy}
 		\item interfaccia \texttt{RoomStrategy}
 		\item classe \texttt{ShopRoomStrategy}
@@ -948,7 +954,6 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 			\begin{itemize}
 				\item classe \texttt{BossMeleeAttackAction}
 				\item classe \texttt{BossSpeedBoosTAction}
-				\item classe \texttt{HealRegenerationAction}
 			\end{itemize}
 		\end{itemize}
 	\end{itemize}
