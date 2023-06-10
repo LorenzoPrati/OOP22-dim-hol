@@ -425,15 +425,14 @@ ne estrapola le informazioni fondamentali e le aggiorna nella parte grafica
 che poi si occupa di rappresentare quei valori in grafica.
 
 \subsection{Emanuele Dajko}
-
+\subsubsection{TileMap}
+\paragraph*{Introduzione al concetto di TileMap e il suo ruolo nel gioco}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{uml/TileMap1.png}
+	\includegraphics[width=7cm]{uml/TileMap.png}
 	\caption{Diagramma UML della TileMap}
 \end{figure}
-
-\subsubsection*{Introduzione al concetto di TileMap e il suo ruolo nel gioco}
-In questa sezione, fornirò una panoramica del concetto di TileMap e del suo ruolo fondamentale nel nostro gioco. 
+In questa sezione, fornirò una panoramica del concetto di TileMap e del suo ruolo fondamentale nel nostro gioco.
 La TileMap rappresenta una matrice 2D composta da diverse Tile che, unite insieme, costituiscono la struttura di gioco. 
 Si può pensare alla TileMap come un vero e proprio "puzzle" in cui le Tile sono i pezzi che compongono l'intero quadro del gioco. 
 Ora condividerò le sfide affrontate durante lo sviluppo della TileMap e le soluzioni adottate per superarle.
@@ -467,7 +466,6 @@ Questo equilibrio è fondamentale per garantire l'efficienza e la manutenibilit�
 \subsubsection*{Gestione dei layer della TileMap}
 In questa sezione, introdurrò il concetto di layer nella gestione della TileMap e le migliorie apportate per garantire mappe più complesse ed esteticamente accattivanti.
 \\
-Introduzione al concetto di layer:
 Nel contesto della nostra TileMap, per layer si intende uno strato della mappa che rappresenta diversi elementi sovrapposti. 
 Possiamo immaginare la mappa come un sandwich, dove ogni strato corrisponde a una fetta. 
 Ad esempio, il primo layer potrebbe rappresentare la zona percorribile (pavimento), il secondo layer potrebbe essere associato a un blocco di prato (ancora camminabile o meno), e così via, fino all'ultimo strato che costituisce la parte superiore del sandwich.
@@ -483,14 +481,13 @@ Ad esempio, posso creare layer separati per rappresentare il terreno, gli elemen
 Ogni strato può essere progettato e personalizzato in modo indipendente, offrendo una maggiore flessibilità e libertà creativa nella creazione delle mappe.
 Questo nuovo approccio consente di ottenere mappe più dettagliate e realistiche, migliorando significativamente l'aspetto visivo del gioco. 
 Inoltre, grazie alla gestione avanzata dei layer, è possibile modificare la struttura della mappa in modo più flessibile senza compromettere la funzionalità del gioco.
-\subsubsection*{Gestione delle transizioni tra i livelli}
 
+\subsubsection{Design dei livelli}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{uml/LevelManager.png}
+	\includegraphics[width=7cm]{uml/LevelManager.png}
 	\caption{Diagramma UML del level manager}
 \end{figure}
-
 \paragraph{Problema}
 La seconda sfida che ho affrontato riguardava la transizione fluida tra i diversi livelli all'interno del gioco. 
 Era fondamentale garantire che il giocatore potesse passare da una stanza all'altra in modo corretto e coerente, mantenendo eventuali statische acquisite durante il corso della partita (come vita, monete e power-up).
@@ -499,12 +496,12 @@ Per affrontare questa sfida, ho introdotto un meccasimo chiave chiamato "LevelMa
 Il LevelManager ha assunto la responsabilità di gestire l'intercambio tra i diversi livelli e coordinare l'avanzamento tra le stanze di gioco. 
 Nel nostro gioco, ho definito diverse tipologie di stanze, tra cui stanze normali, stanze del negozio e stanza del boss.
 Il LevelManager assicura che il giocatore si sposti correttamente attraverso le diverse stanze, gestendo la transizione e il posizionamento corretto da una stanza all'altra.
-\subsubsection{Introduzione al concetto di gestione delle stanze all'interno del gioco}
+\subsubsection*{Introduzione al concetto di gestione delle stanze all'interno del gioco}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{uml/RoomStrategy1}
-	\caption{Diagramma UML del level manager}
+	\caption{Diagramma UML della strategy gestionale delle stanze}
 \end{figure}
 
 In questa sezione, introdurrò il concetto di gestione delle stanze all'interno del gioco, utilizzando il pattern di progettazione chiamato "Strategy".
@@ -620,7 +617,7 @@ Grazie all'implementazione del CheckHealthSystem e del RemoveEntityEvent, le ent
 I sistemi del gioco che gestiscono le entità catturano l'evento di rimozione e intraprendono le azioni necessarie per eliminare l'entità dallo schermo, interrompendo le sue interazioni con gli altri elementi di gioco.
 Questa soluzione ha migliorato notevolmente l'esperienza di gioco, rendendola più realistica. 
 Ora i giocatori possono concentrarsi sulle entità ancora vive e non vengono più disturbati dalla presenza di entità sconfitte che rimangono in gioco.
-\subsubsection*{Introduzione alle nuove entità create}
+\subsubsection{Generazione entità}
 Una volta completato quando sopra riportato, mi sono dedicato alla creazione di nuove entità, che ho poi usato per scopi specifici.
 Ne è un esempio il boss per utilizzato per la realizzazione della boss fight.
 \paragraph*{Problema}
@@ -637,7 +634,7 @@ La classe BossFactory, insieme alla classe "GenericFactory", che adotta lo stess
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{uml/BossEntity.png}
+	\includegraphics[width=\textwidth]{uml/BossEntity1.png}
 	\caption{Diagramma UML del level manager}
 \end{figure}
 
@@ -817,6 +814,10 @@ Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzar
 \paragraph*{Test sul comportamento delle AI}
 Ho realizzato una classe \texttt{AITest} che dimostra il corretto funzionamento delle AI in
 situazioni differenti, la creazione delle AI e lo spawn degli attacchi.
+
+\subsubsection*{Emanuele Dajko}
+\paragraph*{Test di generazione dell'entità boss}
+Ho realizzato una class, \texttt{BossFactoryTest} che dimostra la corretta generazione dell'entità.
 
 \subsubsection*{Alessandra Versari}
 \paragraph*{Test degli effetti degli items}
