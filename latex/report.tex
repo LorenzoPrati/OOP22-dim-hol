@@ -28,16 +28,16 @@
 
 \section{Requisiti}
 
-Il gruppo si pone l'obbiettivo di realizzare un videogioco roguelike \textit{Dimension Holiday} vagamente ispirato a giochi famosi come \textit{Hades} oppure \textit{The Binding of Isaac}. Il giocatore controllera' un personaggio 
+Il gruppo si pone l'obbiettivo di realizzare un videogioco roguelike intitolato \textit{Dimension Holiday} vagamente ispirato a giochi famosi come \textit{Hades} oppure \textit{The Binding of Isaac}. Il giocatore controllera' un personaggio che dovra'
 esplorare un dungeon composto di diverse stanze e affrontare un boss per vincere il gioco.
 
 \subsection*{Elementi funzionali}
 
 \begin{itemize}
 	\item Per attraversare tutto il dungeon il giocatore dovrà passare da stanza in stanza,
-	eliminando tutti i nemici presenti. Per farlo potrà usare la spada, lanciare
-	proiettili o utilizzare una magia di fuoco. Giocatore e nemici hanno delle vite (espresse in cuori) e se il giocatore perde tutti i cuori e' \textit{Game over} e si deve ricominciare da capo
-	\item Una volta che il giocatore avrà ucciso tutti i nemici della stanza corrente un portale (\textit{Gate}) che e' presente nella stanza potra' essere attraversato per passare alla stanza successiva
+	eliminando tutti i nemici presenti. Per farlo potrà usare la spada, sparare
+	proiettili o utilizzare una magia di fuoco. Giocatore e nemici hanno delle vite (espresse in cuori) e se il giocatore le perde tutte deve ricominciare da capo
+	\item Una volta che il giocatore avrà ucciso tutti i nemici della stanza corrente, un portale (\textit{Gate}) che e' presente nella stanza potra' essere attraversato per passare alla stanza successiva
 	\item Dopo un certo numero di stanze, comparirà una stanza shop
 	dove sarà possibile effettuare acquisti usando le monete creando una piccola progressione
 	\item Il gioco si conclude quando il giocatore sconfigge un nemico speciale chiamato \textit{Boss}
@@ -55,16 +55,16 @@ esplorare un dungeon composto di diverse stanze e affrontare un boss per vincere
 Il giocatore potra' muoversi nelle 4 direzioni su, sinsitra, giu', destra tramite i tasti, rispettivamente, W, A, S, D ed effettuare due tipi di attacchi piu' un'abilita' speciale:
 \begin{itemize}
 	\item un attacco ravvicinato, usando la sua spada e tramite il tasto sinistro del mouse
-	\item un attacco dalla distanza, usando un proiettile energetico e tramite il tasto destro del mouse
+	\item un attacco da distanza, usando un proiettile energetico e tramite il tasto destro del mouse
 	\item un attacco caricato, tenendo premuto il tasto Z per 3 secondi e rilasciandolo per sparare una palla di fuoco che fara' piu' danno di un normale proiettile
 \end{itemize}
-Il gioco dovra' essere in grado di presentare al \texttt{giocatore} una serie di stanze dove affrontare dei \texttt{nemici}. Questi potranno avere diversi comportamenti e diverse tipologie di \texttt{attacco}. Il giocatore dovrà stare attento ad evitare gli attacchi dei nemici per non perdere cuori. I nemici possono attaccare sia dalla distanza con dei proiettili sia da vicino. Quando un'entita' esaurisce i cuori, essa deve essere rimossa dal \texttt{mondo} di gioco; inoltre alla rimozione di determinate entita' il gioco puo' reagire in diversi modi, ad esempio decretando il \textit{Game over} nel caso il player muoia, oppure la vittoria nel caso il boss venga sconfitto.
+Il gioco dovra' essere in grado di presentare al \texttt{giocatore} una serie di stanze dove affrontare dei \texttt{nemici}. Questi potranno avere diversi comportamenti e diverse tipologie di \texttt{attacco}. Il giocatore dovrà stare attento ad evitare gli attacchi dei nemici per non perdere cuori. I nemici possono attaccare sia dalla distanza con dei proiettili sia da vicino. Quando un'entita' esaurisce i cuori, essa deve essere rimossa dal \texttt{mondo} di gioco; inoltre alla rimozione di determinate entita' il gioco puo' reagire in diversi modi, ad esempio decretando la sconfitta nel caso il player muoia, oppure la vittoria nel caso il boss venga sconfitto.
 Saranno presenti degli \texttt{oggetti} raccoglibili (cuori, monete ecc.) che dovranno applicare degli effetti alle entita' con cui entrano in contatto, ad esempio l'incremento della vita oppure l'incremento della valuta posseduta dal giocatore. 
-Lo shop sara' gestito \textit{in game}, nel senso che non comparirà un'interfaccia grafica che permettera' al giocatore di scegliere i potenziamenti, ma il giocatore dovra' interagire dinamicamente con degli oggetti presenti nella mappa per acquistarli.
+Lo shop sara' gestito \textit{in game}, nel senso che non comparirà un'interfaccia grafica che permettera' al giocatore di scegliere i potenziamenti, ma il giocatore dovra' interagire dinamicamente con degli oggetti (\texttt{oggetti interagibili}) presenti nella mappa per acquistarli.
 Anche gli attacchi applicheranno degli effetti alle entita' con cui entrano in contatto, come ad esempio la perdita di cuori.
-Il \texttt{mondo} di gioco  sara' composto di una serie di \texttt{stanze}. Tramite l'interazione con un oggetto portale, il giocatore sara' trasportato alla stanza successiva senza possibilità di tornare indietro. All'interno delle stanze sono presenti dei muri, che bloccano il passaggio al giocatore. Esistono tre tipi di stanze: normale, shop, boss. Nella stanza normale compariranno dei nemici e alcuni oggetti raccoglibili, in numero e tipo casuale; nella stanza shop invece compariranno gli oggetti rappresentanti i potenziamenti acquistabili, e nella stanza boss comparirà il nemico boss.
+Il \texttt{mondo} di gioco  sara' composto di una serie di \texttt{stanze}. Tramite l'interazione con un oggetto portale, il giocatore sara' trasportato alla stanza successiva senza possibilità di tornare indietro. All'interno delle stanze sono presenti dei muri, che bloccano il passaggio al giocatore. Esistono tre tipi di stanze: normale, shop, boss. Nella stanza normale compariranno dei nemici e alcuni oggetti raccoglibili, in numero e tipo casuale; nella stanza shop invece compariranno anche degli oggetti rappresentanti i potenziamenti acquistabili, e nella stanza boss comparirà il nemico boss.
 
-Una delle maggiori difficoltà consistera' nella creazione di un architettura che permetta la gestione sia di diversi tipi di nemici (zombie, shooter, boss ecc.), ognuno con un proprio comportamento, sia di diversi attacchi utilizzabili sia dal giocatore che dai nemici (proiettili, attacchi meele). Inoltre, si cerchera' di realizzare un sistema di combattimento \textit{action} e \textit{real-time} quanto piu' possibile fluido e responsivo e un'alternanza di mappe e generazione dei nemici in modo tale da far sembrare ogni partita diversa.
+Una delle maggiori difficoltà consistera' nella creazione di un architettura che permetta la gestione sia di diversi tipi di nemici (zombie, shooter, boss ecc.), ognuno con un proprio comportamento, sia di diversi attacchi utilizzabili sia dal giocatore che dai nemici (proiettili, attacchi ravvicinati). Inoltre, si cerchera' di realizzare un sistema di combattimento \textit{action} e \textit{real-time} quanto piu' possibile fluido e responsivo oltre che un'alternanza di mappe e generazione dei nemici in modo tale da far sembrare ogni partita diversa.
 
 Dato il monte ore previsto, si rimanda al futuro una gestione accurata delle performance del gioco.
 
@@ -72,7 +72,7 @@ Dato il monte ore previsto, si rimanda al futuro una gestione accurata delle per
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{uml/uml_analisi.png}
-	\caption{Diagramma UML dell'analisi del dominio rappresentante le varie entita' di gioco e i loro legami con il mondo e i livelli}
+	\caption{Diagramma UML dell'analisi del dominio rappresentante alcune interfacce e i vari concetti di gioco}
 \end{figure}
 
 
@@ -127,7 +127,7 @@ Modellare il concetto di \textit{entity'} nel contesto del \textit{pattern ecs}.
 
 \paragraph*{Soluzione}
 Differentemente dall'approccio classico utilizzato per il \textit{pattern ecs}, che consiste nel rappresentare il concetto di entita' come \textit{id} numerici (interi di fatto) attraverso i quali identificare i vari component, ho scelto di usare un approccio piu' semplice e piu' \textit{object-oriented}, oggetto del corso, realizzando le entita' come classi di tipo \texttt{Entity} contenenti un insieme di \texttt{Component}. Ciascuna entita' possiede comunque un \textit{id} ma questo e' usato in minima parte e solo per esigenze di gestione che esulano da questo paragrafo e che spieghero' in seguito. 
-Il vantaggio di questo approccio \textit{oop} e' sicuramente nella semplicita' di gestione; infatti liste di entita', ciascuna con relativo insieme di componenti, sono facilmente iterabili e manipolabili all'occorrenza. Di contro, un approccio piu' a basso livello che favorisca l'uso massiccio di \textit{id} e array di componenti avrebbe permesso un notevole incremento delle performance che pero' e' fuori dallo scopo del progetto.
+Il vantaggio di questo approccio \textit{oop} e' sicuramente nella semplicita' di gestione; infatti collezioni di entita', ciascuna con relativo insieme di componenti, sono facilmente iterabili e manipolabili all'occorrenza. Di contro, un approccio piu' a basso livello che favorisca l'uso massiccio di \textit{id} e array di componenti avrebbe permesso un notevole incremento delle performance che pero' e' fuori dallo scopo del progetto.
 
 Quindi, l'interfaccia \texttt{Component} non ha metodi, e serve a essere implementata da tutti i componenti del gioco.
 L'interfaccia \texttt{Entity}, invece, contiene tutti i metodi fondamentali per manipolare i componenti contenuti in quell'entita', come ad esempio l'aggiunta e la rimozione, e l'ottenimento di uno specifico componente. Tramite il metodo \texttt{hasFamily} e' possibile interrogare l'entita' sul possesso di un insieme di \texttt{Component} specifici, cosa che risultera' molto utile per i \textit{system}.
@@ -136,7 +136,8 @@ Su queste semplici interfacce si basa l'intera struttura del \textit{pattern ent
 
 Infine, ho realizzato una classe \texttt{EntityBuilder} che, tramite l'uso del \textit{builder pattern}, consente la creazione di entita' in modo dichiarativo semplicemente tramite l'aggiunta sequenziale di \texttt{Component} su cui si basano tutte le factory presenti nel progetto. Per creare nuove entita' e' quindi sufficiente aggiungere componenti tramite l'\texttt{EntityBuilder} e modificando i parametri di creazione di questi componenti oppure creandone di nuovi, e' di fatti possibile creare molto velocemente nemici, oggetti e attacchi nuovi e dalle caratteristiche diverse.
 
-Un esempio di creazione di entita' sfruttando il builder e il \textit{pattern factory method} da me realizzato: (inserire permalink)
+Un esempio di creazione di entita' sfruttando il builder e il \textit{pattern factory method} da me realizzato: 
+\url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/bddafa24173b52eddf37e0b0ed47276c1f4309af/src/main/java/dimhol/entity/factories/GenericFactory.java#L31-L48}
 
 \subsubsection{System}
 
@@ -150,7 +151,7 @@ Un esempio di creazione di entita' sfruttando il builder e il \textit{pattern fa
 Le entita' e i componenti non definiscono logica di comportamento propria, quindi e' necessario che vengano manipolati dai \textit{system}. I sistemi devono essere divisi per specifico compito e ognuno deve essere in grado di operare sulle entita' che hanno certi componenti. Ad esempio, devono essere realizzati dei sistemi in grado di muovere le entita', rilevare e gestire le loro collisioni, rimuoverle dal mondo di gioco quando necessario ecc.
 
 \paragraph[]{Soluzione}
-Ho realizzato un'interfaccia \texttt{GameSystem} che modella un generico \textit{system}. Il metodo esposto e' \texttt{update} e si occupa di far eseguire la logica del sistema. Visto che ogni \textit{system} deve essere in grado di operare solo su certe entita', per garantire il \textit{riuso} ho scelto di realizzare una classe astratta \texttt{AbstractSystem} che all'interno utilizza il \textit{pattern template method} dove il metodo template e' appunto \texttt{update}, che fa i dovuti controlli sui componenti che compongono l'entita' e poi richiama il metodo astratto e protetto \texttt{process} solo sulle entita' che hanno i componenti richiesti. In questo modo, ogni classe che estende \texttt{AbstractSystem} deve solamente occuparsi di definire tramite costruttore l'insieme di \texttt{Component} su cui vuole operare e poi implementare il metodo \texttt{process} che andra' ad operare solo su \texttt{Entity} che hanno i componenti precedentemente richiesti.
+Ho realizzato un'interfaccia \texttt{GameSystem} che modella un generico \textit{system}. Il metodo esposto e' \texttt{update} e si occupa di far eseguire la logica del sistema. Visto che ogni \textit{system} deve essere in grado di operare solo su certe entita', per garantire il \textit{riuso di codice} ho scelto di realizzare una classe astratta \texttt{AbstractSystem} che all'interno utilizza il \textit{pattern template method} dove il metodo template e' appunto \texttt{update}, che fa i dovuti controlli sui componenti che compongono l'entita' e poi richiama il metodo astratto e protetto \texttt{process} solo sulle entita' che hanno i componenti richiesti. In questo modo, ogni classe che estende \texttt{AbstractSystem} deve solamente occuparsi di definire tramite costruttore l'insieme di \texttt{Component} su cui vuole operare e poi implementare il metodo \texttt{process} che andra' ad operare solo su \texttt{Entity} che hanno i componenti precedentemente richiesti.
 
 I \textit{system} sono in grado, avendo nel loro metodo \texttt{process} un riferimento al \texttt{World}, di notificare, come spieghero' meglio in seguito, degli eventi; ma e' anche possibile un metodo di \textit{signaling} tra \textit{system} diversi. Questo e' possibile attaccando, in seguito al verificarsi di una determinata situazione, un componente \textit{informativo} all'entita' che si sta processando in modo tale da permettere a successivi \textit{system} di cercare entita' con quel componente \textit{informativo} e gestire la cosa adeguatamente.
 
@@ -193,9 +194,9 @@ L'interfaccia \texttt{World} espone i metodi necessari al controllo del gioco ve
 
 Ho scelto di memorizzare e gestire i \texttt{GameSystem} direttamente in una lista dentro il \texttt{World} per semplicita' quando di fatti l'ordine con cui essi vengono memorizzati nella lista e quindi eseguiti ad ogni ciclo di \textit{update} potrebbe essere gestito da uno \textit{strategy pattern} ed essere modificabile in futuro con un'altra implementazione; tuttavia ho scelto di semplificare l'approccio perche' in ogni caso non viene gestita in nessun modo l'abilitazione/disabilitazione di sistemi a run-time (come e' comune nel \textit{pattern ecs}) e in generale in un gioco semplice come il nostro i pochi sistemi presenti devono eseguire strettamente uno dopo l'altro in un certo ordine preciso che di fatti lascia spazio a poche variazioni. Per questi motivi, la gestione dei sistemi e' fissa e non modificabile, e per questo l'inizializzazione dei \texttt{System} e' gestita internamente al \texttt{World} e non e' visibile o modificabile dall'esterno.
 
-Poi il \texttt{World} espone i metodi per la gestione delle \texttt{Entity}, cioe' che permettono di aggiungere e rimuovere \texttt{Entity}, oppure di ottnere una copia delle entita' presenti in gioco.
+Poi il \texttt{World} espone i metodi per la gestione delle \texttt{Entity}, cioe' che permettono di aggiungere e rimuovere \texttt{Entity}, oppure di ottenere una copia delle entita' presenti in gioco.
 
-Gli eventi sono rappresentati tramite l'interfaccia \texttt{WorldEvent} e sono gestiti in modo asincrono. Durante la loro esecuzione, i vari \textit{system} possono notificare il \texttt{World} di uno specifico evento, che verra' messo in una coda ed eseguito solo dopo che tutti i \texttt{System} hanno finito la loro esecuzione. In questo modo si evita il verificarsi di comportamenti anomali dovuti all'immissione di \texttt{Entity} nel \texttt{World} nel mezzo dell'esecuzione dei \textit{system} durante la quale, d'altra parte, e' risultato comodo sia immettere che rimuovere le \texttt{Entity} tramite eventi dedicati, in modo da reagire all'aggiunta/eliminazione di una specifica entita' (ad esempio per il \textit{game over}). Mi sono occupato io di implementare tutti gli eventi, che saranno pero' lanciati anche dai \textit{system} realizzati dai miei colleghi:
+Gli eventi sono rappresentati tramite l'interfaccia \texttt{WorldEvent} e sono gestiti in modo asincrono. Durante la loro esecuzione, i vari \textit{system} possono notificare il \texttt{World} di uno specifico evento, che verra' messo in una coda ed eseguito solo dopo che tutti i \texttt{System} hanno finito la loro esecuzione. In questo modo si evita il verificarsi di comportamenti anomali dovuti all'immissione di \texttt{Entity} nel \texttt{World} nel mezzo dell'esecuzione dei \textit{system} durante la quale, d'altra parte, e' risultato comodo sia immettere che rimuovere le \texttt{Entity} tramite eventi dedicati, in modo da reagire all'aggiunta/eliminazione di una specifica entita' (ad esempio per la morte del player o del boss). Mi sono occupato io di implementare tutti gli eventi, che saranno pero' lanciati anche dai \textit{system} realizzati dai miei colleghi:
 \begin{itemize}
 	\item \texttt{AddEntityEvent} aggiunge l'entita' passata come parametro al \texttt{World}
 	\item \texttt{RemoveEntityEvent} rimuove dal \texttt{World} l'entita' passata come parametro, in questo caso identificata tramite \textit{id}. Nel caso si trattasse dell'entita' che rappresenta il giocatore o il boss, viene notificato il \texttt{World} rispettivamente della sconfitta o della vittoria
@@ -240,7 +241,7 @@ Alcune entita' hanno corpi \textit{solidi} e devono comportarsi come tali nelle 
 Ho realizzato una classe \texttt{BodyComponent} che modella il \textit{corpo} di un'entita', definendone proprieta' come la \texttt{BodyShape}, ovvero la forma geometrica che il suo corpo occupa nello spazio, e la solidita'
 (espressa da un booleano). 
 
-Il \texttt{CollisionSystem} si occupa di processare le entita' che hanno un \texttt{BodyComponent}. Per ciascuna di queste entita', viene controllata la collisione con \textit{tutte} le altre entita' presenti nel gioco. Se viene rilevata una collisione, calcolata estrendo dai rispettivi \texttt{BodyComponent} le body shape e controllandone l'intersezione in date coordinate, allora viene \textit{registrata} la collisione attaccando all'entita' che il system sta processando in quel momento un \texttt{CollisionComponent}, un semplice componente che mantiene i dati sulle collisioni avvenute. In particolare, viene aggiunto un \texttt{CollisionComponent} solo nel caso non ce ne sia gia' uno, poiche' altrimenti vengono aggiornate le informazioni di quello gia' presente aggiungendo i dati sulla nuova collisione. Questo e' un esempio, l'unico in realta' realmente presente in questo progetto, di \textit{signaling tra system}. Infatti, i successivi \textit{system} potranno filtrare le entita' che hanno tra i loro componenti anche un \texttt{CollisionComponent} e gestire la collisione in modo appropriato. Su questo meccanismo si basano i sistemi che gestiscono le collisioni fisiche, gli item, il combattimento ecc. poiche' la loro gestione si basa sulla precedente aggiunta di un \texttt{CollisionComponent} da parte del \texttt{CollisionSystem}.
+Il \texttt{CollisionSystem} si occupa di processare le entita' che hanno un \texttt{BodyComponent}. Per ciascuna di queste entita', viene controllata la collisione con \textit{tutte} le altre entita' presenti nel gioco. Se viene rilevata una collisione, calcolata estraendo dai rispettivi \texttt{BodyComponent} le body shape e controllandone l'intersezione in date coordinate, allora viene \textit{registrata} la collisione attaccando all'entita' che il system sta processando in quel momento un \texttt{CollisionComponent}, un semplice componente che mantiene i dati sulle collisioni avvenute. In particolare, viene aggiunto un \texttt{CollisionComponent} solo nel caso non ce ne sia gia' uno, poiche' altrimenti vengono aggiornate le informazioni di quello gia' presente aggiungendo i dati sulla nuova collisione. Questo e' un esempio, l'unico in realta' realmente presente in questo progetto, di \textit{signaling tra system}. Infatti, i successivi \textit{system} potranno filtrare le entita' che hanno tra i loro componenti anche un \texttt{CollisionComponent} e gestire la collisione in modo appropriato. Su questo meccanismo si basano i sistemi che gestiscono le collisioni fisiche, gli item, il combattimento ecc. poiche' la loro gestione si basa sulla precedente aggiunta di un \texttt{CollisionComponent} da parte del \texttt{CollisionSystem}.
 
 Un \texttt{PhysicsSystem}, che esegue subito dopo il \texttt{CollisionSystem}, processa le entita' che hanno \texttt{BodyCompoenent} e \texttt{CollisionComponent} occupandosi invece della gestione vera e propria della collisione fisica, che pero' nel dominio del gioco si traduce in un semplice reset della posizione. Dato che vengono tenute nel \texttt{PositionComponent} sia la posizione corrente che quella immediatamente passata, solo in caso di collisione tra corpi \textit{solidi} viene ripristinata la posizione precedente.
 
@@ -341,16 +342,16 @@ Data la definizione di \textit{Comportamento} citata prima, per creare comportam
 ho deciso di implementare la classe \texttt{RoutineFactory} che crea collezioni di azioni 
 seguendo il \textit{Pattern Factory Method}.\\
 
-\underline{Esempio:} \textit{createShooterRoutine()} restituisce una classica personalità da zombie:
-segue il player se lo rileva nella sua aggro zone, lo attacca se è abbastanza vicino oppure si muove
-casualmente nel caso non sia il caso di eseguire le precedenti azioni.
+\underline{Esempio:} \textit{createZombieRoutine()} restituisce una classica personalità da zombie:
+segue il player se lo rileva nella sua aggro zone (zona di rilevamento del player misurata in raggio), lo attacca se è abbastanza vicino oppure si muove
+casualmente nel caso non possa eseguire le precedenti azioni.
 
 \paragraph{Problema}
 Quasi tutte le Action in questa prima versione del gioco presentano una caratteristca comune:
 si attivano tenendo conto soltanto della distanza tra esecutore della Action ed il player.
 \paragraph{Soluzione}
 Ho deciso di creare la classe astratta \texttt{AbstractAction} che implementa il metodo \textit{canExecute()}, il quale 
-valuta la distanza tra AI e giocatore. Oltre a quel metodo ho sfruttto la classe astratta per 
+valuta la distanza tra AI e giocatore. Oltre che per quel metodo ho sfruttato la classe astratta per 
 fattorizzare altri metodi comuni. E' nota la limitazione che questo sistema provoca 
 ma si è deciso che per un gameplay semplice come il nostro potesse comunque andare bene.
 
@@ -358,10 +359,8 @@ ma si è deciso che per un gameplay semplice come il nostro potesse comunque and
 Permettere alle Action di creare nuove entità, ad esempio: attacchi.
 \paragraph{Soluzione}
 Per creare nuovi attacchi performati dalle AI nemiche ho creato la classe \texttt{EnemyAttackFactory} seguendo il 
-\textit{Pattern Factory Method}, le action quindi usano i metodi di questa factory per creare attacchi 
+\textit{Pattern Factory Method}. Le action quindi usano i metodi di questa factory per creare attacchi 
 diversi.
-Ho implementato la \texttt{BaseAttackFactory} che viene estesa dalle factory utili a costruire attachi ed 
-implementa le funzioni che permettono il corretto posizionamento degli attacchi rispetto al entità che lo esegue.
 
 Ho quindi deciso di far restituire dal metodo \textit{execute()}, presente nelle \texttt{Action}, una 
 lista opzionale di \texttt{WorldEvent} che l'\texttt{AISystem} si occuperà di notificare al \texttt{World}.
@@ -369,10 +368,10 @@ In una Action utile per attaccare sarà logico restituire una lista con eventi d
 che prendono come parametro entità create dalla \texttt{EnemyAttackFactory}.
 
 \paragraph{Problema}
-La classi utili alla creazione di attacchi come \texttt{EnemyAttackFactory} oppure \texttt{PlayerAttackFactory}
+Le classi utili alla creazione di attacchi come \texttt{EnemyAttackFactory} oppure \texttt{PlayerAttackFactory}
 hanno metodi comuni utili al corretto posizionamento e direzionamento degli attacchi.
 \paragraph{Soluzione}
-Ho fattorizzato i metodi comuni in una classe astratta \texttt{AbstractAttackFactory}.
+Ho fattorizzato i metodi comuni in una classe astratta \texttt{BaseAttackFactory}.
 Non ho fatto lo stesso per il metodo \textit{getPlayerDirection()} che permette alle
 AI di rintracciare il player perché ha la sua utilità sia in Action di attacco che non;
 quindi ho inserito il metodo nella classe \texttt{BehaviourUtil}. 
@@ -380,19 +379,10 @@ quindi ho inserito il metodo nella classe \texttt{BehaviourUtil}.
 \paragraph{Conclusione}
 Ho ideato quindi un sistema che permette di creare nuove \texttt{Action} basandosi sullo spazio 
 intorno alla AI e sullo scorrere del tempo. 
-Considerato il dominio di gioco semplice, nonostante le chiare litazione che questo sistema presenta, 
+Considerato il dominio di gioco semplice, nonostante le chiare limitazioni che questo sistema presenta, 
 riesce, nel suo piccolo, nella creazione di nuove personalità.
 Nelle sezione precedenti ho trattato soltanto di AI nemiche ma questo sistema
 permette anche la creazione di AI assegnabili ad NPC.
-
-\paragraph{Problema}
-Evitare che le AI nemiche causino danno a loro AI alleate.
-\paragraph{Soluzione}
-Ho sfruttato un sistema simile a quello ideato dalla collega Alessandra Versari 
-per la creazione degli Item.\\
-Gli attacchi sono un entità composta, tra le altri componenti, del \texttt{AttackComponent} che 
-si occupa di memorizzare il danno del arma e quali entità devono ricevere il 
-danno (così da evitare che le entità nemiche del player si uccidano tra di loro).
 
 \subsubsection{Combat System}
 
@@ -401,6 +391,16 @@ danno (così da evitare che le entità nemiche del player si uccidano tra di lor
 	\includegraphics[width=\textwidth]{uml/UML_CombatSystem.png}
 	\caption{Diagramma UML delle Action.}
 \end{figure}
+
+
+\paragraph{Problema}
+Evitare che le AI nemiche causino danno a loro AI alleate.
+\paragraph{Soluzione}
+Ho sfruttato un sistema simile a quello ideato dalla collega Alessandra Versari 
+per la creazione degli Item.\\
+Gli attacchi sono un entità composta, tra le altri componenti, del \texttt{AttackComponent} che 
+si occupa di memorizzare il danno dell'attacco e quali entità devono ricevere il 
+danno (così da evitare che le entità nemiche del player si uccidano tra di loro).
 
 \paragraph{Problema}
 Eliminare gli attacchi ravvicinati processati.
@@ -422,7 +422,7 @@ che fossero abbastanza pochi semplici metodi utili al aggiornamento
 ed alla visualizzazione delle monete correnti, vita corrente e vita massima.
 Il \texttt{World} ottiene il player dalla lista delle entità in gioco, 
 ne estrapola le informazioni fondamentali e le aggiorna nella parte grafica 
-che poi si occupa di rappresentare quei valori in grafica.
+che poi si occupa di rappresentare quei valori graficamente.
 
 \subsection{Emanuele Dajko}
 \subsubsection{TileMap}
@@ -434,7 +434,7 @@ che poi si occupa di rappresentare quei valori in grafica.
 
 \paragraph*{Introduzione al concetto di TileMap e il suo ruolo nel gioco}
 In questa sezione, fornirò una panoramica del concetto di TileMap e del suo ruolo fondamentale nel nostro gioco.
-La TileMap rappresenta una matrice 2D composta da diverse Tile che, unite insieme, costituiscono la struttura di gioco. 
+La TileMap rappresenta una matrice 2D composta da diverse Tile che, unite insieme, costituiscono la mappa. 
 Si può pensare alla TileMap come un vero e proprio "puzzle" in cui le Tile sono i pezzi che compongono l'intero quadro del gioco. 
 Ora condividerò le sfide affrontate durante lo sviluppo della TileMap e le soluzioni adottate per superarle.
 \paragraph*{Parsing delle configurazioni della TileMap}
@@ -446,10 +446,10 @@ Per ottenere maggiore flessibilità nel design del gioco, ho deciso di adottare 
 Questa scelta mi ha permesso, anche grazie all'aiuto del collega Elvis Perlika, di definire configurazioni personalizzate per ciascun livello e gestire in modo più efficace le diverse proprietà delle Tile.
 Ad esempio, ho utilizzato la proprietà "TileMapIdInt" associata a un booleano "WalkableBool", per distinguere le aree camminabili (true) da quelle bloccate (false).
 \\
-Per affrontare questa sfida, ho sviluppato un parser utilizzando la libreria JDOM (Java DOM parser) per leggere i file XML generati dal programma "Tiled" e gestire il caricamento delle TileMap.
+Per affrontare questa sfida, ho sviluppato un parser utilizzando la libreria JDOM (Java DOM parser) per leggere i file XML generati dal programma "Tiled" da noi personalizzati e gestire il caricamento delle TileMap.
 Il parser ci ha consentito di estrarre le informazioni necessarie da ciascun file XML e creare la corrispondente TileMap nel nostro gioco.
 Durante lo sviluppo del parser, ho preso decisioni di design specifiche per garantire un'adeguata gestione delle configurazioni delle TileMap e un corretto caricamento delle informazioni nel nostro gioco.
-Inoltre, grazie al fatto che rispettando le proprietà definite si può garantire il parsing di diversi tipi di TileMap, sono riuscito a ottenere un riuso parziale del parser stesso.
+
 \paragraph*{Note:}
 Durante lo sviluppo del parser per le TileMap, ho affrontato alcune sfide legate alle configurazioni dei file XML attualmente utilizzati.
 È importante sottolineare che il nostro sistema è stato progettato per gestire le configurazioni delle TileMap conformi alle regole definite. 
@@ -490,7 +490,7 @@ Inoltre, grazie alla gestione avanzata dei layer, è possibile modificare la str
 	\caption{Diagramma UML del level manager}
 \end{figure}
 \paragraph{Problema}
-La seconda sfida che ho affrontato riguardava la transizione fluida tra i diversi livelli all'interno del gioco. 
+La seconda sfida che ho affrontato riguardava la transizione tra i diversi livelli all'interno del gioco. 
 Era fondamentale garantire che il giocatore potesse passare da una stanza all'altra in modo corretto e coerente, mantenendo eventuali statische acquisite durante il corso della partita (come vita, monete e power-up).
 \paragraph{Soluzione}
 Per affrontare questa sfida, ho introdotto un meccasimo chiave chiamato "LevelManager".
@@ -501,7 +501,7 @@ Il LevelManager assicura che il giocatore si sposti correttamente attraverso le 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=7cm]{uml/RoomStrategy1}
+	\includegraphics[width=\textwidth]{uml/RoomStrategy1}
 	\caption{Diagramma UML della strategy gestionale delle stanze}
 \end{figure}
 
@@ -515,8 +515,8 @@ Ho iniziato creando un'interfaccia chiamata "RoomStrategy" per rappresentare la 
 Successivamente, ho implementato diverse strategie specifiche, tra cui "NormalRoomStrategy", "ShopRoomStrategy" e "BossRoomStrategy".
 Ogni strategia ha una logica unica per la generazione e la gestione delle entità in base alle caratteristiche specifiche della stanza.
 Per ridurre la duplicazione di codice e favorire il riutilizzo, ho creato una classe astratta chiamata "AbstractRoomStrategy".
-Questa classe contiene i metodi comuni a tutte le strategie di stanza, ad esempio, il posizionamento del giocatore.
-Le strategie specifiche, come "NormalRoomStrategy", "ShopRoomStrategy" e "BossRoomStrategy", estendono questa classe astratta e implementano i metodi unici alle loro caratteristiche specifiche.
+Questa classe contiene i metodi comuni a tutte le strategie di stanza (ad esempio, il posizionamento del giocatore).
+Le strategie specifiche, come "NormalRoomStrategy", "ShopRoomStrategy" e "BossRoomStrategy", estendono questa classe astratta e implementano il metodo d'interfaccia secondo le loro esigenze specifiche.
 L'utilizzo del pattern "Strategy" mi ha consentito di modellare in modo flessibile le diverse strategie per le stanze del gioco. 
 Ad esempio, la stanza del boss ospita un'entità boss, a differenza delle altre stanze, mentre la stanza del negozio contiene power-up.
 Ogni strategia di stanza può personalizzare la generazione e la gestione delle entità in base alle sue caratteristiche specifiche.
@@ -540,7 +540,7 @@ Ad esempio, la stanza del boss ospita un'entità boss, a differenza delle altre 
 Utilizzando il pattern "Strategy", sono stato in grado di modellare in modo flessibile le diverse strategie per le stanze, semplificando l'aggiornamento delle logiche di generazione e gestione delle entità in base alle caratteristiche specifiche di ciascuna stanza. 
 Questo ci consente di mantenere un alto livello di modularità e facilita la gestione e l'espansione delle diverse stanze nel nostro gioco.
 \paragraph*{Note:}
-Ho cercato di bilanciare la complessità delle strategie delle stanze nel mio gioco, cercando di trovare un punto di equilibrio tra la semplicità e la complessità. 
+Ho cercato di bilanciare la complessità delle strategie delle stanze del gioco, cercando di trovare un punto di equilibrio tra la semplicità e la complessità. 
 Sebbene strategie più complesse potrebbero offrire un'esperienza di gioco più sofisticata, ho considerato le caratteristiche specifiche del mio dominio di gioco e ho optato per strategie che soddisfano le esigenze senza aggiungere un'eccessiva complessità.
 Tuttavia, comprendo che potrebbe esserci spazio per miglioramenti futuri.
 Sono consapevole che potrei aggiungere ulteriori funzionalità alle stanze, ad esempio, per gestire interazioni più complesse tra le entità o altri meccanismi più avanzati.
@@ -555,14 +555,14 @@ Tuttavia, ho incontrato una sfida riguardante il posizionamento corretto delle e
 Per affrontare questa questione, ho introdotto un processo di spawn delle entità basato su un approccio di posizionamento randomico controllato. 
 Ogni entità viene creata prendendo in considerazione le zone camminabili all'interno della stanza, ottenute tramite il metodo automatizzato \textit{"getRandomTile()"}.
 Per illustrare meglio il processo, prenderemo come esempio il posizionamento del player. 
-Per garantirene un corretto posizionamento, sono stati sviluppati diversi metodi:
+Per garantirne un corretto posizionamento, sono stati sviluppati diversi metodi:
 \begin{itemize}
 	\item Il metodo "createPlayer()" crea un'entità player, non tenendo conto delle dimensioni del player stesso.
 	Utilizza un "Set" (insieme) di Tile camminabili e seleziona due coordinate libere per il posizionamento del player.  
 	\item Il metodo "createAndPlacePlayer()" considera anche le dimensioni del player e utilizza il metodo "getRandomTile()" per ottenere una zona camminabile casuale. 
 	Questo metodo viene utilizzato per creare e posizionare il player all'interno della stanza.
 	\item Il metodo "generatePlayer()" è responsabile di controllare se il player esiste già nella lista delle entità del World prima di crearne uno nuovo. 
-	Se il player esiste già, viene utilizzato il player esistente, garantendo così la coerenza delle informazioni, come monete e cuori accumulati durante il gameplay. 
+	Se il player esiste già, viene utilizzato il player esistente, garantendo così la coerenza delle informazioni, come monete e cuori accumulati durante il gioco. 
 	Se il player non esiste, viene creato un nuovo player utilizzando il metodo sopra descritto.
 \end{itemize}
 Questo processo di creazione e posizionamento delle entità viene applicato a ciascuna stanza, garantendo imprevedibilità nel posizionamento delle entità all'interno del gioco.
@@ -585,7 +585,6 @@ Per affrontare il posizionamento specifico dell'entità boss, sono stati svilupp
 	\item Il metodo "canAccommodateTileForBoss()" utilizza il metodo "canAccommodate()" per controllare se l'entità boss può essere posizionata correttamente all'interno dell'area di tile dedicata alla sua generazione.
 	\item Il metodo "getRandomTileForBoss()" viene utilizzato per selezionare casualmente una tile libera che possa ospitare l'entità boss, tenendo conto delle sue dimensioni specifiche
 	\item Successivamente, il metodo "createBoss()" viene chiamato per creare l'entità boss, assegnandole le coordinate di posizione ottenute dal metodo precedente.
-	\item Ora vi è il meotodo "createBoss()", che appunto si occupa di crare l'entità boss, assegnandogli ora una posizione con rispettive coordinate x e y.
 	\item Infine, il metodo "generateAndPlaceBoss()" utilizza tutti i metodi di supporto descritti in precedenza per generare e posizionare l'entità boss all'interno della mappa di gioco.
 \end{itemize}
 È importante sottolineare che, per garantire la corretta generazione e posizionamento dell'entità boss, è stato necessario adottare un approccio specifico per selezionare le tile libere e assicurarsi che l'entità non si sovrapponesse ad altre entità esistenti.
@@ -605,22 +604,21 @@ Allo stesso modo, le entità che rapprestano i proiettili, i quali sono sparati 
 \subsubsection*{Introduzione alla vita delle entità di gioco}
 In questa sezione, forniremo una panoramica del concetto di salute delle entità e il ruolo che essa assume nel nostro gioco. 
 La gestione della salute delle entità è un aspetto fondamentale per determinare la loro vitalità e partecipazione attiva nel gameplay.
-La salute di un'entità nel nostro gioco è rappresentata dal componente HealthComponent. 
+La salute di un'entità nel nostro gioco è rappresentata dal componente HealthComponent, realizzato dalla mia collega Alessandra Versari. 
 Un'entità è considerata "viva" se il valore del suo HealthComponent è superiore a zero, mentre è considerata "morta" se il valore è uguale o inferiore a zero.
 \paragraph*{Problema}
 All'inizio, non era presente un controllo sulla salute delle entità sconfitte, e di conseguenza rimanevano in gioco nonostante fossero state eliminate.
 \paragraph*{Soluzione}
-Per affrontare questo problema e garantire un'esperienza di gioco più realistica, ho introdotto un componente dedicato chiamato \texttt{HealthComponent}. 
-Questo componente viene utilizzato da tutte le entità di gioco, inclusi il player, i nemici e il boss, per gestire la loro salute.
-Ho sviluppato anche un sistema specifico chiamato \texttt{"CheckHealthSystem"} per gestire il controllo della salute delle entità e rimuovere quelle che muoiono durante i combattimenti. 
+HealthComponent, realizzato dalla collega, viene utilizzato da tutte le entità di gioco, inclusi il player, i nemici e il boss, per gestire la loro salute.
+Ho sviluppato un sistema specifico chiamato \texttt{"CheckHealthSystem"} per gestire il controllo della salute delle entità e rimuovere quelle che muoiono durante i combattimenti. 
 Il CheckHealthSystem viene eseguito in sincronia con l'aggiornamento del gioco, controllando costantemente lo stato di salute di ciascuna entità.
-Grazie all'implementazione del CheckHealthSystem e del RemoveEntityEvent, le entità sconfitte vengono correttamente rimosse dal gameplay.
+Grazie all'implementazione del CheckHealthSystem e del RemoveEntityEvent, le entità sconfitte vengono correttamente rimosse dal gioco.
 I sistemi del gioco che gestiscono le entità catturano l'evento di rimozione e intraprendono le azioni necessarie per eliminare l'entità dallo schermo, interrompendo le sue interazioni con gli altri elementi di gioco.
 Questa soluzione ha migliorato notevolmente l'esperienza di gioco, rendendola più realistica. 
 Ora i giocatori possono concentrarsi sulle entità ancora vive e non vengono più disturbati dalla presenza di entità sconfitte che rimangono in gioco.
 \subsubsection{Generazione entità}
 Una volta completato quando sopra riportato, mi sono dedicato alla creazione di nuove entità, che ho poi usato per scopi specifici.
-Ne è un esempio il boss per utilizzato per la realizzazione della boss fight.
+Ne è un esempio il boss utilizzato per la realizzazione della boss fight.
 \paragraph*{Problema}
 Uno dei nostri obiettivi era ampliare il gioco introducendo nuove entità.
 \paragraph*{Soluzione}
@@ -640,7 +638,7 @@ La classe BossFactory, insieme alla classe "GenericFactory", che adotta lo stess
 \end{figure}
 
 Alla proposta di progetto, avevamo messo tra le scelte opzionali, quella della realizzazione della boss fight, ho dunque deciso di occuparmene, per rendere il gioco più completo e giocabile.
-Introuduciamo ora la Boss entity, la quale è presente nell'ultima delle stanze, con stanza dedicata, essa è l'entità nemica più potente (da qui si ha anche l'introduzione degli item e power-up). 
+Introduciamo ora la Boss entity, la quale è presente nell'ultima delle stanze, con stanza dedicata, essa è l'entità nemica più potente (da qui si ha anche l'introduzione degli item e power-up). 
 \paragraph*{Problema}
 Il problema da affrontare era la realizzazione di un combattimento coinvolgente tra l'entità player e il boss.
 \paragraph*{Soluzione}
@@ -649,11 +647,9 @@ Nel caso del boss, ho adottato nuovamente il design pattern Factory Method per g
 \\
 Le azioni che il boss può compiere sono le seguenti:
 \begin{itemize}
-	\item Attacco corpo a corpo speciale: un attacco con un'area abbastanza grande, attivabile solo quando il boss raggiunge una soglia di vita specificata.
+	\item Attacco corpo a corpo speciale: un attacco con un'area abbastanza grande, attivabile solo quando il boss raggiunge una soglia di vita specifica.
 	\item Incremento di velocità: l'aumento della velocità del boss, attivato solo quando il boss si avvicina a una soglia di vita specifica. 
 	Questo bilancia lo scontro nel caso in cui il giocatore abbia acquisito numerosi power-up.
-	\item Incremento di vita: l'aumento della vita del boss, attivato quando il boss raggiunge una determinata soglia di vita.
-	Questo permette al boss di recuperare energia quando il giocatore si concentra principalmente sull'attacco a distanza.
 \end{itemize}
 La creazione delle azioni speciali del boss avviene tramite l'utilizzo del design pattern Factory Method. I metodi, come ad esempio "createBossMeleeAttack()", sono responsabili della creazione delle entità di attacco specifiche utilizzate solo dal boss.
 Questo approccio incapsula la logica di creazione e restituisce un'istanza dell'oggetto Entità che rappresenta l'attacco stesso.
@@ -667,31 +663,18 @@ Ritengo che l'implementazione sopra descritta sia sufficiente per garantire uno 
 \paragraph*{Note:}
 Sono consapevole che avrei potuto realizzare delle action più complesse, ma ho ritenuto che delle azioni semplici fossero sufficienti per soddisfare le esigenze del nostro gioco.
 Date le caratteristiche del dominio di gioco, l'implementazione di azioni complesse avrebbe potuto aggiungere una complessità eccessiva senza apportare un valore significativo all'esperienza di gioco complessiva.
-\subsubsection*{Introduzione ai nuovi component realizzati}
-Nella mia implementazione del gioco, ho sviluppato due component specifici: il Boss e lo Shop-Keeper component.
-Per rendere queste entità interattive e funzionali agli eventi, ne ho creato dei component dedicati.
-Il componente del Boss ha una funzione importante nel riconoscere lo stato della partita, questo evento non è però stato realizzato da me.
-Quando il Boss viene sconfitto, viene lanciato l'evento "Win", seguito dalla visualizzazione di una schermata di vittoria e dalla conclusione del gioco.
-Questo componente, che funge da "tag", permette al gioco di rilevare la fine della sfida con il Boss e di fornire una conclusione ai giocatori.
-\\
-Il componente dello Shop-Keeper, invece, ha una funzionalità differente rispetto alle altre entità normali, come i nemici comuni (escludendo il Boss e il giocatore).
-Nelle stanze di gioco, di solito è necessario eliminare tutti i nemici per poter accedere al gate e passare al livello successivo.
-Tuttavia, nello specifico caso dello Shop-Keeper, che appare solo nella stanza del negozio, il gate può essere utilizzato fin da subito, in quanto lo Shop-Keeper è escluso dalle entità che devono essere eliminate.
-Questa eccezione è possibile grazie all'introduzione del componente specifico dello Shop-Keeper (tramite uso del suo "tag").
-I componenti del Boss e dello Shop-Keeper non implementano una logica interna complessa, ma svolgono il ruolo di "tag" o riconoscimento delle entità.
+
 \paragraph*{Problema}
 Generare l'evento di fine partita.
 \paragraph*{Soluzione}
-Per gestire questo problema, ho creato il componente necessario ad un sistema che, al momento della sconfitta del Boss, genera l'evento "Win".
-Questo evento viene rilevato dal sistema del gioco, che avvia una sequenza di azioni, tra cui la visualizzazione di una schermata di vittoria e la conclusione del gioco.
-Dettagli specifici sulla gestione di questo evento sono stati forniti precedentemente.
+Per gestire questo problema, ho creato il componente necessario per fare si' che, al momento della sconfitta dell'entita' che rappresenta il boss, l'evento di rimozione delle entita' si accorga che il gioco e' concluso con la vittoria del giocatore riconoscendo il \texttt{BossComponent}.
+
 \paragraph*{Problema}
 Gestire il cambio di livello anche con lo Shop-Keeper che precedentemente non era costituito da un componente.
 \paragraph*{Soluzione}
 Per permettere il cambio di livello con la presenza dello Shop-Keeper, ho introdotto un componente dedicato a questa entità.
-Questo componente viene utilizzato per all'interno del predicate BiFunction "useGate", la presenza del suo component, è usata come filtro, quando tutti i nemici oppure lo shop-keeper è presente, allora avviene l'evento "ChangeLevelEvent" non realizzato da me.
-I dettagli specifici sono stati realizzati all'interno della classe \texttt{"InteractableObjectFactory"}.
-Con queste migliorie, i componenti del Boss e dello Shop-Keeper diventano parte integrante del gameplay, offrendo funzionalità specifiche e consentendo una gestione più sofisticata degli eventi e delle transizioni di livello nel gioco.
+Questo componente viene utilizzato all'interno del predicate BiFunction "useGate"; la presenza del suo component è usata come filtro, quando tutti i nemici sono morti oppure lo shop-keeper è presente, allora avviene l'evento "ChangeLevelEvent" non realizzato da me.
+
 \subsubsection*{Menu tutorial}
 \paragraph*{Problema}
 Il mio obiettivo era quello di fornire al giocatore una schermata di tutorial iniziale, pre-game, che spiegasse i tasti e le regole di gioco in modo chiaro e comprensibile. 
@@ -703,14 +686,13 @@ Ho abbinato a ogni immagine un testo esplicativo che illustra il modo corretto d
 Ad esempio, mostriamo i tasti utilizzati per il movimento del giocatore e spieghiamo le regole per cambiare stanza o utilizzare il gate (portale).
 La disposizione delle immagini e del testo è stata organizzata in modo semplice e intuitivo per facilitare la comprensione del giocatore.
 Ho cercato di mantenere il tutorial conciso e diretto al punto, evitando informazioni superflue che potrebbero confondere o annoiare il giocatore.
-In conclusione, la schermata di tutorial che ho implementato nel menu principale fornisce al giocatore un'introduzione semplice ma completa ai tasti e alle regole di gioco.
-Ciò permette al giocatore di immergersi nel gameplay fin dal primo momento, senza troppe difficoltà, sfruttando appieno le meccaniche di gioco e godendo dell'esperienza offerta dal nostro gioco.
+
 \paragraph*{Note:}
 Sono consapevole che avrei potuto costruire un Menu tutorial più funzionale, ad esempio un tutorial interattivo, ma dato il nostro dominio di 
 gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per la visualizzazione a schermo dei comandi e delle regole di gioco.
 
 \subsection{Alessandra Versari}
-\subsubsection*{Items}
+\subsubsection{Items}
 \paragraph*{Problema}
 	Ciascun item una volta entrato in contatto con un'entità dovrà prima verificare che si tratti del player ed effettuare i controlli necessari prima di applicare il proprio “effetto” (cioè la conseguenza/reazione che l'item avrà sull'entità che ha colliso con esso).
 	Di seguito l’effetto specifico degli items presenti nel nostro gioco:
@@ -720,38 +702,38 @@ gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per
 	\end{itemize}
 
 \paragraph*{Soluzione}
-	Per realizzare quanto descritto ho deciso di creare due componenti principali: \texttt{HealthComponent} e \texttt{CoinPocketComponent}, appartenenti alla lista di componenti del player, che permettono di consultare e modificare vita corrente, vita massima e monete raccolte. Tramite i getter e i setter, in questo modo, posso creare gli “effetti” degli item, all'interno dell'ItemFactory.  Ogni item è dotato di un componente detto \texttt{ItemComponent} che oltre a rendere riconoscibili gli item, memorizza una Bifunction che corrisponde a quello che fin'ora ho definito “effetto”. La Bifunction in questo caso prende come argomento l'entità che ha colliso con l'item e una lista di component. Nel nostro gioco, al momento, solo il player ha la possibilità di raccogliere items, ma nel caso in cui volessimo rendere questi items raccoglibili anche ai nemici, sarebbe possibile farlo, passando come argomento alla Bifuntion una lista contenente i componenti identificativi di player e nemici (ossia PlayerComponent e AIComponent).
+	Per realizzare quanto descritto ho deciso di creare due componenti principali: \texttt{HealthComponent} e \texttt{CoinPocketComponent}, appartenenti alla lista di componenti del player, che permettono di consultare e modificare vita corrente, vita massima e monete raccolte. I getter e i setter dei componenti appena elencati vengono utilizzati all'interno dell'implmentazione degli effetti degli item.  Ogni item è dotato di un componente detto \texttt{ItemComponent} che oltre a rendere riconoscibili gli item, memorizza una Bifunction che corrisponde a quello che fin'ora ho definito “effetto”. La Bifunction in questo caso prende come argomento l'entità che ha colliso con l'item e una lista di component. Nel nostro gioco, al momento, solo il player ha la possibilità di raccogliere items, ma nel caso in cui volessimo rendere questi items raccoglibili anche ai nemici, sarebbe possibile farlo, passando come argomento alla Bifuntion una lista contenente i componenti identificativi di player e nemici (ossia PlayerComponent e AIComponent).
 	Inizialmente avevo scelto di creare gli effetti utilizzando il Factory Method perché pensavo potesse rendere più riutilizzabili gli effetti e velocizzarne la creazione, ma il risultato era un insieme di classi Factory, molto simili tra loro e la cui unica differenza era operare su componenti diversi (una factory per gli effetti che modificavano la vita, un'altra per quelli che modificavano l'ammontare delle monete e così via).
 	Inoltre siccome gli effetti alla fine sono praticamente solo incrementi e decrementi, mi è sembrato più sensato utilizzare interfacce funzionali e lamba per crearli all'interno della factory. 
-	Per quanto riguarda le interfacce funzionali, ho deciso di utilizzare le Bifuction così da poter restituire un boolean che permette di capire se l'effetto è stato applicato o meno e se quindi è necessario rimuovere l'item.
+	Per quanto riguarda le interfacce funzionali, ho deciso di utilizzare le Bifuction così da poter restituire un booleano che permette di capire se l'effetto è stato applicato o meno e se quindi è necessario rimuovere l'item.
 
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=\textwidth]{uml/uml_itemSystem.png}
+		\includegraphics[width=6cm]{uml/uml_itemSystem.png}
 		\caption{Diagramma UML riguardante la gestione degli item e dei loro effetti}
 	\end{figure}
 	
 \paragraph*{Pattern utilizzati}
 	Nella classe ItemFactory è stato utilizzato il Factory Method.
 
-\subsubsection*{InteractableObjects}
+\subsubsection{InteractableObjects}
 \paragraph*{Problema}
 	A differenza degli items, la collisione con l'oggetto in questo caso non è sufficiente, è necessario premere in tasto E una volta posizionato il player sull'oggetto.
 	Gli oggetti interactable presenti nel nostro gioco sono i power-up e il gate:
 	\begin{itemize} 
 		\item I power up prima di applicare il loro effetto (che comprenderà anche il decremento delle monete totali del giocatore) dovranno controllare che il player abbia sufficienti monete per effettuare l'acquisto.
-		\item Il gate invece dovrà fare un controllo sulle entità presenti in gioco e applicare il proprio effetto solo nel caso i nemici siano stati eliminati, avrà quindi bisogno del World.
+		\item Il gate invece dovrà fare un controllo sulle entità presenti in gioco e applicare il proprio effetto solo nel caso i nemici siano stati eliminati oppure ci si trovi nello shop: avrà quindi bisogno del World.
 	\end{itemize}
 	Se e solo se l'effetto verrà applicato, l'interactable object dovrà essere rimosso. 
 
 \paragraph*{Soluzione}
-	Per realizzare tutto ciò ho creato i vari InteractableObjects all'interno dell'\texttt{InteractableObjectsFactory} assegnando a ciascuno di essi i propri componenti. Ognuno di questi oggetti è distinguibile grazie all'\texttt{InteractableComponent} che memorizza il loro “effetto” mediante un Bifunction che prende come argomenti un'entità e il world (necessario affinchè alcuni di essi possano lanciare WorldEvent, per esempio il gate come effetto lancia l'evento ChangeRoomEvent()) e restituisce un booleano che permette di capire se l'effetto è stato applicato o meno.
+	Per realizzare tutto ciò ho creato i vari InteractableObjects all'interno dell'\texttt{InteractableObjectsFactory} assegnando a ciascuno di essi i propri componenti. Ognuno di questi oggetti è distinguibile grazie \\ all'\texttt{InteractableComponent} che memorizza il loro “effetto” mediante un Bifunction che prende come argomenti un'entità e il world (necessario affinchè alcuni di essi possano lanciare WorldEvent, per esempio il gate come effetto lancia l'evento ChangeLevelEvent()) e restituisce un booleano che permette di capire se l'effetto è stato applicato o meno.
 	Sempre all'interno della factory ho implementato anche gli “effetti” tramite Bifunction che poi utilizzano altre interfacce funzionali per effettuare i controlli necessari (es. checkCoin che controlla se le monete solo sufficienti per effettuare l'acquisto) in modo da poterli riutilizzare all'interno di “effetti” diversi se necessario. Ho deciso di implementare tutto questo all'interno della factory (come nel caso degli items) perché anche in questo caso si trattava di qualche incremento o decremento di interi contenuti in Component diversi e qualche controllo in più. Anche in questo caso inizialmente avevo tentato di utilizzare il Factory method per poi rendermi conto che non era la strada migliore perché il risultato erano una serie di classi molto simili e quindi codice ripetitivo, inoltre le factory non erano molto riutilizzabili siccome questo tipo di effetti devono essere applicati sempre e solo sul player.
-	Ho creato infine l'\texttt{InteractableSystem} che si occupa di tutti gli oggetti che hanno l'InteractableComponent e controlla se alcune entità hanno colliso con essi. Nel caso affermativo, se tutti i controlli vengono superati (es. l'effetto del gate viene applicato solo se il player sta interagendo con esso, se tutti i nemici sono stati eliminati e quindi la Bifunction ritorna true) l'oggetto viene rimosso tramite il WorldEvent RemoveEntityEvent(). 
+	Ho creato infine l'\texttt{InteractableSystem} che si occupa di processare tutte le entita' che hanno l'InteractableComponent e il CollisionComponent. Se tutti i controlli vengono superati (es. l'effetto del gate viene applicato solo se il player sta interagendo con esso, se tutti i nemici sono stati eliminati e quindi la Bifunction ritorna true) l'oggetto viene rimosso tramite il WorldEvent RemoveEntityEvent(). 
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=\textwidth]{uml/uml_interactableSystem.png}
+		\includegraphics[width=9cm]{uml/uml_interactableSystem.png}
 		\caption{Diagramma UML riguardante gli interactableObjects (cioè tutte le entità che possiedono un InteractableComponent) e la gestione dei loro effetti}
 	\end{figure}
 	
@@ -763,9 +745,9 @@ gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per
 	Si vuole realizzare un gioco le cui entità sono animate. Ogni entità può assumere stati diversi: può stare semplicemente ferma (idle), può attaccare in modi differenti (con la spadata, sparando…), può subire un danno etc.
 \paragraph*{Soluzione}
 	Siccome ciascuna entità ha un numero di sprite diverso, con dimensioni differenti e vari stati ho deciso di realizzare un componente chiamato \texttt{AnimationComponent} con lo scopo di mantenere tutti i dati neccassari per l'animazione (solo interi e stringhe). Ogni AnimationComponent contiene una mappa riguardante il proprio tipo di entità (es. l'animation component del player avrà una mappa che conterrà solo i dati riguardanti il player) ricavata da una mappa generica creata in AbstractFactory grazie alla lettura di un file di configurazione yaml.
-	L'\texttt{AnimationSystem} elabora poi i dati presenti nell'AnimationComponent, semplicemente incrementando o resettando degli interi, non contiene quindi informazioni di view. 
+	L'\texttt{AnimationSystem} elabora poi i dati presenti nell'AnimationComponent, semplicemente incrementando o resettando degli interi, non contenendo quindi informazioni di view. 
 	Questi dati vengono poi passati dal world alla view sotto forma di \texttt{GraphicInfo}, ossia un semplice oggetto contenente tutte le informazioni necessarie per il disegno (come posizione, numero di immagine da utilizzare, numero dello sprite da ritagliare etc.) e che viene aggiunto alla lista di entità da disegnare mantenuta nella view.
-	Tutte le immagini necessarie per le animazioni e per il disegno della mappa di gioco vengono caricare grazie ad una classe dedicata a questo: il \texttt{Resource loader}.
+	Tutte le immagini necessarie per le animazioni e per il disegno della mappa di gioco vengono caricate grazie ad una classe dedicata a questo: il \texttt{Resource loader}.
 	Per non limitare la scelta degli sprites utilizzando tutti sprite con le stesse dimensioni, ho deciso di realizzare un secondo file di configurazione contenente altezza e larghezza del singolo sprite di ciascuna entità, che verranno poi utilizzate per eseguire il ritaglio dell'immagine da disegnare.
 
 \subsubsection{Rappresentazione grafica delle entità}
@@ -773,12 +755,12 @@ gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per
 	Ogni entità dovrà essere disegnata sopra alla mappa di gioco, nella posizione giusta e in una dimensione adatta alla risoluzione dello schermo.
 \paragraph*{Soluzione}
 	Per realizzare tutto ciò ho realizzato l'interfaccia Scene, implementata da SceneImpl che, una volta ottenute le informazioni per il disegno dal world sotto forma di GraphicInfo, le salva.
-	All'interno di SceneImpl verrà disegnata prima la mappa di gioco (scorrendo ogni tile della mappa di ciascun layer e disegnando la corrispondente immagine ottenuta dal ResourceLoader) e in seguito verranno disegnate tutte le entità andando prima a richiedere l'immagine corrispondente allo stato dal ResourceLoader per poi ritagliare lo sprite necessario.
+	Alla chiamata del metodo render(), all'interno di SceneImpl verrà disegnata prima la mappa di gioco (scorrendo ogni tile della mappa di ciascun layer e disegnando la corrispondente immagine ottenuta dal ResourceLoader) e in seguito verranno disegnate tutte le entità andando prima a richiedere l'immagine corrispondente allo stato dal ResourceLoader per poi ritagliare lo sprite necessario.
 	Ci tengo a precisare che la parte di resize all'interno di questa classa è stata realizzata in collaborazione con il collega Elvis Perlika.
 
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=3cm]{uml/uml_scene.png}
+		\includegraphics[width=6cm]{uml/uml_scene.png}
 		\caption{Diagramma UML riguardante la rappresentazione grafica del gioco}
 	\end{figure}
 
