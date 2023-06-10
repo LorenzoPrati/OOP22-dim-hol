@@ -746,7 +746,7 @@ gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per
 \paragraph*{Pattern utilizzati}
 	È stato utilizzato il Factory Method nella classe InteractableObjectFactory.
 
-\subsubsection*{Animazioni}
+\subsubsection{Animazioni}
 \paragraph*{Problema}
 	Si vuole realizzare un gioco le cui entità sono animate. Ogni entità può assumere stati diversi: può stare semplicemente ferma (idle), può attaccare in modi differenti (con la spadata, sparando…), può subire un danno etc.
 \paragraph*{Soluzione}
@@ -756,7 +756,21 @@ gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per
 	Tutte le immagini necessarie per le animazioni e per il disegno della mappa di gioco vengono caricare grazie ad una classe dedicata a questo: il \texttt{Resource loader}.
 	Per non limitare la scelta degli sprites utilizzando tutti sprite con le stesse dimensioni, ho deciso di realizzare un secondo file di configurazione contenente altezza e larghezza del singolo sprite di ciascuna entità, che verranno poi utilizzate per eseguire il ritaglio dell'immagine da disegnare.
 
-\subsubsection*{Menù di gioco}
+\subsubsection{Rappresentazione grafica delle entità}
+\paragraph*{Problema}
+	Ogni entità dovrà essere disegnata sopra alla mappa di gioco, nella posizione giusta e in una dimensione adatta alla risoluzione dello schermo.
+\paragraph*{Soluzione}
+	Per realizzare tutto ciò ho realizzato l'interfaccia Scene, implementata da SceneImpl che, una volta ottenute le informazioni per il disegno dal world sotto forma di GraphicInfo, le salva.
+	All'interno di SceneImpl verrà disegnata prima la mappa di gioco (scorrendo ogni tile della mappa di ciascun layer e disegnando la corrispondente immagine ottenuta dal ResourceLoader) e in seguito verranno disegnate tutte le entità andando prima a richiedere l'immagine corrispondente allo stato dal ResourceLoader per poi ritagliare lo sprite necessario.
+	Ci tengo a precisare che la parte di resize all'interno di questa classa è stata realizzata in collaborazione con il collega Elvis Perlika.
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\textwidth]{uml/uml_scene.png}
+		\caption{Diagramma UML riguardante la rappresentazione grafica del gioco}
+	\end{figure}
+
+\subsubsection{Menù di gioco}
 \paragraph*{Problema}
 	L'obiettivo era creare varie schermate, più nello specifico una schermata iniziale contente il menù, una schermata Options che permette di modificare la risoluzione, una schermata che permette di interrompere la partita e riprendere dal punto in cui è stata interrotta e una schermata finale che semplicemente mostra il risultato della partita.
 \paragraph*{Soluzione}
@@ -769,6 +783,7 @@ gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per
 		\caption{Diagramma UML riguardante l'implementazione delle schermate di gioco}
 	\end{figure}
 	
+
 \chapter{Sviluppo}
 
 \section{Testing automatizzato}
