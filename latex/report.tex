@@ -419,19 +419,20 @@ gioco semplice ho valutato che bastassero pochi semplici metodi per la
 visualizzazione del HUD.
 
 \subsection{Emanuele Dajko}
+\subsubsection{TileMap}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{uml/TileMap1.png}
+	\includegraphics[width=7cm]{uml/TileMap1.png}
 	\caption{Diagramma UML della TileMap}
 \end{figure}
 
-\subsubsection*{Introduzione al concetto di TileMap e il suo ruolo nel gioco}
 In questa sezione, fornirò una panoramica del concetto di TileMap e del suo ruolo fondamentale nel nostro gioco. 
 La TileMap rappresenta una matrice 2D composta da diverse Tile che, unite insieme, costituiscono la struttura di gioco. 
 Si può pensare alla TileMap come un vero e proprio "puzzle" in cui le Tile sono i pezzi che compongono l'intero quadro del gioco. 
 Ora condividerò le sfide affrontate durante lo sviluppo della TileMap e le soluzioni adottate per superarle.
 \paragraph*{Parsing delle configurazioni della TileMap}
+
 \paragraph{Problema}
 Durante lo sviluppo del nostro gioco, una delle sfide principali che ho affrontato riguardava il parsing delle diverse configurazioni della TileMap per i vari livelli. 
 Era necessario leggere le informazioni specifiche relative a ciascuna TileMap e utilizzarle per creare la corrispondente mappa di gioco.
@@ -477,11 +478,12 @@ Ad esempio, posso creare layer separati per rappresentare il terreno, gli elemen
 Ogni strato può essere progettato e personalizzato in modo indipendente, offrendo una maggiore flessibilità e libertà creativa nella creazione delle mappe.
 Questo nuovo approccio consente di ottenere mappe più dettagliate e realistiche, migliorando significativamente l'aspetto visivo del gioco. 
 Inoltre, grazie alla gestione avanzata dei layer, è possibile modificare la struttura della mappa in modo più flessibile senza compromettere la funzionalità del gioco.
-\subsubsection*{Gestione delle transizioni tra i livelli}
+
+\subsubsection{Level Design}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{uml/LevelManager.png}
+	\includegraphics[width=3cm]{uml/LevelManager.png}
 	\caption{Diagramma UML del level manager}
 \end{figure}
 
@@ -493,7 +495,7 @@ Per affrontare questa sfida, ho introdotto un meccasimo chiave chiamato "LevelMa
 Il LevelManager ha assunto la responsabilità di gestire l'intercambio tra i diversi livelli e coordinare l'avanzamento tra le stanze di gioco. 
 Nel nostro gioco, ho definito diverse tipologie di stanze, tra cui stanze normali, stanze del negozio e stanza del boss.
 Il LevelManager assicura che il giocatore si sposti correttamente attraverso le diverse stanze, gestendo la transizione e il posizionamento corretto da una stanza all'altra.
-\subsubsection{Introduzione al concetto di gestione delle stanze all'interno del gioco}
+\subsubsection*{Introduzione al concetto di gestione delle stanze all'interno del gioco}
 
 \begin{figure}[h]
 	\centering
@@ -614,7 +616,7 @@ Grazie all'implementazione del CheckHealthSystem e del RemoveEntityEvent, le ent
 I sistemi del gioco che gestiscono le entità catturano l'evento di rimozione e intraprendono le azioni necessarie per eliminare l'entità dallo schermo, interrompendo le sue interazioni con gli altri elementi di gioco.
 Questa soluzione ha migliorato notevolmente l'esperienza di gioco, rendendola più realistica. 
 Ora i giocatori possono concentrarsi sulle entità ancora vive e non vengono più disturbati dalla presenza di entità sconfitte che rimangono in gioco.
-\subsubsection*{Introduzione alle nuove entità create}
+\subsubsection{Generazione entità}
 Una volta completato quando sopra riportato, mi sono dedicato alla creazione di nuove entità, che ho poi usato per scopi specifici.
 Ne è un esempio il boss per utilizzato per la realizzazione della boss fight.
 \paragraph*{Problema}
