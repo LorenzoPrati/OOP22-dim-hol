@@ -420,19 +420,17 @@ visualizzazione del HUD.
 
 \subsection{Emanuele Dajko}
 \subsubsection{TileMap}
-
+\paragraph*{Introduzione al concetto di TileMap e il suo ruolo nel gioco}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=7cm]{uml/TileMap1.png}
+	\includegraphics[width=7cm]{uml/TileMap.png}
 	\caption{Diagramma UML della TileMap}
 \end{figure}
-
-In questa sezione, fornirò una panoramica del concetto di TileMap e del suo ruolo fondamentale nel nostro gioco. 
+In questa sezione, fornirò una panoramica del concetto di TileMap e del suo ruolo fondamentale nel nostro gioco.
 La TileMap rappresenta una matrice 2D composta da diverse Tile che, unite insieme, costituiscono la struttura di gioco. 
 Si può pensare alla TileMap come un vero e proprio "puzzle" in cui le Tile sono i pezzi che compongono l'intero quadro del gioco. 
 Ora condividerò le sfide affrontate durante lo sviluppo della TileMap e le soluzioni adottate per superarle.
 \paragraph*{Parsing delle configurazioni della TileMap}
-
 \paragraph{Problema}
 Durante lo sviluppo del nostro gioco, una delle sfide principali che ho affrontato riguardava il parsing delle diverse configurazioni della TileMap per i vari livelli. 
 Era necessario leggere le informazioni specifiche relative a ciascuna TileMap e utilizzarle per creare la corrispondente mappa di gioco.
@@ -462,7 +460,6 @@ Questo equilibrio è fondamentale per garantire l'efficienza e la manutenibilit�
 \subsubsection*{Gestione dei layer della TileMap}
 In questa sezione, introdurrò il concetto di layer nella gestione della TileMap e le migliorie apportate per garantire mappe più complesse ed esteticamente accattivanti.
 \\
-Introduzione al concetto di layer:
 Nel contesto della nostra TileMap, per layer si intende uno strato della mappa che rappresenta diversi elementi sovrapposti. 
 Possiamo immaginare la mappa come un sandwich, dove ogni strato corrisponde a una fetta. 
 Ad esempio, il primo layer potrebbe rappresentare la zona percorribile (pavimento), il secondo layer potrebbe essere associato a un blocco di prato (ancora camminabile o meno), e così via, fino all'ultimo strato che costituisce la parte superiore del sandwich.
@@ -479,14 +476,12 @@ Ogni strato può essere progettato e personalizzato in modo indipendente, offren
 Questo nuovo approccio consente di ottenere mappe più dettagliate e realistiche, migliorando significativamente l'aspetto visivo del gioco. 
 Inoltre, grazie alla gestione avanzata dei layer, è possibile modificare la struttura della mappa in modo più flessibile senza compromettere la funzionalità del gioco.
 
-\subsubsection{Level Design}
-
+\subsubsection{Design dei livelli}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=3cm]{uml/LevelManager.png}
+	\includegraphics[width=7cm]{uml/LevelManager.png}
 	\caption{Diagramma UML del level manager}
 \end{figure}
-
 \paragraph{Problema}
 La seconda sfida che ho affrontato riguardava la transizione fluida tra i diversi livelli all'interno del gioco. 
 Era fondamentale garantire che il giocatore potesse passare da una stanza all'altra in modo corretto e coerente, mantenendo eventuali statische acquisite durante il corso della partita (come vita, monete e power-up).
@@ -500,7 +495,7 @@ Il LevelManager assicura che il giocatore si sposti correttamente attraverso le 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{uml/RoomStrategy1}
-	\caption{Diagramma UML del level manager}
+	\caption{Diagramma UML della strategy gestionale delle stanze}
 \end{figure}
 
 In questa sezione, introdurrò il concetto di gestione delle stanze all'interno del gioco, utilizzando il pattern di progettazione chiamato "Strategy".
@@ -633,7 +628,7 @@ La classe BossFactory, insieme alla classe "GenericFactory", che adotta lo stess
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{uml/BossEntity.png}
+	\includegraphics[width=\textwidth]{uml/BossEntity1.png}
 	\caption{Diagramma UML del level manager}
 \end{figure}
 
@@ -781,6 +776,10 @@ Ho realizzato una classe \texttt{PlayerTest} che prima si occupa di inizializzar
 \paragraph*{Test sul comportamento delle AI}
 Ho realizzato una classe \texttt{AITest} che dimostra il corretto funzionamento delle AI in
 situazioni differenti, la creazione delle AI e lo spawn degli attacchi.
+
+\subsubsection*{Emanuele Dajko}
+\paragraph*{Test di generazione dell'entità boss}
+Ho realizzato una class, \texttt{BossFactoryTest} che dimostra la corretta generazione dell'entità.
 
 \subsubsection*{Alessandra Versari}
 \paragraph*{Test degli effetti degli items}
