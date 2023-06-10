@@ -53,34 +53,30 @@ public final class ResourceLoader {
     }
 
     private void load() {
-        try {
-            int i;
-            for (i = 1; i <= NUM_PLAYER_SPRITES; i++) {
-                updateMap(i, "/asset/warrior/" + i + ".png", "player");
-            }
-            updateMap(i++, "/asset/enemies/ghost-Sheet.png", "enemy");
-            updateMap(i++, "/asset/enemies/enemiesAttack/enemyAttack.png", "enemyMeleeAttack");
-            updateMap(i++, "/asset/items/coin2.png", "coin");
-            updateMap(i++, "/asset/items/heart.png", "heart");
-            updateMap(i++, "/asset/bullet/up.png", STRING_BULLET);
-            updateMap(i++, "/asset/bullet/down.png", STRING_BULLET);
-            updateMap(i++, "/asset/bullet/left.png", STRING_BULLET);
-            updateMap(i++, "/asset/bullet/right.png", STRING_BULLET);
-            updateMap(i++, "/asset/GateRing.png", "gate");
-            updateMap(i++, "/asset/shop/healthPotion.png", "shopHeart");
-            updateMap(i++, "/asset/shop/thunder.png", "shopSpeed");
-            updateMap(i++, "/asset/hud/font/logo/hudCoin.png", "hudCoin");
-            updateMap(i++, "/asset/hud/font/logo/hudHeart.png", "hudHeart");
-            updateMap(i++, "/asset/boss/walk.png", STRING_BOSS);
-            updateMap(i++, "/asset/boss/attack.png", STRING_BOSS);
-            updateMap(i++, "/asset/boss/damage.png", STRING_BOSS);
-            updateMap(i++, "/asset/boss/death.png", STRING_BOSS);
-            updateMap(i++, "/asset/boss/idle.png", STRING_BOSS);
-            updateMap(i++, "/asset/bullet/fireball.png", "fireball");
-            updateMap(i, "/asset/shopkeeper/DownIdle.png", "shopkeeper");
-        } catch (IllegalStateException e) {
-           throw new IllegalStateException(e);
+        int i;
+        for (i = 1; i <= NUM_PLAYER_SPRITES; i++) {
+            updateMap(i, "/asset/warrior/" + i + ".png", "player");
         }
+        updateMap(i++, "/asset/enemies/ghost-Sheet.png", "enemy");
+        updateMap(i++, "/asset/enemies/enemiesAttack/enemyAttack.png", "enemyMeleeAttack");
+        updateMap(i++, "/asset/items/coin2.png", "coin");
+        updateMap(i++, "/asset/items/heart.png", "heart");
+        updateMap(i++, "/asset/bullet/up.png", STRING_BULLET);
+        updateMap(i++, "/asset/bullet/down.png", STRING_BULLET);
+        updateMap(i++, "/asset/bullet/left.png", STRING_BULLET);
+        updateMap(i++, "/asset/bullet/right.png", STRING_BULLET);
+        updateMap(i++, "/asset/GateRing.png", "gate");
+        updateMap(i++, "/asset/shop/healthPotion.png", "shopHeart");
+        updateMap(i++, "/asset/shop/thunder.png", "shopSpeed");
+        updateMap(i++, "/asset/hud/font/logo/hudCoin.png", "hudCoin");
+        updateMap(i++, "/asset/hud/font/logo/hudHeart.png", "hudHeart");
+        updateMap(i++, "/asset/boss/walk.png", STRING_BOSS);
+        updateMap(i++, "/asset/boss/attack.png", STRING_BOSS);
+        updateMap(i++, "/asset/boss/damage.png", STRING_BOSS);
+        updateMap(i++, "/asset/boss/death.png", STRING_BOSS);
+        updateMap(i++, "/asset/boss/idle.png", STRING_BOSS);
+        updateMap(i++, "/asset/bullet/fireball.png", "fireball");
+        updateMap(i, "/asset/shopkeeper/DownIdle.png", "shopkeeper");
     }
 
     private void loadTileSetImages(final int tileWidth, final int tileHeight) {
