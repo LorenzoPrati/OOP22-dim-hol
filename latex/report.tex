@@ -313,6 +313,7 @@ Ho realizzato anche una schermata di View, cioe' la schermata di vittoria e scon
 \subsection{Elvis Perlika}
 In questa sezione si approfondirà la parte di \textit{AI} dei nemici
 ed il \textit{Combat System} tra gli stessi nemici ed player.\\
+Non si approfondirà eccessivamente la questone del HUD in quanto prettamente grafica.
 
 \subsubsection{AI}
 
@@ -332,9 +333,9 @@ I nemici devono avere comportamenti diversi.
 Per \textit{Comportamento} si intende "Insieme di azioni, di atteggiamenti con cui 
 l'individuo esterna la propria personalità, rapportandosi agli altri e all'ambiente".
 \paragraph{Soluzione}
-Prendendo spunto dal \textit{Pattern Strategy} ho creato l'interfaccia \texttt{Action} che ha il ruolo
-di "strategia da effettuare".
-Nel mio caso però le Action, a differenza del classico \textit{Pattern Stratgy}, 
+Prendendo spunto dal \textit{Pattern Strategy} ho creato l'interfaccia \texttt{Action} che rappresenta
+la "strategia da effettuare".
+In questo caso però le Action, a differenza del classico \textit{Pattern Stratgy}, 
 oltre ad eseguire una certa strategia valutano se è il caso di eseguirla.
 Data la definizione di \textit{Comportamento} citata prima, per creare comportamenti predefiniti 
 ho deciso di implementare la classe \texttt{RoutineFactory} che crea collezioni di azioni 
@@ -345,8 +346,8 @@ segue il player se lo rileva nella sua aggro zone, lo attacca se è abbastanza v
 casualmente nel caso non sia il caso di eseguire le precedenti azioni.
 
 \paragraph{Problema}
-Tutte le Action in questa prima versione del gioco presentano una caratteristca comune:
-si attivano tenendo conto soltanto della distanza dal player.
+Quasi tutte le Action in questa prima versione del gioco presentano una caratteristca comune:
+si attivano tenendo conto soltanto della distanza tra esecutore della Action ed il player.
 \paragraph{Soluzione}
 Ho deciso di creare la classe astratta \texttt{AbstractAction} che implementa il metodo \textit{canExecute()}, il quale 
 valuta la distanza tra AI e giocatore. Oltre a quel metodo ho sfruttto la classe astratta per 
@@ -358,10 +359,9 @@ Permettere alle Action di creare nuove entità, ad esempio: attacchi.
 \paragraph{Soluzione}
 Per creare nuovi attacchi performati dalle AI nemiche ho creato la classe \texttt{EnemyAttackFactory} seguendo il 
 \textit{Pattern Factory Method}, le action quindi usano i metodi di questa factory per creare attacchi 
-diversi.\\
-
-\underline{Nota:} Per distinguere gli attachi da altre entità ho creato l'\texttt{AttackComponent}.
-L'\texttt{AttackComponent} mantiene anche i dati relativi al danno del attacco.\\
+diversi.
+Ho implementato la \texttt{BaseAttackFactory} che viene estesa dalle factory utili a costruire attachi ed 
+implementa le funzioni che permettono il corretto posizionamento degli attacchi rispetto al entità che lo esegue.
 
 Ho quindi deciso di far restituire dal metodo \textit{execute()}, presente nelle \texttt{Action}, una 
 lista opzionale di \texttt{WorldEvent} che l'\texttt{AISystem} si occuperà di notificare al \texttt{World}.
@@ -390,10 +390,9 @@ Evitare che le AI nemiche causino danno a loro AI alleate.
 \paragraph{Soluzione}
 Ho sfruttato un sistema simile a quello ideato dalla collega Alessandra Versari 
 per la creazione degli Item.\\
-Gli attacchi sono un entità composta, tra le altri componenti, del AttackComponent che 
-si occupa di memorizzare il danno del arma, chi ha processato l'attacco e quali entità
-devono ricevere il danno (così da evitare che le entità nemiche del player si 
-uccidano tra di loro).
+Gli attacchi sono un entità composta, tra le altri componenti, del \texttt{AttackComponent} che 
+si occupa di memorizzare il danno del arma e quali entità devono ricevere il 
+danno (così da evitare che le entità nemiche del player si uccidano tra di loro).
 
 \subsubsection{Combat System}
 
@@ -406,7 +405,9 @@ uccidano tra di loro).
 \paragraph{Problema}
 Eliminare gli attacchi ravvicinati processati.
 \paragraph{Soluzione}
-Ho ideato il \texttt{ClearAttackSystem} il quale si occupa di eliminare gli attacchi
+L'architettura è costruita in modo tale da permettere la \\
+creazione di nuovi System anche solo per eseguire piccole operazioni quindi ho ideato il 
+\texttt{ClearAttackSystem} il quale si occupa di eliminare gli attacchi
 ravvicinati (di durata istantanea) nonostante non abbiano colpito l'entità puntata.
 Per distinguere gli attacchi ho creato due \textit{"Tag Component"}: \texttt{MeleeComponent}
 ed \texttt{BulletComponent}.
@@ -414,11 +415,14 @@ ed \texttt{BulletComponent}.
 \subsubsection{HUD}
 
 \paragraph{Problema}
-Creare un HUD semplice che mostri vita e monete del giocatore.
+Creare un HUD che mostri vita e monete del giocatore.
 \paragraph{Soluzione}
-Avrei potuto costruire un HUD più modulare ma dato il nostro dominio di 
-gioco semplice ho valutato che bastassero pochi semplici metodi per la 
-visualizzazione del HUD.
+Dato il nostro dominio di gioco molto semplice si è valutato 
+che fossero abbastanza pochi semplici metodi utili al aggiornamento 
+ed alla visualizzazione delle monete correnti, vita corrente e vita massima.
+Il \texttt{World} ottiene il player dalla lista delle entità in gioco, 
+ne estrapola le informazioni fondamentali e le aggiorna nella parte grafica 
+che poi si occupa di rappresentare quei valori in grafica.
 
 \subsection{Emanuele Dajko}
 
