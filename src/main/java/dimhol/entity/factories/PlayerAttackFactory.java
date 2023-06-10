@@ -33,7 +33,7 @@ public class PlayerAttackFactory extends BaseAttackFactory {
     /**
      * Player melee attack damage.
      */
-    private static final int PLAYER_MELEE_DAMAGE = 1;
+    private static final int PLAYER_MELEE_DAMAGE = 2;
     /**
      * Player little bullet speed.
      */
