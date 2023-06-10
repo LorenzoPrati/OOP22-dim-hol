@@ -403,8 +403,8 @@ danno (così da evitare che le entità nemiche del player si uccidano tra di lor
 \paragraph{Problema}
 Eliminare gli attacchi ravvicinati processati.
 \paragraph{Soluzione}
-L'architettura è costruita in modo tale da permettere la creazione di nuovi 
-System anche solo per eseguire piccole operazioni quindi ho ideato il 
+L'architettura è costruita in modo tale da permettere la \\
+creazione di nuovi System anche solo per eseguire piccole operazioni quindi ho ideato il 
 \texttt{ClearAttackSystem} il quale si occupa di eliminare gli attacchi
 ravvicinati (di durata istantanea) nonostante non abbiano colpito l'entità puntata.
 Per distinguere gli attacchi ho creato due \textit{"Tag Component"}: \texttt{MeleeComponent}
@@ -416,8 +416,11 @@ ed \texttt{BulletComponent}.
 Creare un HUD che mostri vita e monete del giocatore.
 \paragraph{Soluzione}
 Dato il nostro dominio di gioco molto semplice si è valutato 
-che bastassero pochi semplici metodi utili al aggiornamento 
-ed alla visualizzazione delle monete correnti, vita corrente e vita massima. .
+che fossero abbastanza pochi semplici metodi utili al aggiornamento 
+ed alla visualizzazione delle monete correnti, vita corrente e vita massima.
+Il \texttt{World} ottiene il player dalla lista delle entità in gioco, 
+ne estrapola le informazioni fondamentali e le aggiorna nella parte grafica 
+che poi si occupa di rappresentare quei valori in grafica.
 
 \subsection{Emanuele Dajko}
 
