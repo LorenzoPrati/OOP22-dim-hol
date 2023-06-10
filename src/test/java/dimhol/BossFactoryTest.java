@@ -14,50 +14,68 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.math.Vector2D;
 
-public class BossFactoryTest {
+/**
+ * Testing the generation with all its components for the boss entity.
+ */
+final class BossFactoryTest {
     private BossFactory bossFactory;
+    private static final double TEST_NUMBER = 0.0001;
 
+    private static final double COORDINATE_X = 10.0;
+    private static final double COORDINATE_Y = 20.0;
+    private static final double BOSS_WIDTH = 4;
+    private static final double BOSS_HEIGHT = 3;
+    private static final double BOSS_SPEED = 1.5;
+    private static final double BOSS_HEALTH = 20;
+    private static final String BOSS_STATUS = "walk";
+
+    /**
+     *
+     */
     @BeforeEach
-    public void setup() {
+    void setup() {
         bossFactory = new BossFactory();
     }
 
+    /**
+     * Tests the boss creation.
+     */
     @Test
-    public void testCreateBoss() {
-        double x = 10.0;
-        double y = 20.0;
+    void testCreateBoss() {
+        final double x = COORDINATE_X;
+        final double y = COORDINATE_Y;
 
-        Entity boss = bossFactory.createBoss(x, y);
+        final Entity boss = bossFactory.createBoss(x, y);
 
         // Check Boss component
         Assertions.assertNotNull(boss.getComponent(BossComponent.class));
 
         // Check Position component
-        PositionComponent position = (PositionComponent) boss.getComponent(PositionComponent.class);
+        final PositionComponent position = (PositionComponent) boss.getComponent(PositionComponent.class);
         Assertions.assertEquals(new Vector2D(x, y), position.getPos());
 
         // Check Movement component
-        MovementComponent movement = (MovementComponent) boss.getComponent(MovementComponent.class);
+        final MovementComponent movement = (MovementComponent) boss.getComponent(MovementComponent.class);
         Assertions.assertEquals(new Vector2D(0, 1), movement.getDir());
-        Assertions.assertEquals(2, movement.getSpeed(), 0.0001);
+        Assertions.assertEquals(BOSS_SPEED, movement.getSpeed(), TEST_NUMBER);
         Assertions.assertFalse(movement.isEnabled());
 
         // Check Body component
-        BodyComponent body = (BodyComponent) boss.getComponent(BodyComponent.class);
-        Assertions.assertEquals(4, body.getBodyShape().getBoundingWidth(), 0.0001);
-        Assertions.assertEquals(3, body.getBodyShape().getBoundingHeight(), 0.0001);
+        final BodyComponent body = (BodyComponent) boss.getComponent(BodyComponent.class);
+        Assertions.assertEquals(BOSS_WIDTH, body.getBodyShape().getBoundingWidth(), TEST_NUMBER);
+        Assertions.assertEquals(BOSS_HEIGHT, body.getBodyShape().getBoundingHeight(), TEST_NUMBER);
         Assertions.assertTrue(body.isSolid());
 
         // Check Health component
-        HealthComponent health = (HealthComponent) boss.getComponent(HealthComponent.class);
-        Assertions.assertEquals(20, health.getMaxHealth());
+        final HealthComponent health = (HealthComponent) boss.getComponent(HealthComponent.class);
+        Assertions.assertEquals(BOSS_HEALTH, health.getMaxHealth());
 
         // Check Animation component
-        AnimationComponent animation = (AnimationComponent) boss.getComponent(AnimationComponent.class);
-        Assertions.assertNotNull(animation.getMap().get("walk"));
+        final AnimationComponent animation = (AnimationComponent) boss.getComponent(AnimationComponent.class);
+        Assertions.assertNotNull(animation.getMap().get(BOSS_STATUS));
 
         // Check AI component
-        AIComponent ai = (AIComponent) boss.getComponent(AIComponent.class);
+        final AIComponent ai = (AIComponent) boss.getComponent(AIComponent.class);
         Assertions.assertNotNull(ai.getRoutine());
     }
 }
