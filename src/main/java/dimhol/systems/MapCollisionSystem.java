@@ -7,7 +7,7 @@ import dimhol.components.PositionComponent;
 import dimhol.core.World;
 import dimhol.entity.Entity;
 import dimhol.events.RemoveEntityEvent;
-import dimhol.gamelevels.map.TileMap;
+import dimhol.levels.map.TileMap;
 import org.locationtech.jts.math.Vector2D;
 
 import java.math.BigDecimal;

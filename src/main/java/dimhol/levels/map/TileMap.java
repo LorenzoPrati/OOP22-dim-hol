@@ -1,4 +1,4 @@
-package dimhol.gamelevels.map;
+package dimhol.levels.map;
 
 import java.util.List;
 

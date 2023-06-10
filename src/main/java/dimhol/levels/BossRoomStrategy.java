@@ -1,4 +1,4 @@
-package dimhol.gamelevels;
+package dimhol.levels;
 
 import dimhol.components.PositionComponent;
 import dimhol.entity.Entity;
