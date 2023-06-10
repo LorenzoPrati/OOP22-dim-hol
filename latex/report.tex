@@ -394,13 +394,16 @@ permette anche la creazione di AI assegnabili ad NPC.
 
 
 \paragraph{Problema}
-Evitare che le AI nemiche causino danno a loro AI alleate.
+Gestire gli attacchi tra entità ed evitare che le AI nemiche causino danno a loro AI alleate.
 \paragraph{Soluzione}
 Ho sfruttato un sistema simile a quello ideato dalla collega Alessandra Versari 
 per la creazione degli Item.\\
 Gli attacchi sono un entità composta, tra le altri componenti, del \texttt{AttackComponent} che 
 si occupa di memorizzare il danno dell'attacco e quali entità devono ricevere il 
 danno (così da evitare che le entità nemiche del player si uccidano tra di loro).
+Ho costruito il \texttt{CombatSystem} per processare questi attacchi ed applicare il danno
+alle entità con le quali gli attacchi hanno colliso.
+Mi è sembravato ragionevole ed automatico costruire gli attacchi come entità.
 
 \paragraph{Problema}
 Eliminare gli attacchi ravvicinati processati.
