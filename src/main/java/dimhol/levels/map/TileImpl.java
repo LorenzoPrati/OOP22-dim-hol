@@ -1,4 +1,4 @@
-package dimhol.gamelevels.map;
+package dimhol.levels.map;
 
 /**
  * A Tile represents a single tile in a game map, with information about whether it is collidable.

@@ -1,4 +1,4 @@
-package dimhol.gamelevels;
+package dimhol.levels;
 
 import dimhol.components.PlayerComponent;
 import dimhol.entity.Entity;
@@ -7,10 +7,10 @@ import dimhol.entity.factories.EnemyFactory;
 import dimhol.entity.factories.GenericFactory;
 import dimhol.entity.factories.InteractableObjectFactory;
 import dimhol.entity.factories.ItemFactory;
-import dimhol.gamelevels.map.MapLoader;
-import dimhol.gamelevels.map.MapLoaderImpl;
-import dimhol.gamelevels.map.TileMap;
-import dimhol.gamelevels.map.TileMapImpl;
+import dimhol.levels.map.MapLoader;
+import dimhol.levels.map.MapLoaderImpl;
+import dimhol.levels.map.TileMap;
+import dimhol.levels.map.TileMapImpl;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 

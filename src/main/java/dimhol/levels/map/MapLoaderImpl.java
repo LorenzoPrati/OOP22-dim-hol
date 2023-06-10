@@ -1,4 +1,4 @@
-package dimhol.gamelevels.map;
+package dimhol.levels.map;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

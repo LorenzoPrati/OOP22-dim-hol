@@ -1,4 +1,4 @@
-package dimhol.gamelevels.map;
+package dimhol.levels.map;
 
 /**
  * Represents a tile in the game map.
