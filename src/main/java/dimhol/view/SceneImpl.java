@@ -157,7 +157,7 @@ public class SceneImpl implements Scene {
      */
     @Override
     @SuppressFBWarnings(value = { "EI_EXPOSE_REP", "EI_EXPOSE_REP2" },
-            justification = "I prefer to suppress these FindBugs warnings")
+            justification = "I prefer to suppress these spotBugs warnings")
     public JPanel getPanel() {
         return this.scenePanel;
     }
