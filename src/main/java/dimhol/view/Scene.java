@@ -1,6 +1,6 @@
 package dimhol.view;
 
-import dimhol.gamelevels.map.TileMap;
+import dimhol.levels.map.TileMap;
 import dimhol.input.Input;
 
 import javax.swing.JPanel;
