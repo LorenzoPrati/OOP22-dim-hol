@@ -79,7 +79,7 @@ public final class ResourceLoader {
             updateMap(i++, "/asset/bullet/fireball.png", "fireball");
             updateMap(i, "/asset/shopkeeper/DownIdle.png", "shopkeeper");
         } catch (IllegalStateException e) {
-           throw (IllegalStateException) new IllegalStateException().initCause(e);
+           throw new IllegalStateException(e);
         }
     }
 
