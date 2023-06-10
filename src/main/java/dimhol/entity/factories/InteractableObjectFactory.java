@@ -22,7 +22,7 @@ import dimhol.logic.collision.RectBodyShape;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * A factory of interactable objects.
+ * A factory of intractable objects.
  */
 public class InteractableObjectFactory extends BaseFactory {
     private static final double W_POWERUP = 1;
@@ -43,7 +43,6 @@ public class InteractableObjectFactory extends BaseFactory {
         return world.getEntities().stream().anyMatch(e -> e.hasComponent(ShopKeeperComponent.class));
     }
 
-    @SuppressFBWarnings("MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR") 
     private final Predicate<World> checkAllEnemyAreDead = (w) -> w.getEntities()
         .stream()
         .noneMatch(e -> e.hasComponent(AIComponent.class));

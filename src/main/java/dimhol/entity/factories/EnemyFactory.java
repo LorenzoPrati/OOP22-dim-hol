@@ -32,7 +32,7 @@ public class EnemyFactory extends BaseFactory {
     /**
      * Zombie health.
      */
-    public static final int ZOMBIE_HEALTH = 2;
+    public static final int ZOMBIE_HEALTH = 3;
     /**
      * Shooter width.
      */
@@ -48,7 +48,7 @@ public class EnemyFactory extends BaseFactory {
     /**
      * Zombie health.
      */
-    public static final int SHOOTER_HEALTH = 2;
+    public static final int SHOOTER_HEALTH = 4;
 
     /**
      * Create a Zombie Entity that follows and attack you is you are in his aggro zone.

@@ -34,7 +34,6 @@ public class BossFactory extends BaseFactory {
      * Boss's health.
      */
     private static final int BOSS_HEALTH = 20;
-
     /**
      * Minion's speed.
      */

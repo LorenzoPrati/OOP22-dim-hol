@@ -53,7 +53,8 @@ public abstract class AbstractScreen extends JPanel {
     /**
      * @return the centerPanel.
      */
-    @SuppressFBWarnings("EI_EXPOSED_REP")
+    @SuppressFBWarnings(value = { "EI_EXPOSE_REP", "EI_EXPOSE_REP2" },
+            justification = "I prefer to suppress these spotBugs warnings")
     public JPanel getCenterPanel() {
         return this.centerPanel;
     }
@@ -121,12 +122,10 @@ public abstract class AbstractScreen extends JPanel {
      * @return a JLabel.
      */
     public JLabel createLabel(final String path) {
-        JLabel label = new JLabel();
         try {
-            label = new JLabel(new ImageIcon(ImageIO.read(AbstractScreen.class.getResourceAsStream(path))));
+            return new JLabel(new ImageIcon(ImageIO.read(AbstractScreen.class.getResourceAsStream(path))));
         } catch (IOException e) {
             throw new IllegalStateException();
         }
-        return label;
     }
 }
