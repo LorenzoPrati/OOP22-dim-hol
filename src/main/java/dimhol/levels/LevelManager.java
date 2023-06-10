@@ -1,7 +1,7 @@
-package dimhol.gamelevels;
+package dimhol.levels;
 
 import dimhol.entity.Entity;
-import dimhol.gamelevels.map.TileMap;
+import dimhol.levels.map.TileMap;
 
 import java.util.List;
 

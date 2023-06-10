@@ -1,4 +1,4 @@
-package dimhol.gamelevels;
+package dimhol.levels;
 
 import dimhol.entity.Entity;
 import dimhol.entity.factories.EnemyFactory;

@@ -2,8 +2,8 @@ package dimhol.view;
 
 import dimhol.core.Engine;
 import dimhol.input.Input;
-import dimhol.gamelevels.map.TileMap;
-import dimhol.gamelevels.map.TileMapImpl;
+import dimhol.levels.map.TileMap;
+import dimhol.levels.map.TileMapImpl;
 import dimhol.view.hud.HUD;
 import dimhol.view.hud.HUDImpl;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
