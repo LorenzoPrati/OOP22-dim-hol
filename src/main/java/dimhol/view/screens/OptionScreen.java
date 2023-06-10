@@ -46,15 +46,17 @@ public class OptionScreen extends AbstractScreen {
         final Font font2 = new Font("Helvetica", Font.BOLD, FONT2_SIZE);
         final JPanel optionListPanel = new JPanel();
         final JComboBox<String> comboBox = new JComboBox<>();
+        final var screenSize = engine.getMainWindow().getScreenSize();
         mapResolutions.put(W1 + "x" + H1, new Dimension(W1, H1));
         mapResolutions.put(W2 + "x" + H2, new Dimension(W2, H2));
         mapResolutions.put(W3 + "x" + H3, new Dimension(W3, H3));
         mapResolutions.put(W4 + "x" + H4, new Dimension(W4, H4));
         mapResolutions.put(W5 + "x" + H5, new Dimension(W4, H4));
         mapResolutions.put(W6 + "x" + H6, new Dimension(W4, H4));
+        mapResolutions.put("FullScreen", screenSize);
         for (final var resolution : mapResolutions.entrySet()) {
-            if (resolution.getValue().getWidth() <= engine.getMainWindow().getScreenSize().getWidth() 
-                || resolution.getValue().getHeight() <= engine.getMainWindow().getScreenSize().getHeight()) {
+            if (resolution.getValue().getWidth() <= screenSize.getWidth() 
+                || resolution.getValue().getHeight() <= screenSize.getHeight()) {
                 comboBox.addItem(resolution.getKey());
             }
         }
