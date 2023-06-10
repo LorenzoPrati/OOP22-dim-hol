@@ -26,9 +26,9 @@ public class OptionScreen extends AbstractScreen {
     private static final int W2 = 1080;
     private static final int H2 = 1080;
     private static final int W3 = 1920;
-    private static final int H3 = 1200;
-    private static final int W4 = 3300;
-    private static final int H4 = 2000;
+    private static final int H3 = 1080;
+    private static final int W4 = 3480;
+    private static final int H4 = 2160;
     private static final int W5 = 800;
     private static final int H5 = 600;
     private static final int W6 = 720;
@@ -50,8 +50,8 @@ public class OptionScreen extends AbstractScreen {
         mapResolutions.put("FullScreen", screenSize);
         mapResolutions.put(W1 + "x" + H1, new Dimension(W1, H1));
         mapResolutions.put(W2 + "x" + H2, new Dimension(W2, H2));
-        mapResolutions.put(W3 + "x" + H3, new Dimension(W3, H3));
-        mapResolutions.put(W4 + "x" + H4, new Dimension(W4, H4));
+        mapResolutions.put("FullHD", new Dimension(W3, H3));
+        mapResolutions.put("4K", new Dimension(W4, H4));
         mapResolutions.put(W5 + "x" + H5, new Dimension(W4, H4));
         mapResolutions.put(W6 + "x" + H6, new Dimension(W4, H4));
         for (final var resolution : mapResolutions.entrySet()) {
