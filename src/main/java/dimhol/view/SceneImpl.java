@@ -7,19 +7,20 @@ import dimhol.levels.map.TileMapImpl;
 import dimhol.view.hud.HUD;
 import dimhol.view.hud.HUDImpl;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JPanel;
-import java.awt.Point;
 
 /**
  * Implements the scene where all the entities will be drawn.
@@ -91,7 +92,8 @@ public class SceneImpl implements Scene {
                         }
                     }
                 }
-                for (final GraphicInfo graphicInfo : renderList) {
+                for (int i = 0; i < renderList.size(); i++) { // NOPMD, suppressed for jar exception while painting
+                    final GraphicInfo graphicInfo = renderList.get(i);
                     final var imageToCut = loader.getImage(graphicInfo.getNumImage());
                     final var img = createCompatibleImage(imageToCut.getSubimage(
                             graphicInfo.getIndex() * loader.getWidth(graphicInfo.getNumImage()),
