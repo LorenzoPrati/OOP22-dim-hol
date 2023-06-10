@@ -22,7 +22,7 @@ import dimhol.logic.collision.RectBodyShape;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * A factory of interactable objects.
+ * A factory of intractable objects.
  */
 public class InteractableObjectFactory extends BaseFactory {
     private static final double W_POWERUP = 1;
