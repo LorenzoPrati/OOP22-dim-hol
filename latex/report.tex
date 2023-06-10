@@ -307,6 +307,8 @@ Ho realizzato una classe \texttt{InputListener} che, tramite i metodi di Swing, 
 \subsubsection{Schermata vittoria/sconfitta}
 Ho realizzato anche una schermata di View, cioe' la schermata di vittoria e sconfitta. Qui, tramite il passaggio di un parametro booleano che indica la vittoria/sconfitta, viene semplicemente visualizzata un'immagine di sfondo e un messagio finale differente.
 
+\pagebreak
+
 
 \subsection{Elvis Perlika}
 In questa sezione si approfondirà la parte di \textit{AI} dei nemici
@@ -720,12 +722,17 @@ gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per
 	\end{itemize}
 
 \paragraph*{Soluzione}
-	Per realizzare quanto descritto ho deciso di creare due componenti principali: HealthComponent e CoinPocketComponent, appartenenti alla lista di componenti del player, che permettono di consultare e modificare vita corrente, vita massima e monete raccolte. Tramite i getter e i setter, in questo modo, posso creare gli “effetti” degli item, all'interno dell'ItemFactory.  Ogni item è dotato di un componente detto ItemComponent che oltre a rendere riconoscibili gli item, memorizza una Bifunction che corrisponde a quello che fin'ora ho definito “effetto”. La Bifunction in questo caso prende come argomento l'entità che ha colliso con l'item e una lista di component. Nel nostro gioco, al momento, solo il player ha la possibilità di raccogliere items, ma nel caso in cui volessimo rendere questi items raccoglibili anche ai nemici, sarebbe possibile farlo, passando come argomento alla Bifuntion una lista contenente i componenti identificativi di player e nemici (ossia PlayerComponent e AIComponent).
+	Per realizzare quanto descritto ho deciso di creare due componenti principali: \texttt{HealthComponent} e \texttt{CoinPocketComponent}, appartenenti alla lista di componenti del player, che permettono di consultare e modificare vita corrente, vita massima e monete raccolte. Tramite i getter e i setter, in questo modo, posso creare gli “effetti” degli item, all'interno dell'ItemFactory.  Ogni item è dotato di un componente detto \texttt{ItemComponent} che oltre a rendere riconoscibili gli item, memorizza una Bifunction che corrisponde a quello che fin'ora ho definito “effetto”. La Bifunction in questo caso prende come argomento l'entità che ha colliso con l'item e una lista di component. Nel nostro gioco, al momento, solo il player ha la possibilità di raccogliere items, ma nel caso in cui volessimo rendere questi items raccoglibili anche ai nemici, sarebbe possibile farlo, passando come argomento alla Bifuntion una lista contenente i componenti identificativi di player e nemici (ossia PlayerComponent e AIComponent).
 	Inizialmente avevo scelto di creare gli effetti utilizzando il Factory Method perché pensavo potesse rendere più riutilizzabili gli effetti e velocizzarne la creazione, ma il risultato era un insieme di classi Factory, molto simili tra loro e la cui unica differenza era operare su componenti diversi (una factory per gli effetti che modificavano la vita, un'altra per quelli che modificavano l'ammontare delle monete e così via).
 	Inoltre siccome gli effetti alla fine sono praticamente solo incrementi e decrementi, mi è sembrato più sensato utilizzare interfacce funzionali e lamba per crearli all'interno della factory. 
 	Per quanto riguarda le interfacce funzionali, ho deciso di utilizzare le Bifuction così da poter restituire un boolean che permette di capire se l'effetto è stato applicato o meno e se quindi è necessario rimuovere l'item.
 
-
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\textwidth]{uml/uml_itemSystem.png}
+		\caption{Diagramma UML riguardante la gestione degli item e dei loro effetti}
+	\end{figure}
+	
 \paragraph*{Pattern utilizzati}
 	Nella classe ItemFactory è stato utilizzato il Factory Method.
 
@@ -740,29 +747,56 @@ gioco piuttosto semplice, ho valutato che bastassero pochi e semplici metodi per
 	Se e solo se l'effetto verrà applicato, l'interactable object dovrà essere rimosso. 
 
 \paragraph*{Soluzione}
-	Per realizzare tutto ciò ho creato i vari InteractableObjects all'interno dell'InteractableObjectsFactory assegnando a ciascuno di essi i propri componenti. Ognuno di questi oggetti è distinguibile grazie all'InteractableComponent che memorizza il loro “effetto” mediante un Bifunction che prende come argomenti un'entità e il world (necessario affinchè alcuni di essi possano lanciare WorldEvent, per esempio il gate come effetto lancia l'evento ChangeRoomEvent()) e restituisce un booleano che permette di capire se l'effetto è stato applicato o meno.
+	Per realizzare tutto ciò ho creato i vari InteractableObjects all'interno dell'\texttt{InteractableObjectsFactory} assegnando a ciascuno di essi i propri componenti. Ognuno di questi oggetti è distinguibile grazie all'\texttt{InteractableComponent} che memorizza il loro “effetto” mediante un Bifunction che prende come argomenti un'entità e il world (necessario affinchè alcuni di essi possano lanciare WorldEvent, per esempio il gate come effetto lancia l'evento ChangeRoomEvent()) e restituisce un booleano che permette di capire se l'effetto è stato applicato o meno.
 	Sempre all'interno della factory ho implementato anche gli “effetti” tramite Bifunction che poi utilizzano altre interfacce funzionali per effettuare i controlli necessari (es. checkCoin che controlla se le monete solo sufficienti per effettuare l'acquisto) in modo da poterli riutilizzare all'interno di “effetti” diversi se necessario. Ho deciso di implementare tutto questo all'interno della factory (come nel caso degli items) perché anche in questo caso si trattava di qualche incremento o decremento di interi contenuti in Component diversi e qualche controllo in più. Anche in questo caso inizialmente avevo tentato di utilizzare il Factory method per poi rendermi conto che non era la strada migliore perché il risultato erano una serie di classi molto simili e quindi codice ripetitivo, inoltre le factory non erano molto riutilizzabili siccome questo tipo di effetti devono essere applicati sempre e solo sul player.
-	Ho creato infine l'InteractableSystem che si occupa di tutti gli oggetti che hanno l'InteractableComponent e controlla se alcune entità hanno colliso con essi. Nel caso affermativo, se tutti i controlli vengono superati (es. l'effetto del gate viene applicato solo se il player sta interagendo con esso, se tutti i nemici sono stati eliminati e quindi la Bifunction ritorna true) l'oggetto viene rimosso tramite il WorldEvent RemoveEntityEvent(). 
+	Ho creato infine l'\texttt{InteractableSystem} che si occupa di tutti gli oggetti che hanno l'InteractableComponent e controlla se alcune entità hanno colliso con essi. Nel caso affermativo, se tutti i controlli vengono superati (es. l'effetto del gate viene applicato solo se il player sta interagendo con esso, se tutti i nemici sono stati eliminati e quindi la Bifunction ritorna true) l'oggetto viene rimosso tramite il WorldEvent RemoveEntityEvent(). 
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\textwidth]{uml/uml_interactableSystem.png}
+		\caption{Diagramma UML riguardante gli interactableObjects (cioè tutte le entità che possiedono un InteractableComponent) e la gestione dei loro effetti}
+	\end{figure}
 	
 \paragraph*{Pattern utilizzati}
 	È stato utilizzato il Factory Method nella classe InteractableObjectFactory.
 
-\subsubsection*{Animazioni}
+\subsubsection{Animazioni}
 \paragraph*{Problema}
 	Si vuole realizzare un gioco le cui entità sono animate. Ogni entità può assumere stati diversi: può stare semplicemente ferma (idle), può attaccare in modi differenti (con la spadata, sparando…), può subire un danno etc.
 \paragraph*{Soluzione}
-	Siccome ciascuna entità ha un numero di sprite diverso, con dimensioni differenti e vari stati ho deciso di realizzare un componente chiamato AnimationComponent con lo scopo di mantenere tutti i dati neccassari per l'animazione (solo interi e stringhe). Ogni AnimationComponent contiene una mappa riguardante il proprio tipo di entità (es. l'animation component del player avrà una mappa che conterrà solo i dati riguardanti il player) ricavata da una mappa generica creata in AbstractFactory grazie alla lettura di un file di configurazione yaml.
-	L'AnimationSystem elabora poi i dati presenti nell'AnimationComponent, semplicemente incrementando o resettando degli interi, non contiene quindi informazioni di view. 
-	Questi dati vengono poi passati dal world alla view sotto forma di GraphicInfo, ossia un semplice oggetto contenente tutte le informazioni necessarie per il disegno (come posizione, numero di immagine da utilizzare, numero dello sprite da ritagliare etc.) e che viene aggiunto alla lista di entità da disegnare mantenuta nella view.
-	Tutte le immagini necessarie per le animazioni e per il disegno della mappa di gioco vengono caricare grazie ad una classe dedicata a questo: il Resource loader.
+	Siccome ciascuna entità ha un numero di sprite diverso, con dimensioni differenti e vari stati ho deciso di realizzare un componente chiamato \texttt{AnimationComponent} con lo scopo di mantenere tutti i dati neccassari per l'animazione (solo interi e stringhe). Ogni AnimationComponent contiene una mappa riguardante il proprio tipo di entità (es. l'animation component del player avrà una mappa che conterrà solo i dati riguardanti il player) ricavata da una mappa generica creata in AbstractFactory grazie alla lettura di un file di configurazione yaml.
+	L'\texttt{AnimationSystem} elabora poi i dati presenti nell'AnimationComponent, semplicemente incrementando o resettando degli interi, non contiene quindi informazioni di view. 
+	Questi dati vengono poi passati dal world alla view sotto forma di \texttt{GraphicInfo}, ossia un semplice oggetto contenente tutte le informazioni necessarie per il disegno (come posizione, numero di immagine da utilizzare, numero dello sprite da ritagliare etc.) e che viene aggiunto alla lista di entità da disegnare mantenuta nella view.
+	Tutte le immagini necessarie per le animazioni e per il disegno della mappa di gioco vengono caricare grazie ad una classe dedicata a questo: il \texttt{Resource loader}.
 	Per non limitare la scelta degli sprites utilizzando tutti sprite con le stesse dimensioni, ho deciso di realizzare un secondo file di configurazione contenente altezza e larghezza del singolo sprite di ciascuna entità, che verranno poi utilizzate per eseguire il ritaglio dell'immagine da disegnare.
 
-\subsubsection*{Menù di gioco}
+\subsubsection{Rappresentazione grafica delle entità}
+\paragraph*{Problema}
+	Ogni entità dovrà essere disegnata sopra alla mappa di gioco, nella posizione giusta e in una dimensione adatta alla risoluzione dello schermo.
+\paragraph*{Soluzione}
+	Per realizzare tutto ciò ho realizzato l'interfaccia Scene, implementata da SceneImpl che, una volta ottenute le informazioni per il disegno dal world sotto forma di GraphicInfo, le salva.
+	All'interno di SceneImpl verrà disegnata prima la mappa di gioco (scorrendo ogni tile della mappa di ciascun layer e disegnando la corrispondente immagine ottenuta dal ResourceLoader) e in seguito verranno disegnate tutte le entità andando prima a richiedere l'immagine corrispondente allo stato dal ResourceLoader per poi ritagliare lo sprite necessario.
+	Ci tengo a precisare che la parte di resize all'interno di questa classa è stata realizzata in collaborazione con il collega Elvis Perlika.
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\textwidth]{uml/uml_scene.png}
+		\caption{Diagramma UML riguardante la rappresentazione grafica del gioco}
+	\end{figure}
+
+\subsubsection{Menù di gioco}
 \paragraph*{Problema}
 	L'obiettivo era creare varie schermate, più nello specifico una schermata iniziale contente il menù, una schermata Options che permette di modificare la risoluzione, una schermata che permette di interrompere la partita e riprendere dal punto in cui è stata interrotta e una schermata finale che semplicemente mostra il risultato della partita.
 \paragraph*{Soluzione}
-	Per fare ciò ho deciso di creare una classe AbstractScreen così da ridurre il più possibile la ripetizione di codice. Questo è stato possibile perché tutte queste schermate utilizzano il GridBagLayout come layout più esterno.
+	Per fare ciò ho deciso di creare una classe \texttt{AbstractScreen} così da ridurre il più possibile la ripetizione di codice. Questo è stato possibile perché tutte queste schermate utilizzano il GridBagLayout come layout più esterno.
 	In questo modo nelle classi che implementano i vari menù e schermate compaiono solo gli elementi differenti e non utilizzati negli altri menù o schermate.
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\textwidth]{uml/uml_Screens.png}
+		\caption{Diagramma UML riguardante l'implementazione delle schermate di gioco}
+	\end{figure}
+	
 
 \chapter{Sviluppo}
 
@@ -1073,9 +1107,9 @@ Ciascun membro del gruppo ha lavorato su vari branch separati (uno per ogni feat
 	Esempio: \url{}
 	\item reflection, stream, interfacce funzionali e lambda utilizzate in varie classi. Seguono alcuni esempi:
 	Esempio: utilizzo reflection in ItemSystem \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/78f510d43dec8c4b5855980ccefefa539f23f48e/src/main/java/dimhol/systems/ItemSystem.java#LL20C8-L20C8}
-	Esempio: utilizzo lambda in InteractableObjectsFactory \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/cc4664659311592c5d0f16e6f7d332ba8f5b8131/src/main/java/dimhol/entity/factories/InteractableObjectFactory.java#L29}
+	Esempio: utilizzo lambda in InteractableObjectsFactory \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/f5588c3374c7111e27e7f29b183f7b465d221a8f/src/main/java/dimhol/entity/factories/InteractableObjectFactory.java#LL45C9-L78C11}
 	Esempio: utilizzo stream in AnimationComponent \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/cc4664659311592c5d0f16e6f7d332ba8f5b8131/src/main/java/dimhol/components/AnimationComponent.java#LL64C4-L72C1}
-	Esempio: utilizzo interfacce funzionali in InteractableObjectsFactory \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/cc4664659311592c5d0f16e6f7d332ba8f5b8131/src/main/java/dimhol/entity/factories/InteractableObjectFactory.java#LL29C4-L70C5}
+	Esempio: utilizzo interfacce funzionali in InteractableObjectsFactory \url{https://github.com/LorenzoPrati/OOP22-dim-hol/blob/f5588c3374c7111e27e7f29b183f7b465d221a8f/src/main/java/dimhol/entity/factories/InteractableObjectFactory.java#LL34C4-L38C62}
 \end{itemize}
 
 
@@ -1167,9 +1201,6 @@ Inoltre, e' possibile attivare una \textbf{DEBUG MODE}. Per farlo, andare in \te
 	\item Laboratorio 04: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=113869#p169301}
 \end{itemize}
 
-\bibliographystyle{alpha}
-\bibliography{13-template}
-
 
 \subsection{alessandra.versari2@studio.unibo.it}
 \begin{itemize}
@@ -1181,3 +1212,7 @@ Inoltre, e' possibile attivare una \textbf{DEBUG MODE}. Per farlo, andare in \te
 	\item Laboratorio 10: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=119938#p176115}
 \end{itemize}
 \end{document}
+
+\bibliographystyle{alpha}
+\bibliography{13-template}
+
