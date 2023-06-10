@@ -91,16 +91,16 @@ public class SceneImpl implements Scene {
                         }
                     }
                 }
-                for (int i = 0; i < renderList.size(); i++) {
-                    final var imageToCut = loader.getImage(renderList.get(i).getNumImage());
+                for (final GraphicInfo graphicInfo : renderList) {
+                    final var imageToCut = loader.getImage(graphicInfo.getNumImage());
                     final var img = createCompatibleImage(imageToCut.getSubimage(
-                            renderList.get(i).getIndex() * loader.getWidth(renderList.get(i).getNumImage()),
-                            0, loader.getWidth(renderList.get(i).getNumImage()),
-                            loader.getHeigth(renderList.get(i).getNumImage())));
-                    final double newWidth = newTileWidth * renderList.get(i).getW();
-                    final double newHeight = newTileHeight * renderList.get(i).getH();
-                    final double newX = renderList.get(i).getX() * newTileWidth + offsetX;
-                    final double newY = renderList.get(i).getY() * newTileHeight + offsetY;
+                            graphicInfo.getIndex() * loader.getWidth(graphicInfo.getNumImage()),
+                            0, loader.getWidth(graphicInfo.getNumImage()),
+                            loader.getHeigth(graphicInfo.getNumImage())));
+                    final double newWidth = newTileWidth * graphicInfo.getW();
+                    final double newHeight = newTileHeight * graphicInfo.getH();
+                    final double newX = graphicInfo.getX() * newTileWidth + offsetX;
+                    final double newY = graphicInfo.getY() * newTileHeight + offsetY;
                     g2.drawImage(img, (int) newX, (int) newY, (int) newWidth, (int) newHeight, null);
                 }
                 hud.show(g2, newTileWidth, newTileHeight, offsetX, offsetY);
@@ -156,7 +156,8 @@ public class SceneImpl implements Scene {
      * {@inheritDoc}
      */
     @Override
-    @SuppressFBWarnings("EI_EXPOSED_REP")
+    @SuppressFBWarnings(value = { "EI_EXPOSE_REP", "EI_EXPOSE_REP2" },
+            justification = "I prefer to suppress these FindBugs warnings")
     public JPanel getPanel() {
         return this.scenePanel;
     }
