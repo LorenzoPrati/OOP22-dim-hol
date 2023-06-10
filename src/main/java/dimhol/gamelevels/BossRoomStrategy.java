@@ -9,8 +9,6 @@ import dimhol.entity.factories.InteractableObjectFactory;
 import dimhol.entity.factories.ItemFactory;
 import org.apache.commons.lang3.tuple.Pair;
 import org.locationtech.jts.math.Vector2D;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 import java.util.ArrayList;
@@ -19,8 +17,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 /**
@@ -34,8 +30,7 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
     private static final int MINIONS_ENTITY_WIDTH = 1;
     private static final int MINIONS_ENTITY_HEIGHT = 1;
     private static final int BOSS_ENTITY_WIDTH = 4;
-    private static final int BOSS_ENTITY_HEIGTH = 3;
-    private static final Logger LOGGER = LoggerFactory.getLogger(BossRoomStrategy.class);
+    private static final int BOSS_ENTITY_HEIGHT = 3;
     private final BossFactory bossFactory;
 
 
@@ -75,7 +70,7 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
         generatePlayer(freeTiles, entities, newListOfEntities, PLAYER_ENTITY_WIDTH, PLAYER_ENTITY_HEIGHT);
 
         // Place the boss:
-        generateAndPlaceBoss(freeTiles, newListOfEntities, BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGTH);
+        generateAndPlaceBoss(freeTiles, newListOfEntities, BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGHT);
 
         // Generate enemy waves:
         generateEnemies(freeTiles, newListOfEntities);
@@ -90,7 +85,7 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
      * Generates and places minions entities in the room.
      *
      * @param freeTiles           The set of available tiles where the minions can be placed.
-     * @param entities            The
+     * @param entities            The entities.
      * @param minionsEntityWidth  The minions
      * @param minionsEntityHeight The minions
      */
@@ -124,14 +119,11 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
      */
     private void generateAndPlaceBoss(final Set<Pair<Integer, Integer>> availableTiles, final List<Entity> entities,
                                       final int bossEntityWidth, final int bossEntityHeight) {
-        generateEntitiesWithExceptionHandling(() -> calculateNumEntities(availableTiles, BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGTH),
-                numBosses -> IntStream.range(0, numBosses).forEach(i -> {
-                    final Entity boss = createBoss(availableTiles);
-                    placeEntityWithDimension(boss, availableTiles, bossEntityWidth, bossEntityHeight, new Random());
-                    entities.add(boss);
-                }),
-                this::handleEntityGenerationError
-        );
+        final int numBosses = calculateNumEntities(availableTiles, bossEntityWidth, bossEntityHeight);
+        IntStream.range(0, numBosses).mapToObj(i -> createBoss(availableTiles)).forEach(boss -> {
+            placeEntityWithDimension(boss, availableTiles, bossEntityWidth, bossEntityHeight, new Random());
+            entities.add(boss);
+        });
     }
 
     /**
@@ -215,8 +207,7 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
      */
     private boolean canAccommodateTileForBoss(final Pair<Integer, Integer> tile,
                                               final Set<Pair<Integer, Integer>> availableTiles) {
-        validateAvailableTilesNotEmpty(availableTiles);
-        return canAccommodate(tile, availableTiles, BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGTH, "Boss");
+        return canAccommodate(tile, availableTiles, BOSS_ENTITY_WIDTH, BOSS_ENTITY_HEIGHT, "Boss");
     }
 
 
@@ -232,7 +223,7 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
         final int startY = startPos.getRight();
 
         for (int x = startX; x < startX + BOSS_ENTITY_WIDTH; x++) {
-            for (int y = startY; y < startY + BOSS_ENTITY_HEIGTH; y++) {
+            for (int y = startY; y < startY + BOSS_ENTITY_HEIGHT; y++) {
                 bossTiles.add(Pair.of(x, y));
             }
         }
@@ -273,35 +264,5 @@ public final class BossRoomStrategy extends AbstractRoomStrategy {
         final Vector2D bossPosition = getTileCenterPosition(bossTiles);
 
         return bossFactory.createBoss(bossPosition.getX(), bossPosition.getY());
-    }
-
-    /**
-     * Generates entities with exception handling.
-     *
-     * @param <T>                  the type of the entity count parameter
-     * @param entityCountSupplier  the supplier for obtaining the entity count
-     * @param entityGenerationFunc the consumer for generating entities based on the entity count
-     * @param errorHandlingFunc    the consumer for handling any exceptions that occur during entity generation
-     */
-    private <T> void generateEntitiesWithExceptionHandling(
-            final Supplier<T> entityCountSupplier,
-            final Consumer<T> entityGenerationFunc,
-            final Consumer<EntityGenerationException> errorHandlingFunc) {
-        try {
-            final T entityCount = entityCountSupplier.get();
-            entityGenerationFunc.accept(entityCount);
-        } catch (Exception e) {
-            errorHandlingFunc.accept(new EntityGenerationException("Error generating entities", e));
-        }
-    }
-
-    /**
-     * Handles the error that occurs during entity generation.
-     * The handleEntityGenerationError method is responsible for handling any exceptions that occur during entity generation.
-     *
-     * @param e The exception that occurred.
-     */
-    private void handleEntityGenerationError(final Exception e) {
-        LOGGER.error("Error generating entities: " + e.getMessage(), e);
     }
 }

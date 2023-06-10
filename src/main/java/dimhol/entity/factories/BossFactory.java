@@ -29,7 +29,7 @@ public class BossFactory extends BaseFactory {
     /**
      * Boss's speed.
      */
-    private static final double BOSS_SPEED = 2;
+    private static final double BOSS_SPEED = 1.5;
     /**
      * Boss's health.
      */

@@ -25,8 +25,6 @@ import java.util.stream.IntStream;
  * An abstract class to use common methods between the room strategy's.
  */
 public abstract class AbstractRoomStrategy implements RoomStrategy {
-    private static final String NO_AVAILABLE_TILE = "No available tiles.";
-    private static final String INVALID_DIMENSION = "Invalid entity dimensions! Dimensions must be greater than zero.";
     private static final int GATE_WIDTH = 3;
     private static final int GATE_HEIGHT = 3;
     private static final int MAX_ITEMS = 5;
@@ -70,31 +68,6 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
     @Override
     public abstract List<Entity> generate(Optional<Entity> entity, Set<Pair<Integer, Integer>> availableTiles,
                                           List<Entity> entities);
-
-    /**
-     * Validates that the set of available tiles is not empty.
-     *
-     * @param availableTiles The set of available tiles.
-     * @throws NoAvailableTilesException if the set of available tiles is empty.
-     */
-    protected void validateAvailableTilesNotEmpty(final Set<Pair<Integer, Integer>> availableTiles) {
-        if (availableTiles.isEmpty()) {
-            throw new NoAvailableTilesException(NO_AVAILABLE_TILE);
-        }
-    }
-
-    /**
-     * Validates the dimensions of an entity.
-     *
-     * @param entityWidth  the width of the entity.
-     * @param entityHeight the height of the entity.
-     * @throws InvalidEntityDimensionsException if the entity dimensions are invalid (less than or equal to zero).
-     */
-    protected void validateEntityDimensions(final int entityWidth, final int entityHeight) {
-        if (entityWidth <= 0 || entityHeight <= 0) {
-            throw new InvalidEntityDimensionsException(INVALID_DIMENSION);
-        }
-    }
 
     /**
      * Checks if an entity can be accommodated at the given position without overlapping with occupied tiles.
@@ -188,7 +161,7 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
         return availableTiles.stream()
                 .skip(randomIndex)
                 .findFirst()
-                .orElseThrow(() -> new NoAvailableTilesException(NO_AVAILABLE_TILE));
+                .orElseThrow(IllegalArgumentException::new);
     }
 
 
@@ -202,7 +175,6 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
      */
     protected Entity createAndPlacePlayer(final Set<Pair<Integer, Integer>> freeTiles,
                                           final int playerWidth, final int playerHeight) {
-        validateEntityDimensions(playerWidth, playerHeight);
         final Entity player = createPlayer(freeTiles);
         placeEntityAtRandomPosition(player, freeTiles, playerWidth, playerHeight);
         return player;
@@ -215,7 +187,6 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
      * @return The created player entity.
      */
     protected Entity createPlayer(final Set<Pair<Integer, Integer>> availableTiles) {
-        validateAvailableTilesNotEmpty(availableTiles);
         final Pair<Integer, Integer> randomCoordinates = getRandomTile(availableTiles);
         final double x = randomCoordinates.getLeft().doubleValue();
         final double y = randomCoordinates.getRight().doubleValue();
@@ -264,8 +235,6 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
      */
     protected void placeEntityAtRandomPosition(final Entity entity, final Set<Pair<Integer, Integer>> availableTiles,
                                                final int entityWidth, final int entityHeight) {
-        validateAvailableTilesNotEmpty(availableTiles);
-        validateEntityDimensions(entityWidth, entityHeight);
         final List<ImmutablePair<Integer, Integer>> availablePositions = new LinkedList<>(
                 findAvailablePositions(availableTiles, entityWidth, entityHeight));
         if (!availablePositions.isEmpty()) {
@@ -321,9 +290,6 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
     protected int calculateNumEntities(final Set<Pair<Integer, Integer>> availableTileCoordinates,
                                        final int entityWidth,
                                        final int entityHeight) {
-        validateAvailableTilesNotEmpty(availableTileCoordinates);
-        validateEntityDimensions(entityWidth, entityHeight);
-
         final int numAvailableTiles = availableTileCoordinates.size();
         final int maxNumOfEntities = numAvailableTiles / calculateRequiredTiles(entityWidth, entityHeight);
         final int totalEntityCount = Math.min(MIN_ENTITIES, maxNumOfEntities);
@@ -353,11 +319,6 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
 
         // Limit the maximum number of enemies
         final int maxAllowedEnemies = Math.min(maxNumOfEnemies, limitEnemies);
-
-        // Handle edge cases where there are no available tiles or no space for enemies
-        if (maxAllowedEnemies <= 0) {
-            throw new NoAvailableTilesException(NO_AVAILABLE_TILE);
-        }
 
         // Generate a random number of enemies between 1 and the maximum allowed
         return getRandomNumber(1, maxAllowedEnemies);
@@ -456,7 +417,6 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
      * @return The number of tiles required to accommodate the entity.
      */
     protected int calculateRequiredTiles(final int entityWidth, final int entityHeight) {
-        validateEntityDimensions(entityWidth, entityHeight);
         return entityWidth * entityHeight;
     }
 
@@ -467,7 +427,6 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
      * @return a randomly selected tile that can accommodate a gate interactable object.
      */
     protected Pair<Integer, Integer> getRandomTileForGate(final Set<Pair<Integer, Integer>> availableTiles) {
-        validateAvailableTilesNotEmpty(availableTiles);
         final List<Pair<Integer, Integer>> shuffledTiles = new ArrayList<>(availableTiles);
         Collections.shuffle(shuffledTiles);
         return shuffledTiles.stream()
@@ -485,7 +444,6 @@ public abstract class AbstractRoomStrategy implements RoomStrategy {
      */
     protected boolean canAccommodateTileForGate(final Pair<Integer, Integer> tile,
                                                 final Set<Pair<Integer, Integer>> availableTiles) {
-        validateAvailableTilesNotEmpty(availableTiles);
         return canAccommodate(tile, availableTiles, GATE_WIDTH, GATE_HEIGHT, "Gate");
     }
 

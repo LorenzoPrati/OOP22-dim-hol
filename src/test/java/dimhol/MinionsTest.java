@@ -13,48 +13,66 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.math.Vector2D;
 
-public class MinionsTest {
+/**
+ * Testing the generation with all its components for the minion entities.
+ */
+final class MinionsTest {
 
     private BossFactory bossFactory;
+    private static final double TEST_NUMBER = 0.0001;
 
+    private static final double COORDINATE_X = 10.0;
+    private static final double COORDINATE_Y = 20.0;
+    private static final double MINIONS_DIMENSION = 0.5;
+    private static final double MINIONS_SPEED = 1;
+    private static final double MINIONS_HEALTH = 1;
+    private static final String MINIONS_STATUS = "idle";
+
+
+    /**
+     * Sets up the test fixture before each test method is run.
+     */
     @BeforeEach
-    public void setup() {
+    void setup() {
         bossFactory = new BossFactory();
     }
 
+    /**
+     * Tests the creation of a minion.
+     */
     @Test
-    public void testCreateMinion() {
-        double x = 10.0;
-        double y = 20.0;
+    void testCreateMinion() {
+        final double x = COORDINATE_X;
+        final double y = COORDINATE_Y;
 
-        Entity minion = bossFactory.createMinion(x, y);
+        final Entity minion = bossFactory.createMinion(x, y);
 
         // Check Position component
-        PositionComponent position = (PositionComponent) minion.getComponent(PositionComponent.class);
+        final PositionComponent position = (PositionComponent) minion.getComponent(PositionComponent.class);
         Assertions.assertEquals(new Vector2D(x, y), position.getPos());
 
         // Check Movement component
-        MovementComponent movement = (MovementComponent) minion.getComponent(MovementComponent.class);
+        final MovementComponent movement = (MovementComponent) minion.getComponent(MovementComponent.class);
         Assertions.assertEquals(new Vector2D(0, 1), movement.getDir());
-        Assertions.assertEquals(1, movement.getSpeed(), 0.0001);
+        Assertions.assertEquals(MINIONS_SPEED, movement.getSpeed(), TEST_NUMBER);
         Assertions.assertFalse(movement.isEnabled());
 
         // Check Body component
-        BodyComponent body = (BodyComponent) minion.getComponent(BodyComponent.class);
-        Assertions.assertEquals(0.5, body.getBodyShape().getBoundingWidth(), 0.0001);
-        Assertions.assertEquals(0.5, body.getBodyShape().getBoundingHeight(), 0.0001);
+        final BodyComponent body = (BodyComponent) minion.getComponent(BodyComponent.class);
+        Assertions.assertEquals(MINIONS_DIMENSION, body.getBodyShape().getBoundingWidth(), TEST_NUMBER);
+        Assertions.assertEquals(MINIONS_DIMENSION, body.getBodyShape().getBoundingHeight(), TEST_NUMBER);
         Assertions.assertTrue(body.isSolid());
 
         // Check Health component
-        HealthComponent health = (HealthComponent) minion.getComponent(HealthComponent.class);
-        Assertions.assertEquals(1, health.getMaxHealth());
+        final HealthComponent health = (HealthComponent) minion.getComponent(HealthComponent.class);
+        Assertions.assertEquals(MINIONS_HEALTH, health.getMaxHealth());
 
         // Check Animation component
-        AnimationComponent animation = (AnimationComponent) minion.getComponent(AnimationComponent.class);
-        Assertions.assertNotNull(animation.getMap().get("idle"));
+        final AnimationComponent animation = (AnimationComponent) minion.getComponent(AnimationComponent.class);
+        Assertions.assertNotNull(animation.getMap().get(MINIONS_STATUS));
 
         // Check AI component
-        AIComponent ai = (AIComponent) minion.getComponent(AIComponent.class);
+        final AIComponent ai = (AIComponent) minion.getComponent(AIComponent.class);
         Assertions.assertNotNull(ai.getRoutine());
     }
 
