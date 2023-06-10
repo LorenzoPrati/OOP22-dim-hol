@@ -54,7 +54,7 @@ public abstract class AbstractScreen extends JPanel {
      * @return the centerPanel.
      */
     @SuppressFBWarnings(value = { "EI_EXPOSE_REP", "EI_EXPOSE_REP2" },
-            justification = "I prefer to suppress these FindBugs warnings")
+            justification = "I prefer to suppress these spotBugs warnings")
     public JPanel getCenterPanel() {
         return this.centerPanel;
     }

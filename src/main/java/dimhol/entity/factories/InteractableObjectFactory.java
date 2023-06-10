@@ -43,7 +43,6 @@ public class InteractableObjectFactory extends BaseFactory {
         return world.getEntities().stream().anyMatch(e -> e.hasComponent(ShopKeeperComponent.class));
     }
 
-    @SuppressFBWarnings("MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR") 
     private final Predicate<World> checkAllEnemyAreDead = (w) -> w.getEntities()
         .stream()
         .noneMatch(e -> e.hasComponent(AIComponent.class));
