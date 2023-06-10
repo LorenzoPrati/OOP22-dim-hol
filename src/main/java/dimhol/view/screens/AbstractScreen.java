@@ -22,7 +22,13 @@ import java.io.Serial;
 public abstract class AbstractScreen extends JPanel {
     @Serial
     private static final long serialVersionUID = -8156943716103350031L;
+    /**
+     * Constant for spacing component in screens.
+     */
     public static final int INSETS = 10;
+    /**
+     * Constant for the main font used size.
+     */
     public static final int FONT_SIZE = 20;
     private ImageIcon background;
     private final Font font;
@@ -97,7 +103,7 @@ public abstract class AbstractScreen extends JPanel {
         try {
             this.background = new ImageIcon(ImageIO.read(AbstractScreen.class.getResourceAsStream(path)));
         } catch (IOException e) {
-            throw new IllegalStateException();
+            throw new IllegalStateException(e);
         }
     }
 
@@ -125,7 +131,7 @@ public abstract class AbstractScreen extends JPanel {
         try {
             return new JLabel(new ImageIcon(ImageIO.read(AbstractScreen.class.getResourceAsStream(path))));
         } catch (IOException e) {
-            throw new IllegalStateException();
+            throw new IllegalStateException(e);
         }
     }
 }

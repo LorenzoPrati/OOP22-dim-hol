@@ -31,14 +31,14 @@ public class HomeScreen extends AbstractScreen {
      */
     public HomeScreen(final Engine engine) {
         super.setBackground("/asset/bg/homeScreen.png");
-        Color color = new Color(R, G, B);
+        final Color color = new Color(R, G, B);
         this.add(super.createLabel("/asset/bg/HomeScreenTitle.png"), super.getGbc());
         super.setGbcAnchorCenter();
         super.setGbcFillHorizontal();
         super.getCenterPanel().setLayout(new GridBagLayout());
         super.getCenterPanel().add(super.createButton(e -> engine.newGame(), "PLAY", color), super.getGbc());
-        super.getCenterPanel().add(super.createButton(e -> engine.getMainWindow().changePanel(new OptionScreen(engine)), "OPTIONS",
-            color), super.getGbc());
+        super.getCenterPanel().add(super.createButton(e -> engine.getMainWindow().changePanel(new OptionScreen(engine)), 
+        "OPTIONS", color), super.getGbc());
             super.getCenterPanel().add(super.createButton(e -> Runtime.getRuntime().exit(0), "QUIT", color), super.getGbc());
             super.getGbc().weighty = 1;
         this.add(super.getCenterPanel());
