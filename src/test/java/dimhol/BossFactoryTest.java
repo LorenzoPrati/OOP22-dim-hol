@@ -71,7 +71,7 @@ final class BossFactoryTest {
         Assertions.assertEquals(BOSS_HEALTH, health.getMaxHealth());
 
         // Check Animation component
-        AnimationComponent animation = (AnimationComponent) boss.getComponent(AnimationComponent.class);
+        final AnimationComponent animation = (AnimationComponent) boss.getComponent(AnimationComponent.class);
         Assertions.assertNotNull(animation.getMap().get(BOSS_STATUS));
 
         // Check AI component
