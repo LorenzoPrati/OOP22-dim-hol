@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Tests items' effects.
  */
 final class ItemTest {
-    private Entity player;
-    private Entity heartItem;
-    private Entity coinItem;
+    private final Entity player;
+    private final Entity heartItem;
+    private final Entity coinItem;
 
     ItemTest() {
         final var genericFactory = new GenericFactory();
@@ -29,8 +29,8 @@ final class ItemTest {
 
     @Test
     void testHeartEffect() {
-        var healthComp = (HealthComponent) player.getComponent(HealthComponent.class);
-        var itemComp = (ItemComponent) heartItem.getComponent(ItemComponent.class);
+        final var healthComp = (HealthComponent) player.getComponent(HealthComponent.class);
+        final var itemComp = (ItemComponent) heartItem.getComponent(ItemComponent.class);
         /*case: effect can't be applied */
         itemComp.applyEffect(player, List.of(PlayerComponent.class));
         assertEquals(healthComp.getCurrentHealth(), healthComp.getMaxHealth());
@@ -42,9 +42,9 @@ final class ItemTest {
 
     @Test
     void testCoinEffect() {
-        var pocketComp = (CoinPocketComponent) player.getComponent(CoinPocketComponent.class);
-        var itemComp = (ItemComponent) coinItem.getComponent(ItemComponent.class);
-        var coinAmountBeforeEffect = pocketComp.getCurrentAmount();
+        final var pocketComp = (CoinPocketComponent) player.getComponent(CoinPocketComponent.class);
+        final var itemComp = (ItemComponent) coinItem.getComponent(ItemComponent.class);
+        final var coinAmountBeforeEffect = pocketComp.getCurrentAmount();
         itemComp.applyEffect(player, List.of(PlayerComponent.class));
         assertEquals(pocketComp.getCurrentAmount(), coinAmountBeforeEffect + 1);
     }
